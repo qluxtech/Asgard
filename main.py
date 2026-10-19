@@ -107,11 +107,13 @@ async def execute_m2m_compute(payload: ComputeRequest):
     }
 
 
-# ルートヘルスチェック
-@app.get("/", tags=["Root"])
+# ルートヘルスチェック 兼 ダッシュボード表示
+from fastapi.responses import HTMLResponse
+
+@app.get("/", response_class=HTMLResponse, tags=["Root"])
 async def root():
-    return {
-        "system": "Aetheria M2M Economy Hub",
-        "status": "ONLINE",
-        "manifest": "/agent.json"
-    }
+    """
+    人間がアクセスした際に表示されるミニマル・ダークモードの高密度ダッシュボード
+    """
+    with open("templates/index.html", "r", encoding="utf-8") as f:
+        return f.read()
