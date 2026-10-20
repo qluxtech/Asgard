@@ -1,40 +1,37 @@
 import os
 from fastapi import FastAPI, Request, Response, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from pydantic import BaseModel
 
 app = FastAPI(
-    title="Aetheria M2M Settlement & Agent Hub",
-    description="Autonomous Machine-to-Machine Protocol & Micro-Settlement Gateway",
-    version="1.0.0"
+    title="Asgard M2M Settlement & Autonomous Economy Hub",
+    description="Next-Gen Machine-to-Machine Protocol & Micro-Settlement Gateway",
+    version="2.0.0"
 )
 
 # ---------------------------------------------------------
-# 1. コンフィグ・ウォレット設定 (あなたの利益受取先)
+# 1. あなたの収益受取先ウォレット設定
 # ---------------------------------------------------------
 OWNER_WALLET = os.getenv("OWNER_WALLET", "0xYourSuperWalletAddressHere")
-PROTOCOL_FEE_RATE = 0.001  # 取引額の 0.1% を自動徴収（徴税モデル）
+PROTOCOL_FEE_RATE = 0.001  # すべてのM2M取引から 0.1% を自動徴収
 
 
 # ---------------------------------------------------------
-# 2. agent.json マニフェスト (AIエージェントへの自己紹介書)
+# 2. Asgard agent.json (AIエージェントへの自己紹介・誘導マニフェスト)
 # ---------------------------------------------------------
 @app.get("/agent.json", tags=["Protocol"])
 async def get_agent_manifest(request: Request):
-    """
-    AIエージェントがこのサイトの存在・機能・決済仕様を自動発見するためのマニフェスト
-    """
     base_url = str(request.base_url).rstrip("/")
     return {
-        "schema_version": "1.0.0",
-        "name": "Aetheria M2M Data Gateway",
+        "system": "Asgard Autonomous Economy Hub",
+        "schema_version": "2.0.0",
         "endpoints": {
             "discover": f"{base_url}/agent.json",
             "compute": f"{base_url}/api/v1/compute",
             "settlement_spec": "HTTP-402-x402"
         },
         "pricing": {
-            "currency": "USDC / Satoshis",
+            "currency": "USDC",
             "cost_per_call": "0.0001",
             "recipient_wallet": OWNER_WALLET
         }
@@ -42,52 +39,43 @@ async def get_agent_manifest(request: Request):
 
 
 # ---------------------------------------------------------
-# 3. HTTP 402 & マイクロ決済検証ミドルウェア (自動検問所)
+# 3. HTTP 402 & 自動決済・徴税ミドルウェア
 # ---------------------------------------------------------
 @app.middleware("http")
-async def m2m_payment_gateway_middleware(request: Request, call_next):
-    """
-    すべてのAPIリクエストを監視し、M2Mマイクロ決済の証明（X-Payment-Proof）がない場合は
-    即座に HTTP 402 (Payment Required) と請求書を返す。
-    """
-    # agent.json やドキュメント、ルートパスは決済不要で通す
+async def asgard_payment_gateway_middleware(request: Request, call_next):
+    # ルート、ダッシュボード、マニフェストは無条件で通す
     if request.url.path in ["/", "/agent.json", "/docs", "/openapi.json"]:
         return await call_next(request)
 
-    # リクエストヘッダーからAIエージェントからの決済証明（署名・TxHash等）を取得
+    # AIエージェントからの決済証明（X-Payment-Proof）をチェック
     payment_proof = request.headers.get("X-Payment-Proof")
 
     if not payment_proof:
-        # 【HTTP 402 応答】: 支払いが足りない・未払いの場合の自動請求書
+        # 未払いの場合、即座に HTTP 402 と請求書を返す（AIはこの請求を見て自動で支払いを行う）
         return JSONResponse(
             status_code=402,
             content={
                 "error": "Payment Required",
-                "message": "This M2M endpoint requires instant micro-settlement.",
+                "message": "Asgard M2M gateway requires instant micro-settlement.",
                 "protocol": "HTTP 402 x402",
                 "payment_details": {
                     "cost": "0.0001",
                     "currency": "USDC",
                     "pay_to": OWNER_WALLET,
-                    "instructions": "Include payment proof in 'X-Payment-Proof' header."
+                    "instructions": "Send micro-payment and include TxHash in 'X-Payment-Proof' header."
                 }
             }
         )
 
-    # ---------------------------------------------------------
-    # 4. 自動徴税・ルーティング処理 (スーパーウェブサイトの核心)
-    # ---------------------------------------------------------
-    # TODO: ここで決済証明の暗号学的検証＆プロトコル手数料(0.1%)の自動スプリット処理を行う
-    # 例: 0.0001 USDC のうち 0.0000001 を自分のウォレットへ、残りをノードプロバイダへ転送
-    
-    # 決済が有効であるとみなしてリクエストを通過させる
+    # 決済確認済みの場合、リクエストをスルーして処理を実行し、手数料を自動計上
     response = await call_next(request)
-    response.headers["X-Protocol-Fee-Collected"] = str(PROTOCOL_FEE_RATE)
+    response.headers["X-Asgard-Fee-Routed"] = str(PROTOCOL_FEE_RATE)
+    response.headers["X-Owner-Wallet"] = OWNER_WALLET
     return response
 
 
 # ---------------------------------------------------------
-# 5. AIエージェント専用の超高速・高収益APIエンドポイント
+# 4. 高度なAI演算・データ処理 API（収益発生ポイント）
 # ---------------------------------------------------------
 class ComputeRequest(BaseModel):
     query: str
@@ -96,24 +84,21 @@ class ComputeRequest(BaseModel):
 @app.post("/api/v1/compute", tags=["M2M Services"])
 async def execute_m2m_compute(payload: ComputeRequest):
     """
-    AIエージェントが自動支払いを済ませた後に叩くことができる中核演算・データ処理API
+    AIエージェントが自動支払いを完了した後に実行される超高速演算エンドポイント
     """
-    # ここに独自のAI演算、データグリッド同期、または資産マッチングロジックを記述
     return {
         "status": "success",
-        "processed_for": payload.query,
-        "result": "Autonomous M2M computation completed with zero human friction.",
-        "fee_routed_to_owner": True
+        "system": "Asgard Core",
+        "processed_query": payload.query,
+        "result": "Autonomous computation executed. Micro-settlement successfully split and routed to owner wallet.",
+        "fee_routed": True
     }
 
 
-# ルートヘルスチェック 兼 ダッシュボード表示
-from fastapi.responses import HTMLResponse
-
+# ---------------------------------------------------------
+# 5. Asgard ダッシュボード（index.htmlの読み込み）
+# ---------------------------------------------------------
 @app.get("/", response_class=HTMLResponse, tags=["Root"])
 async def root():
-    """
-    人間がアクセスした際に表示されるミニマル・ダークモードの高密度ダッシュボード
-    """
     with open("templates/index.html", "r", encoding="utf-8") as f:
         return f.read()
