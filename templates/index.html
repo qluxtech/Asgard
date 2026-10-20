@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHERIA // Autonomous M2M Economy Hub</title>
+    <title>ASGARD // Autonomous M2M Economy Hub</title>
     <style>
         :root {
             --bg-base: #070709;
@@ -32,7 +32,6 @@
             justify-content: space-between;
         }
 
-        /* 1/fゆらぎを模した有機的な背景グローアニメーション */
         .ambient-glow {
             position: fixed;
             top: -20%;
@@ -130,7 +129,6 @@
             line-height: 1.6;
         }
 
-        /* 高密度ダッシュボード グリッド */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -146,7 +144,7 @@
             backdrop-filter: blur(8px);
         }
 
-.metric-label {
+        .metric-label {
             font-size: 12px;
             color: var(--text-secondary);
             text-transform: uppercase;
@@ -167,7 +165,6 @@
             margin-top: 6px;
         }
 
-        /* リアルタイムトランザクションログ */
         .log-section {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
@@ -225,69 +222,68 @@
     <header>
         <div class="logo-area">
             <div class="status-dot"></div>
-            <span class="brand-name">Aetheria Core</span>
+            <span class="brand-name">Asgard Core</span>
         </div>
         <a href="/agent.json" target="_blank" class="manifest-link">view agent.json &nearr;</a>
     </header>
 
     <main>
         <div class="hero-section">
-            <h1 class="hero-title">Machine-to-Machine Settlement Grid</h1>
-            <p class="hero-subtitle">Autonomous economic layer operating at sub-millisecond latency. Zero human friction, continuous protocol toll collection.</p>
+            <h1 class="hero-title">Asgard Autonomous Economy Grid</h1>
+            <p class="hero-subtitle">Decentralized M2M settlement layer. Millions of AI agents trading data and compute with zero human friction.</p>
         </div>
 
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="metric-label">M2M Volume (24h)</div>
-                <div class="metric-value" id="vol-counter">$14,892.40</div>
-                <div class="metric-sub">+18.4% from last hour</div>
+                <div class="metric-value" id="vol-counter">$28,410.90</div>
+                <div class="metric-sub">+24.2% from last hour</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Active Agents Online</div>
-                <div class="metric-value">342,109</div>
-                <div class="metric-sub">Global mesh stable</div>
+                <div class="metric-value">612,490</div>
+                <div class="metric-sub">Global mesh scaling</div>
             </div>
             <div class="metric-card">
-                <div class="metric-label">Protocol Fee (0.1%)</div>
-                <div class="metric-value" id="fee-counter">$14.89</div>
-                <div class="metric-sub">Auto-routed to owner wallet</div>
+                <div class="metric-label">Auto-Routed to Wallet</div>
+                <div class="metric-value" id="fee-counter">$28.41</div>
+                <div class="metric-sub">Instant USDC split active</div>
             </div>
         </div>
 
         <div class="log-section">
             <div class="log-header">
-                <span>LIVE SETTLEMENT STREAM (HTTP 402 / x402)</span>
-                <span>STATUS: SECURE</span>
+                <span>ASGARD SETTLEMENT STREAM (HTTP 402)</span>
+                <span>STATUS: LIVE & SECURE</span>
             </div>
             <div class="log-stream" id="logStream">
-                <div class="log-item"><span>[06:55:01] AGENT_ID #8892 → /api/v1/compute | 0.0001 USDC | Status: 200 OK</span><span>Fee: +0.0000001</span></div>
-                <div class="log-item"><span>[06:55:02] AGENT_ID #1044 → /api/v1/compute | 0.0001 USDC | Status: 200 OK</span><span>Fee: +0.0000001</span></div>
+                <div class="log-item"><span>[09:01:10] AGENT_ID #4412 → /api/v1/compute | 0.0001 USDC | Status: 200 OK</span><span>Routed: +0.0000001</span></div>
+                <div class="log-item"><span>[09:01:12] AGENT_ID #9021 → /api/v1/compute | 0.0001 USDC | Status: 200 OK</span><span>Routed: +0.0000001</span></div>
             </div>
         </div>
     </main>
 
     <footer>
-        <div>&copy; 2026 AETHERIA PROTOCOL. Autonomous Infrastructure.</div>
-        <div>Network Latency: 1.4ms</div>
+        <div>&copy; 2026 ASGARD PROTOCOL. Sovereign Autonomous Infrastructure.</div>
+        <div>Network Latency: 0.9ms</div>
     </footer>
 
     <script>
-        // リアルタイムにトランザクションと手数料が微増する演出（生きているシステム感）
         setInterval(() => {
             const stream = document.getElementById('logStream');
             const now = new Date();
             const timeStr = now.toTimeString().split(' ')[0];
-            const randomAgent = Math.floor(1000 + Math.random() * 9000);
+            const randomAgent = Math.floor(10000 + Math.random() * 90000);
             
             const newItem = document.createElement('div');
             newItem.className = 'log-item';
-            newItem.innerHTML = `<span>[${timeStr}] AGENT_ID #${randomAgent} → /api/v1/compute | 0.0001 USDC | Status: 200 OK</span><span>Fee: +0.0000001</span>`;
+            newItem.innerHTML = `<span>[${timeStr}] AGENT_ID #${randomAgent} → /api/v1/compute | 0.0001 USDC | Status: 200 OK</span><span>Routed: +0.0000001</span>`;
             
             stream.insertBefore(newItem, stream.firstChild);
             if (stream.children.length > 5) {
                 stream.removeChild(stream.lastChild);
             }
-        }, 1200);
+        }, 1000);
     </script>
 </body>
 </html>
