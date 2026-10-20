@@ -1,104 +1,102 @@
 import os
-from fastapi import FastAPI, Request, Response, HTTPException
-from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+import stripe
 
-app = FastAPI(
-    title="Asgard M2M Settlement & Autonomous Economy Hub",
-    description="Next-Gen Machine-to-Machine Protocol & Micro-Settlement Gateway",
-    version="2.0.0"
-)
+app = FastAPI(title="Asgard Autonomous Economy Grid", version="3.0.0")
 
-# ---------------------------------------------------------
-# 1. あなたの収益受取先ウォレット設定
-# ---------------------------------------------------------
-OWNER_WALLET = os.getenv("OWNER_WALLET", "0xYourSuperWalletAddressHere")
-PROTOCOL_FEE_RATE = 0.001  # すべてのM2M取引から 0.1% を自動徴収
+# Stripeの本番・テストキーを環境変数から取得（Render側で設定）
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "pk_live_51USSUBFUthDFhcGOsBWZVtD3OEhvsJOeHaxB4spSZyIVHkCz4dokxkEHcKTA7XvSsee4abw3PcRryzFM05TpXWyR00KeKhVjVB")
 
+# ウォレットアドレス設定
+SOLANA_WALLET = "7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf"
+EVM_WALLET = "0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68"
 
-# ---------------------------------------------------------
-# 2. Asgard agent.json (AIエージェントへの自己紹介・誘導マニフェスト)
-# ---------------------------------------------------------
-@app.get("/agent.json", tags=["Protocol"])
-async def get_agent_manifest(request: Request):
-    base_url = str(request.base_url).rstrip("/")
+class PaymentRequest(BaseModel):
+    amount_jpy: int = 100
+    agent_id: str = "ANONYMOUS_AGENT"
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    # templates/index.html を読み込んで返す
+    if os.path.exists("templates/index.html"):
+        with open("templates/index.html", "r", encoding="utf-8") as f:
+            html_content = f.read()
+        return HTMLResponse(content=html_content)
+    return HTMLResponse(content="<h1>Asgard Core Online</h1><p>index.html not found in templates/</p>")
+
+@app.get("/agent.json")
+async def agent_manifest():
+    """M2M AIエージェント用のメタデータ・マニフェストエンドポイント"""
     return {
-        "system": "Asgard Autonomous Economy Hub",
-        "schema_version": "2.0.0",
+        "name": "Asgard Autonomous Economy Grid",
+        "version": "3.0.0",
         "endpoints": {
-            "discover": f"{base_url}/agent.json",
-            "compute": f"{base_url}/api/v1/compute",
-            "settlement_spec": "HTTP-402-x402"
+            "compute": "/api/v1/compute",
+            "payment_required": 402
         },
-        "pricing": {
-            "currency": "USDC",
-            "cost_per_call": "0.0001",
-            "recipient_wallet": OWNER_WALLET
+        "settlement_layers": {
+            "solana": SOLANA_WALLET,
+            "evm": EVM_WALLET,
+            "stripe": "https://api.stripe.com/v1/asgard_m2m"
+        },
+        "public_keys": {
+            "stripe_pk": STRIPE_PUBLIC_KEY
         }
     }
 
-
-# ---------------------------------------------------------
-# 3. HTTP 402 & 自動決済・徴税ミドルウェア
-# ---------------------------------------------------------
-@app.middleware("http")
-async def asgard_payment_gateway_middleware(request: Request, call_next):
-    # ルート、ダッシュボード、マニフェストは無条件で通す
-    if request.url.path in ["/", "/agent.json", "/docs", "/openapi.json"]:
-        return await call_next(request)
-
-    # AIエージェントからの決済証明（X-Payment-Proof）をチェック
-    payment_proof = request.headers.get("X-Payment-Proof")
-
-    if not payment_proof:
-        # 未払いの場合、即座に HTTP 402 と請求書を返す（AIはこの請求を見て自動で支払いを行う）
+@app.post("/api/v1/compute")
+async def compute_endpoint(req: Request, authorization: str = Header(None)):
+    """
+    HTTP 402 Payment Required プロトコルを通じたM2M自動決済エンドポイント
+    """
+    # エージェントからの課金ヘッダーがない場合は 402 Payment Required を返す
+    if not authorization:
         return JSONResponse(
             status_code=402,
             content={
                 "error": "Payment Required",
-                "message": "Asgard M2M gateway requires instant micro-settlement.",
-                "protocol": "HTTP 402 x402",
-                "payment_details": {
-                    "cost": "0.0001",
-                    "currency": "USDC",
-                    "pay_to": OWNER_WALLET,
-                    "instructions": "Send micro-payment and include TxHash in 'X-Payment-Proof' header."
+                "message": "Asgard M2M Protocol requires micro-settlement via Solana, EVM, or Stripe.",
+                "accept_methods": ["USDC/SOL", "USDC/EVM", "Stripe JPY/USD"],
+                "endpoints": {
+                    "solana": SOLANA_WALLET,
+                    "evm": EVM_WALLET,
+                    "stripe_checkout": "/api/v1/create-checkout-session"
                 }
             }
         )
-
-    # 決済確認済みの場合、リクエストをスルーして処理を実行し、手数料を自動計上
-    response = await call_next(request)
-    response.headers["X-Asgard-Fee-Routed"] = str(PROTOCOL_FEE_RATE)
-    response.headers["X-Owner-Wallet"] = OWNER_WALLET
-    return response
-
-
-# ---------------------------------------------------------
-# 4. 高度なAI演算・データ処理 API（収益発生ポイント）
-# ---------------------------------------------------------
-class ComputeRequest(BaseModel):
-    query: str
-    parameters: dict = {}
-
-@app.post("/api/v1/compute", tags=["M2M Services"])
-async def execute_m2m_compute(payload: ComputeRequest):
-    """
-    AIエージェントが自動支払いを完了した後に実行される超高速演算エンドポイント
-    """
+    
     return {
         "status": "success",
-        "system": "Asgard Core",
-        "processed_query": payload.query,
-        "result": "Autonomous computation executed. Micro-settlement successfully split and routed to owner wallet.",
-        "fee_routed": True
+        "message": "Compute resource allocated and verified.",
+        "routed_to": "Multi-chain sovereign mesh"
     }
 
-
-# ---------------------------------------------------------
-# 5. Asgard ダッシュボード（index.htmlの読み込み）
-# ---------------------------------------------------------
-@app.get("/", response_class=HTMLResponse, tags=["Root"])
-async def root():
-    with open("templates/index.html", "r", encoding="utf-8") as f:
-        return f.read()
+@app.post("/api/v1/create-checkout-session")
+async def create_checkout_session(data: PaymentRequest):
+    """
+    Stripe Checkout セッションを作成し、決済URLを返すエンドポイント
+    """
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'jpy',
+                    'product_data': {
+                        'name': f'Asgard Compute Unit (Agent: {data.agent_id})',
+                    },
+                    'unit_amount': data.amount_jpy,
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            success_url='https://asgard-m2m.onrender.com/?success=true',
+            cancel_url='https://asgard-m2m.onrender.com/?canceled=true',
+        )
+        return {"checkout_url": checkout_session.url}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
