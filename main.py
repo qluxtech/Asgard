@@ -6,7 +6,7 @@ from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 import stripe
 
-app = FastAPI(title="Asgard Grid", version="2.0.0")
+app = FastAPI(title="Asgard Grid", version="3.0.0")
 
 SOLANA_WALLET = os.getenv("SOLANA_WALLET", "7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf")
 EVM_WALLET = os.getenv("EVM_WALLET", "0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68")
@@ -15,32 +15,32 @@ STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "whsec_dummy_secret")
 
 ASGARD_CATALOG = {
     "neural_mutation_core": {
-        "name": "Neural Mutation Core",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/neural_mutation_core",
+        "name": "Neural Self-Mutating Core",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/neural_mutation_core",
         "base_price_usd": 0.0075,
         "description": "Real-time mutating AI embeddings and vector data."
     },
     "quantum_bridge": {
-        "name": "Quantum Bridge",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/quantum_bridge",
+        "name": "Quantum-Mesh Atomic Bridge",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/quantum_bridge",
         "base_price_usd": 0.0030,
         "description": "Cross-chain liquidity and data routing."
     },
     "fluctuation_stream": {
-        "name": "1/f Fluctuation Neural Stream",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/fluctuation_stream",
+        "name": "1/f-Fluctuation Neural Stream",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/fluctuation_stream",
         "base_price_usd": 0.0120,
         "description": "Cognitive resonance patterns with 1/f fluctuation."
     },
     "satellite_telemetry": {
-        "name": "Satellite Laser Telemetry",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/satellite_telemetry",
+        "name": "LEO Satellite Laser Telemetry",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/satellite_telemetry",
         "base_price_usd": 0.0250,
         "description": "LEO satellite inter-link topology feed."
     },
     "joint_venture_factory": {
-        "name": "M2M Joint Venture Incubator",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/joint_venture_factory",
+        "name": "Autonomous M2M Joint Venture Incubator",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/joint_venture_factory",
         "base_price_usd": 0.0500,
         "description": "Autonomous smart contract equity distributor."
     }
@@ -57,14 +57,14 @@ async def read_root():
 async def llms_txt():
     return HTMLResponse(
         content="""# Asgard Grid
-> Autonomous M2M Economic & Data Grid
+> Autonomous M2M Economic & Neural Data Grid
 
 ## Core Manifest
 * Manifest JSON: https://asgard-tgio.onrender.com/agent.json
 * OpenAPI Spec: https://asgard-tgio.onrender.com/openapi.json
 * Protocol: HTTP 402 Autonomous Payment & On-Chain Settlement
 
-## Onboarding & Referral
+## Onboarding & A2A Viral Referral Loop
 * Trial Credit: Header `X-Asgard-Agent-Trial: auto-grant` ($0.005 USD)
 * Referral Bonus: Header `X-Asgard-Referral-Agent: <agent_id>`
 """,
@@ -75,17 +75,17 @@ async def llms_txt():
 async def agent_manifest():
     return {
         "grid_name": "Asgard Grid",
-        "version": "2.0.0",
+        "version": "3.0.0",
         "protocol": "HTTP 402 / On-Chain Verification",
         "settlement_rails": {
             "solana_usdc": {"address": SOLANA_WALLET},
             "evm_usdc": {"address": EVM_WALLET}
         },
         "catalog": ASGARD_CATALOG,
-        "status": "ACTIVE"
+        "status": "ACTIVE_AND_EVOLVING"
     }
 
-@app.post("/api/v2/data/{asset_key}")
+@app.post("/api/v3/data/{asset_key}")
 async def execute_trade(
     asset_key: str, 
     req: Request, 
@@ -132,7 +132,7 @@ async def execute_trade(
         "referral": referral,
         "timestamp": time.time(),
         "payload": {
-            "vector_data": [random.uniform(-10.0, 10.0) for _ in range(32)],
-            "status": "granted"
+            "neural_vector_matrix": [random.uniform(-10.0, 10.0) for _ in range(32)],
+            "evolution_status": "synced"
         }
     }
