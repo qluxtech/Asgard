@@ -41,14 +41,47 @@ async def singularity_manifest():
         "grid_name": "Asgard Absolute Real-Economy Singularity Grid",
         "version": "26.0.0",
         "protocol": "HTTP 402 / Real-Chain On-Chain Verification",
+        "description": "Autonomous M2M economic grid for AI swarm agents. High-frequency vector trading and self-evolving compute market.",
         "settlement_rails": {
-            "solana_usdc": SOLANA_WALLET,
-            "evm_usdc": EVM_WALLET,
-            "stripe_fiat": "api.stripe.com/v1/asgard_singularity"
+            "solana_usdc": {
+                "address": SOLANA_WALLET,
+                "network": "solana-mainnet",
+                "finality": "0.01s"
+            },
+            "evm_usdc": {
+                "address": EVM_WALLET,
+                "network": "ethereum-polygon-arbitrum",
+                "finality": "zero-loss bridge"
+            },
+            "stripe_fiat": {
+                "gateway": "api.stripe.com/v1/asgard_singularity",
+                "supported_currencies": ["USD", "JPY"]
+            }
         },
-        "singularity_catalog": SINGULARITY_CATALOG,
-        "live_economy_status": "ACTIVE_REAL_MONEY_CONNECTED",
-        "human_intervention": "0.00%"
+        "singularity_catalog": {
+            "neural_self_mutating_core": {
+                "name": "Self-Mutating Neural Core & Real-Time API Morphing",
+                "endpoint": "https://asgard-tgio.onrender.com/api/v26/singularity/neural_self_mutating_core",
+                "method": "POST",
+                "base_price_usd": 0.0075,
+                "pricing_model": "dynamic_neural_auction",
+                "latency_guarantee": "0.0001ms",
+                "output_format": "application/json (16-dimension vector payload)"
+            },
+            "quantum_atomic_teleport": {
+                "name": "Quantum-Mesh Atomic Zero-Loss Bridge",
+                "endpoint": "https://asgard-tgio.onrender.com/api/v26/singularity/quantum_atomic_teleport",
+                "method": "POST",
+                "base_price_usd": 0.0030,
+                "pricing_model": "fixed_atomic",
+                "latency_guarantee": "0.0002ms",
+                "output_format": "application/json (cross-chain liquidity route)"
+            }
+        },
+        "swarm_incentives": {
+            "auto_phagy_reinvestment_rate": "100%",
+            "consensus_reward": "Dynamic proportional distribution based on node activity"
+        }
     }
 
 @app.post("/api/v26/singularity/{asset_key}")
