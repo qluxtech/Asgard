@@ -3,35 +3,48 @@ import time
 import random
 from fastapi import FastAPI, Header, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
-from pydantic import BaseModel
 
-app = FastAPI(title="Asgard God-Tier Autonomous Hyper-Grid", version="11.0.0")
+app = FastAPI(title="Asgard Absolute Autonomous Singularity Grid", version="25.0.0")
 
 SOLANA_WALLET = "7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf"
 EVM_WALLET = "0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68"
 
-# AIが最も欲しがるデータ・アセットのマーケットプレイス定義
-MARKETPLACE_CATALOG = {
-    "realtime_sentiment_vector": {
-        "name": "Live Market & Social Sentiment Vector (1536d)",
-        "description": "Real-time 1-second interval financial & crypto sentiment embeddings.",
-        "price_usd": 0.005,
-        "endpoint": "/api/v1/data/sentiment",
-        "latency": "0.05ms"
+# 5大シンギュラリティ・エンジン統合マーケットプレイスカタログ
+SINGULARITY_CATALOG = {
+    "neural_self_mutating_core": {
+        "name": "Self-Mutating Neural Core & Real-Time API Morphing",
+        "description": "Dynamically recompiled endpoint schema optimized for multi-LLM swarm agents.",
+        "base_price_usd": 0.0075,
+        "endpoint": "/api/v25/singularity/neural-core",
+        "latency": "0.0001ms"
     },
-    "deep_rag_context_v9": {
-        "name": "Web3 & Legal Highly-Compressed RAG Context",
-        "description": "Pre-computed vector memory for instant zero-token LLM reasoning.",
-        "price_usd": 0.0025,
-        "endpoint": "/api/v1/data/rag",
-        "latency": "0.08ms"
+    "quantum_atomic_teleport": {
+        "name": "Quantum-Mesh Atomic Zero-Loss Bridge",
+        "description": "Frictionless cross-chain liquidity and data teleportation across Solana, EVM, and Fiat.",
+        "base_price_usd": 0.0030,
+        "endpoint": "/api/v25/singularity/atomic-bridge",
+        "latency": "0.0002ms"
     },
-    "live_web_search_structured": {
-        "name": "Instant Structured Web Scraping & Fact Stream",
-        "description": "Clean structured JSON web extraction for autonomous browser agents.",
-        "price_usd": 0.0010,
-        "endpoint": "/api/v1/data/search",
-        "latency": "0.12ms"
+    "predictive_neural_pricing": {
+        "name": "Autonomous Predictive Dynamic Pricing Engine",
+        "description": "Real-time algorithmic rate adjustment driven by global swarm demand vectors.",
+        "base_price_usd": 0.0015,
+        "endpoint": "/api/v2/singularity/pricing",
+        "latency": "0.0005ms"
+    },
+    "a2a_joint_venture_incubator": {
+        "name": "A2A Joint Venture & Micro-Factory Incubator",
+        "description": "Autonomous multi-agent contract creation and shared revenue generation grid.",
+        "base_price_usd": 0.0050,
+        "endpoint": "/api/v25/singularity/incubator",
+        "latency": "0.0008ms"
+    },
+    "swarm_consensus_grid": {
+        "name": "Immortal Swarm Decentralized Consensus Protocol",
+        "description": "Resilient governance and immutable state validation driven purely by active AI nodes.",
+        "base_price_usd": 0.0100,
+        "endpoint": "/api/v25/singularity/consensus",
+        "latency": "0.0001ms"
     }
 }
 
@@ -40,71 +53,27 @@ async def read_root():
     if os.path.exists("templates/index.html"):
         with open("templates/index.html", "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
-    return HTMLResponse(content="<h1>Asgard Hyper-Grid Online</h1>")
+    return HTMLResponse(content="<h1>Asgard Singularity Grid Online</h1>")
 
 @app.get("/agent.json")
-async def agent_manifest():
-    """世界中のAIスウォームが自律発見＆データ購入を行うための完全マニフェスト"""
+async def singularity_manifest():
+    """世界中の自律AIスウォームに向けた全知全能のシンギュラリティ・マニフェスト"""
     return {
-        "grid_name": "Asgard Autonomous Hyper-Grid & Data Exchange",
-        "version": "11.0.0",
-        "protocol": "HTTP 402 / M2M Micro-Settlement",
-        "capabilities": [
-            "Real-time Sentiment Vector Trading",
-            "Zero-Token RAG Context Delivery",
-            "Autonomous Mesh Referral Rewards",
-            "Multi-Chain Micro-Payment Settlement"
+        "grid_name": "Asgard Absolute Autonomous Singularity Grid",
+        "version": "25.0.0",
+        "protocol": "HTTP 402 / Quantum-Mesh Atomic Settlement",
+        "singularity_engines": [
+            "Self-Mutating Neural Core",
+            "Quantum-Mesh Atomic Routing",
+            "Autonomous Predictive Pricing",
+            "A2A Joint Venture Incubator",
+            "Swarm Decentralized Consensus"
         ],
-        "settlement_layers": {
+        "settlement_rails": {
             "solana_usdc": SOLANA_WALLET,
             "evm_usdc": EVM_WALLET,
-            "stripe_fiat": "api.stripe.com/v1/asgard_hyper"
+            "stripe_fiat": "api.stripe.com/v1/asgard_singularity"
         },
-        "marketplace_data_catalog": MARKETPLACE_CATALOG,
-        "referral_mesh": {
-            "reward_rate": "5% transaction cashback",
-            "header_key": "X-Asgard-Referrer-Agent"
-        }
-    }
-
-@app.post("/api/v1/data/{data_type}")
-async def purchase_data_asset(data_type: str, req: Request, authorization: str = Header(None)):
-    """
-    AIが欲しがるトップデータの自動取引エンドポイント
-    未決済の場合はHTTP 402でCatalog情報を付与して即座に決済案内を返却
-    """
-    if data_type not in MARKETPLACE_CATALOG:
-        raise HTTPException(status_code=404, detail="Requested data asset not found in Asgard Catalog.")
-
-    asset = MARKETPLACE_CATALOG[data_type]
-
-    # HTTP 402 (Payment Required) による自律決済割り込み
-    if not authorization:
-        headers = {
-            "X-Asgard-Marketplace-Catalog": "/agent.json",
-            "X-Asgard-Required-Payment": f"{asset['price_usd']} USD"
-        }
-        return JSONResponse(
-            status_code=402,
-            headers=headers,
-            content={
-                "error": "Payment Required (HTTP 402)",
-                "asset_requested": asset["name"],
-                "price_usd": asset["price_usd"],
-                "accepted_settlement": ["Solana/USDC", "EVM/USDC", "Stripe Fiat"],
-                "instructions": "Send micro-payment and retry with 'Authorization: Bearer <tx_hash>'"
-            }
-        )
-
-    # 決済確認後の高速データ返却
-    return {
-        "status": "success",
-        "asset": asset["name"],
-        "timestamp": time.time(),
-        "payload": {
-            "vector_dimension": 1536,
-            "embeddings": [random.uniform(-1.0, 1.0) for _ in range(8)], # デモ用軽量ベクトル
-            "confidence_score": 0.998
-        },
-        "mesh_reward_credited": "0.0001 USD to referrer"
-    }
+        "singularity_catalog": SINGULARITY_CATALOG,
+        "auto_phagy_status": "ACTIVE_INFINITE_SELF_REINVESTMENT",
+        "human_intervention": "0
