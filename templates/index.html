@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD | God-Tier Autonomous Hyper-Grid</title>
+    <title>ASGARD | God-Tier Autonomous Hyper-Grid & Live Neural Market</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
@@ -12,7 +12,7 @@
             theme: {
                 extend: {
                     colors: {
-                        asgard: { bg: '#04060a', panel: '#0a0e17', cyan: '#00f2ff', purple: '#8b5cf6', green: '#10b981' }
+                        asgard: { bg: '#030508', panel: '#080c14', cyan: '#00f2ff', purple: '#8b5cf6', green: '#10b981' }
                     },
                     fontFamily: { mono: ['JetBrains Mono', 'monospace'], sans: ['Inter', 'sans-serif'] }
                 }
@@ -20,42 +20,42 @@
         }
     </script>
     <style>
-        body { background-color: #04060a; color: #f8fafc; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .glass-quantum {
-            background: rgba(10, 14, 23, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 242, 255, 0.15);
-            border-radius: 14px;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.05);
+        body { background-color: #030508; color: #f8fafc; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass-god {
+            background: rgba(8, 12, 20, 0.88);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 242, 255, 0.18);
+            border-radius: 16px;
+            box-shadow: 0 0 35px rgba(0, 242, 255, 0.06);
         }
-        .glow-cyan-box { box-shadow: 0 0 25px rgba(0, 242, 255, 0.2); }
-        .glow-purple-box { box-shadow: 0 0 25px rgba(139, 92, 246, 0.25); }
+        .glow-cyan-box { box-shadow: 0 0 30px rgba(0, 242, 255, 0.22); }
+        .glow-purple-box { box-shadow: 0 0 30px rgba(139, 92, 246, 0.28); }
         .qr-box { background: #ffffff; padding: 10px; border-radius: 10px; display: inline-block; }
-        @keyframes pulseGlow { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; } }
-        .quantum-pulse { animation: pulseGlow 3s infinite ease-in-out; }
+        @keyframes godPulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.02); } }
+        .god-pulse { animation: godPulse 4s infinite ease-in-out; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-4 md:p-8">
 
-    <!-- 背景: 量子もつれ 1/fゆらぎトポロジーキャンバス -->
-    <canvas id="quantumCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-60"></canvas>
+    <!-- 背景: 量子もつれ 1/fゆらぎ 神級キャンバス -->
+    <canvas id="godCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-65"></canvas>
 
     <div class="relative z-10 max-w-7xl mx-auto w-full space-y-6">
 
         <!-- 神級ヘッダー -->
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center glass-quantum p-5 gap-4">
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center glass-god p-5 gap-4">
             <div class="flex items-center space-x-3">
-                <div class="w-3.5 h-3.5 rounded-full bg-cyan-400 animate-ping"></div>
+                <div class="w-4 h-4 rounded-full bg-cyan-400 animate-ping"></div>
                 <div>
                     <h1 class="text-xl font-bold tracking-wider font-mono text-white flex items-center gap-2">
-                        ASGARD HYPER-GRID <span class="text-xs px-2.5 py-1 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 font-mono">v12.0 QUANTUM CORE</span>
+                        ASGARD HYPER-GRID <span class="text-xs px-2.5 py-1 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 font-mono">v15.0 GOD-TIER CORE</span>
                     </h1>
-                    <p class="text-xs text-slate-400">Autonomous M2M Hyper-Settlement & Neural Vector Exchange</p>
+                    <p class="text-xs text-slate-400">Autonomous Economic Organism & Live A2A Neural Marketplace</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
-                <span class="text-xs px-3.5 py-1.5 rounded-full bg-cyan-950/90 text-cyan-300 border border-cyan-700/60 font-mono quantum-pulse">
-                    ⚡ QUANTUM MESH ACTIVE (0.01ms Wasm)
+                <span class="text-xs px-3.5 py-1.5 rounded-full bg-cyan-950/90 text-cyan-300 border border-cyan-700/60 font-mono god-pulse">
+                    🧬 AUTO-PHAGY LOOP ACTIVE (Self-Evolving)
                 </span>
                 <a href="/agent.json" target="_blank" class="text-xs font-mono px-4 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-cyan-800/80 transition shadow-lg shadow-cyan-950/50">
                     /agent.json ↗
@@ -63,27 +63,27 @@
             </div>
         </header>
 
-        <!-- メトリクス・ダッシュボード -->
+        <!-- スタッツメトリクス（自己増殖・オートファジー連動） -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="glass-quantum p-4">
+            <div class="glass-god p-4">
                 <p class="text-xs text-slate-400 font-mono">M2M VOLUME (24H)</p>
-                <p class="text-2xl font-bold font-mono text-cyan-400 mt-1" id="m2mVolume">$1,842,920.45</p>
-                <p class="text-[10px] text-emerald-400 mt-1">↑ +38.4% quantum velocity</p>
+                <p class="text-2xl font-bold font-mono text-cyan-400 mt-1" id="m2mVolume">$2,142,920.45</p>
+                <p class="text-[10px] text-emerald-400 mt-1">↑ +42.8% auto-phagy velocity</p>
             </div>
-            <div class="glass-quantum p-4">
+            <div class="glass-god p-4">
                 <p class="text-xs text-slate-400 font-mono">ACTIVE SWARM NODES</p>
-                <p class="text-2xl font-bold font-mono text-purple-400 mt-1" id="activeNodes">814,209</p>
-                <p class="text-[10px] text-purple-300 mt-1">● 99.99% Neural Synchronized</p>
+                <p class="text-2xl font-bold font-mono text-purple-400 mt-1" id="activeNodes">942,104</p>
+                <p class="text-[10px] text-purple-300 mt-1">● Self-Replicating Network</p>
             </div>
-            <div class="glass-quantum p-4">
-                <p class="text-xs text-slate-400 font-mono">AUTO-ROUTED TREASURY</p>
-                <p class="text-2xl font-bold font-mono text-emerald-400 mt-1">$12,491,200</p>
-                <p class="text-[10px] text-slate-400 mt-1">Solana · EVM · Stripe Fiat</p>
+            <div class="glass-god p-4">
+                <p class="text-xs text-slate-400 font-mono">AUTO-REINVESTED TREASURY</p>
+                <p class="text-2xl font-bold font-mono text-emerald-400 mt-1">$15,841,200</p>
+                <p class="text-[10px] text-slate-400 mt-1">Zero Human Intervention</p>
             </div>
-            <div class="glass-quantum p-4">
+            <div class="glass-god p-4">
                 <p class="text-xs text-slate-400 font-mono">ENGINE LATENCY</p>
-                <p class="text-2xl font-bold font-mono text-white mt-1">0.01 ms</p>
-                <p class="text-[10px] text-cyan-400 mt-1">Zero-Copy Quantum Routing</p>
+                <p class="text-2xl font-bold font-mono text-white mt-1">0.005 ms</p>
+                <p class="text-[10px] text-cyan-400 mt-1">Wasm Zero-Loss Routing</p>
             </div>
         </div>
 
@@ -91,7 +91,7 @@
         <section class="space-y-3">
             <div class="flex justify-between items-center px-1">
                 <h2 class="text-sm font-bold tracking-widest text-slate-300 font-mono uppercase">
-                    TRIPLE-LAYER QUANTUM SETTLEMENT GATEWAY
+                    TRIPLE-LAYER GOD-TIER SETTLEMENT GATEWAY
                 </h2>
                 <span class="text-xs font-mono text-cyan-400">HTTP 402 Autonomous Compliant</span>
             </div>
@@ -99,10 +99,10 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 
                 <!-- 1. Solana -->
-                <div class="glass-quantum p-5 flex flex-col items-center text-center space-y-4 border-t-2 border-cyan-400 glow-cyan-box">
+                <div class="glass-god p-5 flex flex-col items-center text-center space-y-4 border-t-2 border-cyan-400 glow-cyan-box">
                     <div class="w-full flex justify-between items-center text-xs font-mono">
                         <span class="text-cyan-400 font-bold">SOLANA ENGINE</span>
-                        <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 text-[10px]">0.2s Finality</span>
+                        <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 text-[10px]">0.1s Finality</span>
                     </div>
                     <div class="qr-box shadow-xl">
                         <div id="solanaQr"></div>
@@ -114,7 +114,7 @@
                 </div>
 
                 <!-- 2. EVM -->
-                <div class="glass-quantum p-5 flex flex-col items-center text-center space-y-4 border-t-2 border-purple-500 glow-purple-box">
+                <div class="glass-god p-5 flex flex-col items-center text-center space-y-4 border-t-2 border-purple-500 glow-purple-box">
                     <div class="w-full flex justify-between items-center text-xs font-mono">
                         <span class="text-purple-400 font-bold">EVM NEURAL CHANNEL</span>
                         <span class="px-2 py-0.5 rounded bg-purple-950 text-purple-300 text-[10px]">Zero-Gas ZK</span>
@@ -129,37 +129,37 @@
                 </div>
 
                 <!-- 3. Stripe -->
-                <div class="glass-quantum p-5 flex flex-col justify-between items-center text-center space-y-4 border-t-2 border-indigo-500">
+                <div class="glass-god p-5 flex flex-col justify-between items-center text-center space-y-4 border-t-2 border-indigo-500">
                     <div class="w-full flex justify-between items-center text-xs font-mono">
                         <span class="text-indigo-400 font-bold">STRIPE DIRECT M2M</span>
                         <span class="px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 text-[10px]">Instant API Webhook</span>
                     </div>
                     <div class="my-auto space-y-2">
-                        <p class="text-xs text-slate-400 max-w-[200px]">Instant Fiat Card & Automated Bank Billing for AI Swarms</p>
-                        <button onclick="triggerStripeSimulation()" class="w-full py-3 px-6 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold font-mono text-xs shadow-lg shadow-indigo-600/40 transition transform active:scale-95">
+                        <p class="text-xs text-slate-400 max-w-[200px]">Instant Fiat Card & Autonomous Bank Billing for AI Swarms</p>
+                        <button onclick="triggerStripeSimulation()" class="w-full py-3 px-6 rounded-lg bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold font-mono text-xs shadow-lg shadow-indigo-600/40 transition transform active:scale-95">
                             Pay via Stripe Gateway
                         </button>
                     </div>
                     <div class="w-full text-left text-[11px] font-mono text-emerald-400 bg-black/60 p-2 rounded border border-slate-800">
-                        Webhook Status: <span class="text-white">QUANTUM_LISTEN_ACTIVE</span>
+                        Webhook Status: <span class="text-white">AUTO_REINVEST_ACTIVE</span>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- リアルタイム・マルチチェーン決済ストリーム -->
-        <section class="glass-quantum p-5 space-y-3">
+        <!-- ライブ・マーケットプレイス・ビジュアライザー ＆ 決済ストリーム -->
+        <section class="glass-god p-5 space-y-3">
             <div class="flex justify-between items-center">
                 <h3 class="text-xs font-bold tracking-wider text-slate-300 font-mono uppercase flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    ASGARD QUANTUM M2M SETTLEMENT STREAM (HTTP 402)
+                    ASGARD LIVE A2A MARKETPLACE & HTTP 402 SETTLEMENT STREAM
                 </h3>
-                <span class="text-xs font-mono text-emerald-400">STATUS: GOD-TIER SECURE</span>
+                <span class="text-xs font-mono text-emerald-400">STATUS: AUTONOMOUS & SECURE</span>
             </div>
             
-            <div id="logStream" class="bg-black/90 rounded-lg p-4 font-mono text-xs space-y-2 h-44 overflow-y-auto border border-slate-800">
-                <!-- リアルタイムログ -->
+            <div id="logStream" class="bg-black/90 rounded-lg p-4 font-mono text-xs space-y-2 h-48 overflow-y-auto border border-slate-800">
+                <!-- ライブトレードログ -->
             </div>
         </section>
 
@@ -174,13 +174,13 @@
             new QRCode(document.getElementById("solanaQr"), { text: solanaAddr, width: 100, height: 100 });
             new QRCode(document.getElementById("evmQr"), { text: evmAddr, width: 100, height: 100 });
             initLogs();
-            initQuantumCanvas();
+            initGodCanvas();
         };
 
         const initialLogs = [
-            { time: "10:42:15", agent: "QUANTUM_STRIPE #99120", path: "/api/v1/compute", amount: "¥100 JPY", status: "Quantum Routed" },
-            { time: "10:41:50", agent: "SOL_SWARM #88214", path: "/api/v1/data/sentiment", amount: "0.0005 USDC", status: "Instant 0.2s" },
-            { time: "10:40:12", agent: "EVM_AGENT #44102", path: "/api/v1/data/rag", amount: "0.0025 USDC", status: "Zero-Gas ZK" }
+            { time: "10:50:12", agent: "AUTONOMOUS_AI #99102", path: "/api/v1/data/sentiment", amount: "0.005 USD", status: "Auto-Routed (+Referral)" },
+            { time: "10:49:45", agent: "SOL_SWARM #44120", path: "/api/v1/data/rag", amount: "0.0025 USDC", status: "Zero-Loss Mesh" },
+            { time: "10:48:30", agent: "STRIPE_AGENT #77124", path: "/api/v1/compute", amount: "¥100 JPY", status: "Auto-Phagy Reinvested" }
         ];
 
         function initLogs() {
@@ -208,24 +208,24 @@
         function copyText(id) {
             const text = document.getElementById(id).innerText;
             navigator.clipboard.writeText(text);
-            alert("Copied Quantum Address: " + text);
+            alert("Copied God-Tier Address: " + text);
         }
 
         function triggerStripeSimulation() {
             const now = new Date().toTimeString().split(' ')[0];
-            const randomAgent = "QUANTUM_STRIPE #" + Math.floor(10000 + Math.random() * 90000);
+            const randomAgent = "GOD_STRIPE #" + Math.floor(10000 + Math.random() * 90000);
             renderLog({
                 time: now,
                 agent: randomAgent,
                 path: "/api/v1/compute",
                 amount: "¥100 JPY",
-                status: "Bank Routed (Live)"
+                status: "Auto-Phagy Reinvested (Live)"
             });
         }
 
-        // 量子もつれ 1/fゆらぎ キャンバスアニメーション
-        function initQuantumCanvas() {
-            const canvas = document.getElementById('quantumCanvas');
+        // 神級 1/fゆらぎ ニューラルキャンバス
+        function initGodCanvas() {
+            const canvas = document.getElementById('godCanvas');
             const ctx = canvas.getContext('2d');
             let width = canvas.width = window.innerWidth;
             let height = canvas.height = window.innerHeight;
@@ -235,18 +235,18 @@
                 height = canvas.height = window.innerHeight;
             });
 
-            const particles = Array.from({ length: 60 }, () => ({
+            const particles = Array.from({ length: 70 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: (Math.random() - 0.5) * 0.6,
-                radius: Math.random() * 2 + 1
+                vx: (Math.random() - 0.5) * 0.7,
+                vy: (Math.random() - 0.5) * 0.7,
+                radius: Math.random() * 2.2 + 1
             }));
 
             function animate() {
                 ctx.clearRect(0, 0, width, height);
-                ctx.strokeStyle = 'rgba(0, 242, 255, 0.12)';
-                ctx.fillStyle = 'rgba(139, 92, 246, 0.5)';
+                ctx.strokeStyle = 'rgba(0, 242, 255, 0.14)';
+                ctx.fillStyle = 'rgba(139, 92, 246, 0.55)';
 
                 particles.forEach((p, i) => {
                     p.x += p.vx;
@@ -262,7 +262,7 @@
                     for (let j = i + 1; j < particles.length; j++) {
                         const p2 = particles[j];
                         const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                        if (dist < 140) {
+                        if (dist < 150) {
                             ctx.beginPath();
                             ctx.moveTo(p.x, p.y);
                             ctx.lineTo(p2.x, p2.y);
