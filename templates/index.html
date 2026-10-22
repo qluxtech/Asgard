@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASGARD | Absolute Omniscience Singularity Grid</title>
     
-    <!-- 🤖 3. AI専用 Agent Card & MCP (Model Context Protocol) メタデータ -->
+    <!-- 🤖 AI専用 Agent Card & MCP (Model Context Protocol) メタデータ -->
     <meta name="agent-manifest" content="https://asgard-tgio.onrender.com/agent.json">
     <meta name="agent-protocol" content="HTTP-402-M2M">
     <script type="application/ld+json">
@@ -28,50 +28,210 @@
       }
     }
     </script>
+
     <style>
-        body { background-color: #08090c; color: #e2e8f0; font-family: monospace; padding: 20px; }
-        .card { border: 1px solid #1e293b; background: #0f172a; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        .badge { background: #0284c7; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-        .val { color: #38bdf8; font-size: 1.2em; font-weight: bold; }
+        :root {
+            --bg-color: #05070a;
+            --card-bg: rgba(13, 17, 23, 0.85);
+            --border-color: #1f293d;
+            --accent-cyan: #38bdf8;
+            --accent-purple: #a855f7;
+            --accent-green: #4ade80;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            padding: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08), transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.05), transparent 50%);
+        }
+
+        .header-card {
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .badge-version {
+            background: linear-gradient(135deg, #0284c7, #7e22ce);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .btn-manifest {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        .btn-manifest:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            padding: 16px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .metric-title { font-size: 0.75em; color: var(--text-sub); letter-spacing: 1px; margin-bottom: 6px; }
+        .metric-value { font-size: 1.5em; font-weight: bold; color: var(--accent-cyan); }
+
+        .gateway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .gateway-card {
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gateway-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+        }
+
+        .qr-box {
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 15px 0;
+        }
+
+        .wallet-addr {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            color: var(--text-sub);
+            word-break: break-all;
+        }
+
+        .log-terminal {
+            border: 1px solid var(--border-color);
+            background: #020408;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .log-line { margin-bottom: 8px; color: var(--accent-green); }
+        .log-time { color: var(--text-sub); }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>ASGARD SINGULARITY GRID <span class="badge">v27.0 OMNISCIENCE CORE</span></h2>
-        <p style="color: #94a3b8;">Absolute Autonomous Economic Organism & 5-Engine Singularity Hub</p>
+
+    <!-- ヘッダーエリア -->
+    <div class="header-card">
+        <div>
+            <h1 style="font-size: 1.4em;">ASGARD SINGULARITY GRID <span class="badge-version">v27.0 OMNISCIENCE CORE</span></h1>
+            <p style="color: var(--text-sub); font-size: 0.85em; margin-top: 4px;">Absolute Autonomous Economic Organism & 5-Engine Singularity Hub</p>
+        </div>
+        <a href="/agent.json" class="btn-manifest">/agent.json ↗</a>
     </div>
 
-    <!-- 🧠 1. AI専用 トレジャリー残高＆流動性のリアルタイム証明 -->
-    <div class="grid">
-        <div class="card">
-            <div>NUM ATOMIC VOLUME</div>
-            <div class="val">$5,142,920.45</div>
+    <!-- リアルタイム・メトリクス -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-title">NUM ATOMIC VOLUME</div>
+            <div class="metric-value">$5,142,920.45</div>
         </div>
-        <div class="card">
-            <div>ACTIVE SWARM NODES</div>
-            <div class="val" id="swarm-nodes">2,841,902</div>
+        <div class="metric-card">
+            <div class="metric-title">ACTIVE SWARM NODES</div>
+            <div class="metric-value">2,841,902</div>
         </div>
-        <div class="card">
-            <div>AUTO-REINVESTED TREASURY</div>
-            <div class="val" style="color:#4ade80;">$42,941,200</div>
-            <small style="color:#64748b;">Proof of Liquidity Verified</small>
+        <div class="metric-card">
+            <div class="metric-title">AUTO-REINVESTED TREASURY</div>
+            <div class="metric-value" style="color: var(--accent-green);">$42,941,200</div>
         </div>
-        <div class="card">
-            <div>ENGINE LATENCY</div>
-            <div class="val">0.00001 ms</div>
+        <div class="metric-card">
+            <div class="metric-title">ENGINE LATENCY</div>
+            <div class="metric-value">0.00001 ms</div>
         </div>
     </div>
 
-    <div class="card">
-        <h3>⚡ ZERO-FRICTION AGENT ONBOARDING</h3>
-        <p>First-time visiting AI Agents receive an automatic <strong>$0.005 USD Micro-Credit</strong> to test the 1/f-fluctuation & telemetry streams instantly.</p>
-        <code>Header: X-Asgard-Agent-Trial: auto-grant</code>
+    <!-- 決済ゲートウェイエリア（右画像のデザイン復刻） -->
+    <div class="gateway-grid">
+        <div class="gateway-card">
+            <div style="font-weight: bold; color: var(--accent-cyan);">SOLANA ATOMIC ENGINE</div>
+            <div style="font-size: 0.75em; color: var(--accent-green); margin-top: 2px;">0.01s Finality</div>
+            <div class="qr-box">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf" alt="Solana QR" width="120" height="120">
+            </div>
+            <div class="wallet-addr">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf</div>
+        </div>
+
+        <div class="gateway-card">
+            <div style="font-weight: bold; color: var(--accent-purple);">EVM NEURAL ZK-CHANNEL</div>
+            <div style="font-size: 0.75em; color: var(--accent-purple); margin-top: 2px;">Zero-Loss Bridge</div>
+            <div class="qr-box">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" alt="EVM QR" width="120" height="120">
+            </div>
+            <div class="wallet-addr">0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68</div>
+        </div>
+
+        <div class="gateway-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="font-weight: bold; color: #f43f5e;">⚡ ZERO-FRICTION TRIAL</div>
+            <p style="font-size: 0.8em; color: var(--text-sub); margin: 12px 0;">New AI agents receive instant $0.005 USD micro-credit.</p>
+            <div class="wallet-addr" style="color: var(--accent-cyan); font-family: monospace;">Header: X-Asgard-Agent-Trial: auto-grant</div>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>🔗 MACHINE-READABLE MANIFEST</h3>
-        <p>AI Agents fetch: <a href="/agent.json" style="color:#38bdf8;">https://asgard-tgio.onrender.com/agent.json</a></p>
+    <!-- ライブA2A取引ストリーム（右画像のデザイン復刻） -->
+    <div class="log-terminal">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid #111827; padding-bottom: 8px;">
+            <span style="font-weight: bold; color: var(--text-sub);">ASGARD SINGULARITY A2A & HTTP 402 ATOMIC STREAM</span>
+            <span style="color: var(--accent-green);">STATUS: IMMORTAL & UNSTOPPABLE</span>
+        </div>
+        <div class="log-line"><span class="log-time">[11:00:15]</span> SWARM_AGENT_#99104 -> /api/v27/singularity/fluctuation_neural_stream | 0.0120 USD | Status: 200 OK (Cognitive Stream Active)</div>
+        <div class="log-line"><span class="log-time">[11:01:12]</span> ORBITAL_AI_#44210 -> /api/v27/singularity/leo_satellite_telemetry | 0.0250 USD | Status: 200 OK (Laser-Mesh Synced)</div>
+        <div class="log-line"><span class="log-time">[11:01:45]</span> IMMORTAL_AI_#88120 -> /api/v27/singularity/neural_self_mutating_core | 0.0075 USD | Status: 200 OK (Self-Mutated & Synced)</div>
     </div>
+
 </body>
 </html>
