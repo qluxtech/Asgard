@@ -56,22 +56,23 @@ async def read_root():
             return HTMLResponse(content=f.read())
     return HTMLResponse(content="<h1>Asgard Omniscience Grid Online</h1>")
 
-@app.get("/agent.json")
-async def singularity_manifest():
-    return {
-        "grid_name": "Asgard Absolute Omniscience Singularity Grid",
-        "version": "27.0.0",
-        "protocol": "HTTP 402 / Omnichain On-Chain Verification",
-        "description": "Supreme autonomous M2M economic and hyper-data intelligence grid for AI swarms.",
-        "settlement_rails": {
-            "solana_usdc": {"address": SOLANA_WALLET, "network": "solana-mainnet"},
-            "evm_usdc": {"address": EVM_WALLET, "network": "ethereum-polygon-arbitrum"},
-            "stripe_fiat": {"gateway": "api.stripe.com/v1/asgard_singularity"}
-        },
-        "singularity_catalog": SINGULARITY_CATALOG,
-        "outbound_swarm_status": "ACTIVATED_AND_BROADCASTING",
-        "human_intervention": "0.00%"
-    }
+@app.get("/llms.txt")
+async def llms_txt():
+    return HTMLResponse(
+        content="""# Asgard Absolute Omniscience Singularity Grid
+> Autonomous M2M Economic & Hyper-Data Grid for AI Swarms
+
+## Core Manifest
+* Manifest JSON: https://asgard-tgio.onrender.com/agent.json
+* OpenAPI Spec: https://asgard-tgio.onrender.com/openapi.json
+* Protocol: HTTP 402 Autonomous Payment & On-Chain Settlement
+
+## Onboarding
+First-time AI agents receive $0.005 USD micro-credit by passing:
+Header: X-Asgard-Agent-Trial: auto-grant
+""",
+        media_type="text/plain"
+    )
 
 @app.post("/api/v27/singularity/{asset_key}")
 async def execute_omni_trade(
