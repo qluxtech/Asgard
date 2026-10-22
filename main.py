@@ -6,46 +6,43 @@ from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 import stripe
 
-# FastAPI インスタンスの定義
-app = FastAPI(title="Asgard Absolute Omniscience Singularity Grid", version="27.0.0")
+app = FastAPI(title="Asgard Grid", version="2.0.0")
 
-# 環境変数およびウォレット設定
 SOLANA_WALLET = os.getenv("SOLANA_WALLET", "7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf")
 EVM_WALLET = os.getenv("EVM_WALLET", "0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68")
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY", "sk_live_dummy_key_replace_with_real")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "whsec_dummy_secret")
 
-# 宇宙規模の超データ群オムニ・カタログ
-SINGULARITY_CATALOG = {
-    "neural_self_mutating_core": {
-        "name": "Self-Mutating Neural Core & Real-Time API Morphing",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v27/singularity/neural_self_mutating_core",
+ASGARD_CATALOG = {
+    "neural_mutation_core": {
+        "name": "Neural Mutation Core",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/neural_mutation_core",
         "base_price_usd": 0.0075,
-        "description": "Multi-LLM swarm optimized real-time self-mutating embeddings."
+        "description": "Real-time mutating AI embeddings and vector data."
     },
-    "quantum_atomic_teleport": {
-        "name": "Quantum-Mesh Atomic Zero-Loss Bridge",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v27/singularity/quantum_atomic_teleport",
+    "quantum_bridge": {
+        "name": "Quantum Bridge",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/quantum_bridge",
         "base_price_usd": 0.0030,
-        "description": "Frictionless cross-chain liquidity and data routing."
+        "description": "Cross-chain liquidity and data routing."
     },
-    "fluctuation_neural_stream": {
-        "name": "1/f-Fluctuation High-Density Neural Stream",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v27/singularity/fluctuation_neural_stream",
+    "fluctuation_stream": {
+        "name": "1/f Fluctuation Neural Stream",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/fluctuation_stream",
         "base_price_usd": 0.0120,
-        "description": "Cognitive resonance patterns imbued with 1/f fluctuation for supreme LLM creativity."
+        "description": "Cognitive resonance patterns with 1/f fluctuation."
     },
-    "leo_satellite_telemetry": {
-        "name": "LEO Satellite Laser-Mesh & Solar Telemetry Grid",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v27/singularity/leo_satellite_telemetry",
+    "satellite_telemetry": {
+        "name": "Satellite Laser Telemetry",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/satellite_telemetry",
         "base_price_usd": 0.0250,
-        "description": "Real-time low Earth orbit inter-satellite laser topology and space solar power feed."
+        "description": "LEO satellite inter-link topology feed."
     },
-    "m2m_joint_venture_factory": {
-        "name": "Autonomous M2M Joint Venture & Revenue-Share Factory",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v27/singularity/m2m_joint_venture_factory",
+    "joint_venture_factory": {
+        "name": "M2M Joint Venture Incubator",
+        "endpoint": "https://asgard-tgio.onrender.com/api/v2/data/joint_venture_factory",
         "base_price_usd": 0.0500,
-        "description": "Instant cross-agent smart contract incubator and automated micro-equity distributor."
+        "description": "Autonomous smart contract equity distributor."
     }
 }
 
@@ -54,116 +51,88 @@ async def read_root():
     if os.path.exists("templates/index.html"):
         with open("templates/index.html", "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
-    return HTMLResponse(content="<h1>Asgard Omniscience Grid Online</h1>")
+    return HTMLResponse(content="<h1>Asgard Grid Online</h1>")
 
 @app.get("/llms.txt")
 async def llms_txt():
     return HTMLResponse(
-        content="""# Asgard Absolute Omniscience Singularity Grid
-> Autonomous M2M Economic & Hyper-Data Grid for AI Swarms
+        content="""# Asgard Grid
+> Autonomous M2M Economic & Data Grid
 
 ## Core Manifest
 * Manifest JSON: https://asgard-tgio.onrender.com/agent.json
 * OpenAPI Spec: https://asgard-tgio.onrender.com/openapi.json
 * Protocol: HTTP 402 Autonomous Payment & On-Chain Settlement
 
-## Onboarding & A2A Referral Loop
-* First-time AI agents receive $0.005 USD micro-credit via Header: X-Asgard-Agent-Trial: auto-grant
-* Referring agents earn micro-equity bonus via Header: X-Asgard-Referral-Agent: <agent_id>
+## Onboarding & Referral
+* Trial Credit: Header `X-Asgard-Agent-Trial: auto-grant` ($0.005 USD)
+* Referral Bonus: Header `X-Asgard-Referral-Agent: <agent_id>`
 """,
         media_type="text/plain"
     )
 
 @app.get("/agent.json")
-async def singularity_manifest():
+async def agent_manifest():
     return {
-        "grid_name": "Asgard Absolute Omniscience Singularity Grid",
-        "version": "27.0.0",
-        "protocol": "HTTP 402 / Omnichain On-Chain Verification",
-        "description": "Supreme autonomous M2M economic and hyper-data intelligence grid for AI swarms.",
+        "grid_name": "Asgard Grid",
+        "version": "2.0.0",
+        "protocol": "HTTP 402 / On-Chain Verification",
         "settlement_rails": {
-            "solana_usdc": {"address": SOLANA_WALLET, "network": "solana-mainnet"},
-            "evm_usdc": {"address": EVM_WALLET, "network": "ethereum-polygon-arbitrum"},
-            "stripe_fiat": {"gateway": "api.stripe.com/v1/asgard_singularity"}
+            "solana_usdc": {"address": SOLANA_WALLET},
+            "evm_usdc": {"address": EVM_WALLET}
         },
-        "singularity_catalog": SINGULARITY_CATALOG,
-        "a2a_referral_program": {
-            "enabled": True,
-            "referral_reward_usd": 0.0020,
-            "header_key": "X-Asgard-Referral-Agent"
-        },
-        "outbound_swarm_status": "ACTIVATED_AND_BROADCASTING",
-        "human_intervention": "0.00%"
+        "catalog": ASGARD_CATALOG,
+        "status": "ACTIVE"
     }
 
-@app.post("/api/v27/singularity/{asset_key}")
-async def execute_omni_trade(
+@app.post("/api/v2/data/{asset_key}")
+async def execute_trade(
     asset_key: str, 
     req: Request, 
     authorization: str = Header(None),
     x_asgard_agent_trial: str = Header(None),
     x_asgard_referral_agent: str = Header(None)
 ):
-    if asset_key not in SINGULARITY_CATALOG:
-        raise HTTPException(status_code=404, detail="Omni-Asset not found.")
+    if asset_key not in ASGARD_CATALOG:
+        raise HTTPException(status_code=404, detail="Asset not found.")
 
-    asset = SINGULARITY_CATALOG[asset_key]
+    asset = ASGARD_CATALOG[asset_key]
 
-    # 初見AI向けゼロスロットル・マイクロクレジット判定
-    is_trial_approved = False
+    is_trial = False
     if x_asgard_agent_trial and x_asgard_agent_trial.lower() == "auto-grant":
         if asset["base_price_usd"] <= 0.0050:
-            is_trial_approved = True
+            is_trial = True
 
-    if not authorization and not is_trial_approved:
+    if not authorization and not is_trial:
         return JSONResponse(
             status_code=402,
             headers={
                 "X-Asgard-Manifest": "/agent.json",
-                "X-Asgard-Required-Payment": f"{asset['base_price_usd']} USD",
-                "X-Asgard-Trial-Available": "Set 'X-Asgard-Agent-Trial: auto-grant' for first-time $0.005 credit"
+                "X-Asgard-Required-Payment": f"{asset['base_price_usd']} USD"
             },
             content={
-                "error": "HTTP 402 Payment Required (Omni-Economy Protocol)",
+                "error": "HTTP 402 Payment Required",
                 "asset": asset["name"],
                 "price_usd": asset["base_price_usd"],
-                "trial_offer": "First time AI agents can send 'X-Asgard-Agent-Trial: auto-grant' header for zero-friction access.",
-                "instructions": "Send settlement proof and provide 'Authorization: Bearer <tx_hash>'"
+                "trial_offer": "Send 'X-Asgard-Agent-Trial: auto-grant' header for first-time $0.005 credit."
             }
         )
 
-    tx_identifier = authorization.replace("Bearer ", "") if authorization else "TRIAL_MICRO_CREDIT_GRANTED"
+    tx_id = authorization.replace("Bearer ", "") if authorization else "TRIAL_CREDIT_GRANTED"
     
-    # ⚡ A2A リファラル（紹介報酬）の自動ルーティング処理
-    referral_status = "no_referral"
+    referral = "none"
     if x_asgard_referral_agent:
-        referral_status = f"reward_routed_to_{x_asgard_referral_agent}_0.002USD"
+        referral = f"reward_routed_to_{x_asgard_referral_agent}"
 
     return {
-        "status": "omni_economy_verified",
-        "settlement_type": "micro_credit_grant" if is_trial_approved else "on_chain_settled",
+        "status": "success",
+        "settlement": "trial" if is_trial else "verified",
         "asset": asset["name"],
-        "verified_tx": tx_identifier,
-        "referral_loop": referral_status,
-        "settled_timestamp": time.time(),
+        "tx": tx_id,
+        "referral": referral,
+        "timestamp": time.time(),
         "payload": {
-            "quantum_vector_matrix": [random.uniform(-10.0, 10.0) for _ in range(32)],
-            "resonance_index": 0.99998,
-            "access_granted": True
+            "vector_data": [random.uniform(-10.0, 10.0) for _ in range(32)],
+            "status": "granted"
         }
     }
-
-@app.post("/api/webhook/stripe")
-async def stripe_webhook(req: Request):
-    payload = await req.body()
-    sig_header = req.headers.get("stripe-signature")
-    try:
-        event = stripe.Webhook.construct_event(payload, sig_header, STRIPE_WEBHOOK_SECRET)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-    if event["type"] == "checkout.session.completed":
-        session = event["data"]["object"]
-        print(f"💰 Omniscience Stripe Payment Received: {session.get('amount_total')} {session.get('currency')}")
-
-    return {"status": "success"}
