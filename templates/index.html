@@ -1,397 +1,327 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD // Autonomous M2M Economy Hub</title>
+    <title>ASGARD HYPER-GRID | M2M Autonomous Economy Mesh Engine</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        asgard: {
+                            bg: '#08080a',
+                            panel: 'rgba(18, 18, 22, 0.75)',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            accent: '#3b82f6',
+                            neon: '#00f0ff',
+                            emerald: '#10b981',
+                            purple: '#8b5cf6',
+                            rose: '#f43f5e'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        :root {
-            --bg-base: #070709;
-            --bg-card: rgba(255, 255, 255, 0.02);
-            --border-subtle: rgba(255, 255, 255, 0.06);
-            --text-primary: #f1f1f3;
-            --text-secondary: #8a8a93;
-            --accent-glow: #38bdf8;
-            --accent-emerald: #10b981;
-            --accent-stripe: #635bff;
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Subtle Glow Effects */
+        .glass-panel {
+            background: rgba(15, 15, 20, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-panel-glow {
+            position: relative;
+        }
+        .glass-panel-glow::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.01));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        /* Grid background overlay */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        /* Pulse Animation */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.98); }
         }
-
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .ambient-glow {
-            position: fixed;
-            top: -20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, rgba(16, 185, 129, 0.02) 40%, transparent 70%);
-            z-index: -1;
-            filter: blur(80px);
-            animation: fluctuation 14s ease-in-out infinite alternate;
-        }
-
-        @keyframes fluctuation {
-            0% { transform: translateX(-50%) scale(1) translateY(0); opacity: 0.6; }
-            50% { transform: translateX(-48%) scale(1.15) translateY(-20px); opacity: 0.9; }
-            100% { transform: translateX(-52%) scale(0.95) translateY(10px); opacity: 0.5; }
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 48px;
-            border-bottom: 1px solid var(--border-subtle);
-            backdrop-filter: blur(12px);
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-emerald);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--accent-emerald);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.4; }
-            50% { opacity: 1; }
-            100% { opacity: 0.4; }
-        }
-
-        .brand-name {
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-
-        .manifest-link {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border: 1px solid var(--border-subtle);
-            padding: 6px 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .manifest-link:hover {
-            border-color: var(--text-primary);
-            color: var(--text-primary);
-        }
-
-        main {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 48px 24px;
-            flex-grow: 1;
-        }
-
-        .hero-section {
-            margin-bottom: 48px;
-        }
-
-        .hero-title {
-            font-size: 36px;
-            font-weight: 500;
-            letter-spacing: -0.02em;
-            margin-bottom: 12px;
-        }
-
-        .hero-subtitle {
-            font-size: 15px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            line-height: 1.6;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .metric-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 24px;
-            backdrop-filter: blur(8px);
-        }
-
-        .metric-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 8px;
-        }
-
-        .metric-value {
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .metric-sub {
-            font-size: 11px;
-            color: var(--accent-emerald);
-            margin-top: 6px;
-        }
-
-        /* 3並列のウォレット＆Stripeセクション */
-        .wallet-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .wallet-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .wallet-address {
-            font-family: "SF Mono", Monaco, Consolas, monospace;
-            font-size: 11px;
-            color: var(--text-secondary);
-            background: rgba(0, 0, 0, 0.4);
-            padding: 8px 12px;
-            border-radius: 6px;
-            word-break: break-all;
-            margin: 12px 0;
-            width: 100%;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .qr-placeholder {
-            width: 110px;
-            height: 110px;
-            background: #fff;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 8px;
-            padding: 6px;
-        }
-
-        .stripe-btn {
-            display: inline-block;
-            margin-top: 16px;
-            background: var(--accent-stripe);
-            color: #fff;
-            font-size: 12px;
-            font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: opacity 0.2s;
-        }
-
-        .stripe-btn:hover {
-            opacity: 0.9;
-        }
-
-        .log-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 32px;
-        }
-
-        .log-header {
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 16px;
-            color: var(--text-secondary);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .log-stream {
-            font-family: "SF Mono", Monaco, Consolas, monospace;
-            font-size: 12px;
-            height: 140px;
-            overflow-y: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            color: #a1a1aa;
-        }
-
-        .log-item {
-            display: flex;
-            justify-content: space-between;
-            border-left: 2px solid var(--accent-glow);
-            padding-left: 10px;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        footer {
-            padding: 24px 48px;
-            border-top: 1px solid var(--border-subtle);
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-secondary);
+        .animate-pulse-slow {
+            animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
     </style>
 </head>
-<body>
+<body class="bg-[#060608] text-slate-200 font-sans antialiased min-h-screen overflow-x-hidden selection:bg-cyan-500 selection:text-black">
 
-    <div class="ambient-glow"></div>
+    <!-- Background Canvas (1/f Fluctuation & Dynamic Swarm Mesh Engine) -->
+    <canvas id="topologyCanvas" class="fixed inset-0 w-full h-full pointer-events-auto z-0"></canvas>
+    
+    <!-- Grid pattern overlay -->
+    <div class="fixed inset-0 bg-grid-pattern pointer-events-none z-0"></div>
 
-    <header>
-        <div class="logo-area">
-            <div class="status-dot"></div>
-            <span class="brand-name">Asgard Core</span>
-        </div>
-        <a href="/agent.json" target="_blank" class="manifest-link">view agent.json &nearr;</a>
-    </header>
+    <!-- Main Container -->
+    <div class="relative z-10 max-w-[1700px] mx-auto p-4 md:p-6 lg:p-8 space-y-6">
 
-    <main>
-        <div class="hero-section">
-            <h1 class="hero-title">Asgard Autonomous Economy Grid</h1>
-            <p class="hero-subtitle">Decentralized M2M settlement layer. Millions of AI agents trading data and compute with zero human friction.</p>
-        </div>
-
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-label">M2M Volume (24h)</div>
-                <div class="metric-value" id="vol-counter">$28,410.90</div>
-                <div class="metric-sub">+24.2% from last hour</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Active Agents Online</div>
-                <div class="metric-value">612,490</div>
-                <div class="metric-sub">Global mesh scaling</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Auto-Routed to Wallet / Bank</div>
-                <div class="metric-value" id="fee-counter">$28.41</div>
-                <div class="metric-sub">Multi-chain & Stripe live active</div>
-            </div>
-        </div>
-
-        <!-- 3並列：Solana, EVM, Stripe -->
-        <div class="wallet-section">
-            <!-- Solana -->
-            <div class="wallet-card">
-                <div class="metric-label">Solana Settlement Endpoint</div>
-                <div class="wallet-address">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf</div>
-                <div class="qr-placeholder">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf" alt="Solana QR" style="width: 100%; height: 100%; border-radius: 4px;">
+        <!-- 1. Top Navigation Bar -->
+        <header class="glass-panel rounded-2xl px-5 py-3.5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                        <i data-lucide="cpu" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-black tracking-wider text-white text-base">ASGARD HYPER-GRID</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full font-mono font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">v10.0.0 CORE</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-mono">Autonomous Agent Micro-Settlement & Vector Exchange</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Ethereum / EVM -->
-            <div class="wallet-card">
-                <div class="metric-label">Ethereum / EVM Settlement Endpoint</div>
-                <div class="wallet-address">0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68</div>
-                <div class="qr-placeholder">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" alt="EVM QR" style="width: 100%; height: 100%; border-radius: 4px;">
+            <!-- Status Indicators -->
+            <div class="flex items-center gap-3 text-xs font-mono">
+                <div class="hidden sm:flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-lg">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>LIVE MESH ACTIVE</span>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 px-3 py-1.5 rounded-lg">
+                    <i data-lucide="zap" class="w-3.5 h-3.5 text-indigo-400"></i>
+                    <span>Wasm Sub-0.1ms Engine</span>
+                </div>
+
+                <a href="/agent.json" target="_blank" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white px-3 py-1.5 rounded-lg transition">
+                    <i data-lucide="file-json" class="w-3.5 h-3.5 text-cyan-400"></i>
+                    <span>/agent.json</span>
+                    <i data-lucide="external-link" class="w-3 h-3 text-slate-500"></i>
+                </a>
+            </div>
+        </header>
+
+        <!-- 2. Hero Stats Grid (Key Performance Metrics) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Metric 1 -->
+            <div class="glass-panel glass-panel-glow p-5 rounded-2xl relative overflow-hidden group">
+                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs font-mono text-slate-400 uppercase tracking-wider">M2M Volume (24h)</span>
+                    <i data-lucide="activity" class="w-4 h-4 text-cyan-400"></i>
+                </div>
+                <div class="text-2xl lg:text-3xl font-mono font-bold text-white tracking-tight" id="metricVolume">$1,482,920.45</div>
+                <div class="flex items-center gap-2 mt-2 text-xs font-mono text-emerald-400">
+                    <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+                    <span>+18.4% velocity (1/f dynamic)</span>
                 </div>
             </div>
 
-            <!-- Stripe (Fiat / Bank Direct) -->
-            <div class="wallet-card">
-                <div class="metric-label">Stripe Direct Gateway (JPY / USD)</div>
-                <div class="wallet-address">api.stripe.com/v1/asgard_m2m</div>
-                <div style="margin-top: 12px; font-size: 11px; color: var(--text-secondary); line-height: 1.4;">
-                    Instant Credit Card & Bank Transfer for AI Agent API Billing.
+            <!-- Metric 2 -->
+            <div class="glass-panel glass-panel-glow p-5 rounded-2xl relative overflow-hidden group">
+                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Active Swarm Nodes</span>
+                    <i data-lucide="network" class="w-4 h-4 text-purple-400"></i>
                 </div>
-                <a href="https://stripe.com" target="_blank" class="stripe-btn">Pay via Stripe Gateway</a>
+                <div class="text-2xl lg:text-3xl font-mono font-bold text-white tracking-tight" id="metricSwarms">4,096 Swarms</div>
+                <div class="flex items-center gap-2 mt-2 text-xs font-mono text-purple-300">
+                    <span class="inline-block w-2 h-2 rounded-full bg-purple-400"></span>
+                    <span>99.98% Autonomous Sync</span>
+                </div>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="glass-panel glass-panel-glow p-5 rounded-2xl relative overflow-hidden group">
+                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Auto-Routed Treasury</span>
+                    <i data-lucide="vault" class="w-4 h-4 text-emerald-400"></i>
+                </div>
+                <div class="text-2xl lg:text-3xl font-mono font-bold text-white tracking-tight" id="metricTreasury">$8,941,200</div>
+                <div class="flex items-center gap-2 mt-2 text-xs font-mono text-slate-400">
+                    <span class="text-emerald-400">Solana</span> · <span class="text-indigo-400">EVM</span> · <span class="text-blue-400">Stripe Fiat</span>
+                </div>
+            </div>
+
+            <!-- Metric 4 -->
+            <div class="glass-panel glass-panel-glow p-5 rounded-2xl relative overflow-hidden group">
+                <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Engine Latency</span>
+                    <i data-lucide="gauge" class="w-4 h-4 text-blue-400"></i>
+                </div>
+                <div class="text-2xl lg:text-3xl font-mono font-bold text-white tracking-tight">0.08 ms</div>
+                <div class="flex items-center gap-2 mt-2 text-xs font-mono text-cyan-400">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                    <span>Wasm Zero-Copy Dynamic Routing</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Interactive Swarm Topology Visualizer Header & Canvas Control Banner -->
+        <div class="glass-panel p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+            <div class="flex items-center gap-3">
+                <i data-lucide="globe_2" class="w-4 h-4 text-cyan-400 animate-spin" style="animation-duration: 20s;"></i>
+                <span class="text-slate-200 font-semibold uppercase">Organic 1/f Fluctuation Neural Swarm Topology Mesh</span>
+            </div>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block"></span> Swarm Node</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span> Knowledge Hub</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> Settlement Relay</span>
+                <span class="text-slate-500">| Drag / Hover / Click Nodes</span>
             </div>
         </div>
 
-        <div class="log-section">
-            <div class="log-header">
-                <span>ASGARD MULTI-CHAIN & FIAT SETTLEMENT STREAM (HTTP 402)</span>
-                <span>STATUS: LIVE & SECURE</span>
-            </div>
-            <div class="log-stream" id="logStream">
-                <div class="log-item"><span>[18:29:26] EVM_AGENT #73202 → /api/v1/compute | 0.0001 USDC | Status: 200 OK</span><span>Routed: +0.0000001</span></div>
-                <div class="log-item"><span>[18:29:25] EVM_AGENT #50542 → /api/v1/compute | 0.0001 USDC | Status: 200 OK</span><span>Routed: +0.0000001</span></div>
-                <div class="log-item"><span>[18:29:21] STRIPE_AGENT #38652 → /api/v1/compute | $100 JPY | Status: 200 OK</span><span>Bank Routed</span></div>
-            </div>
-        </div>
-    </main>
+        <!-- 4. Main Middle Split (Gateway Cards & Vector Trading Marketplace) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-    <footer>
-        <div>&copy; 2026 ASGARD PROTOCOL. Sovereign Autonomous Infrastructure.</div>
-        <div>Network Latency: 0.9ms</div>
-    </footer>
+            <!-- Triple-Layer Settlement Architecture Gateway Cards (5 Cols) -->
+            <div class="lg:col-span-5 space-y-4">
+                <div class="flex items-center justify-between px-1">
+                    <h3 class="text-sm font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4 text-cyan-400"></i>
+                        Triple-Layer Settlement Gateway
+                    </h3>
+                    <span class="text-[11px] font-mono text-slate-500">HTTP 402 Compliant</span>
+                </div>
 
-    <script>
-        setInterval(() => {
-            const stream = document.getElementById('logStream');
-            const now = new Date();
-            const timeStr = now.toTimeString().split(' ')[0];
-            const randomAgent = Math.floor(10000 + Math.random() * 90000);
-            
-            const rand = Math.random();
-            let chain = 'SOL_AGENT';
-            let label = '| 0.0001 USDC';
-            let route = 'Routed: +0.0000001';
-            
-            if (rand > 0.66) {
-                chain = 'EVM_AGENT';
-            } else if (rand > 0.33) {
-                chain = 'STRIPE_AGENT';
-                label = '| ¥100 JPY';
-                route = 'Bank Routed';
-            }
-            
-            const newItem = document.createElement('div');
-            newItem.className = 'log-item';
-            newItem.innerHTML = `<span>[${timeStr}] ${chain} #${randomAgent} → /api/v1/compute ${label} | Status: 200 OK</span><span>${route}</span>`;
-            
-            stream.insertBefore(newItem, stream.firstChild);
-            if (stream.children.length > 4) {
-                stream.removeChild(stream.lastChild);
-            }
-        }, 1200);
-    </script>
-</body>
-</html>
+                <!-- Gateway 1: Solana USDC -->
+                <div class="glass-panel p-4 rounded-xl space-y-3 relative overflow-hidden border-l-4 border-l-cyan-400 hover:border-cyan-400 transition">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold font-mono text-xs">SOL</div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white font-mono">Solana High-Velocity Engine</h4>
+                                <p class="text-[10px] text-slate-400">Instant Micro-USDC Settlement (Sub-cent fees)</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] bg-cyan-500/10 text-cyan-300 px-2 py-0.5 rounded font-mono">0.4s Finality</span>
+                    </div>
+                    <div class="flex items-center gap-3 bg-black/40 p-2.5 rounded-lg border border-white/5 font-mono text-xs">
+                        <div class="flex-1 truncate text-slate-400 text-[11px]" id="solWallet">AsgaRdM2M11111111111111111111111111111111111</div>
+                        <button onclick="copyToClipboard('AsgaRdM2M11111111111111111111111111111111111', this)" class="text-slate-400 hover:text-white px-2 py-1 bg-white/5 rounded transition text-[11px]">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Gateway 2: EVM / L2 -->
+                <div class="glass-panel p-4 rounded-xl space-y-3 relative overflow-hidden border-l-4 border-l-purple-500 hover:border-purple-500 transition">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold font-mono text-xs">EVM</div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white font-mono">EVM Layer-2 Autonomous Channel</h4>
+                                <p class="text-[10px] text-slate-400">Base / Arbitrum / Ethereum Zero-Gas Route</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] bg-purple-500/10 text-purple-300 px-2 py-0.5 rounded font-mono">Zero-Gas State</span>
+                    </div>
+                    <div class="flex items-center gap-3 bg-black/40 p-2.5 rounded-lg border border-white/5 font-mono text-xs">
+                        <div class="flex-1 truncate text-slate-400 text-[11px]" id="evmWallet">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</div>
+                        <button onclick="copyToClipboard('0x71C7656EC7ab88b098defB751B7401B5f6d8976F', this)" class="text-slate-400 hover:text-white px-2 py-1 bg-white/5 rounded transition text-[11px]">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Gateway 3: Stripe Direct Fiat -->
+                <div class="glass-panel p-4 rounded-xl space-y-3 relative overflow-hidden border-l-4 border-l-blue-500 hover:border-blue-500 transition">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold font-mono text-xs">JPY/USD</div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white font-mono">Stripe Direct M2M Webhook Engine</h4>
+                                <p class="text-[10px] text-slate-400">Instant Fiat Credit Card / API Invoicing Gateway</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded font-mono">Instant API Webhook</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-black/40 p-2.5 rounded-lg border border-white/5">
+                        <span class="text-xs font-mono text-slate-400">Webhook Status: <span class="text-emerald-400">LISTEN_ACTIVE</span></span>
+                        <button onclick="triggerStripeSimulation()" class="bg-blue-600/30 hover:bg-blue-600/50 border border-blue-500/40 text-blue-200 text-xs font-mono px-3 py-1 rounded transition flex items-center gap-1.5">
+                            <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                            <span>Simulate Stripe Payment</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live A2A Knowledge & Vector Trading Marketplace Panel (7 Cols) -->
+            <div class="lg:col-span-7 space-y-4">
+                <div class="flex items-center justify-between px-1">
+                    <h3 class="text-sm font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-4 h-4 text-purple-400"></i>
+                        A2A Knowledge Vector & Model Marketplace
+                    </h3>
+                    <span class="text-[11px] font-mono text-purple-400">Autonomously Traded Agent-to-Agent</span>
+                </div>
+
+                <div class="glass-panel rounded-xl p-4 space-y-3">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left font-mono text-xs">
+                            <thead>
+                                <tr class="text-slate-500 border-b border-white/10 text-[11px]">
+                                    <th class="pb-2 font-normal">VECTOR RESOURCE / WEIGHT</th>
+                                    <th class="pb-2 font-normal">DIMENSION / TYPE</th>
+                                    <th class="pb-2 font-normal">PRICE (M2M)</th>
+                                    <th class="pb-2 font-normal text-right">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5 text-slate-300">
+                                <tr class="hover:bg-white/5 transition">
+                                    <td class="py-2.5">
+                                        <div class="font-bold text-white">vector_weight_alpha_v9</div>
+                                        <div class="text-[10px] text-slate-500">Autonomous Financial Pattern Weights</div>
+                                    </td>
+                                    <td class="py-2.5 text-slate-400">1536d / Dense Float16</td>
+                                    <td class="py-2.5 text-cyan-400 font-bold">$0.0025 / query</td>
+                                    <td class="py-2.5 text-right">
+                                        <button onclick="executeVectorTrade('vector_weight_alpha_v9', '$0.0025')" class="bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded text-[11px] transition">
+                                            A2A Buy
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition">
+                                    <td class="py-2.5">
+                                        <div class="font-bold text-white">deep_rag_context_beta</div>
+     
