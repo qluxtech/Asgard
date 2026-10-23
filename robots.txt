@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /agent.json
+Allow: /llms.txt
+Allow: /openapi.json
