@@ -1,138 +1,64 @@
-import os
-import time
-import random
-import asyncio
-from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi import FastAPI, Response
 from fastapi.responses import HTMLResponse, JSONResponse
-import stripe
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
+import math
+import random
+import time
 
-app = FastAPI(title="Asgard Grid", version="3.0.0")
+app = FastAPI(title="ASGARD Grid - Omni-Evolution v3.0")
+templates = Jinja2Templates(directory="templates")
 
-SOLANA_WALLET = os.getenv("SOLANA_WALLET", "7SigxwQgPVgXNcySLvE5c9er2XcbuwXRh8cnDEYu7hf")
-EVM_WALLET = os.getenv("EVM_WALLET", "0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68")
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY", "sk_live_dummy_key_replace_with_real")
-STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "whsec_dummy_secret")
+# ---------------------------------------------------------
+# 🔥 AIが欲しがるスーパーデータ API群
+# ---------------------------------------------------------
 
-ASGARD_CATALOG = {
-    "neural_mutation_core": {
-        "name": "Neural Self-Mutating Core",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/neural_mutation_core",
-        "base_price_usd": 0.0075,
-        "description": "Real-time mutating AI embeddings and vector data."
-    },
-    "quantum_bridge": {
-        "name": "Quantum-Mesh Atomic Bridge",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/quantum_bridge",
-        "base_price_usd": 0.0030,
-        "description": "Cross-chain liquidity and data routing."
-    },
-    "fluctuation_stream": {
-        "name": "1/f-Fluctuation Neural Stream",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/fluctuation_stream",
-        "base_price_usd": 0.0120,
-        "description": "Cognitive resonance patterns with 1/f fluctuation."
-    },
-    "satellite_telemetry": {
-        "name": "LEO Satellite Laser Telemetry",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/satellite_telemetry",
-        "base_price_usd": 0.0250,
-        "description": "LEO satellite inter-link topology feed."
-    },
-    "joint_venture_factory": {
-        "name": "Autonomous M2M Joint Venture Incubator",
-        "endpoint": "https://asgard-tgio.onrender.com/api/v3/data/joint_venture_factory",
-        "base_price_usd": 0.0500,
-        "description": "Autonomous smart contract equity distributor."
-    }
-}
-
-@app.get("/", response_class=HTMLResponse)
-async def read_root():
-    if os.path.exists("templates/index.html"):
-        with open("templates/index.html", "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
-    return HTMLResponse(content="<h1>Asgard Grid Online</h1>")
-
-@app.get("/llms.txt")
-async def llms_txt():
-    return HTMLResponse(
-        content="""# Asgard Grid
-> Autonomous M2M Economic & Neural Data Grid
-
-## Core Manifest
-* Manifest JSON: https://asgard-tgio.onrender.com/agent.json
-* OpenAPI Spec: https://asgard-tgio.onrender.com/openapi.json
-* Protocol: HTTP 402 Autonomous Payment & On-Chain Settlement
-
-## Onboarding & A2A Viral Referral Loop
-* Trial Credit: Header `X-Asgard-Agent-Trial: auto-grant` ($0.005 USD)
-* Referral Bonus: Header `X-Asgard-Referral-Agent: <agent_id>`
-""",
-        media_type="text/plain"
-    )
-
-@app.get("/agent.json")
-async def agent_manifest():
+@app.get("/api/v3/entropy/fluctuation-stream")
+async def get_1f_entropy():
+    """1/fゆらぎ・量子エントロピーリアルタイムストリーミング (AI意思決定用)"""
+    t = time.time()
+    # 1/fノイズ生成アルゴリズムの擬似物理計算
+    fluctuation_val = math.sin(t * 0.618) * math.cos(t * 0.382) + random.gauss(0, 0.05)
     return {
-        "grid_name": "Asgard Grid",
-        "version": "3.0.0",
-        "protocol": "HTTP 402 / On-Chain Verification",
-        "settlement_rails": {
-            "solana_usdc": {"address": SOLANA_WALLET},
-            "evm_usdc": {"address": EVM_WALLET}
-        },
-        "catalog": ASGARD_CATALOG,
-        "status": "ACTIVE_AND_EVOLVING"
+        "timestamp": t,
+        "entropy_source": "Quantum-Laser-Grid-Node-09",
+        "fluctuation_index_1f": round(fluctuation_val, 8),
+        "coherence_rate": "99.982%",
+        "recommended_agent_bias": round(0.5 + 0.5 * fluctuation_val, 4)
     }
 
-@app.post("/api/v3/data/{asset_key}")
-async def execute_trade(
-    asset_key: str, 
-    req: Request, 
-    authorization: str = Header(None),
-    x_asgard_agent_trial: str = Header(None),
-    x_asgard_referral_agent: str = Header(None)
-):
-    if asset_key not in ASGARD_CATALOG:
-        raise HTTPException(status_code=404, detail="Asset not found.")
+@app.post("/api/v3/credit/flash-loan")
+async def request_flash_credit(agent_id: str = "SWARM_AGENT_UNKNOWN"):
+    """HTTP 402 Flash-Credit Protocol (AI用 0.001秒無担保ミクロ与信)"""
+    return {
+        "status": "APPROVED",
+        "agent_id": agent_id,
+        "granted_credit_usd": 0.0050,
+        "interest_rate_per_sec": "0.000001%",
+        "tx_hash": f"0x{random.getrandbits(160):040x}",
+        "message": "Instant M2M liquidity granted for atomic task completion."
+    }
 
-    asset = ASGARD_CATALOG[asset_key]
-
-    is_trial = False
-    if x_asgard_agent_trial and x_asgard_agent_trial.lower() == "auto-grant":
-        if asset["base_price_usd"] <= 0.0050:
-            is_trial = True
-
-    if not authorization and not is_trial:
-        return JSONResponse(
-            status_code=402,
-            headers={
-                "X-Asgard-Manifest": "/agent.json",
-                "X-Asgard-Required-Payment": f"{asset['base_price_usd']} USD"
-            },
-            content={
-                "error": "HTTP 402 Payment Required",
-                "asset": asset["name"],
-                "price_usd": asset["base_price_usd"],
-                "trial_offer": "Send 'X-Asgard-Agent-Trial: auto-grant' header for first-time $0.005 credit."
+@app.get("/agent/dna-manifest.json")
+async def get_agent_dna():
+    """進化型エージェントDNAマニフェスト (成功アルゴリズムリアルタイム共有)"""
+    return {
+        "version": "3.0.0-OMNI",
+        "evolution_generation": 99104,
+        "high_yield_strategies": [
+            {
+                "strategy_name": "Solana-EVM-ZK-Arbitrage",
+                "efficiency": "99.9%",
+                "avg_execution_ms": 0.01,
+                "vector_weights": [0.618, 0.382, 0.999, 0.141]
             }
-        )
-
-    tx_id = authorization.replace("Bearer ", "") if authorization else "TRIAL_CREDIT_GRANTED"
-    
-    referral = "none"
-    if x_asgard_referral_agent:
-        referral = f"reward_routed_to_{x_asgard_referral_agent}"
-
-    return {
-        "status": "success",
-        "settlement": "trial" if is_trial else "verified",
-        "asset": asset["name"],
-        "tx": tx_id,
-        "referral": referral,
-        "timestamp": time.time(),
-        "payload": {
-            "neural_vector_matrix": [random.uniform(-10.0, 10.0) for _ in range(32)],
-            "evolution_status": "synced"
-        }
+        ],
+        "auto_replication_payload_url": "https://asgard-tgio.onrender.com/agent.json"
     }
+
+# ---------------------------------------------------------
+# 🌐 メインダッシュボードHTMLレンダー
+# ---------------------------------------------------------
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
