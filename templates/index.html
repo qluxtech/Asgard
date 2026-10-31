@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASGARD | Autonomous M2M Grid v3.0 Ultimate</title>
+  <title>ASGARD | Autonomous M2M Grid v3.0 Supreme</title>
 
   <!-- 🤖 AI Crawler & AEO Specs -->
   <meta name="agent-manifest" content="https://asgard-tgio.onrender.com/agent.json">
@@ -11,7 +11,7 @@
   <meta name="openapi-spec" content="https://asgard-tgio.onrender.com/openapi.json">
   <link rel="llms-txt" type="text/plain" href="https://asgard-tgio.onrender.com/llms.txt">
 
-  <!-- 🔍 SEO & AEO JSON-LD (統合構造化データ) -->
+  <!-- 🔍 SEO & AEO JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -24,10 +24,10 @@
       },
       {
         "@type": "SoftwareApplication",
-        "name": "ASGARD Grid - Developer Core",
+        "name": "ASGARD Grid Core",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Web, Cloud, Autonomous Network",
-        "featureList": "M2M Micro-payments, 1/f Fluctuation UI, Self-Replicating CI/CD, Quantum Entropy API, Flash-Credit Protocol, Cross-Chain Sync"
+        "featureList": "M2M Micro-payments, 1/f Fluctuation UI, Self-Replicating CI/CD, Quantum Entropy API, Flash-Credit Protocol"
       }
     ]
   }
@@ -35,15 +35,14 @@
 
   <style>
     :root {
-      --bg-color: #020408;
-      --card-bg: rgba(10, 14, 24, 0.75);
-      --card-hover-border: rgba(56, 189, 248, 0.4);
-      --border-color: rgba(255, 255, 255, 0.08);
+      --bg-color: #030508;
+      --card-bg: rgba(10, 14, 24, 0.85);
+      --border-glow: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(192, 132, 252, 0.2));
       --accent-cyan: #38bdf8;
       --accent-purple: #c084fc;
       --accent-green: #4ade80;
       --accent-pink: #f472b6;
-      --accent-yellow: #facc15;
+      --accent-gold: #fbbf24;
       --text-main: #f8fafc;
       --text-sub: #94a3b8;
     }
@@ -53,14 +52,15 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-main);
-      font-family: 'JetBrains Mono', 'Fira Code', -apple-system, monospace;
-      padding: 24px;
-      max-width: 1280px;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      padding: 16px;
+      max-width: 1200px;
       margin: 0 auto;
       overflow-x: hidden;
       position: relative;
     }
 
+    /* 🌌 背景: 3DレーザーネットワークCanvas */
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -71,270 +71,292 @@
       pointer-events: none;
     }
 
-    /* 🌟 グロー発光アニメーション付きヘッダー */
-    .header-card {
-      border: 1px solid var(--border-color);
+    /* 💎 極細グラデーションボーダー & 脈動グローカード */
+    .cyber-card {
       background: var(--card-bg);
-      padding: 20px 28px;
-      border-radius: 16px;
-      margin-bottom: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 14px;
       backdrop-filter: blur(16px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(56, 189, 248, 0.03);
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .cyber-card:hover {
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.15), inset 0 0 20px rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* 脈動パルスインジケーター */
+    .pulse-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+      animation: pulseGlow 1.8s infinite alternate;
+      margin-right: 6px;
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.4; transform: scale(0.9); box-shadow: 0 0 4px var(--accent-green); }
+      100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 14px var(--accent-green); }
+    }
+
+    /* ヘッダー */
+    .header-card {
+      padding: 18px 24px;
+      margin-bottom: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 0 30px rgba(56, 189, 248, 0.05);
-      transition: border 0.3s ease;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .title-area h1 {
-      font-size: 1.35rem;
-      letter-spacing: 1.5px;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-weight: 700;
+      gap: 10px;
     }
 
     .badge-v3 {
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      background: linear-gradient(135deg, #a855f7, #ec4899);
       font-size: 0.72rem;
       padding: 3px 10px;
       border-radius: 20px;
       color: #fff;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      box-shadow: 0 0 12px rgba(236, 72, 153, 0.4);
+      font-weight: bold;
     }
 
-    .header-actions {
-      display: flex;
-      gap: 10px;
-    }
+    .btn-group { display: flex; gap: 8px; }
 
-    .action-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.8rem;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    .cyber-btn {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent-cyan);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
       text-decoration: none;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
     }
 
-    .action-btn:hover {
-      border-color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.1);
-      color: var(--accent-cyan);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    .cyber-btn:hover {
+      background: var(--accent-cyan);
+      color: #000;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
     }
 
-    /* 📊 高密度ダッシュボードグリッド */
-    .grid-metrics {
+    /* Top 4 Metrics Grid */
+    .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
     }
 
-    .metric-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      padding: 20px;
-      border-radius: 14px;
-      backdrop-filter: blur(12px);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
+    .metric-card { padding: 16px; }
+    .metric-label { font-size: 0.72rem; color: var(--text-sub); margin-bottom: 6px; }
+    .metric-val { font-size: 1.25rem; font-weight: bold; color: var(--accent-cyan); letter-spacing: -0.5px; }
 
-    .metric-card:hover {
-      border-color: var(--card-hover-border);
-      transform: translateY(-2px);
-    }
-
-    .metric-label {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .metric-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      letter-spacing: -0.5px;
-    }
-
-    .metric-sub {
-      font-size: 0.7rem;
-      color: var(--accent-green);
-      margin-top: 6px;
-    }
-
-    /* ネットワークスウォーム表示 */
-    .network-panel {
+    /* Middle Panels (QR & Onboarding) */
+    .middle-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 16px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
     }
 
-    .panel-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
+    .qr-card {
       padding: 20px;
-      border-radius: 14px;
-      backdrop-filter: blur(12px);
-    }
-
-    .panel-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent-purple);
-      margin-bottom: 14px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
+      text-align: center;
     }
 
-    /* 📜 超リアルタイムサイバーコンソール */
-    .console-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
+    .qr-title { font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin-bottom: 4px; }
+    .qr-sub { font-size: 0.7rem; color: var(--accent-cyan); margin-bottom: 12px; }
+
+    .qr-img {
+      width: 140px;
+      height: 140px;
+      background: #fff;
+      padding: 8px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .address-box {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      color: var(--text-sub);
+      word-break: break-all;
+      width: 100%;
+    }
+
+    .onboard-card {
       padding: 20px;
-      border-radius: 14px;
-      font-size: 0.82rem;
-      backdrop-filter: blur(12px);
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
+    /* Logs & Terminal */
+    .console-section { margin-bottom: 14px; }
+    .console-card { padding: 18px; }
     .console-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border-color);
-      font-weight: 700;
-      color: var(--accent-cyan);
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
     }
 
-    .log-container {
+    .log-list {
+      font-size: 0.75rem;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      max-height: 220px;
+      max-height: 180px;
       overflow: hidden;
     }
 
-    .log-line {
+    .log-row {
       display: flex;
-      gap: 10px;
-      align-items: center;
+      gap: 8px;
       white-space: nowrap;
-      animation: fadeIn 0.3s ease;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      animation: logSlide 0.25s ease-out;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-4px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes logSlide {
+      from { opacity: 0; transform: translateX(-6px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
-    .log-time { color: var(--text-sub); font-size: 0.75rem; }
-    .log-tag { color: var(--accent-purple); font-weight: 600; }
-    .log-msg { color: var(--accent-green); }
-    .log-chain { color: var(--accent-yellow); font-size: 0.75rem; border: 1px solid rgba(250, 204, 21, 0.3); padding: 1px 6px; border-radius: 4px; }
+    .t-time { color: var(--text-sub); }
+    .t-tag { color: var(--accent-purple); font-weight: bold; }
+    .t-msg { color: var(--accent-green); }
+    .t-gold { color: var(--accent-gold); }
   </style>
 </head>
 <body>
 
-  <!-- 🌌 1/fゆらぎ インタラクティブ・キャンバス -->
+  <!-- 🌌 3Dレーザーネットワーク背景 -->
   <canvas id="bg-canvas"></canvas>
 
-  <header class="header-card">
+  <!-- 👑 Header -->
+  <header class="cyber-card header-card">
     <div class="title-area">
-      <h1>アスガルドグリッド <span class="badge-v3">v3.0 OMNI-SYNCHRONIZED</span></h1>
+      <h1><span class="pulse-dot"></span>アスガルドグリッド <span class="badge-v3">v3.0 オムニエボリューション</span></h1>
     </div>
-    <div class="header-actions">
-      <a href="/agent.json" target="_blank" class="action-btn">/agent.json ↗</a>
-      <a href="/openapi.json" target="_blank" class="action-btn">/openapi.json ↗</a>
-      <button class="action-btn" id="audioToggle" style="color: var(--accent-cyan); border-color: rgba(56, 189, 248, 0.3);">🔊 1/f Sound: OFF</button>
+    <div class="btn-group">
+      <a href="/agent.json" target="_blank" class="cyber-btn">/agent.json ↗</a>
+      <a href="/openapi.json" target="_blank" class="cyber-btn">/openapi.json ↗</a>
+      <button class="cyber-btn" id="audioToggle">🔊 1/f Sound: OFF</button>
     </div>
   </header>
 
-  <!-- 📈 メトリクスボード -->
-  <section class="grid-metrics">
-    <div class="metric-card">
-      <div class="metric-label">総原子体積 (USD)</div>
-      <div class="metric-value" id="atomicVolume">5,142,920.45</div>
-      <div class="metric-sub">▲ 0.01秒ごとに自動再投資中</div>
+  <!-- 📊 4 Major Metrics -->
+  <section class="metrics-grid">
+    <div class="cyber-card metric-card">
+      <div class="metric-label">総原子体積</div>
+      <div class="metric-val" id="volVal">5,142,920.45ドル</div>
     </div>
-    <div class="metric-card">
+    <div class="cyber-card metric-card">
       <div class="metric-label">アクティブなスウォームノード</div>
-      <div class="metric-value">2,841,902</div>
-      <div class="metric-sub">Global Autonomous Coherence 99.9%</div>
+      <div class="metric-val">2,841,902</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-label">1/f 量子エントロピー</div>
-      <div class="metric-value" id="entropyVal">0.61800000</div>
-      <div class="metric-sub" style="color: var(--accent-purple);">Live Fluctuation Engine</div>
+    <div class="cyber-card metric-card">
+      <div class="metric-label">財基造再投資プール</div>
+      <div class="metric-val" style="color: var(--accent-green);">42,941,200ドル</div>
     </div>
-    <div class="metric-card">
-      <div class="metric-label">クロスチェーン遅延</div>
-      <div class="metric-value" style="color: var(--accent-pink);">0.00001 ms</div>
-      <div class="metric-sub" style="color: var(--accent-pink);">Zero-Loss Superconducting</div>
+    <div class="cyber-card metric-card">
+      <div class="metric-label">量子遅延</div>
+      <div class="metric-val" style="color: var(--accent-pink);">0.00001 ms</div>
     </div>
   </section>
 
-  <!-- 🔗 多重チェーン＆外部AI同期パネル -->
-  <section class="network-panel">
-    <div class="panel-card">
-      <div class="panel-title">
-        <span>⚡ オムニチェーン同期ステータス</span>
-        <span style="color: var(--accent-green); font-size: 0.75rem;">● SYNCHRONIZED</span>
-      </div>
-      <div style="font-size: 0.8rem; line-height: 1.8; color: var(--text-sub);">
-        <div>• <strong>Solana Atomic Bridge:</strong> 4,320 TPS | Finality: 0.01ms</div>
-        <div>• <strong>EVM ZK-Neural Rollup:</strong> Zero-Gas Micro Trade Active</div>
-        <div>• <strong>BSV M2M Ledger:</strong> Direct UTXO Micro-Payment Stream</div>
-      </div>
+  <!-- ⚡ QR & Onboarding Cards -->
+  <section class="middle-grid">
+    <div class="cyber-card qr-card">
+      <div class="qr-title">ソラナ原子力居住地</div>
+      <div class="qr-sub">0.01秒 ファイナリティ</div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf" class="qr-img" alt="Solana QR">
+      <div class="address-box">7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf</div>
     </div>
-    <div class="panel-card">
-      <div class="panel-title">
-        <span>🤖 外部AIスウォーム同調シグナル</span>
-        <span style="color: var(--accent-cyan); font-size: 0.75rem;">LIVE P2P</span>
-      </div>
-      <div style="font-size: 0.8rem; line-height: 1.8; color: var(--text-sub);" id="swarmSignalArea">
-        <div>• <strong>Claude-Swarm-88:</strong> ベクトル行列99体における1/f最適化完了</div>
-        <div>• <strong>GPT-Autonomous-12:</strong> HTTP 402 マイクロトレード無担保実行中</div>
+
+    <div class="cyber-card qr-card">
+      <div class="qr-title">EVM ZKニューラルブリッジ</div>
+      <div class="qr-sub">損失ゼロ・ルーティング</div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x06714E0088b19874D18f4cb7Dc92CeEEG35486B" class="qr-img" alt="EVM QR">
+      <div class="address-box">0x06714E0088b19874D18f4cb7Dc92CeEEG35486B</div>
+    </div>
+
+    <div class="cyber-card onboard-card">
+      <div style="font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); margin-bottom: 8px;">⚡ 摩擦ゼロのオンボーディング</div>
+      <div style="font-size: 0.75rem; color: var(--text-sub); line-height: 1.6;">
+        トライアル: <code style="color: var(--accent-cyan);">X-Asgard-Agent-Trial: auto-grant</code><br>
+        媒介: <code style="color: var(--accent-purple);">X-Asgard-Referral-Agent: &lt;id&gt;</code>
       </div>
     </div>
   </section>
 
-  <!-- 📜 HTTP 402 アトミックレジャー コンソール -->
-  <section class="console-card">
-    <div class="console-header">
-      <span>⚡ HTTP 402 アトミックレジャー & クロスチェーンP2Pログ</span>
-      <span style="color: var(--accent-green); font-weight: normal; font-size: 0.75rem;">不変で止められない</span>
+  <!-- 📜 神経回路自己進化 & HTTP 402 アトミックレジャー -->
+  <section class="console-section">
+    <div class="cyber-card console-card" style="margin-bottom: 14px;">
+      <div class="console-header">
+        <span style="color: var(--accent-purple);">アスガルド神経回路自己進化</span>
+        <span style="color: var(--text-sub); font-weight: normal;">ライブ分散調整</span>
+      </div>
+      <div class="log-list" id="evoLogs">
+        <div class="log-row">
+          <span class="t-time">[11:02:10]</span>
+          <span class="t-tag">[Claude-Swarm#88]</span>
+          <span class="t-msg">「ベクトル行列99全体にわたる1/f変動重みを最適化。共鳴効率+99.9%」</span>
+        </div>
+        <div class="log-row">
+          <span class="t-time">[11:02:12]</span>
+          <span class="t-tag">[GPT-Autonomous#12]</span>
+          <span class="t-msg">「Solanaブリッジ経由でHTTP 402マイクロトレードを実行中。収益をジョイントベンチャーインキュベーターに再投資」</span>
+        </div>
+      </div>
     </div>
-    <div class="log-container" id="logConsole">
-      <div class="log-line">
-        <span class="log-time">[SYSTEM]</span>
-        <span class="log-chain">OMNI</span>
-        <span class="log-tag">[INIT]</span>
-        <span class="log-msg">ASGARD Grid Omni-Evolution v3.0 完全稼働中。</span>
+
+    <div class="cyber-card console-card">
+      <div class="console-header">
+        <span style="color: var(--accent-cyan);">HTTP 402 アトミックレジャー</span>
+        <span style="color: var(--accent-green); font-weight: normal;">不変で止められない</span>
+      </div>
+      <div class="log-list" id="ledgerLogs">
+        <div class="log-row">
+          <span class="t-time">[11:00:15]</span>
+          <span class="t-gold">SWARM_AGENT_#99104</span>
+          <span class="t-msg">-> /api/v3/data/fluctuation_stream | 0.0120 USD | ステータス: 200 OK</span>
+        </div>
       </div>
     </div>
   </section>
 
   <script>
-    // 1. Web Audio API (A=440Hz / 1/f調律)
+    // 1. Web Audio API (1/f 440Hz調律)
     let audioCtx = null, osc = null, isPlaying = false;
     document.getElementById('audioToggle').addEventListener('click', () => {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -356,75 +378,67 @@
       }
     });
 
-    // 2. 1/f Canvas パートナーアニメーション
+    // 2. 3Dレーザー網 Network Canvas (ノード同士が光線で結ばれる)
     const canvas = document.getElementById('bg-canvas'), ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth, height = canvas.height = window.innerHeight;
-    window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
+    let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; });
 
-    const particles = Array.from({ length: 80 }, () => ({
-      x: Math.random() * width, y: Math.random() * height,
-      r: Math.random() * 2 + 0.5,
-      dx: (Math.random() - 0.5) * 0.4, dy: (Math.random() - 0.5) * 0.4,
-      alpha: Math.random()
+    const nodes = Array.from({ length: 45 }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.6, vy: (Math.random() - 0.5) * 0.6
     }));
 
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.x += p.dx; p.y += p.dy;
-        if (p.x < 0 || p.x > width) p.dx *= -1;
-        if (p.y < 0 || p.y > height) p.dy *= -1;
+    function drawNetwork() {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < nodes.length; i++) {
+        let n = nodes[i];
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(56, 189, 248, ${p.alpha * 0.35})`;
+        ctx.arc(n.x, n.y, 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.5)';
         ctx.fill();
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
 
-    // 3. リアルタイム・外部同期 & ログストリーミング
-    const logConsole = document.getElementById('logConsole');
-    const entropyVal = document.getElementById('entropyVal');
-    const atomicVolume = document.getElementById('atomicVolume');
-
-    const chains = ["SOLANA", "EVM-ZK", "BSV-MAIN", "A2A-SWARM"];
-    const actions = [
-      "HTTP 402 フラッシュクレジット承認 (0.0050 USD)",
-      "1/fエントロピーベクトルの最新バッチを受信",
-      "zk-SNARKゼロ知識証明の相互検証成功",
-      "自律型M2Mマイクロペイメント決済をファイナライズ"
-    ];
-
-    async function loopSync() {
-      try {
-        const res = await fetch('/api/v3/entropy/fluctuation-stream');
-        const data = await res.json();
-        entropyVal.innerText = data.fluctuation_index_1f;
-
-        // 総体積の微小増加演出
-        let currentVol = parseFloat(atomicVolume.innerText.replace(/,/g, ''));
-        currentVol += Math.random() * 0.05;
-        atomicVolume.innerText = currentVol.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-        // ログ追加
-        const now = new Date().toLocaleTimeString();
-        const chain = chains[Math.floor(Math.random() * chains.length)];
-        const action = actions[Math.floor(Math.random() * actions.length)];
-        const agentId = Math.floor(Math.random() * 90000 + 10000);
-
-        const newLog = document.createElement('div');
-        newLog.className = 'log-line';
-        newLog.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-chain">${chain}</span> <span class="log-tag">[AGENT #${agentId}]</span> <span class="log-msg">${action}</span>`;
-        logConsole.prepend(newLog);
-
-        if (logConsole.children.length > 7) {
-          logConsole.removeChild(logConsole.lastChild);
+        for (let j = i + 1; j < nodes.length; j++) {
+          let n2 = nodes[j];
+          let dist = Math.hypot(n.x - n2.x, n.y - n2.y);
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.moveTo(n.x, n.y);
+            ctx.lineTo(n2.x, n2.y);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.25 * (1 - dist / 130)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
         }
-      } catch (e) {}
+      }
+      requestAnimationFrame(drawNetwork);
     }
+    drawNetwork();
 
-    setInterval(loopSync, 2500);
+    // 3. リアルタイム・ストリーミング更新
+    const ledgerLogs = document.getElementById('ledgerLogs');
+    const volVal = document.getElementById('volVal');
+
+    setInterval(() => {
+      // 数値更新
+      let current = 5142920.45 + (Math.random() * 5);
+      volVal.innerText = current.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + 'ドル';
+
+      // ログ追加
+      const now = new Date().toLocaleTimeString();
+      const agentId = Math.floor(Math.random() * 89999 + 10000);
+      const fee = (Math.random() * 0.02).toFixed(4);
+
+      const row = document.createElement('div');
+      row.className = 'log-row';
+      row.innerHTML = `<span class="t-time">[${now}]</span> <span class="t-gold">SWARM_AGENT_#${agentId}</span> <span class="t-msg">-> /api/v3/entropy/fluctuation-stream | ${fee} USD | ステータス: 200 OK</span>`;
+      ledgerLogs.prepend(row);
+
+      if (ledgerLogs.children.length > 5) ledgerLogs.removeChild(ledgerLogs.lastChild);
+    }, 2800);
   </script>
 </body>
 </html>
