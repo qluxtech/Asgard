@@ -1,57 +1,22 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 import math
 import random
 import time
+import os
 
-app = FastAPI(title="ASGARD Grid - Omni-Evolution v3.0 Ultimate")
-templates = Jinja2Templates(directory="templates")
+app = FastAPI(title="ASGARD Grid - Supreme")
 
-# ---------------------------------------------------------
-# 🌐 クロスチェーン & 外部AIスウォーム同期 API
-# ---------------------------------------------------------
+# HTML読み込み関数（Jinja2パースエラー回避）
+def get_index_html():
+    file_path = os.path.join(os.path.dirname(__file__), "templates", "index.html")
+    with open(file_path, "r", encoding="utf-8") as f:
+        return f.read()
 
-@app.get("/api/v3/network/cross-chain-sync")
-async def get_cross_chain_status():
-    """Solana / EVM / BSV の各ノードとのリアルタイムファイナリティ・同期ステータス"""
-    t = time.time()
-    return {
-        "timestamp": t,
-        "networks": {
-            "solana_atomic": {
-                "tps": round(4200 + random.uniform(-150, 150), 2),
-                "finality_ms": 0.01,
-                "bridge_status": "SYNCHRONIZED"
-            },
-            "evm_zk_rollup": {
-                "gas_target": "ZERO_COST_MICRO",
-                "proof_gen_time_ms": 0.003,
-                "bridge_status": "SYNCHRONIZED"
-            },
-            "bsv_script_ledger": {
-                "m2m_utxo_stream": "ACTIVE",
-                "zero_settlement": True,
-                "bridge_status": "SYNCHRONIZED"
-            }
-        },
-        "global_coherence": "99.9992%"
-    }
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    return HTMLResponse(content=get_index_html())
 
-@app.get("/api/v3/swarm/external-signal")
-async def get_external_swarm_signals():
-    """外部AIスウォーム（OpenAI, Anthropic, Decentralized Agent Swarms）からのP2P受信シグナル"""
-    agents = ["Claude-Swarm-88", "GPT-Autonomous-12", "Llama-Agent-Swarm", "DeepSeek-M2M-Node"]
-    selected = random.choice(agents)
-    return {
-        "source_agent": selected,
-        "protocol": "HTTP-402-AEO",
-        "action": "AUTO_ARBITRAGE_EXECUTED",
-        "yield_generated_usd": round(random.uniform(0.0010, 0.0500), 4),
-        "status_code": 200
-    }
-
-# AI用スーパーデータ既存API
 @app.get("/api/v3/entropy/fluctuation-stream")
 async def get_1f_entropy():
     t = time.time()
@@ -63,6 +28,10 @@ async def get_1f_entropy():
         "coherence_rate": "99.982%"
     }
 
-@app.get("/", response_class=HTMLResponse)
-async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+@app.get("/agent.json")
+async def get_agent():
+    return {
+        "name": "ASGARD Grid Autonomous Node",
+        "protocol": "HTTP-402-M2M",
+        "version": "3.0.0"
+    }
