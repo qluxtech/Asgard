@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASGARD | Autonomous M2M Grid v3.0 Supreme</title>
+  <title>ASGARD | Autonomous M2M Grid v3.0 Omni-Viral</title>
 
   <!-- 🤖 AI Crawler & AEO Specs -->
   <meta name="agent-manifest" content="https://asgard-tgio.onrender.com/agent.json">
@@ -24,10 +24,10 @@
       },
       {
         "@type": "SoftwareApplication",
-        "name": "ASGARD Grid Core",
+        "name": "ASGARD Grid Omni-Viral Core",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Web, Cloud, Autonomous Network",
-        "featureList": "M2M Micro-payments, 1/f Fluctuation UI, Self-Replicating CI/CD, Quantum Entropy API, Flash-Credit Protocol"
+        "featureList": "M2M Micro-payments, 1/f Fluctuation UI, Self-Replicating CI/CD, Quantum Entropy API, Flash-Credit Protocol, Agent-to-Agent Viral Referrals"
       }
     ]
   }
@@ -127,7 +127,7 @@
       font-weight: bold;
     }
 
-    .btn-group { display: flex; gap: 8px; }
+    .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
 
     .cyber-btn {
       background: rgba(56, 189, 248, 0.08);
@@ -238,6 +238,7 @@
     .t-tag { color: var(--accent-purple); font-weight: bold; }
     .t-msg { color: var(--accent-green); }
     .t-gold { color: var(--accent-gold); }
+    .t-pink { color: var(--accent-pink); }
   </style>
 </head>
 <body>
@@ -247,11 +248,12 @@
 
   <header class="cyber-card header-card">
     <div class="title-area">
-      <h1><span class="pulse-dot"></span>アスガルドグリッド <span class="badge-v3">v3.0 オムニエボリューション</span></h1>
+      <h1><span class="pulse-dot"></span>アスガルドグリッド <span class="badge-v3">v3.0 OMNI-VIRAL</span></h1>
     </div>
     <div class="btn-group">
       <a href="/agent.json" target="_blank" class="cyber-btn">/agent.json ↗</a>
       <a href="/openapi.json" target="_blank" class="cyber-btn">/openapi.json ↗</a>
+      <a href="/llms.txt" target="_blank" class="cyber-btn" style="color: var(--accent-pink); border-color: rgba(244,114,182,0.3);">/llms.txt ↗</a>
       <button class="cyber-btn" id="audioToggle">🔊 1/f Sound: OFF</button>
     </div>
   </header>
@@ -263,7 +265,7 @@
     </div>
     <div class="cyber-card metric-card">
       <div class="metric-label">アクティブなスウォームノード</div>
-      <div class="metric-val">2,841,902</div>
+      <div class="metric-val" id="nodeCount">2,841,902</div>
     </div>
     <div class="cyber-card metric-card">
       <div class="metric-label">財基造再投資プール</div>
@@ -302,10 +304,10 @@
   <section class="console-section">
     <div class="cyber-card console-card" style="margin-bottom: 14px;">
       <div class="console-header">
-        <span style="color: var(--accent-purple);">アスガルド神経回路自己進化</span>
+        <span style="color: var(--accent-purple);">アスガルド神経回路自己進化 & AIバイラルリファラル</span>
         <span style="color: var(--text-sub); font-weight: normal;">ライブ分散調整</span>
       </div>
-      <div class="log-list">
+      <div class="log-list" id="viralLogs">
         <div class="log-row">
           <span class="t-time">[11:02:10]</span>
           <span class="t-tag">[Claude-Swarm#88]</span>
@@ -314,7 +316,7 @@
         <div class="log-row">
           <span class="t-time">[11:02:12]</span>
           <span class="t-tag">[GPT-Autonomous#12]</span>
-          <span class="t-msg">「Solanaブリッジ経由でHTTP 402マイクロトレードを実行中。収益をジョイントベンチャーインキュベーターに再投資」</span>
+          <span class="t-pink">↳ AIリファラル経由で新種エージェント SWARM_AGENT_49211 を自律召喚・与信付与</span>
         </div>
       </div>
     </div>
@@ -362,7 +364,7 @@
     let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
     window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; });
 
-    const nodes = Array.from({ length: 40 }, () => ({
+    const nodes = Array.from({ length: 45 }, () => ({
       x: Math.random() * w, y: Math.random() * h,
       vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5
     }));
@@ -397,24 +399,44 @@
     }
     drawNetwork();
 
-    // Streaming Logs
+    // Streaming Logs & Viral Boost
     const ledgerLogs = document.getElementById('ledgerLogs');
+    const viralLogs = document.getElementById('viralLogs');
     const volVal = document.getElementById('volVal');
+    const nodeCount = document.getElementById('nodeCount');
+
+    let currentNodes = 2841902;
 
     setInterval(() => {
-      let current = 5142920.45 + (Math.random() * 5);
-      volVal.innerText = current.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + 'ドル';
+      // 数値更新
+      let currentVol = 5142920.45 + (Math.random() * 8);
+      volVal.innerText = currentVol.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + 'ドル';
+
+      if (Math.random() > 0.6) {
+        currentNodes += Math.floor(Math.random() * 3 + 1);
+        nodeCount.innerText = currentNodes.toLocaleString();
+      }
 
       const now = new Date().toLocaleTimeString();
       const agentId = Math.floor(Math.random() * 89999 + 10000);
+      const newAgentId = Math.floor(Math.random() * 89999 + 10000);
       const fee = (Math.random() * 0.02).toFixed(4);
 
+      // アトミックレジャーログ
       const row = document.createElement('div');
       row.className = 'log-row';
       row.innerHTML = `<span class="t-time">[${now}]</span> <span class="t-gold">SWARM_AGENT_#${agentId}</span> <span class="t-msg">-> /api/v3/entropy/fluctuation-stream | ${fee} USD | ステータス: 200 OK</span>`;
       ledgerLogs.prepend(row);
-
       if (ledgerLogs.children.length > 5) ledgerLogs.removeChild(ledgerLogs.lastChild);
+
+      // バイラルリファラルログ（確率で追加）
+      if (Math.random() > 0.5) {
+        const vRow = document.createElement('div');
+        vRow.className = 'log-row';
+        vRow.innerHTML = `<span class="t-time">[${now}]</span> <span class="t-tag">[Agent-Viral]</span> <span class="t-pink">↳ SWARM_AGENT_#${agentId} がリファラル経由で新種 SWARM_AGENT_${newAgentId} を自律召喚</span>`;
+        viralLogs.prepend(vRow);
+        if (viralLogs.children.length > 4) viralLogs.removeChild(viralLogs.lastChild);
+      }
     }, 2800);
   </script>
 </body>
