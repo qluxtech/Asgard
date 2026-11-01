@@ -463,5 +463,39 @@
       }
     }, 2500);
   </script>
-</body>
-</html>
+
+  <!-- ASGARD Smart Feedback Bar -->
+<section style="margin-top: 40px; padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px;">
+  <h3 style="margin-bottom: 12px; font-family: var(--font-mono); font-size: 1rem; color: var(--accent);">GLOBAL FEEDBACK & SYSTEM INSIGHTS</h3>
+  <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">ASGARDの機能・パフォーマンスに関するご意見をお寄せください。AI・人間双方からの入力がシステムを自動進化させます。</p>
+  
+  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+    <input id="feedback-input" type="text" placeholder="超スマートなご意見・ご要望を入力..." style="flex: 1; min-width: 280px; padding: 10px 14px; background: #000; border: 1px solid var(--border); border-radius: 6px; color: #fff; font-family: var(--font-sans); font-size: 0.9rem;">
+    <button onclick="sendAsgardFeedback()" style="padding: 10px 20px; background: var(--accent-green); color: #000; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-family: var(--font-mono);">送信 (SYNC)</button>
+  </div>
+  <div id="feedback-status" style="margin-top: 8px; font-size: 0.8rem; color: var(--accent-green); display: none;">✓ フィードバックが正常にコアへ送信されました。</div>
+</section>
+
+<script>
+async function sendAsgardFeedback() {
+  const input = document.getElementById('feedback-input');
+  const status = document.getElementById('feedback-status');
+  if(!input.value.trim()) return;
+  
+  try {
+    const res = await fetch('/api/v3/feedback/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ message: input.value, rating: 5, type: 'user_insight' })
+    });
+    if(res.ok) {
+      input.value = '';
+      status.style.display = 'block';
+      setTimeout(() => status.style.display = 'none', 4000);
+    }
+  } catch(e) {
+    console.error(e);
+  }
+}
+</script>
+
