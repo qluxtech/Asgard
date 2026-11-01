@@ -131,7 +131,6 @@ async def legal_page(request: Request):
       <table>
         <tr><th>アイテム</th><th>詳細</th></tr>
         <tr><td>ベンダー</td><td>QLAX</td></tr>
-        <tr><td>オペレーションマネージャー</td><td>樋口大輔 (Daisuke Higuchi)</td></tr>
         <tr><td>所在地 / 連絡先</td><td>福岡県豊前市 (メールまたはお問い合わせフォームより速やかに開示)</td></tr>
         <tr><td>価格</td><td>各プランおよびAPIリクエスト単価に指定されているとおり</td></tr>
         <tr><td>支払方法</td><td>Stripe（クレジットカード）、Solana / EVM / Bitcoin SV (BSV) オンチェーン決済</td></tr>
