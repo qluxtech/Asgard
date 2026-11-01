@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse, PlainTextResponse, JSONResponse
 import math
 import random
 import time
-import requests
 import os
 import asyncio
 
