@@ -1,3 +1,13 @@
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, PlainTextResponse, JSONResponse
+import math
+import random
+import time
+import os
+
+# 1. ここで先に app を定義します
+app = FastAPI(title="ASGARD Grid - Omni-Viral Supreme")
+
 @app.get("/legal", response_class=HTMLResponse)
 async def legal_page(request: Request):
     return """
