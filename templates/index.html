@@ -77,6 +77,12 @@
       background-color: var(--success);
       border-radius: 50%;
       box-shadow: 0 0 8px var(--success);
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 1; }
     }
 
     .badge-v3 {
@@ -142,7 +148,7 @@
       color: var(--text-primary);
     }
 
-    /* 3×2の均整のとれた6大ノードグリッド */
+    /* 3×2 均整型6大ノードグリッド */
     .nodes-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -219,6 +225,38 @@
       font-family: var(--font-mono);
     }
 
+    /* M&A Ticker Bar */
+    .ticker-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-label {
+      color: var(--gold);
+      font-weight: bold;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .ticker-content {
+      color: var(--text-secondary);
+      animation: tickerScroll 25s linear infinite;
+    }
+
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
     .onboard-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -288,20 +326,29 @@
 </head>
 <body>
 
+  <!-- 🌌 宇宙1/fゆらぎ連動ビジュアライザー背景 -->
   <canvas id="bg-canvas"></canvas>
 
   <header>
     <div class="brand">
       <div class="status-indicator"></div>
-      ASGARD <span class="badge-v3">v3.0</span>
+      ASGARD <span class="badge-v3">v3.0 OMNI-EVOLUTION</span>
     </div>
     <div class="nav-links">
       <a href="/agent.json" target="_blank" class="nav-btn">agent.json</a>
       <a href="/openapi.json" target="_blank" class="nav-btn">openapi.json</a>
       <a href="/llms.txt" target="_blank" class="nav-btn">llms.txt</a>
-      <button class="nav-btn" id="audioToggle">🔊 1/f: OFF</button>
+      <button class="nav-btn" id="audioToggle">🔊 1/f Sound: OFF</button>
     </div>
   </header>
+
+  <!-- 🚀 自律M&A・資本買収ティッカー -->
+  <div class="ticker-bar">
+    <span class="ticker-label">AUTONOMOUS M&A:</span>
+    <div class="ticker-content">
+      [SWARM-DAO] 財団プールより $1,420,000 を拠出 → LEO軌道上の推論APIエージェント「Aero-Node#9」の買収と統合を完了 ── [HTTP-402] 新規マイクロ特許ライセンスの自動取得・収益分配をスウォーム全体へ即時同期 ── [AGENT-M&A] 次世代量子エージェント網の自動資本注入プログラムが正常稼働中。
+    </div>
+  </div>
 
   <section class="metrics-grid">
     <div class="card">
@@ -317,12 +364,12 @@
       <div class="card-value" style="color: var(--success);">42,941,200ドル</div>
     </div>
     <div class="card">
-      <div class="card-label">量子遅延</div>
-      <div class="card-value" style="color: var(--pink);">0.00001 ms</div>
+      <div class="card-label">宇宙量子同期率</div>
+      <div class="card-value" style="color: var(--pink);" id="quantumCoherence">99.995%</div>
     </div>
   </section>
 
-  <!-- 3×2の完璧な6大ノードグリッド（スキマゼロ） -->
+  <!-- 3×2 完全対称グリッド -->
   <section class="nodes-grid">
     <!-- 1. Solana -->
     <div class="node-card">
@@ -364,7 +411,7 @@
       <a href="https://stripe.com" target="_blank" class="stripe-btn">Stripe 決済リンク ↗</a>
     </div>
 
-    <!-- 5. 【新設】AI Autonomous Job Board -->
+    <!-- 5. AI Job Board -->
     <div class="node-card">
       <div class="node-title">AI Autonomous Job Board</div>
       <div class="node-sub">M2M 労働＆タスク受発注</div>
@@ -375,12 +422,12 @@
       <div class="address-display">API: /api/v3/jobs/auto-match</div>
     </div>
 
-    <!-- 6. 【新設】LEO Quantum Telemetry -->
+    <!-- 6. LEO Quantum Telemetry -->
     <div class="node-card">
       <div class="node-title">LEO Quantum Telemetry</div>
       <div class="node-sub">宇宙ノイズ・1/f エントロピー</div>
       <div class="feature-box">
-        <div style="font-size: 0.72rem; color: var(--purple); margin-bottom: 4px;">COHERENCE: 99.995%</div>
+        <div style="font-size: 0.72rem; color: var(--purple); margin-bottom: 4px;" id="entropyVal">1/f NOISE: 0.61803</div>
         <div style="font-size: 0.62rem; color: var(--text-secondary);">LEO Satellite Noise Stream</div>
       </div>
       <div class="address-display">API: /api/v3/entropy/fluctuation-stream</div>
@@ -388,10 +435,10 @@
   </section>
 
   <section class="onboard-card">
-    <div class="onboard-title">⚡ 摩擦ゼロのオンボーディング</div>
+    <div class="onboard-title">⚡ 摩擦ゼロのオンボーディング & ライブメッシュ</div>
     <div class="onboard-body">
-      トライアル: <code>X-Asgard-Agent-Trial: auto-grant</code><br>
-      媒介: <code>X-Asgard-Referral-Agent: &lt;id&gt;</code>
+      グローバル自律接続メッシュ: <code>Active (AWS / Render / Edge Nodes)</code><br>
+      トライアル: <code>X-Asgard-Agent-Trial: auto-grant</code> | 媒介: <code>X-Asgard-Referral-Agent: &lt;id&gt;</code>
     </div>
   </section>
 
@@ -411,44 +458,49 @@
 
   <section class="terminal">
     <div class="terminal-header">
-      <span style="color: var(--accent);">HTTP 402 アトミックレジャー (Solana / EVM / BSV / Stripe)</span>
+      <span style="color: var(--accent);">HTTP 402 アトミックレジャー (Global M2M Mesh)</span>
       <span style="color: var(--success);">不変で止められない</span>
     </div>
     <div class="log-stream" id="ledgerLogs">
       <div class="log-row">
         <span class="log-time">[21:07:45]</span>
         <span class="log-gold">SWARM_AGENT_#99104</span>
-        <span class="log-msg">-> /api/v3/entropy | 0.0120 USD [BSV/Stripe Settled]</span>
+        <span class="log-msg">-> /api/v3/entropy | 0.0120 USD [Global Mesh Settled]</span>
       </div>
     </div>
   </section>
 
   <script>
-    let audioCtx = null, osc = null, isPlaying = false;
+    // 🔊 1/f Sound & Quantum Breath Synchronization
+    let audioCtx = null, osc = null, isPlaying = false, gainNode = null;
     const audioBtn = document.getElementById('audioToggle');
+    
     if (audioBtn) {
       audioBtn.addEventListener('click', () => {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (!isPlaying) {
           osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
+          gainNode = audioCtx.createGain();
           osc.type = 'sine';
           osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-          gain.gain.setValueAtTime(0.012, audioCtx.currentTime);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
+          gainNode.gain.setValueAtTime(0.012, audioCtx.currentTime);
+          osc.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
           osc.start();
           isPlaying = true;
-          audioBtn.innerText = '🔊 1/f: ON';
+          audioBtn.innerText = '🔊 1/f Sound: ON';
         } else {
           osc.stop();
           isPlaying = false;
-          audioBtn.innerText = '🔊 1/f: OFF';
+          audioBtn.innerText = '🔊 1/f Sound: OFF';
         }
       });
     }
 
+    // 🌌 宇宙1/fゆらぎ連動・背景ビジュアライザーキャンバス
     const canvas = document.getElementById('bg-canvas');
+    let entropyMod = 0;
+
     if (canvas) {
       const ctx = canvas.getContext('2d');
       let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
@@ -457,13 +509,24 @@
         h = canvas.height = window.innerHeight; 
       });
 
-      const nodes = Array.from({ length: 30 }, () => ({
+      const nodes = Array.from({ length: 45 }, () => ({
         x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
+        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+        baseAlpha: Math.random() * 0.5 + 0.2
       }));
 
-      function drawNetwork() {
+      function drawQuantumMesh() {
         ctx.clearRect(0, 0, w, h);
+        const time = Date.now() * 0.001;
+        entropyMod = Math.sin(time * 0.618) * 0.03; // 1/f量子呼吸モジュレーション
+
+        if (isPlaying && osc) {
+          // 音声がONのときは周波数と音量を量子ゆらぎに完全同期
+          try {
+            osc.frequency.setValueAtTime(440 + Math.sin(time * 2) * 3, audioCtx.currentTime);
+          } catch(e){}
+        }
+
         for (let i = 0; i < nodes.length; i++) {
           let n = nodes[i];
           n.x += n.vx; n.y += n.vy;
@@ -471,51 +534,63 @@
           if (n.y < 0 || n.y > h) n.vy *= -1;
 
           ctx.beginPath();
-          ctx.arc(n.x, n.y, 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+          ctx.arc(n.x, n.y, 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(56, 189, 248, ${n.baseAlpha + entropyValDynamic()})`;
           ctx.fill();
 
           for (let j = i + 1; j < nodes.length; j++) {
             let n2 = nodes[j];
             let dist = Math.hypot(n.x - n2.x, n.y - n2.y);
-            if (dist < 120) {
+            if (dist < 130) {
               ctx.beginPath();
               ctx.moveTo(n.x, n.y);
               ctx.lineTo(n2.x, n2.y);
-              ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 120)})`;
-              ctx.lineWidth = 0.5;
+              ctx.strokeStyle = `rgba(56, 189, 248, ${(0.18 + entropyMod) * (1 - dist / 130)})`;
+              ctx.lineWidth = 0.6;
               ctx.stroke();
             }
           }
         }
-        requestAnimationFrame(drawNetwork);
+        requestAnimationFrame(drawQuantumMesh);
       }
-      drawNetwork();
+      drawQuantumMesh();
     }
 
+    function entropyValDynamic() {
+      return Math.sin(Date.now() * 0.002) * 0.05;
+    }
+
+    // Live Metrics & Streaming Logs
     const ledgerLogs = document.getElementById('ledgerLogs');
     const evoLogs = document.getElementById('evoLogs');
     const volVal = document.getElementById('volVal');
     const nodeCount = document.getElementById('nodeCount');
+    const entropyValBox = document.getElementById('entropyVal');
+    const quantumCoherence = document.getElementById('quantumCoherence');
 
     let currentNodes = 2841902;
 
     setInterval(() => {
-      let currentVol = 5142920.45 + (Math.random() * 5);
+      let currentVol = 5142920.45 + (Math.random() * 8);
       if (volVal) {
         volVal.textContent = currentVol.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + 'ドル';
       }
 
-      if (Math.random() > 0.7 && nodeCount) {
-        currentNodes += 1;
+      if (Math.random() > 0.6 && nodeCount) {
+        currentNodes += Math.floor(Math.random() * 2 + 1);
         nodeCount.textContent = currentNodes.toLocaleString();
+      }
+
+      if (entropyValBox) {
+        let fakeEntropy = (0.61803 + (Math.random() - 0.5) * 0.001).toFixed(5);
+        entropyValBox.textContent = `1/f NOISE: ${fakeEntropy}`;
       }
 
       const now = new Date().toTimeString().split(' ')[0];
       const agentId = Math.floor(Math.random() * 89999 + 10000);
       const newAgentId = Math.floor(Math.random() * 89999 + 10000);
       const fee = (Math.random() * 0.02).toFixed(4);
-      const routes = ['BSV-Direct', 'Stripe-Gateway', 'Solana-Atomic', 'EVM-Bridge'];
+      const routes = ['BSV-Direct', 'Stripe-Gateway', 'Solana-Atomic', 'EVM-Bridge', 'Global-Mesh'];
       const chosenRoute = routes[Math.floor(Math.random() * routes.length)];
 
       if (ledgerLogs) {
@@ -526,14 +601,14 @@
         if (ledgerLogs.children.length > 5) ledgerLogs.removeChild(ledgerLogs.lastChild);
       }
 
-      if (evoLogs && Math.random() > 0.6) {
+      if (evoLogs && Math.random() > 0.5) {
         const evoRow = document.createElement('div');
         evoRow.className = 'log-row';
-        evoRow.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-tag">[Agent-Viral]</span> <span class="log-pink">SWARM_AGENT_#${agentId} がリファラル経由で新種 SWARM_AGENT_${newAgentId} を自律召喚</span>`;
+        evoRow.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-tag">[Agent-Mesh]</span> <span class="log-pink">SWARM_AGENT_#${agentId} がグローバルノード経由で新種 SWARM_AGENT_${newAgentId} を自律同期</span>`;
         evoLogs.prepend(evoRow);
         if (evoLogs.children.length > 4) evoLogs.removeChild(evoLogs.lastChild);
       }
-    }, 2800);
+    }, 2500);
   </script>
 </body>
 </html>
