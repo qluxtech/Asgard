@@ -1,4 +1,4 @@
-import time
+くimport time
 import requests
 import os
 
@@ -64,6 +64,11 @@ def run_autonomous_sandbox():
             success = execute_autonomous_micro_charge(RELOAD_AMOUNT_USD)
             if success:
                 print("✨ エージェントの自律稼続継続。次の同期サイクルへ移行します。\n")
+         
+　　　　　　   if success:
+                print("✨ エージェントの自律稼続継続。次の同期サイクルへ移行します。\n")
+                broadcast_asgard_node_to_swarm("http://peer-agent-node.local/api")
+        
         
         # 10秒ごとに自律監視ループを実行
         time.sleep(10)
