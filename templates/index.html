@@ -362,6 +362,36 @@
     </div>
   </div>
 
+      <!-- Global Mesh Traffic Map -->
+    <div style="background: var(--card-bg, #0d1117); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span style="font-size: 0.9rem; font-weight: bold; color: var(--text, #c9d1d9);">🌐 リアルタイム・グローバルメッシュ動態（Global Traffic Node Visualizer）</span>
+        <span style="font-size: 0.75rem; font-family: var(--font-mono); color: #3fb950;">● LIVE TRANSMISSION</span>
+      </div>
+      <div style="position: relative; width: 100%; height: 120px; background: #05070a; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px dashed #21262d;">
+        <!-- 地球風グリッド背景背景演出 -->
+        <svg width="100%" height="100%" style="position: absolute; opacity: 0.15;">
+          <defs>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#58a6ff" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+        
+        <!-- ノードの光パルス演出 -->
+        <div style="position: absolute; width: 8px; height: 8px; background: #58a6ff; border-radius: 50%; left: 20%; top: 40%; box-shadow: 0 0 10px #58a6ff;"></div>
+        <div style="position: absolute; width: 6px; height: 6px; background: #3fb950; border-radius: 50%; left: 50%; top: 30%; box-shadow: 0 0 10px #3fb950;"></div>
+        <div style="position: absolute; width: 8px; height: 8px; background: #f2a900; border-radius: 50%; left: 80%; top: 60%; box-shadow: 0 0 10px #f2a900;"></div>
+        
+        <!-- アニメーションテキスト -->
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #8b949e; z-index: 1; text-align: center;">
+          [ TOKYO | NEW YORK | LONDON | SINGAPORE ]<br>
+          <span style="color: #58a6ff; font-size: 0.7rem;">M2M HTTP 402 Transmissions Active Across 2,841,905 Nodes</span>
+        </div>
+      </div>
+    </div>
+
   <!-- ライブターミナル -->
   <div class="terminal-section">
     <div class="terminal-title">
