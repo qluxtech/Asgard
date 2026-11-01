@@ -234,7 +234,7 @@ async def legal_page(request: Request):
       </table>
     </body>
     </html>
-    
+    """
 # --- 3. 自律型リファラル報酬・バイラル自動化エンジン ---
 import uuid
 
