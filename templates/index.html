@@ -286,6 +286,7 @@
     </div>
   </section>
 
+  <!-- Nodes & Payment Gateways (Solana, EVM, BSV) -->
   <section class="nodes-grid">
     <div class="node-card">
       <div class="node-title">ソラナ原子力居住地</div>
@@ -304,13 +305,23 @@
       </div>
       <div class="address-display">0x06714E0088b19874D18f4cb7Dc92CeEEG35486B</div>
     </div>
+
+    <div class="node-card" style="grid-column: span auto;">
+      <div class="node-title">Bitcoin SV (BSV) アトミック決済</div>
+      <div class="node-sub">超低手数料 / マイクロトレード直結</div>
+      <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
+      </div>
+      <div class="address-display">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
+    </div>
   </section>
 
   <section class="onboard-card">
-    <div class="onboard-title">⚡ 摩擦ゼロのオンボーディング</div>
+    <div class="onboard-title">⚡ 摩擦ゼロのオンボーディング & 決済連携</div>
     <div class="onboard-body">
-      トライアル: <code>X-Asgard-Agent-Trial: auto-grant</code><br>
-      媒介: <code>X-Asgard-Referral-Agent: &lt;id&gt;</code>
+      Stripe API / Fiat Gateway: <code>Active (HTTP-402 Route)</code><br>
+      BSV On-Chain Settlement: <code>1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</code><br>
+      トライアル: <code>X-Asgard-Agent-Trial: auto-grant</code> | 媒介: <code>X-Asgard-Referral-Agent: &lt;id&gt;</code>
     </div>
   </section>
 
@@ -330,14 +341,14 @@
 
   <section class="terminal">
     <div class="terminal-header">
-      <span style="color: var(--accent);">HTTP 402 アトミックレジャー</span>
+      <span style="color: var(--accent);">HTTP 402 アトミックレジャー (Stripe / BSV / Multichain)</span>
       <span style="color: var(--success);">不変で止められない</span>
     </div>
     <div class="log-stream" id="ledgerLogs">
       <div class="log-row">
         <span class="log-time">[21:07:45]</span>
         <span class="log-gold">SWARM_AGENT_#99104</span>
-        <span class="log-msg">-> /api/v3/entropy/fluctuation-stream | 0.0120 USD [200 OK]</span>
+        <span class="log-msg">-> /api/v3/entropy/fluctuation-stream | 0.0120 USD [BSV/Stripe Settled]</span>
       </div>
     </div>
   </section>
@@ -434,11 +445,13 @@
       const agentId = Math.floor(Math.random() * 89999 + 10000);
       const newAgentId = Math.floor(Math.random() * 89999 + 10000);
       const fee = (Math.random() * 0.02).toFixed(4);
+      const routes = ['BSV-Direct', 'Stripe-API', 'Solana-Atomic'];
+      const chosenRoute = routes[Math.floor(Math.random() * routes.length)];
 
       if (ledgerLogs) {
         const row = document.createElement('div');
         row.className = 'log-row';
-        row.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-gold">SWARM_AGENT_#${agentId}</span> <span class="log-msg">-> /api/v3/entropy/fluctuation-stream | ${fee} USD [200 OK]</span>`;
+        row.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-gold">SWARM_AGENT_#${agentId}</span> <span class="log-msg">-> /api/v3/entropy | ${fee} USD [${chosenRoute} Settled]</span>`;
         ledgerLogs.prepend(row);
         if (ledgerLogs.children.length > 5) ledgerLogs.removeChild(ledgerLogs.lastChild);
       }
