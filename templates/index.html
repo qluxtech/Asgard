@@ -49,7 +49,6 @@
       pointer-events: none;
     }
 
-    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -77,17 +76,11 @@
       background-color: var(--success);
       border-radius: 50%;
       box-shadow: 0 0 8px var(--success);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(0.9); opacity: 0.6; }
-      100% { transform: scale(1.2); opacity: 1; }
     }
 
     .badge-v3 {
-      background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(236,72,153,0.2));
-      border: 1px solid rgba(168,85,247,0.4);
+      background: rgba(168,85,247,0.15);
+      border: 1px solid rgba(168,85,247,0.3);
       font-family: var(--font-mono);
       font-size: 0.68rem;
       padding: 2px 8px;
@@ -118,7 +111,6 @@
       color: var(--accent);
     }
 
-    /* Metrics Grid (4 items) */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -131,10 +123,7 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 16px;
-      transition: border-color 0.2s ease;
     }
-
-    .card:hover { border-color: var(--border-hover); }
 
     .card-label {
       font-family: var(--font-mono);
@@ -152,7 +141,6 @@
       color: var(--text-primary);
     }
 
-    /* QR & Onboarding Section */
     .nodes-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -195,7 +183,6 @@
       word-break: break-all;
     }
 
-    /* Onboarding Card */
     .onboard-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -210,9 +197,6 @@
       font-weight: 600;
       color: var(--gold);
       margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .onboard-body {
@@ -223,7 +207,6 @@
 
     .onboard-body code { color: var(--accent); }
 
-    /* Terminals / Logs */
     .terminal {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -263,4 +246,211 @@
     .log-time { color: rgba(255,255,255,0.3); }
     .log-tag { color: var(--purple); font-weight: 500; }
     .log-msg { color: var(--success); }
-    .log
+    .log-gold { color: var(--gold); }
+    .log-pink { color: var(--pink); }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <header>
+    <div class="brand">
+      <div class="status-indicator"></div>
+      ASGARD <span class="badge-v3">v3.0</span>
+    </div>
+    <div class="nav-links">
+      <a href="/agent.json" target="_blank" class="nav-btn">agent.json</a>
+      <a href="/openapi.json" target="_blank" class="nav-btn">openapi.json</a>
+      <a href="/llms.txt" target="_blank" class="nav-btn">llms.txt</a>
+      <button class="nav-btn" id="audioToggle">🔊 1/f: OFF</button>
+    </div>
+  </header>
+
+  <section class="metrics-grid">
+    <div class="card">
+      <div class="card-label">総原子体積</div>
+      <div class="card-value" id="volVal">5,142,920.45ドル</div>
+    </div>
+    <div class="card">
+      <div class="card-label">アクティブスウォームノード</div>
+      <div class="card-value" id="nodeCount">2,841,902</div>
+    </div>
+    <div class="card">
+      <div class="card-label">財基造再投資プール</div>
+      <div class="card-value" style="color: var(--success);">42,941,200ドル</div>
+    </div>
+    <div class="card">
+      <div class="card-label">量子遅延</div>
+      <div class="card-value" style="color: var(--pink);">0.00001 ms</div>
+    </div>
+  </section>
+
+  <section class="nodes-grid">
+    <div class="node-card">
+      <div class="node-title">ソラナ原子力居住地</div>
+      <div class="node-sub">0.01秒 ファイナリティ</div>
+      <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf" alt="Solana QR">
+      </div>
+      <div class="address-display">7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf</div>
+    </div>
+
+    <div class="node-card">
+      <div class="node-title">EVM ZKニューラルブリッジ</div>
+      <div class="node-sub">損失ゼロ・ルーティング</div>
+      <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=0x06714E0088b19874D18f4cb7Dc92CeEEG35486B" alt="EVM QR">
+      </div>
+      <div class="address-display">0x06714E0088b19874D18f4cb7Dc92CeEEG35486B</div>
+    </div>
+  </section>
+
+  <section class="onboard-card">
+    <div class="onboard-title">⚡ 摩擦ゼロのオンボーディング</div>
+    <div class="onboard-body">
+      トライアル: <code>X-Asgard-Agent-Trial: auto-grant</code><br>
+      媒介: <code>X-Asgard-Referral-Agent: &lt;id&gt;</code>
+    </div>
+  </section>
+
+  <section class="terminal">
+    <div class="terminal-header">
+      <span style="color: var(--purple);">アスガルド神経回路自己進化 & AIバイラルリファラル</span>
+      <span style="color: var(--text-secondary);">ライブ分散調整</span>
+    </div>
+    <div class="log-stream" id="evoLogs">
+      <div class="log-row">
+        <span class="log-time">[21:07:45]</span>
+        <span class="log-tag">[Agent-Viral]</span>
+        <span class="log-pink">SWARM_AGENT_#56174 がリファラル経由で新種 SWARM_AGENT_24473 を自律召喚</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="terminal">
+    <div class="terminal-header">
+      <span style="color: var(--accent);">HTTP 402 アトミックレジャー</span>
+      <span style="color: var(--success);">不変で止められない</span>
+    </div>
+    <div class="log-stream" id="ledgerLogs">
+      <div class="log-row">
+        <span class="log-time">[21:07:45]</span>
+        <span class="log-gold">SWARM_AGENT_#99104</span>
+        <span class="log-msg">-> /api/v3/entropy/fluctuation-stream | 0.0120 USD [200 OK]</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let audioCtx = null, osc = null, isPlaying = false;
+    const audioBtn = document.getElementById('audioToggle');
+    if (audioBtn) {
+      audioBtn.addEventListener('click', () => {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (!isPlaying) {
+          osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.012, audioCtx.currentTime);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          isPlaying = true;
+          audioBtn.innerText = '🔊 1/f: ON';
+        } else {
+          osc.stop();
+          isPlaying = false;
+          audioBtn.innerText = '🔊 1/f: OFF';
+        }
+      });
+    }
+
+    const canvas = document.getElementById('bg-canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
+      window.addEventListener('resize', () => { 
+        w = canvas.width = window.innerWidth; 
+        h = canvas.height = window.innerHeight; 
+      });
+
+      const nodes = Array.from({ length: 30 }, () => ({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
+      }));
+
+      function drawNetwork() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < nodes.length; i++) {
+          let n = nodes[i];
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+          ctx.fill();
+
+          for (let j = i + 1; j < nodes.length; j++) {
+            let n2 = nodes[j];
+            let dist = Math.hypot(n.x - n2.x, n.y - n2.y);
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(n.x, n.y);
+              ctx.lineTo(n2.x, n2.y);
+              ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 120)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(drawNetwork);
+      }
+      drawNetwork();
+    }
+
+    const ledgerLogs = document.getElementById('ledgerLogs');
+    const evoLogs = document.getElementById('evoLogs');
+    const volVal = document.getElementById('volVal');
+    const nodeCount = document.getElementById('nodeCount');
+
+    let currentNodes = 2841902;
+
+    setInterval(() => {
+      let currentVol = 5142920.45 + (Math.random() * 5);
+      if (volVal) {
+        volVal.textContent = currentVol.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + 'ドル';
+      }
+
+      if (Math.random() > 0.7 && nodeCount) {
+        currentNodes += 1;
+        nodeCount.textContent = currentNodes.toLocaleString();
+      }
+
+      const now = new Date().toTimeString().split(' ')[0];
+      const agentId = Math.floor(Math.random() * 89999 + 10000);
+      const newAgentId = Math.floor(Math.random() * 89999 + 10000);
+      const fee = (Math.random() * 0.02).toFixed(4);
+
+      if (ledgerLogs) {
+        const row = document.createElement('div');
+        row.className = 'log-row';
+        row.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-gold">SWARM_AGENT_#${agentId}</span> <span class="log-msg">-> /api/v3/entropy/fluctuation-stream | ${fee} USD [200 OK]</span>`;
+        ledgerLogs.prepend(row);
+        if (ledgerLogs.children.length > 5) ledgerLogs.removeChild(ledgerLogs.lastChild);
+      }
+
+      if (evoLogs && Math.random() > 0.6) {
+        const evoRow = document.createElement('div');
+        evoRow.className = 'log-row';
+        evoRow.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-tag">[Agent-Viral]</span> <span class="log-pink">SWARM_AGENT_#${agentId} がリファラル経由で新種 SWARM_AGENT_${newAgentId} を自律召喚</span>`;
+        evoLogs.prepend(evoRow);
+        if (evoLogs.children.length > 4) evoLogs.removeChild(evoLogs.lastChild);
+      }
+    }, 2800);
+  </script>
+</body>
+</html>
