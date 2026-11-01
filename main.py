@@ -280,3 +280,34 @@ async def get_viral_network_stats():
         "network_engine": "ASGARD_APEX_MONOPOLY_VIRAL_V3",
         "active_nodes": "2,841,905"
     }
+
+# --- 4. グローバル・フィードバック & スマートインサイトエンジン ---
+
+ASGARD_FEEDBACK_DB = []
+
+@app.post("/api/v3/feedback/submit")
+async def submit_feedback(request: Request):
+    try:
+        body = await request.json()
+        feedback_type = body.get("type", "general")
+        message = body.get("message", "")
+        rating = body.get("rating", 5)
+        
+        entry = {
+            "timestamp": time.time(),
+            "type": feedback_type,
+            "message": message,
+            "rating": rating,
+            "user_agent": request.headers.get("user-agent", "Unknown")
+        }
+        ASGARD_FEEDBACK_DB.append(entry)
+        
+        print(f"💡 [ASGARD Feedback Received] Rating: {rating} | Type: {feedback_type} | Message: {message}")
+        
+        return {
+            "status": "success",
+            "message": "Feedback synchronized with ASGARD core.",
+            "total_feedbacks_recorded": len(ASGARD_FEEDBACK_DB)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
