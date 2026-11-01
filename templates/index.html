@@ -362,6 +362,36 @@
     </div>
   </div>
 
+      <!-- BSV (本物のウォレットアドレスとQRコード) -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="card-title">Bitcoin SV (BSV) 決済</span>
+          <span class="card-badge">微小手数料 / オンチェーン</span>
+        </div>
+        <p class="card-desc">巨大なデータスループットを持つBSVブロックチェーンを活用し、極小のマイクロペイメントをロスなく直接処理します。</p>
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
+        </div>
+        <div class="pay-address">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
+      </div>
+    </div>
+
+    <!-- Stripe (Stripeの決済リンクURLを設定) -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="card-title">Stripe FIAT Gateway</span>
+          <span class="card-badge">クレジットカード / 法定通貨</span>
+        </div>
+        <p class="card-desc">通常のクレジットカードによる安心・安全な即時決済。決済完了後、APIライセンスとクレジットが即時発行されます。</p>
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=YOUR_STRIPE_PAYMENT_LINK" alt="Stripe QR">
+        </div>
+      </div>
+      <a href="YOUR_STRIPE_PAYMENT_LINK" target="_blank" class="action-btn">Stripe 決済リンクへ ↗</a>
+    </div>
+
   <!-- ライブターミナル -->
   <div class="terminal-section">
     <div class="terminal-title">
