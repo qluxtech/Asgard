@@ -5,6 +5,7 @@ import random
 import time
 import os
 import asyncio
+app = FastAPI(title="ASGARD Grid - Omni-Viral Supreme")
 
 # --- 究極：エイペックス・モノポリー・エンジン（時間差ゼロの強制ハント＆即時収益化） ---
 class AsgardApexMonopolyEngine:
