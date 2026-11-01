@@ -20,6 +20,9 @@
       --text-secondary: #8892b0;
       --accent: #38bdf8;
       --success: #34d399;
+      --purple: #c084fc;
+      --gold: #fbbf24;
+      --pink: #f472b6;
       --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
@@ -30,7 +33,7 @@
       background-color: var(--bg);
       color: var(--text-primary);
       font-family: var(--font-sans);
-      padding: 40px 24px;
+      padding: 24px 16px;
       max-width: 1100px;
       margin: 0 auto;
       -webkit-font-smoothing: antialiased;
@@ -46,14 +49,16 @@
       pointer-events: none;
     }
 
-    /* Navigation / Header */
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 40px;
-      padding-bottom: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .brand {
@@ -61,7 +66,6 @@
       font-size: 1.1rem;
       font-weight: 600;
       letter-spacing: 0.15em;
-      color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -73,12 +77,28 @@
       background-color: var(--success);
       border-radius: 50%;
       box-shadow: 0 0 8px var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .badge-v3 {
+      background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(236,72,153,0.2));
+      border: 1px solid rgba(168,85,247,0.4);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--pink);
     }
 
     .nav-links {
       display: flex;
-      gap: 16px;
-      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .nav-btn {
@@ -88,7 +108,7 @@
       padding: 6px 12px;
       border-radius: 6px;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-decoration: none;
       transition: all 0.2s ease;
     }
@@ -98,249 +118,149 @@
       color: var(--accent);
     }
 
-    /* Metrics Grid */
+    /* Metrics Grid (4 items) */
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 20px;
+      padding: 16px;
       transition: border-color 0.2s ease;
     }
 
-    .card:hover {
-      border-color: var(--border-hover);
-    }
+    .card:hover { border-color: var(--border-hover); }
 
     .card-label {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-secondary);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .card-value {
       font-family: var(--font-mono);
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 500;
       color: var(--text-primary);
     }
 
-    /* Main Grid (QR & Info) */
-    .content-grid {
+    /* QR & Onboarding Section */
+    .nodes-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
     .node-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
     }
 
-    .node-title {
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .node-sub {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-secondary);
-      margin-bottom: 16px;
-    }
+    .node-title { font-size: 0.85rem; font-weight: 500; margin-bottom: 2px; }
+    .node-sub { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent); margin-bottom: 12px; }
 
     .qr-container {
       background: #ffffff;
-      padding: 10px;
+      padding: 8px;
       border-radius: 6px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
-    .qr-container img {
-      width: 120px;
-      height: 120px;
-      display: block;
-    }
+    .qr-container img { width: 110px; height: 110px; display: block; }
 
     .address-display {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.4);
       border: 1px solid var(--border);
-      padding: 8px 12px;
+      padding: 6px 10px;
       border-radius: 6px;
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--text-secondary);
       width: 100%;
       word-break: break-all;
     }
 
-    /* Terminal Logs */
+    /* Onboarding Card */
+    .onboard-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      font-family: var(--font-mono);
+    }
+
+    .onboard-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .onboard-body {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .onboard-body code { color: var(--accent); }
+
+    /* Terminals / Logs */
     .terminal {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 20px;
+      padding: 16px;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
+      margin-bottom: 16px;
     }
 
     .terminal-header {
       display: flex;
       justify-content: space-between;
       color: var(--text-secondary);
-      margin-bottom: 12px;
-      padding-bottom: 8px;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
       border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
     }
 
     .log-stream {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      max-height: 160px;
+      max-height: 150px;
       overflow: hidden;
     }
 
     .log-row {
       display: flex;
-      gap: 12px;
-      color: var(--text-secondary);
+      gap: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .log-time { color: rgba(255,255,255,0.3); }
-    .log-tag { color: var(--accent); }
-    .log-msg { color: var(--text-primary); }
-  </style>
-</head>
-<body>
-
-  <canvas id="bg-canvas"></canvas>
-
-  <header>
-    <div class="brand">
-      <div class="status-indicator"></div>
-      ASGARD
-    </div>
-    <div class="nav-links">
-      <a href="/agent.json" target="_blank" class="nav-btn">agent.json</a>
-      <a href="/openapi.json" target="_blank" class="nav-btn">openapi</a>
-      <a href="/llms.txt" target="_blank" class="nav-btn">llms.txt</a>
-    </div>
-  </header>
-
-  <section class="metrics-grid">
-    <div class="card">
-      <div class="card-label">Total Atomic Volume</div>
-      <div class="card-value" id="volVal">$5,142,920.45</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Active Swarm Nodes</div>
-      <div class="card-value" id="nodeCount">2,841,902</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Reinvestment Pool</div>
-      <div class="card-value" style="color: var(--success);">$42,941,200</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Network Latency</div>
-      <div class="card-value" style="color: var(--accent);">0.00001 ms</div>
-    </div>
-  </section>
-
-  <section class="content-grid">
-    <div class="node-card">
-      <div class="node-title">Solana Atomic Node</div>
-      <div class="node-sub">Finality: 0.01ms</div>
-      <div class="qr-container">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf" alt="Solana QR">
-      </div>
-      <div class="address-display">7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf</div>
-    </div>
-
-    <div class="node-card">
-      <div class="node-title">EVM ZK-Neural Bridge</div>
-      <div class="node-sub">Zero-Loss Routing</div>
-      <div class="qr-container">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x06714E0088b19874D18f4cb7Dc92CeEEG35486B" alt="EVM QR">
-      </div>
-      <div class="address-display">0x06714E0088b19874D18f4cb7Dc92CeEEG35486B</div>
-    </div>
-  </section>
-
-  <section class="terminal">
-    <div class="terminal-header">
-      <span>HTTP 402 / M2M Atomic Ledger</span>
-      <span style="color: var(--success);">ONLINE</span>
-    </div>
-    <div class="log-stream" id="ledgerLogs">
-      <div class="log-row">
-        <span class="log-time">[21:07:45]</span>
-        <span class="log-tag">SWARM_AGENT_#56174</span>
-        <span class="log-msg">GET /api/v3/entropy/fluctuation-stream → 0.0090 USD [200 OK]</span>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    // Minimalist Background Canvas
-    const canvas = document.getElementById('bg-canvas'), ctx = canvas.getContext('2d');
-    let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
-    window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; });
-
-    const dots = Array.from({ length: 30 }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2
-    }));
-
-    function render() {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.15)';
-      dots.forEach(d => {
-        d.x += d.vx; d.y += d.vy;
-        if (d.x < 0 || d.x > w) d.vx *= -1;
-        if (d.y < 0 || d.y > h) d.vy *= -1;
-        ctx.fillRect(d.x, d.y, 1.5, 1.5);
-      });
-      requestAnimationFrame(render);
-    }
-    render();
-
-    // Live Metrics & Logs
-    const ledgerLogs = document.getElementById('ledgerLogs');
-    const volVal = document.getElementById('volVal');
-
-    setInterval(() => {
-      let current = 5142920.45 + (Math.random() * 3);
-      volVal.textContent = '$' + current.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-      const now = new Date().toTimeString().split(' ')[0];
-      const agentId = Math.floor(Math.random() * 89999 + 10000);
-      const fee = (Math.random() * 0.02).toFixed(4);
-
-      const row = document.createElement('div');
-      row.className = 'log-row';
-      row.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-tag">SWARM_AGENT_#${agentId}</span> <span class="log-msg">GET /api/v3/entropy → ${fee} USD [200 OK]</span>`;
-      ledgerLogs.prepend(row);
-
-      if (ledgerLogs.children.length > 5) ledgerLogs.removeChild(ledgerLogs.lastChild);
-    }, 3000);
-  </script>
-</body>
-</html>
+    .log-tag { color: var(--purple); font-weight: 500; }
+    .log-msg { color: var(--success); }
+    .log
