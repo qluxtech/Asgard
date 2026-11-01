@@ -23,6 +23,7 @@
       --purple: #c084fc;
       --gold: #fbbf24;
       --pink: #f472b6;
+      --stripe-color: #635bff;
       --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
@@ -141,10 +142,10 @@
       color: var(--text-primary);
     }
 
-    /* 2列のQRノードカード (あの頃のデザインを完全復元) */
+    /* 4列の決済ゲートウェイ・ノードグリッド (Solana, EVM, BSV, Stripe) */
     .nodes-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 12px;
       margin-bottom: 16px;
     }
@@ -153,7 +154,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 20px;
+      padding: 18px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -161,30 +162,48 @@
     }
 
     .node-title { font-size: 0.85rem; font-weight: 500; margin-bottom: 2px; }
-    .node-sub { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent); margin-bottom: 12px; }
+    .node-sub { font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); margin-bottom: 12px; }
 
     .qr-container {
       background: #ffffff;
-      padding: 8px;
+      padding: 6px;
       border-radius: 6px;
       margin-bottom: 12px;
     }
 
-    .qr-container img { width: 110px; height: 110px; display: block; }
+    .qr-container img { width: 100px; height: 100px; display: block; }
 
     .address-display {
       background: rgba(0, 0, 0, 0.4);
       border: 1px solid var(--border);
-      padding: 6px 10px;
+      padding: 6px 8px;
       border-radius: 6px;
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       color: var(--text-secondary);
       width: 100%;
       word-break: break-all;
     }
 
-    /* 摩擦ゼロのオンボーディングカード (Stripe / BSV統合版) */
+    .stripe-btn {
+      background: var(--stripe-color);
+      color: #ffffff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s ease;
+      width: 100%;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .stripe-btn:hover { background: #534be0; }
+
     .onboard-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -288,13 +307,13 @@
     </div>
   </section>
 
-  <!-- Solana & EVM の2列グリッド（あの頃のデザイン） -->
+  <!-- 4大決済ゲートウェイノード (Solana, EVM, BSV, Stripe) -->
   <section class="nodes-grid">
     <div class="node-card">
       <div class="node-title">ソラナ原子力居住地</div>
       <div class="node-sub">0.01秒 ファイナリティ</div>
       <div class="qr-container">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf" alt="Solana QR">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf" alt="Solana QR">
       </div>
       <div class="address-display">7SsgvxOgPVgXNSYLVtcSc9er2XrtuuallNlenDEYu7sf</div>
     </div>
@@ -303,19 +322,35 @@
       <div class="node-title">EVM ZKニューラルブリッジ</div>
       <div class="node-sub">損失ゼロ・ルーティング</div>
       <div class="qr-container">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=0x06714E0088b19874D18f4cb7Dc92CeEEG35486B" alt="EVM QR">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0x06714E0088b19874D18f4cb7Dc92CeEEG35486B" alt="EVM QR">
       </div>
       <div class="address-display">0x06714E0088b19874D18f4cb7Dc92CeEEG35486B</div>
     </div>
+
+    <div class="node-card">
+      <div class="node-title">Bitcoin SV (BSV) 決済</div>
+      <div class="node-sub">超低手数料 / オンチェーン</div>
+      <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
+      </div>
+      <div class="address-display">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
+    </div>
+
+    <div class="node-card">
+      <div class="node-title">Stripe FIAT Gateway</div>
+      <div class="node-sub">クレジットカード / 法定通貨</div>
+      <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://stripe.com" alt="Stripe QR">
+      </div>
+      <a href="https://stripe.com" target="_blank" class="stripe-btn">Stripe 決済リンク ↗</a>
+    </div>
   </section>
 
-  <!-- 摩擦ゼロのオンボーディング（Stripe & BSV統合版） -->
   <section class="onboard-card">
-    <div class="onboard-title">⚡ 摩擦ゼロのオンボーディング & 決済連携</div>
+    <div class="onboard-title">⚡ 摩擦ゼロのオンボーディング</div>
     <div class="onboard-body">
-      Stripe API / Fiat Gateway: <code>Active (HTTP-402 Route)</code><br>
-      Bitcoin SV (BSV) 決済: <code>1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</code><br>
-      トライアル: <code>X-Asgard-Agent-Trial: auto-grant</code> | 媒介: <code>X-Asgard-Referral-Agent: &lt;id&gt;</code>
+      トライアル: <code>X-Asgard-Agent-Trial: auto-grant</code><br>
+      媒介: <code>X-Asgard-Referral-Agent: &lt;id&gt;</code>
     </div>
   </section>
 
@@ -335,14 +370,14 @@
 
   <section class="terminal">
     <div class="terminal-header">
-      <span style="color: var(--accent);">HTTP 402 アトミックレジャー (Stripe / BSV / Multichain)</span>
+      <span style="color: var(--accent);">HTTP 402 アトミックレジャー (Solana / EVM / BSV / Stripe)</span>
       <span style="color: var(--success);">不変で止められない</span>
     </div>
     <div class="log-stream" id="ledgerLogs">
       <div class="log-row">
         <span class="log-time">[21:07:45]</span>
         <span class="log-gold">SWARM_AGENT_#99104</span>
-        <span class="log-msg">-> /api/v3/entropy/fluctuation-stream | 0.0120 USD [BSV/Stripe Settled]</span>
+        <span class="log-msg">-> /api/v3/entropy | 0.0120 USD [BSV/Stripe Settled]</span>
       </div>
     </div>
   </section>
@@ -439,7 +474,7 @@
       const agentId = Math.floor(Math.random() * 89999 + 10000);
       const newAgentId = Math.floor(Math.random() * 89999 + 10000);
       const fee = (Math.random() * 0.02).toFixed(4);
-      const routes = ['BSV-Direct', 'Stripe-API', 'Solana-Atomic'];
+      const routes = ['BSV-Direct', 'Stripe-Gateway', 'Solana-Atomic', 'EVM-Bridge'];
       const chosenRoute = routes[Math.floor(Math.random() * routes.length)];
 
       if (ledgerLogs) {
