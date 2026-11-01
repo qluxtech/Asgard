@@ -132,7 +132,6 @@
       padding: 3px 8px;
       border-radius: 4px;
     }
-    /* 人間向け説明ライティング */
     .card-desc {
       font-size: 0.8rem;
       color: var(--text-secondary);
@@ -268,8 +267,9 @@
     </div>
   </div>
 
+  <!-- 3x2 厳選グリッド -->
   <div class="cards-grid">
-    <!-- Solana -->
+    <!-- 1. Solana -->
     <div class="card">
       <div>
         <div class="card-header">
@@ -284,7 +284,7 @@
       </div>
     </div>
 
-    <!-- EVM -->
+    <!-- 2. EVM -->
     <div class="card">
       <div>
         <div class="card-header">
@@ -299,7 +299,7 @@
       </div>
     </div>
 
-    <!-- BSV -->
+    <!-- 3. BSV (正真正銘の本物アドレス) -->
     <div class="card">
       <div>
         <div class="card-header">
@@ -308,13 +308,13 @@
         </div>
         <p class="card-desc">巨大なデータスループットを持つBSVブロックチェーンを活用し、極小のマイクロペイメントをロスなく直接処理します。</p>
         <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1AsgardGridOmniViralSupremeM2MNode000999" alt="BSV QR">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
         </div>
-        <div class="pay-address">1AsgardGridOmniViralSupremeM2MNode000999</div>
+        <div class="pay-address">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
       </div>
     </div>
 
-    <!-- Stripe -->
+    <!-- 4. Stripe -->
     <div class="card">
       <div>
         <div class="card-header">
@@ -329,7 +329,7 @@
       <a href="https://buy.stripe.com/test_placeholder" target="_blank" class="action-btn">Stripe 決済リンクへ ↗</a>
     </div>
 
-    <!-- AI Job Board -->
+    <!-- 5. AI Job Board -->
     <div class="card">
       <div>
         <div class="card-header">
@@ -345,7 +345,7 @@
       <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-secondary);">API: /api/v3/public/job-board</div>
     </div>
 
-    <!-- LEO Quantum Telemetry -->
+    <!-- 6. LEO Quantum Telemetry -->
     <div class="card">
       <div>
         <div class="card-header">
@@ -361,36 +361,6 @@
       <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-secondary);">API: /api/v3/entropy/fluctuation-stream</div>
     </div>
   </div>
-
-      <!-- BSV (本物のウォレットアドレスとQRコード) -->
-    <div class="card">
-      <div>
-        <div class="card-header">
-          <span class="card-title">Bitcoin SV (BSV) 決済</span>
-          <span class="card-badge">微小手数料 / オンチェーン</span>
-        </div>
-        <p class="card-desc">巨大なデータスループットを持つBSVブロックチェーンを活用し、極小のマイクロペイメントをロスなく直接処理します。</p>
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
-        </div>
-        <div class="pay-address">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
-      </div>
-    </div>
-
-    <!-- Stripe (Stripeの決済リンクURLを設定) -->
-    <div class="card">
-      <div>
-        <div class="card-header">
-          <span class="card-title">Stripe FIAT Gateway</span>
-          <span class="card-badge">クレジットカード / 法定通貨</span>
-        </div>
-        <p class="card-desc">通常のクレジットカードによる安心・安全な即時決済。決済完了後、APIライセンスとクレジットが即時発行されます。</p>
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=YOUR_STRIPE_PAYMENT_LINK" alt="Stripe QR">
-        </div>
-      </div>
-      <a href="YOUR_STRIPE_PAYMENT_LINK" target="_blank" class="action-btn">Stripe 決済リンクへ ↗</a>
-    </div>
 
   <!-- ライブターミナル -->
   <div class="terminal-section">
