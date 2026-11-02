@@ -227,7 +227,7 @@ INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <footer>
-        <div>&copy; ASGARD Infrastructure / 運営者: Daisuke Higuchi (QLAX)</div>
+        <div>&copy; ASGARD Infrastructure / 運営者: (QLAX)</div>
         <div><a href="/legal" target="_blank">特定商取引法に基づく表記</a></div>
     </footer>
 
