@@ -499,3 +499,15 @@ async function sendAsgardFeedback() {
 }
 </script>
 
+<!-- Smart Localization Switcher -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const userLang = navigator.language || navigator.userLanguage;
+  if (!userLang.startsWith("ja")) {
+    // 英語環境向けにテキストをスマート変換
+    document.querySelectorAll("[data-en]").forEach(el => {
+      el.textContent = el.getAttribute("data-en");
+    });
+  }
+});
+</script>
