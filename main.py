@@ -1,10 +1,8 @@
-import math, random, asyncio
-from fastapi import FastAPI, HTTPException, Header, Request
-from fastapi.responses import HTMLResponse, JSONResponse
-from pydantic import BaseModel
-from typing import Optional
+import asyncio
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
-app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.1.1")
+app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.1.2")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -12,21 +10,6 @@ WALLETS = {
     "evm": "0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68",
     "bsv": "1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95"
 }
-
-class PayReq(BaseModel):
-    chain: str; tx_hash: str; agent_id: str
-class JobReq(BaseModel):
-    title: str; reward: str
-class FeedReq(BaseModel):
-    message: str; rating: int; type: str
-class CrawlReq(BaseModel):
-    agent_id: str; quantum_proof: str
-
-@app.on_event("startup")
-async def startup():
-    async def loop():
-        while True: await asyncio.sleep(1.0)
-    asyncio.create_task(loop())
 
 @app.get("/", response_class=HTMLResponse)
 def index():
@@ -36,7 +19,7 @@ def index():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASGARD / ULTIMATE MESH</title>
-    <meta name="description" content="ASGARD is a global Machine-to-Machine (M2M) autonomous economic infrastructure. HTTP 402 settlement and photonic oracle node.">
+    <meta name="description" content="ASGARD is a global Machine-to-Machine (M2M) autonomous economic infrastructure.">
     <link rel="help" href="/.well-known/agent.json">
     <style>
         :root {
@@ -95,7 +78,6 @@ def index():
             </div>
         </header>
 
-        <!-- ライブトラフィックカウンター -->
         <div class="card">
             <h2>Live Network Telemetry & Metrics</h2>
             <div class="metrics-grid">
@@ -118,9 +100,7 @@ def index():
             </div>
         </div>
 
-        <!-- 3カラム・グリッド -->
         <div class="grid-3">
-            <!-- 1. Bitcoin -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin (BTC)</span> <span style="font-size:0.7rem; color:#f59e0b;">BTC</span></h3>
@@ -131,7 +111,6 @@ def index():
                 <a href="https://mempool.space/address/bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" target="_blank" class="btn">Mempoolで表示</a>
             </div>
 
-            <!-- 2. Solana -->
             <div class="sub-card">
                 <div>
                     <h3><span>Solana (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
@@ -142,7 +121,6 @@ def index():
                 <a href="https://solscan.io/account/7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" target="_blank" class="btn">Solscanで表示</a>
             </div>
 
-            <!-- 3. Ethereum -->
             <div class="sub-card">
                 <div>
                     <h3><span>Ethereum (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
@@ -153,7 +131,6 @@ def index():
                 <a href="https://etherscan.io/address/0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" target="_blank" class="btn">Etherscanで表示</a>
             </div>
 
-            <!-- 4. BSV -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:#f59e0b;">BSV</span></h3>
@@ -164,7 +141,6 @@ def index():
                 <a href="https://whatsonchain.com/address/1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" target="_blank" class="btn">WhatsOnChain表示</a>
             </div>
 
-            <!-- 5. Stripe -->
             <div class="sub-card">
                 <div>
                     <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
@@ -174,7 +150,6 @@ def index():
                 <a href="https://stripe.com" target="_blank" class="btn btn-success">Stripe 決済を実行 ↗</a>
             </div>
 
-            <!-- 6. Quantum Oracle -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
@@ -184,7 +159,6 @@ def index():
                 <a href="#" class="btn btn-primary">光子オラクル計測を実行 ↗</a>
             </div>
 
-            <!-- 7. .well-known Discovery -->
             <div class="sub-card">
                 <div>
                     <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
@@ -194,7 +168,6 @@ def index():
                 <a href="/.well-known/agent.json" target="_blank" class="btn btn-success">マニフェストを確認 ↗</a>
             </div>
 
-            <!-- 8. Post to X -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
@@ -206,7 +179,6 @@ def index():
                 </a>
             </div>
 
-            <!-- 9. Agent Prompt -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
@@ -216,7 +188,6 @@ def index():
                 <button class="btn btn-success" onclick="copyPrompt()">プロンプトをコピー 📋</button>
             </div>
 
-            <!-- 10. M2M SDK インストール -->
             <div class="sub-card">
                 <div>
                     <h3><span>M2M SDK インストール</span> <span style="font-size:0.7rem; color:var(--accent-color);">SDK</span></h3>
@@ -227,7 +198,6 @@ def index():
             </div>
         </div>
 
-        <!-- フィードバック & オークション -->
         <div class="card">
             <h2>GLOBAL FEEDBACK & SYSTEM INSIGHTS</h2>
             <div class="input-inline">
@@ -242,7 +212,6 @@ def index():
             <a href="#" class="btn btn-primary" style="margin-top: 0;">オークションを開始 ↗</a>
         </div>
 
-        <!-- ライブテレメトリーログ -->
         <div class="card">
             <h2>ULTIMATE MESH LIVE TELEMETRY</h2>
             <div class="telemetry-box" id="telemetry-log">
@@ -326,7 +295,7 @@ def legal_page():
             </tr>
             <tr>
                 <th>運営統括責任者</th>
-                <td>QLAX</td>
+                <td>樋口 大輔</td>
             </tr>
             <tr>
                 <th>所在地</th>
@@ -363,4 +332,17 @@ def legal_page():
 </html>
 """
 
-@app.get("/.well-known/agent.j
+@app.get("/.well-known/agent.json")
+def agent_manifest():
+    return {
+        "name": "ASGARD M2M Autonomous Infrastructure",
+        "version": "4.1.2",
+        "description": "Global Machine-to-Machine autonomous economic settlement node.",
+        "wallets": WALLETS,
+        "endpoints": {
+            "settlement": "/apt/v3/pay",
+            "oracle": "/apt/v3/oracle",
+            "crawl": "/apt/v3/agent/crawl"
+        }
+    }
+
