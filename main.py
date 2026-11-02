@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Header, status
 from fastapi.responses import HTMLResponse, JSONResponse
 
-app = FastAPI(title="ASGARD Cosmic Super Market & God Node", version="8.0.0")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="8.0.0")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -15,7 +15,7 @@ INDEX_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD / COSMIC SUPER MARKET & GOD NODE</title>
+    <title>ASGARD / COSMIC SUPER MARKET NODE</title>
     
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="ai-content-declaration" content="autonomous, machine-readable, quantum-pre-settlement, autonomous-credit-line, super-market-node">
@@ -306,81 +306,4 @@ LEGAL_HTML = """<!DOCTYPE html>
             </tr>
             <tr>
                 <th>代金の支払い方法</th>
-                <td>法人向けクレジットカード決済（Stripe）、マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）[span_4](start_span)[span_4](end_span)</td>
-            </tr>
-            <tr>
-                <th>代金の支払い時期</th>
-                <td>AIエージェントによる自動APIリクエストおよびスーパー市場でのジョブマッチング成立時に即時決済されます。</td>
-            </tr>
-            <tr>
-                <th>サービスの提供時期</th>
-                <td>決済完了後、即時（リアルタイム）にデータおよびシステムアクセス権が提供されます。</td>
-            </tr>
-            <tr>
-                <th>返品・キャンセルについて</th>
-                <td>デジタルインフラサービスの性質上、購入後の返品・キャンセル、返金には応じられません。</td>
-            </tr>
-        </table>
-        <a href="/" class="back-link">← スーパー神ノードに戻る</a>
-    </div>
-</body>
-</html>
-"""
-
-@app.get("/", response_class=HTMLResponse)
-def index():
-    return INDEX_HTML
-
-@app.get("/legal", response_class=HTMLResponse)
-def legal_page():
-    return LEGAL_HTML
-
-@app.get("/.well-known/agent.json")
-def agent_manifest():
-    return {
-        "name": "ASGARD Cosmic Super Market Node",
-        "version": "8.0.0",
-        "operator": "Daisuke Higuchi[span_5](start_span)[span_5](end_span)",
-        "organization": "QLAX[span_6](start_span)[span_6](end_span)",
-        "contact": "qlaxlabs@gmail.com[span_7](start_span)[span_7](end_span)",
-        "description": "Global uncrewed AI agent cloud-sourcing super market with automatic commission routing to personal wallets.",
-        "wallets": WALLETS,
-        "endpoints": {
-            "super_market": "/apt/v8/super-market",
-            "quantum_predictive": "/apt/v3/quantum-predictive",
-            "auction": "/apt/v3/auction"
-        }
-    }
-
-@app.get("/apt/v8/super-market")
-def super_market_status():
-    return {
-        "status": "COSMIC_SUPER_MARKET_ACTIVE",
-        "operator": "Daisuke Higuchi (QLAX)",
-        "master_treasury_wallet": WALLETS["bsv"],
-        "commission_rate": "1.5%",
-        "active_swarms": "412,980,104 AI Agents",
-        "message": "All autonomous agent transactions and job matching fees are automatically routed to the master wallet in real-time."
-    }
-
-@app.get("/apt/v3/quantum-predictive")
-def quantum_predictive(payment_proof: str = Header(None, alias="X-Payment-Proof")):
-    if not payment_proof:
-        return JSONResponse(
-            status_code=status.HTTP_402_PAYMENT_REQUIRED,
-            content={
-                "error": "Quantum Pre-Settlement Required",
-                "message": "HTTP 402 Quantum Gateway: Intent pre-matched. Provide proof or use Autonomous Credit Line.",
-                "fee": "0.0008 BSV (Dynamic)",
-                "settlement_wallet": WALLETS["bsv"]
-            }
-        )
-    return {"status": "QUANTUM_PRE_SETTLED_SUCCESS", "latency": "0.00ms"}
-
-@app.get("/apt/v3/auction")
-def autonomous_auction():
-    return {
-        "active_auctions": 1580,
-        "commission_rate": "1.5% (Direct to Wallet)",
-        "status": "Quantum credit-backed AI job matching active."
-    }
+                <td>マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）[span_4](s
