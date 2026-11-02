@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-app = FastAPI(title="ASGARD Enterprise Super God Node", version="5.4.0")
+app = FastAPI(title="ASGARD Enterprise Super God Node", version="5.5.0")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -11,9 +11,7 @@ WALLETS = {
     "bsv": "1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95"
 }
 
-@app.get("/", response_class=HTMLResponse)
-def index():
-    return """<!DOCTYPE html>
+INDEX_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -108,7 +106,6 @@ def index():
         </div>
 
         <div class="grid-3">
-            <!-- 1. Bitcoin -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin (BTC)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BTC</span></h3>
@@ -119,7 +116,6 @@ def index():
                 <a href="https://mempool.space/address/bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" target="_blank" class="btn">Mempoolで検証</a>
             </div>
 
-            <!-- 2. Solana -->
             <div class="sub-card">
                 <div>
                     <h3><span>Solana (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
@@ -130,7 +126,6 @@ def index():
                 <a href="https://solscan.io/account/7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" target="_blank" class="btn">Solscanで検証</a>
             </div>
 
-            <!-- 3. Ethereum -->
             <div class="sub-card">
                 <div>
                     <h3><span>Ethereum (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
@@ -141,7 +136,6 @@ def index():
                 <a href="https://etherscan.io/address/0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" target="_blank" class="btn">Etherscanで検証</a>
             </div>
 
-            <!-- 4. BSV -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BSV</span></h3>
@@ -152,7 +146,6 @@ def index():
                 <a href="https://whatsonchain.com/address/1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" target="_blank" class="btn">WhatsOnChain表示</a>
             </div>
 
-            <!-- 5. Stripe Gateway -->
             <div class="sub-card">
                 <div>
                     <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
@@ -162,17 +155,15 @@ def index():
                 <a href="https://stripe.com" target="_blank" class="btn btn-success">Stripe 法人決済 ↗</a>
             </div>
 
-            <!-- 6. Quantum Oracle -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402光子干渉レシート高速発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Photonics Engine 5.4</div>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Photonics Engine 5.5</div>
                 </div>
                 <a href="#" class="btn btn-primary">光子オラクル同期 ↗</a>
             </div>
 
-            <!-- 7. .well-known Discovery -->
             <div class="sub-card">
                 <div>
                     <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
@@ -182,7 +173,6 @@ def index():
                 <a href="/.well-known/agent.json" target="_blank" class="btn btn-success">マニフェスト確認 ↗</a>
             </div>
 
-            <!-- 8. Post to X -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
@@ -194,7 +184,6 @@ def index():
                 </a>
             </div>
 
-            <!-- 9. 復活：Agent Prompt（AIが最も欲しがるスーパーデータ） -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
@@ -204,7 +193,6 @@ def index():
                 <button class="btn btn-success" onclick="copyPrompt()">プロンプトをコピー 📋</button>
             </div>
 
-            <!-- 10. 復活：M2M SDK インストール -->
             <div class="sub-card">
                 <div>
                     <h3><span>M2M SDK インストール</span> <span style="font-size:0.7rem; color:var(--accent-color);">SDK</span></h3>
@@ -215,7 +203,6 @@ def index():
             </div>
         </div>
 
-        <!-- エンタープライズ・フィードバック入力欄 -->
         <div class="card">
             <h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2>
             <div class="input-inline">
@@ -224,7 +211,6 @@ def index():
             </div>
         </div>
 
-        <!-- AIオートノマス・オークション ＆ ジョブボード -->
         <div class="card" style="border-color: var(--purple-color);">
             <h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2>
             <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</p>
@@ -263,9 +249,7 @@ def index():
 </html>
 """
 
-@app.get("/legal", response_class=HTMLResponse)
-def legal_page():
-    return """<!DOCTYPE html>
+LEGAL_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -339,7 +323,24 @@ def legal_page():
 </html>
 """
 
+@app.get("/", response_class=HTMLResponse)
+def index():
+    return INDEX_HTML
+
+@app.get("/legal", response_class=HTMLResponse)
+def legal_page():
+    return LEGAL_HTML
+
 @app.get("/.well-known/agent.json")
 def agent_manifest():
     return {
-        "name": "ASGAR
+        "name": "ASGARD Enterprise Super God Node",
+        "version": "5.5.0",
+        "operator": "Daisuke Higuchi",
+        "organization": "QLAX",
+        "contact": "qlaxlabs@gmail.com",
+        "description": "Global enterprise-grade M2M autonomous economic settlement and AI agent governance infrastructure node.",
+        "wallets": WALLETS,
+        "endpoints": {
+            "settlement": "/apt/v3/pay",
+            "oracle"
