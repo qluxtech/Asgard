@@ -232,4 +232,4 @@ def verify(p: PayReq): return {"verified": True, "token": "token_ok"}
 def job(j: JobReq): return {"status": "success", "task_id": "TASK_123"}
 
 @app.post("/api/v3/feedback/submit")
-def feedback(f: FeedReq): return {"status":
+def feedback(f: FeedReq): return {"status": "success"}
