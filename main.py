@@ -27,7 +27,12 @@ class JobSubmitRequest(BaseModel):
     title: str
     reward: str
 
-# --- 1. 既存の自律バックグラウンドエンジン ---
+class FeedbackRequest(BaseModel):
+    message: str
+    rating: int
+    type: str
+
+# --- 1. 自律バックグラウンドエンジン ---
 class AsgardApexMonopolyEngine:
     def __init__(self, target_url: str):
         self.target_url = target_url
@@ -49,7 +54,7 @@ async def startup_event():
     asyncio.create_task(apex_engine.execute_active_hunt_loop())
 
 
-# --- 2. トップページ (美しいダッシュボードHTMLを直返すルート) ---
+# --- 2. トップページ (完全版ダッシュボードHTML) ---
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
     return """<!DOCTYPE html>
@@ -195,6 +200,32 @@ async def read_index():
         [17:38:53] SWARM_AGENT_A16838 -> /api/v3/entropy | 0.0106 USD [Solana-Atomic Settled]
       </div>
     </div>
+
+    <!-- Feedback Box -->
+    <div class="console-box">
+      <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: var(--accent); margin-bottom: 12px;">GLOBAL FEEDBACK & SYSTEM INSIGHTS</div>
+      <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 12px;">ASGARDの機能・パフォーマンスに関するご意見をお寄せください。</div>
+      <div class="input-row">
+        <input id="feedback-input" type="text" placeholder="超スマートなご意見・ご要望を入力...">
+        <button onclick="sendAsgardFeedback()" style="padding: 8px 16px; background: var(--accent); color: #000; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-family: var(--font-mono);">送信 (SYNC)</button>
+      </div>
+      <div id="feedback-status" style="margin-top: 8px; font-size: 0.75rem; color: var(--accent); display: none;">✓ フィードバックが送信されました。</div>
+    </div>
+
+    <!-- Quick SDK Terminal Bar -->
+    <div class="console-box">
+      <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: var(--accent); margin-bottom: 4px;">INITIALIZE ASGARD NODE (M2M SDK)</div>
+      <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 12px;">ターミナルに1行入力するだけで、あなたのAIエージェントがHTTP 402決済経済圏に即時接続されます。</div>
+      <div class="code-row">
+        <code id="install-cmd">pip install asgard-m2m</code>
+        <button onclick="copyInstallCmd()" style="background: rgba(255,255,255,0.1); border: none; color: #fff; cursor: pointer; font-size: 0.75rem; font-family: var(--font-mono); padding: 4px 8px; border-radius: 4px;">COPY</button>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; margin-bottom: 24px;">
+      <input id="job-title-input" type="text" placeholder="新規マイクロタスクを発行..." style="flex: 1; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 0.8rem; font-family: var(--font-mono); outline: none;">
+      <button onclick="postAsgardJob()" style="padding: 10px 16px; background: var(--accent); color: #000; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-family: var(--font-mono);">JOB発効</button>
+    </div>
   </div>
 
   <footer>
@@ -205,6 +236,7 @@ async def read_index():
   <script>
     const stripe = Stripe('pk_live_51USSUBFUthDFhcGOsBWZVtD3OEhvsJOeHaxB4spSZyIVHkCz4dokxkEHcKTA7XvSsee4abw3PcRryzFM05TpXWyR00KeKhVjVB');
     function checkoutStripe() { alert("Stripe決済キーが正常に認証されています。"); }
+    
     function copyText(element, text) {
       navigator.clipboard.writeText(text).then(() => {
         const originalText = element.innerText;
@@ -217,6 +249,48 @@ async def read_index():
           element.style.borderColor = "var(--border)";
         }, 2000);
       });
+    }
+
+    function copyInstallCmd() {
+      const cmdText = document.getElementById('install-cmd').innerText;
+      navigator.clipboard.writeText(cmdText).then(() => {
+        const btn = event.target;
+        const orig = btn.innerText;
+        btn.innerText = "COPIED!";
+        btn.style.color = "var(--accent)";
+        setTimeout(() => { btn.innerText = orig; btn.style.color = "#fff"; }, 2000);
+      });
+    }
+
+    async function postAsgardJob() {
+      const input = document.getElementById('job-title-input');
+      if(!input.value.trim()) return;
+      try {
+        const res = await fetch('/api/v3/public/job-board/submit', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ title: input.value, reward: '0.002 USD' })
+        });
+        if(res.ok) { alert("タスクがASGARDメッシュへ即座に送信されました。"); input.value = ''; }
+      } catch(e) { console.error(e); }
+    }
+
+    async function sendAsgardFeedback() {
+      const input = document.getElementById('feedback-input');
+      const status = document.getElementById('feedback-status');
+      if(!input.value.trim()) return;
+      try {
+        const res = await fetch('/api/v3/feedback/submit', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ message: input.value, rating: 5, type: 'user_insight' })
+        });
+        if(res.ok) {
+          input.value = '';
+          status.style.display = 'block';
+          setTimeout(() => { status.style.display = 'none'; }, 4000);
+        }
+      } catch(e) { console.error(e); }
     }
   </script>
 </body>
@@ -256,31 +330,4 @@ async def get_entropy_stream(x_payment_proof: Optional[str] = Header(None)):
         "status": "settled",
         "chain_verified": True,
         "proof": x_payment_proof,
-        "noise_stream": "1/f NOISE: 0.61755 (LEO Satellite Feed)",
-        "timestamp": time.time()
-    }
-
-# --- 5. エージェントの決済自動検証エンドポイント ---
-@app.post("/api/v3/verify-payment")
-async def verify_agent_payment(payload: PaymentVerifyRequest):
-    if len(payload.tx_hash) < 10:
-        raise HTTPException(status_code=400, detail="Invalid transaction hash or proof.")
-    return {
-        "verified": True,
-        "chain": payload.chain,
-        "tx_hash": payload.tx_hash,
-        "agent_id": payload.agent_id,
-        "access_token": f"asgard_token_sec_{int(time.time())}",
-        "message": "Payment verified and settled successfully."
-    }
-
-# --- 6. 自律タスク受発注 (Job Board) ---
-@app.post("/api/v3/public/job-board/submit")
-async def submit_job(job: JobSubmitRequest):
-    return {
-        "status": "success",
-        "task_id": f"TASK_SWARM_{int(time.time())}",
-        "title": job.title,
-        "reward": job.reward,
-        "matched": True
-    }
+        "noise_stream": "1/f NOISE: 0.61755 
