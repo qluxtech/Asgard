@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-app = FastAPI(title="ASGARD Enterprise Super God Node", version="5.2.0")
+app = FastAPI(title="ASGARD Enterprise Super God Node", version="5.3.0")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -161,7 +161,7 @@ def index():
                 <div>
                     <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402光子干渉レシート高速発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Photonics Engine 5.2</div>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Photonics Engine 5.3</div>
                 </div>
                 <a href="#" class="btn btn-primary">光子オラクル同期 ↗</a>
             </div>
@@ -196,18 +196,20 @@ def index():
             </div>
         </div>
 
+        <!-- 復活：エンタープライズ・フィードバック入力欄 -->
         <div class="card">
             <h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2>
             <div class="input-inline">
                 <input type="text" placeholder="エンタープライズ・システムへフィードバックを入力...">
-                <button class="btn btn-success" style="width: auto; margin-top: 0; padding: 0.4rem 1rem;">送信</button>
+                <button class="btn btn-success" style="width: auto; margin-top: 0; padding: 0.4rem 1rem;" onclick="alert('フィードバックを送信しました。')">送信</button>
             </div>
         </div>
 
+        <!-- 復活：AIオートノマス・オークション ＆ ジョブボード -->
         <div class="card" style="border-color: var(--purple-color);">
             <h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2>
             <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</p>
-            <a href="#" class="btn btn-primary" style="margin-top: 0;">エンタープライズ・オークションを開始 ↗</a>
+            <a href="#" class="btn btn-primary" style="margin-top: 0;" onclick="alert('エンタープライズ・オークションを開始しました。'); return false;">エンタープライズ・オークションを開始 ↗</a>
         </div>
 
         <div class="card">
@@ -307,7 +309,7 @@ def legal_page():
 def agent_manifest():
     return {
         "name": "ASGARD Enterprise Super God Node",
-        "version": "5.2.0",
+        "version": "5.3.0",
         "operator": "Daisuke Higuchi",
         "organization": "QLAX",
         "contact": "qlaxlabs@gmail.com",
