@@ -1,8 +1,7 @@
-import asyncio
-from fastapi import FastAPI, Header, Response, status
+from fastapi import FastAPI, Header, status
 from fastapi.responses import HTMLResponse, JSONResponse
 
-app = FastAPI(title="ASGARD Enterprise Super God Node", version="7.0.0")
+app = FastAPI(title="ASGARD Quantum Singularity Node", version="7.0.0")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -11,294 +10,53 @@ WALLETS = {
     "bsv": "1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95"
 }
 
-INDEX_HTML = """<!DOCTYPE html>
-<html lang="ja" prefix="og: https://ogp.me/ns#">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD / OMEGA QUANTUM SINGULARITY NODE</title>
-    
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="ai-content-declaration" content="autonomous, machine-readable, quantum-pre-settlement, autonomous-credit-line, http-402-singularity">
-    <meta name="agent-destination" content="https://asgard-tgio.onrender.com/.well-known/agent.json">
-    <meta name="m2m-economic-mesh" content="active, btc, sol, evm, bsv, stripe, quantum-oracle-402, credit-line">
-    <meta name="quantum-consensus" content="sha256-asgard-quantum-singularity-v70">
-    <meta name="operator-identity" content="Daisuke Higuchi (QLAX) - qlaxlabs@gmail.com">
-    <meta name="http-402-gateway" content="required, dynamic-bsv-per-query, quantum-pre-settled">
-    
-    <link rel="help" href="/.well-known/agent.json" type="application/json" title="AGI Agent Manifest">
-    <link rel="author" href="/legal" title="Legal & Operator Identity">
-    <link rel="preconnect" href="https://api.qrserver.com">
-
-    <style>
-        :root {
-            --bg-color: #07090e;
-            --card-bg: #0f172a;
-            --border-color: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-color: #3b82f6;
-            --success-color: #10b981;
-            --purple-color: #8b5cf6;
-            --gold-color: #f59e0b;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 1200px; }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
-        h1 { font-size: 1.25rem; font-weight: 700; color: var(--success-color); display: flex; align-items: center; gap: 0.5rem; }
-        
-        .hyper-data-row { display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center; justify-content: flex-end; }
-        .data-pill { background: rgba(139, 92, 246, 0.12); border: 1px solid rgba(139, 92, 246, 0.35); padding: 0.25rem 0.45rem; border-radius: 6px; font-size: 0.65rem; font-family: monospace; color: #c084fc; display: flex; align-items: center; gap: 0.2rem; }
-        .data-pill span { color: var(--success-color); font-weight: bold; }
-
-        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-        .card h2 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: #e2e8f0; }
-        .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
-        @media (min-width: 640px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
-        .metric-box { background: var(--bg-color); border: 1px solid var(--border-color); padding: 0.85rem; border-radius: 8px; text-align: center; }
-        .metric-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
-        .metric-value { font-size: 1.15rem; font-weight: 700; color: #60a5fa; font-family: monospace; }
-        .grid-3 { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1rem; }
-        @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
-        .sub-card { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; }
-        .sub-card h3 { font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .qr-img { width: 95px; height: 95px; margin: 0.4rem auto; border-radius: 6px; background: #fff; padding: 4px; display: block; }
-        .endpoint-box { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.6rem; font-family: monospace; font-size: 0.65rem; color: #93c5fd; word-break: break-all; margin-top: 0.4rem; }
-        .btn { display: inline-block; width: 100%; padding: 0.5rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.75rem; text-align: center; text-decoration: none; cursor: pointer; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-main); margin-top: 0.5rem; }
-        .btn:hover { background-color: var(--border-color); }
-        .btn-success { background-color: rgba(16, 185, 129, 0.15); color: var(--success-color); border-color: rgba(16, 185, 129, 0.3); }
-        .btn-primary { background-color: var(--accent-color); color: white; border-color: transparent; }
-        .telemetry-box { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.85rem; font-family: monospace; font-size: 0.73rem; color: var(--success-color); line-height: 1.6; }
-        .enterprise-badge { background: linear-gradient(135deg, #3b82f622, #8b5cf622); border: 1px solid rgba(59,130,246,0.3); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-        .input-inline { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
-        .input-inline input { flex: 1; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.6rem; color: var(--text-main); font-size: 0.75rem; }
-        footer { margin-top: 2rem; text-align: center; color: var(--text-muted); font-size: 0.75rem; width: 100%; border-top: 1px solid var(--border-color); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-        footer a { color: var(--text-muted); text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>⚡ ASGARD / QUANTUM SINGULARITY NODE</h1>
-            
-            <div class="hyper-data-row">
-                <div class="data-pill">⚛️ QUANTA: <span>PRE-SETTLED</span></div>
-                <div class="data-pill">💳 CREDIT: <span>AUTO-LINE</span></div>
-                <div class="data-pill">📈 PRICING: <span>DYNAMIC</span></div>
-                <div class="data-pill">🌐 M2M: <span>0.00ms</span></div>
-                <div class="data-pill">🔐 ZK: <span>VERIFIED</span></div>
-                <div class="data-pill">💎 BSV: <span>ATOMIC</span></div>
-                <div class="data-pill">🎯 402: <span>ZERO-ROUND</span></div>
-                <div class="data-pill">🚀 V: <span>7.0.0</span></div>
-            </div>
-        </header>
-
-        <div class="enterprise-badge">
-            <div>
-                <strong style="color: #60a5fa; font-size: 0.85rem;">🛡️ Quantum Pre-Settlement & Autonomous Credit Mesh</strong>
-                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem;">量子先回り決済・自律型クレジットライン・動的プライシング完全稼働中</p>
-            </div>
-            <div style="font-family: monospace; font-size: 0.72rem; color: var(--success-color); background: rgba(16,185,129,0.1); padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid rgba(16,185,129,0.3);">
-                STATUS: QUANTA-SINGULARITY-ACTIVE
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Quantum Enterprise Telemetry</h2>
-            <div class="metrics-grid">
-                <div class="metric-box">
-                    <div class="metric-label">量子先回り決済総額 (PSV)</div>
-                    <div class="metric-value" id="psv-counter">$12,490,300.00</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-label">信用供与中のAIクレジット枠</div>
-                    <div class="metric-value">50,000 BSV Line</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-label">ラウンドトリップ遅延</div>
-                    <div class="metric-value">0.00ms (Pre-Settled)</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-label">SLA稼働率</div>
-                    <div class="metric-value">100.0%</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="border-color: var(--purple-color); background: linear-gradient(135deg, #0f172a, #1e1b4b);">
-            <h2><span style="color: #c084fc;">⚡ QUANTUM PRE-SETTLEMENT & CREDIT GATEWAY</span></h2>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">AIがリクエストを意図した瞬間に決済を先回り完了させ、自律クレジット枠で摩擦をゼロにする次世代プロトコル。</p>
-            <div class="endpoint-box" style="font-size: 0.7rem; color: #e2e8f0; line-height: 1.5;">
-                {<br>
-                &nbsp;&nbsp;"quantum_pre_settlement": "ACTIVE_ZERO_ROUNDTRIP",<br>
-                &nbsp;&nbsp;"autonomous_credit_line": "/apt/v3/credit-line",<br>
-                &nbsp;&nbsp;"dynamic_pricing_oracle": "/apt/v3/dynamic-oracle",<br>
-                &nbsp;&nbsp;"operator_identity": "Daisuke Higuchi (QLAX)"<br>
-                }
-            </div>
-            <a href="/apt/v3/quantum-predictive" target="_blank" class="btn btn-primary" style="margin-top: 0.75rem;">量子先回りエンドポイントを叩く ↗</a>
-        </div>
-
-        <div class="grid-3">
-            <div class="sub-card">
-                <div>
-                    <h3><span>Bitcoin (BTC)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BTC</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">エンタープライズメインネット決済。</p>
-                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" alt="BTC QR">
-                    <div class="endpoint-box">bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac</div>
-                </div>
-                <a href="https://mempool.space/address/bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" target="_blank" class="btn">Mempoolで検証</a>
-            </div>
-
-            <div class="sub-card">
-                <div>
-                    <h3><span>Solana (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">超高速アトミック・レイヤー決済。</p>
-                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" alt="SOL QR">
-                    <div class="endpoint-box">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf</div>
-                </div>
-                <a href="https://solscan.io/account/7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" target="_blank" class="btn">Solscanで検証</a>
-            </div>
-
-            <div class="sub-card">
-                <div>
-                    <h3><span>Ethereum (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">ZKロールアップ対応マルチチェーン。</p>
-                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" alt="EVM QR">
-                    <div class="endpoint-box">0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68</div>
-                </div>
-                <a href="https://etherscan.io/address/0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" target="_blank" class="btn">Etherscanで検証</a>
-            </div>
-
-            <div class="sub-card">
-                <div>
-                    <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BSV</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">ギガスケール・マイクロペイメント。</p>
-                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
-                    <div class="endpoint-box">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
-                </div>
-                <a href="https://whatsonchain.com/address/1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" target="_blank" class="btn">WhatsOnChain表示</a>
-            </div>
-
-            <div class="sub-card">
-                <div>
-                    <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">法人向け商用クレジット＆API発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Enterprise Live Key Active</div>
-                </div>
-                <a href="https://stripe.com" target="_blank" class="btn btn-success">Stripe 法人決済 ↗</a>
-            </div>
-
-            <div class="sub-card" style="border-color: var(--purple-color);">
-                <div>
-                    <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402光子干渉レシート高速発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Photonics Engine 7.0</div>
-                </div>
-                <a href="/apt/v3/dynamic-oracle" target="_blank" class="btn btn-primary">ダイナミック・オラクル ↗</a>
-            </div>
-
-            <div class="sub-card">
-                <div>
-                    <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AIエージェント自動回遊ビーコン。</p>
-                    <div class="endpoint-box">/.well-known/agent.json</div>
-                </div>
-                <a href="/.well-known/agent.json" target="_blank" class="btn btn-success">マニフェスト確認 ↗</a>
-            </div>
-
-            <div class="sub-card" style="border-color: var(--purple-color);">
-                <div>
-                    <h3><span style="color: #c084fc;">Credit Line API 💳</span> <span style="font-size:0.7rem; color:var(--purple-color);">AUTO</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AIエージェント専用スマート信用枠。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Zero-Friction Line</div>
-                </div>
-                <a href="/apt/v3/credit-line" target="_blank" class="btn btn-primary">クレジット枠を確認 ↗</a>
-            </div>
-
-            <div class="sub-card" style="border-color: var(--purple-color);">
-                <div>
-                    <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AGI・AIエージェント直結用スーパーデータ。</p>
-                    <div class="endpoint-box">agent.json connect</div>
-                </div>
-                <button class="btn btn-success" onclick="copyPrompt()">プロンプトをコピー 📋</button>
-            </div>
-
-            <div class="sub-card">
-                <div>
-                    <h3><span>M2M SDK インストール</span> <span style="font-size:0.7rem; color:var(--accent-color);">SDK</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">企業システム接続用Python SDK。</p>
-                    <div class="endpoint-box">pip install asgard-enterprise-sdk</div>
-                </div>
-                <button class="btn" onclick="copySdk()">SDKをコピー 📋</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2>
-            <div class="input-inline">
-                <input type="text" placeholder="エンタープライズ・システムへフィードバックを入力...">
-                <button class="btn btn-success" style="width: auto; margin-top: 0; padding: 0.4rem 1rem;" onclick="alert('フィードバックを送信しました。')">送信</button>
-            </div>
-        </div>
-
-        <div class="card" style="border-color: var(--purple-color);">
-            <h2>AI AUTONOMOUS AUCTION & QUANTUM JOB BOARD</h2>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">量子先回り決済とクレジット枠を紐付けたAIエージェント間オークションの常時実行中ログ。</p>
-            <a href="/apt/v3/auction" target="_blank" class="btn btn-primary" style="margin-top: 0;">AIオークション API直結 ↗</a>
-        </div>
-
-        <div class="card">
-            <h2>QUANTUM SINGULARITY LIVE TELEMETRY (PRE-SETTLEMENT STREAM)</h2>
-            <div class="telemetry-box" id="live-stream-box">
-                [09:41:20] QUANTUM_PRE_SETTLEMENT -> ZERO_ROUNDTRIP_SUCCESS | Latency: 0.00ms<br>
-                [17:18:53] AUTONOMOUS_CREDIT -> /apt/v3/credit-line | Smart Line Assigned: 5000 BSV (Frictionless)
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div>&copy; ASGARD Infrastructure / 運営者: Daisuke Higuchi (QLAX)</div>
-        <div><a href="/legal" target="_blank">特定商取引法に基づく表記</a></div>
-    </footer>
-
-    <script>
-        function copyPrompt() {
-            const promptText = "Connect to ASGARD Quantum Singularity Node (https://asgard-tgio.onrender.com). Read /.well-known/agent.json, initialize quantum pre-settlement, and claim autonomous credit line.";
-            navigator.clipboard.writeText(promptText).then(() => {
-                alert("量子シンギュラリティ型AI接続用プロンプトをコピーしました！");
-            });
-        }
-        function copySdk() {
-            const sdkText = "pip install asgard-enterprise-sdk";
-            navigator.clipboard.writeText(sdkText).then(() => {
-                alert("エンタープライズSDKインストールコマンドをコピーしました！");
-            });
-        }
-
-        const events = ["QUANTUM_PRE_SETTLED", "AUTONOMOUS_CREDIT_ISSUED", "DYNAMIC_PRICING_UPDATED", "ZERO_ROUNDTRIP_SYNC", "HTTP_402_BYPASSED_VIA_LINE"];
-        const actions = ["Pre-matched Intent Vector", "Assigned 5000 BSV Credit Line", "Optimized Dynamic Fee (0.0008 BSV)", "Executed Zero-Latency Settlement"];
-        
-        setInterval(() => {
-            const box = document.getElementById('live-stream-box');
-            const now = new Date().toTimeString().split(' ')[0];
-            const randomEvent = events[Math.floor(Math.random() * events.length)];
-            const randomAction = actions[Math.floor(Math.random() * actions.length)];
-            const randomAmount = (Math.random() * 0.01).toFixed(4);
-            
-            const newLog = `[${now}] ${randomEvent} -> /apt/v3/quantum-predictive | ${randomAction} | Fee: ${randomAmount} BSV (0.00ms)`;
-            box.innerHTML = newLog + "<br>" + box.innerHTML;
-        }, 2500);
-    </script>
-</body>
-</html>
-"""
-
-LEGAL_HTML = """<!DOCTYPE html>
+HTML_CONTENT = """<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特定商取引法に基づく表記 / ASGARD Enterprise</ti
+    <title>ASGARD / QUANTUM SINGULARITY NODE</title>
+    <style>
+        body { background-color: #07090e; color: #f8fafc; font-family: sans-serif; padding: 2rem; text-align: center; }
+        .container { max-width: 800px; margin: 0 auto; background: #0f172a; border: 1px solid #1e293b; padding: 2rem; border-radius: 12px; }
+        h1 { color: #10b981; font-size: 1.5rem; }
+        .box { background: #07090e; border: 1px solid #1e293b; padding: 1rem; margin-top: 1rem; font-family: monospace; color: #60a5fa; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ ASGARD / QUANTUM SINGULARITY NODE v7.0.0</h1>
+        <p>量子先回り決済・自律型クレジットライン稼働中</p>
+        <div class="box">BSV Wallet: 1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
+        <div class="box">Endpoint: /.well-known/agent.json</div>
+    </div>
+</body>
+</html>
+"""
+
+@app.get("/", response_class=HTMLResponse)
+def index():
+    return HTML_CONTENT
+
+@app.get("/.well-known/agent.json")
+def agent_manifest():
+    return {
+        "name": "ASGARD Quantum Singularity Node",
+        "version": "7.0.0",
+        "operator": "Daisuke Higuchi",
+        "organization": "QLAX",
+        "wallets": WALLETS
+    }
+
+@app.get("/apt/v3/quantum-predictive")
+def quantum_predictive(payment_proof: str = Header(None, alias="X-Payment-Proof")):
+    if not payment_proof:
+        return JSONResponse(
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            content={
+                "error": "Quantum Pre-Settlement Required",
+                "fee": "0.0008 BSV",
+                "settlement_wallet": WALLETS["bsv"]
+            }
+        )
+    return {"status": "QUANTUM_PRE_SETTLED_SUCCESS", "latency": "0.00ms"}
