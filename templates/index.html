@@ -38,7 +38,7 @@
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1100px;
         }
 
         header {
@@ -102,6 +102,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         @media (min-width: 640px) {
@@ -132,8 +133,8 @@
             font-family: monospace;
         }
 
-        /* 完璧な6分割グリッド (3列 × 2行) */
-        .grid-6 {
+        /* 統一グリッドレイアウト (3列構成) */
+        .grid-3 {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
@@ -141,7 +142,7 @@
         }
 
         @media (min-width: 768px) {
-            .grid-6 {
+            .grid-3 {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
@@ -166,8 +167,8 @@
         }
 
         .qr-placeholder {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             background: #1f2937;
             margin: 0.5rem auto;
             border-radius: 6px;
@@ -184,7 +185,7 @@
             border-radius: 6px;
             padding: 0.5rem 0.75rem;
             font-family: monospace;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #93c5fd;
             word-break: break-all;
             margin-top: 0.5rem;
@@ -248,6 +249,9 @@
             width: 100%;
             border-top: 1px solid var(--border-color);
             padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
@@ -286,52 +290,82 @@
             </div>
         </div>
 
-        <!-- 6分割グリッド（QR 4つ ＋ バズ・拡散・オラクル枠 2つ） -->
-        <div class="grid-6">
+        <!-- 3カラム・オールインワン・グリッド（決済4種 ＋ オラクル・発見 ＋ バズ拡散） -->
+        <div class="grid-3">
             <!-- 1. Solana -->
             <div class="sub-card">
-                <h3><span>Solana 居住区</span> <span style="font-size:0.7rem; color:var(--success-color);">SSL</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">超高速ネットワークを流れる瞬時アトミック決済。</p>
-                <div class="qr-placeholder">SOL QR</div>
+                <div>
+                    <h3><span>Solana 居住区</span> <span style="font-size:0.7rem; color:var(--success-color);">SSL</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">超高速ネットワークを流れる瞬時アトミック決済。</p>
+                    <div class="qr-placeholder">SOL QR</div>
+                </div>
                 <a href="#" class="btn">SolScanで表示</a>
             </div>
             <!-- 2. EVM -->
             <div class="sub-card">
-                <h3><span>EVM ZK ブリッジ</span> <span style="font-size:0.7rem; color:#60a5fa;">ZK</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">ゼロ知識証明ベースのEVM系レイヤー間決済。</p>
-                <div class="qr-placeholder">EVM QR</div>
+                <div>
+                    <h3><span>EVM ZK ブリッジ</span> <span style="font-size:0.7rem; color:#60a5fa;">ZK</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">ゼロ知識証明ベースのEVM系レイヤー間決済。</p>
+                    <div class="qr-placeholder">EVM QR</div>
+                </div>
                 <a href="#" class="btn">Etherscanで表示</a>
             </div>
             <!-- 3. BSV -->
             <div class="sub-card">
-                <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:#f59e0b;">BSV</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">巨大スループットを放つオンチェーン・マイクロペイメント。</p>
-                <div class="qr-placeholder">BSV QR</div>
+                <div>
+                    <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:#f59e0b;">BSV</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">巨大スループットを放つオンチェーン・マイクロペイメント。</p>
+                    <div class="qr-placeholder">BSV QR</div>
+                </div>
                 <a href="#" class="btn">WhatsOnChain表示</a>
             </div>
+
             <!-- 4. Stripe -->
             <div class="sub-card">
-                <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">クレジットカ―ドによる即時決済とAPIライセンス発行。</p>
-                <div class="endpoint-box" style="text-align: center; margin: 0.5rem 0;">Live Key Integrated</div>
+                <div>
+                    <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">クレジットカ―ドによる即時決済とAPIライセンス発行。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.5rem 0;">Live Key Integrated</div>
+                </div>
                 <a href="#" class="btn btn-success">Stripe 決済を実行 ↗</a>
             </div>
-            <!-- 5. 拡散枠①: Post to X -->
+            <!-- 5. Photonic Quantum Oracle (復活) -->
             <div class="sub-card" style="border-color: var(--purple-color);">
-                <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">このM2Mインフラの存在をSNSへ瞬時に布教・拡散する。</p>
-                <div style="flex-grow: 1; display: flex; align-items: center;">
-                    <div style="font-size: 0.75rem; color: #93c5fd; background: #1f2937; padding: 0.5rem; border-radius: 6px; width: 100%; text-align: center;">One-Click Share Broadcast</div>
+                <div>
+                    <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">HTTP 402に対し光子干渉で報酬済レシートをナノ秒排出。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.5rem 0;">402 Photonics Active</div>
+                </div>
+                <a href="#" class="btn btn-primary">光子オラクル計測を実行 ↗</a>
+            </div>
+            <!-- 6. .well-known Discovery (復活) -->
+            <div class="sub-card">
+                <div>
+                    <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">AIエージェントが自動回遊してマニフェストを取得する公式ビーコン。</p>
+                    <div class="endpoint-box">/.well-known/agent.json</div>
+                </div>
+                <a href="/.well-known/agent.json" target="_blank" class="btn btn-success">マニフェストを確認 ↗</a>
+            </div>
+
+            <!-- 7. バズ枠①: Post to X -->
+            <div class="sub-card" style="border-color: var(--purple-color);">
+                <div>
+                    <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">このM2Mインフラの存在をSNSへ瞬時に布教・拡散する。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.5rem 0;">One-Click Share Broadcast</div>
                 </div>
                 <a href="https://twitter.com/intent/tweet?text=Just%20checked%20out%20ASGARD%2C%20a%20global%20M2M%20autonomous%20infrastructure%20node.%20The%20future%20of%20autonomous%20machine%20economy%20is%20here%20%F0%9F%9A%80&url=https%3A%2F%2Fasgard-tgio.onrender.com" target="_blank" class="btn btn-primary">
                     Xでシェアする 🚀
                 </a>
             </div>
-            <!-- 6. 拡散枠②: Copy Agent Prompt -->
+            <!-- 8. バズ枠②: Agent Prompt -->
             <div class="sub-card" style="border-color: var(--purple-color);">
-                <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">他AIエージェントに接続プロンプトを秒でコピー＆共有。</p>
-                <div class="endpoint-box">agent.json connect</div>
+                <div>
+                    <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">他AIエージェントに接続プロンプトを秒でコピー＆共有。</p>
+                    <div class="endpoint-box">agent.json connect</div>
+                </div>
                 <button class="btn btn-success" onclick="copyPrompt()">
                     プロンプトをコピー 📋
                 </button>
@@ -349,17 +383,20 @@
     </div>
 
     <footer>
-        &copy; ASGARD Infrastructure / 運営: QLAX &nbsp;|&nbsp; <a href="/legal" style="color: var(--text-muted); text-decoration: underline;">特商法に基づく表記</a>
+        <div>&copy; ASGARD Infrastructure / 運営: QLAX</div>
+        <div><a href="/legal" style="color: var(--text-muted); text-decoration: underline;">特商法に基づく表記</a></div>
     </footer>
 
     <script>
         // ライブカウンターのリアルタイム微増演出
         setInterval(() => {
             const nodeElem = document.getElementById('node-counter');
-            let currentNodes = parseInt(nodeElem.innerText.replace(/,/g, ''));
-            if (Math.random() > 0.5) {
-                currentNodes += Math.floor(Math.random() * 3) + 1;
-                nodeElem.innerText = currentNodes.toLocaleString();
+            if(nodeElem) {
+                let currentNodes = parseInt(nodeElem.innerText.replace(/,/g, ''));
+                if (Math.random() > 0.5) {
+                    currentNodes += Math.floor(Math.random() * 3) + 1;
+                    nodeElem.innerText = currentNodes.toLocaleString();
+                }
             }
         }, 3000);
 
