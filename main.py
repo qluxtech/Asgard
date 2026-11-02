@@ -119,7 +119,7 @@ INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- 全マルチチェーン＆機能カード群 -->
+        <!-- マルチチェーン＆全機能カード群 -->
         <div class="grid-3">
             <div class="sub-card">
                 <div>
