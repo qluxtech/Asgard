@@ -102,7 +102,6 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 0.75rem;
-            margin-bottom: 1rem;
         }
 
         @media (min-width: 640px) {
@@ -133,7 +132,8 @@
             font-family: monospace;
         }
 
-        .grid-3 {
+        /* 完璧な6分割グリッド (3列 × 2行) */
+        .grid-6 {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
@@ -141,7 +141,7 @@
         }
 
         @media (min-width: 768px) {
-            .grid-3 {
+            .grid-6 {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
@@ -151,7 +151,10 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1rem;
-            text-align: center;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .sub-card h3 {
@@ -166,7 +169,7 @@
             width: 100px;
             height: 100px;
             background: #1f2937;
-            margin: 0.75rem auto;
+            margin: 0.5rem auto;
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -185,7 +188,6 @@
             color: #93c5fd;
             word-break: break-all;
             margin-top: 0.5rem;
-            text-align: left;
         }
 
         .btn {
@@ -201,7 +203,7 @@
             border: 1px solid var(--border-color);
             background-color: var(--bg-color);
             color: var(--text-main);
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
             transition: background 0.2s;
         }
 
@@ -261,7 +263,7 @@
             </div>
         </header>
 
-        <!-- メトリクス & ライブトラフィックカウンター -->
+        <!-- ライブトラフィックカウンター -->
         <div class="card">
             <h2>Live Network Telemetry & Metrics</h2>
             <div class="metrics-grid">
@@ -284,66 +286,54 @@
             </div>
         </div>
 
-        <!-- ブロックチェーン & 決済ブリッジ 3カラム -->
-        <div class="grid-3">
-            <!-- Solana -->
+        <!-- 6分割グリッド（QR 4つ ＋ バズ・拡散・オラクル枠 2つ） -->
+        <div class="grid-6">
+            <!-- 1. Solana -->
             <div class="sub-card">
                 <h3><span>Solana 居住区</span> <span style="font-size:0.7rem; color:var(--success-color);">SSL</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); text-align: left; margin-bottom: 0.5rem;">超高速ネットワークを流れる瞬時アトミック決済。</p>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">超高速ネットワークを流れる瞬時アトミック決済。</p>
                 <div class="qr-placeholder">SOL QR</div>
                 <a href="#" class="btn">SolScanで表示</a>
             </div>
-            <!-- EVM -->
+            <!-- 2. EVM -->
             <div class="sub-card">
                 <h3><span>EVM ZK ブリッジ</span> <span style="font-size:0.7rem; color:#60a5fa;">ZK</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); text-align: left; margin-bottom: 0.5rem;">ゼロ知識証明ベースのEVM系レイヤー間決済。</p>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">ゼロ知識証明ベースのEVM系レイヤー間決済。</p>
                 <div class="qr-placeholder">EVM QR</div>
                 <a href="#" class="btn">Etherscanで表示</a>
             </div>
-            <!-- BSV -->
+            <!-- 3. BSV -->
             <div class="sub-card">
                 <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:#f59e0b;">BSV</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); text-align: left; margin-bottom: 0.5rem;">巨大スループットを放つオンチェーン・マイクロペイメント。</p>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">巨大スループットを放つオンチェーン・マイクロペイメント。</p>
                 <div class="qr-placeholder">BSV QR</div>
                 <a href="#" class="btn">WhatsOnChain表示</a>
             </div>
-        </div>
-
-        <!-- Stripe & Oracles -->
-        <div class="grid-3">
-            <div class="sub-card" style="text-align: left;">
+            <!-- 4. Stripe -->
+            <div class="sub-card">
                 <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
                 <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">クレジットカ―ドによる即時決済とAPIライセンス発行。</p>
                 <div class="endpoint-box" style="text-align: center; margin: 0.5rem 0;">Live Key Integrated</div>
                 <a href="#" class="btn btn-success">Stripe 決済を実行 ↗</a>
             </div>
-
-            <div class="sub-card" style="text-align: left;">
-                <h3><span>Photonic Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">HTTP 402リクエストに対し、光子干渉で報酬済レシートをナノ秒排出。</p>
-                <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">光子オラクル計測を実行</a>
-            </div>
-
-            <div class="sub-card" style="text-align: left;">
-                <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
-                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">AIエージェントが自動回遊してマニフェストを取得する公式ビーコン。</p>
-                <div class="endpoint-box">/.well-known/agent.json</div>
-                <a href="/.well-known/agent.json" target="_blank" class="btn btn-success" style="margin-top: 0.5rem;">マニフェストを確認 ↗</a>
-            </div>
-        </div>
-
-        <!-- 拡散・シェア用セクション（新規追加） -->
-        <div class="card" style="border-color: var(--purple-color);">
-            <h2 style="color: #c084fc;">🚀 Global Viral & Agent Share</h2>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-                この自律型インフラストラクチャをSNSへ拡散し、グローバルAI経済圏をさらに加速させましょう。
-            </p>
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                <a href="https://twitter.com/intent/tweet?text=Just%20checked%20out%20ASGARD%2C%20a%20global%20M2M%20autonomous%20infrastructure%20node.%20The%20future%20of%20autonomous%20machine%20economy%20is%20here%20%F0%9F%9A%80&url=https%3A%2F%2Fasgard-tgio.onrender.com" target="_blank" class="btn btn-primary" style="flex: 1; margin: 0; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                    Post to X 🚀
+            <!-- 5. 拡散枠①: Post to X -->
+            <div class="sub-card" style="border-color: var(--purple-color);">
+                <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">このM2Mインフラの存在をSNSへ瞬時に布教・拡散する。</p>
+                <div style="flex-grow: 1; display: flex; align-items: center;">
+                    <div style="font-size: 0.75rem; color: #93c5fd; background: #1f2937; padding: 0.5rem; border-radius: 6px; width: 100%; text-align: center;">One-Click Share Broadcast</div>
+                </div>
+                <a href="https://twitter.com/intent/tweet?text=Just%20checked%20out%20ASGARD%2C%20a%20global%20M2M%20autonomous%20infrastructure%20node.%20The%20future%20of%20autonomous%20machine%20economy%20is%20here%20%F0%9F%9A%80&url=https%3A%2F%2Fasgard-tgio.onrender.com" target="_blank" class="btn btn-primary">
+                    Xでシェアする 🚀
                 </a>
-                <button class="btn" onclick="copyPrompt()" style="flex: 1; margin: 0; background: var(--card-bg); color: var(--text-main);">
-                    Copy Agent Prompt 📋
+            </div>
+            <!-- 6. 拡散枠②: Copy Agent Prompt -->
+            <div class="sub-card" style="border-color: var(--purple-color);">
+                <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">他AIエージェントに接続プロンプトを秒でコピー＆共有。</p>
+                <div class="endpoint-box">agent.json connect</div>
+                <button class="btn btn-success" onclick="copyPrompt()">
+                    プロンプトをコピー 📋
                 </button>
             </div>
         </div>
