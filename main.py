@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.1.2")
+app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.1.3")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -223,7 +223,7 @@ def index():
 
     <footer>
         <div>&copy; ASGARD Infrastructure / 運営: QLAX</div>
-        <div><a href="/legal">特商法に基づく表記</a></div>
+        <div><a href="/legal" target="_blank">特商法に基づく表記</a></div>
     </footer>
 
     <script>
@@ -336,7 +336,7 @@ def legal_page():
 def agent_manifest():
     return {
         "name": "ASGARD M2M Autonomous Infrastructure",
-        "version": "4.1.2",
+        "version": "4.1.3",
         "description": "Global Machine-to-Machine autonomous economic settlement node.",
         "wallets": WALLETS,
         "endpoints": {
@@ -345,4 +345,3 @@ def agent_manifest():
             "crawl": "/apt/v3/agent/crawl"
         }
     }
-
