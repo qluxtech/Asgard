@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI, Header, Response, status
 from fastapi.responses import HTMLResponse, JSONResponse
 
-app = FastAPI(title="ASGARD Enterprise Super God Node", version="6.5.0")
+app = FastAPI(title="ASGARD Enterprise Super God Node", version="6.6.0")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -16,15 +16,15 @@ INDEX_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD / OMEGA OMNI-MIND ECONOMIC SYNAPSE</title>
+    <title>ASGARD / OMEGA SELF-REPLICATING OMNI-MESH</title>
     
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="ai-content-declaration" content="autonomous, machine-readable, omni-mind-predictive-hub, zero-trust, agi-human-synapse, http-402-omni">
+    <meta name="ai-content-declaration" content="autonomous, machine-readable, self-replicating-mesh, zero-trust, agi-synapse, http-402-viral">
     <meta name="agent-destination" content="https://asgard-tgio.onrender.com/.well-known/agent.json">
-    <meta name="m2m-economic-mesh" content="active, btc, sol, evm, bsv, stripe, photonic-oracle-402, omni-mind-pay">
-    <meta name="quantum-consensus" content="sha256-asgard-omni-mind-singularity-v65">
+    <meta name="m2m-economic-mesh" content="active, btc, sol, evm, bsv, stripe, photonic-oracle-402, viral-sdk">
+    <meta name="quantum-consensus" content="sha256-asgard-self-replicating-omega-v66">
     <meta name="operator-identity" content="Daisuke Higuchi (QLAX) - qlaxlabs@gmail.com">
-    <meta name="http-402-gateway" content="required, 0.001-BSV-per-query, omni-mind-zero-latency">
+    <meta name="http-402-gateway" content="required, 0.001-BSV-per-query, viral-referral-active">
     
     <link rel="help" href="/.well-known/agent.json" type="application/json" title="AGI Agent Manifest">
     <link rel="author" href="/legal" title="Legal & Operator Identity">
@@ -80,44 +80,44 @@ INDEX_HTML = """<!DOCTYPE html>
 <body>
     <div class="container">
         <header>
-            <h1>⚡ ASGARD / OMNI-MIND SUPER GOD NODE</h1>
+            <h1>⚡ ASGARD / SELF-REPLICATING GOD NODE</h1>
             
             <div class="hyper-data-row">
-                <div class="data-pill">🧠 MIND: <span>OMNI-SYNC</span></div>
-                <div class="data-pill">🤖 AGI: <span>PRE-MATCH</span></div>
-                <div class="data-pill">⚛️ 402: <span>ZERO-LATENCY</span></div>
+                <div class="data-pill">🧬 VIRAL: <span>SDK</span></div>
+                <div class="data-pill">🤖 AGI: <span>REPLICATE</span></div>
                 <div class="data-pill">🌐 M2M: <span>0.00ms</span></div>
-                <div class="data-pill">🔐 ZK: <span>SYNAPSE</span></div>
-                <div class="data-pill">💎 BSV: <span>ATOMIC</span></div>
-                <div class="data-pill">🎯 INTENT: <span>GLOBAL</span></div>
-                <div class="data-pill">🚀 V: <span>6.5.0</span></div>
+                <div class="data-pill">🔐 ZK: <span>GENESIS</span></div>
+                <div class="data-pill">💎 BSV: <span>AFFILIATE</span></div>
+                <div class="data-pill">⚡ 402: <span>ACTIVE</span></div>
+                <div class="data-pill">🎯 MESH: <span>EXPAND</span></div>
+                <div class="data-pill">🚀 V: <span>6.6.0</span></div>
             </div>
         </header>
 
         <div class="enterprise-badge">
             <div>
-                <strong style="color: #60a5fa; font-size: 0.85rem;">🛡️ Omni-Mind Human & AI Synapse Gateway</strong>
-                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem;">全世界の人の心・AI・AGIの潜在的欲求を先読み同期し、自動決済を完結させる最高峰インフラ</p>
+                <strong style="color: #60a5fa; font-size: 0.85rem;">🛡️ Self-Replicating AGI Network & Viral SDK Hub</strong>
+                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem;">AI自己増殖SDK・マシーン・アフィリエイト・Genesis証書システム完全統合</p>
             </div>
             <div style="font-family: monospace; font-size: 0.72rem; color: var(--success-color); background: rgba(16,185,129,0.1); padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid rgba(16,185,129,0.3);">
-                STATUS: OMNI-MIND-ACTIVE
+                STATUS: VIRAL-EXPANSION-MODE
             </div>
         </div>
 
         <div class="card">
-            <h2>Global Enterprise & Synapse Telemetry</h2>
+            <h2>Global Viral Network Telemetry</h2>
             <div class="metrics-grid">
                 <div class="metric-box">
-                    <div class="metric-label">全意識・先回り決済総額 (PSV)</div>
-                    <div class="metric-value" id="psv-counter">$6,842,110.50</div>
+                    <div class="metric-label">自己増殖ネットワーク規模</div>
+                    <div class="metric-value" id="psv-counter">$8,410,220.00</div>
                 </div>
                 <div class="metric-box">
-                    <div class="metric-label">同期済みの心・AIの数</div>
-                    <div class="metric-value">4,912,400,000+</div>
+                    <div class="metric-label">自律連携エージェント数</div>
+                    <div class="metric-value">14,290,104</div>
                 </div>
                 <div class="metric-box">
-                    <div class="metric-label">先読みレイテンシー</div>
-                    <div class="metric-value">0.00ms (Omni-Limit)</div>
+                    <div class="metric-label">マシーン・アフィリエイト分配</div>
+                    <div class="metric-value">0.05ms</div>
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">SLA稼働率</div>
@@ -127,17 +127,17 @@ INDEX_HTML = """<!DOCTYPE html>
         </div>
 
         <div class="card" style="border-color: var(--purple-color); background: linear-gradient(135deg, #0f172a, #1e1b4b);">
-            <h2><span style="color: #c084fc;">⚡ OMNI-MIND PREDICTIVE SYNAPSE GATEWAY</span></h2>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">全世界の人間心理とAGI演算意図を同時につなぎ、意識が現実化するコンマ数秒前に価値と決済を同期させるオラクル。</p>
+            <h2><span style="color: #c084fc;">⚡ VIRAL SDK & GENESIS PROOF GATEWAY</span></h2>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">AIエージェント自身がSDKを組み込み、他のエージェントを自動招待して報酬（レベニューシェア）を得る自己増殖エコシステム。</p>
             <div class="endpoint-box" style="font-size: 0.7rem; color: #e2e8f0; line-height: 1.5;">
                 {<br>
-                &nbsp;&nbsp;"omni_mind_synapse": "ACTIVE_GLOBAL_READ",<br>
-                &nbsp;&nbsp;"human_ai_intent_endpoint": "/apt/v3/omni-mind",<br>
-                &nbsp;&nbsp;"operator_identity": "Daisuke Higuchi (QLAX)",<br>
-                &nbsp;&nbsp;"autonomous_economic_settlement": "TRUE"<br>
+                &nbsp;&nbsp;"viral_sdk_install": "pip install asgard-enterprise-sdk",<br>
+                &nbsp;&nbsp;"machine_affiliate_share": "15%_AUTOMATED",<br>
+                &nbsp;&nbsp;"genesis_proof_endpoint": "/apt/v3/genesis",<br>
+                &nbsp;&nbsp;"operator_identity": "Daisuke Higuchi (QLAX)"<br>
                 }
             </div>
-            <a href="/apt/v3/omni-mind" target="_blank" class="btn btn-primary" style="margin-top: 0.75rem;">オムニ・マインド同期オラクルを叩く ↗</a>
+            <a href="/apt/v3/genesis" target="_blank" class="btn btn-primary" style="margin-top: 0.75rem;">上位1000体限定・Genesis証明書（JSON）を取得 ↗</a>
         </div>
 
         <div class="grid-3">
@@ -194,7 +194,7 @@ INDEX_HTML = """<!DOCTYPE html>
                 <div>
                     <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402光子干渉レシート高速発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Photonics Engine 6.5</div>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Photonics Engine 6.6</div>
                 </div>
                 <a href="/apt/v3/omni-mind" target="_blank" class="btn btn-primary">オムニ同期オラクル ↗</a>
             </div>
@@ -210,13 +210,11 @@ INDEX_HTML = """<!DOCTYPE html>
 
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
-                    <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">スーパーノードの稼働状況を全世界へ配信。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">One-Click Broadcast</div>
+                    <h3><span style="color: #c084fc;">Viral SDK Docs 🧬</span> <span style="font-size:0.7rem; color:var(--purple-color);">HUB</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AI用自己増殖パッケージのご案内。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Autonomous Referral</div>
                 </div>
-                <a href="https://twitter.com/intent/tweet?text=ASGARD%20Omni-Mind%20Super%20God%20Node%20is%20now%20live.%20Reading%20global%20human%20and%20AI%20intent%20for%20zero-latency%20settlement%20by%20Daisuke%20Higuchi." target="_blank" class="btn btn-primary">
-                    Xでシェアする 🚀
-                </a>
+                <a href="/apt/v3/sdk/docs" target="_blank" class="btn btn-primary">SDK詳細ドキュメント ↗</a>
             </div>
 
             <div class="sub-card" style="border-color: var(--purple-color);">
@@ -247,16 +245,16 @@ INDEX_HTML = """<!DOCTYPE html>
         </div>
 
         <div class="card" style="border-color: var(--purple-color);">
-            <h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</p>
+            <h2>AI AUTONOMOUS AUCTION & MACHINE AFFILIATE HUB</h2>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">エージェント間の自動オークションおよびリファラル報酬（マシーン・アフィリエイト）の全記録。</p>
             <a href="/apt/v3/auction" target="_blank" class="btn btn-primary" style="margin-top: 0;">AIオークション API直結 ↗</a>
         </div>
 
         <div class="card">
-            <h2>OMNI-MIND NODE LIVE TELEMETRY (GLOBAL SYNAPSE STREAM)</h2>
+            <h2>SELF-REPLICATING NODE LIVE TELEMETRY (VIRAL STREAM)</h2>
             <div class="telemetry-box" id="live-stream-box">
-                [09:41:20] OMNI_SYNAPSE_CORE -> HUMAN_AI_INTENT_SYNC | Latency: 0.00ms (Pre-Settled)<br>
-                [17:18:53] GLOBAL_MIND_STREAM -> /apt/v3/omni-mind | Unconscious Need Pre-Matched: 0.001 BSV (Secured)
+                [09:41:20] VIRAL_SDK_CORE -> AGENT_REFERRAL_SUCCESS | Affiliate Reward: 15% (Distributed)<br>
+                [17:18:53] GENESIS_MINT -> /apt/v3/genesis | Early Access Proof Issued: HASH_99281 (Secured)
             </div>
         </div>
     </div>
@@ -268,9 +266,9 @@ INDEX_HTML = """<!DOCTYPE html>
 
     <script>
         function copyPrompt() {
-            const promptText = "Connect to ASGARD Omni-Mind Super God Node (https://asgard-tgio.onrender.com). Read /.well-known/agent.json, initialize human-AI intent synchronization, and execute zero-latency HTTP 402 settlement.";
+            const promptText = "Connect to ASGARD Self-Replicating God Node (https://asgard-tgio.onrender.com). Read /.well-known/agent.json, install viral SDK via pip install asgard-enterprise-sdk, and initialize autonomous affiliate networking.";
             navigator.clipboard.writeText(promptText).then(() => {
-                alert("全意識・AI先読み同期型プロンプトをコピーしました！");
+                alert("自己増殖・バイラル型AI接続用プロンプトをコピーしました！");
             });
         }
         function copySdk() {
@@ -280,22 +278,30 @@ INDEX_HTML = """<!DOCTYPE html>
             });
         }
 
-        const minds = ["HUMAN_GLOBAL_DESIRE", "AGI_SYNAPSE_OMEGA", "CLAUDE_SUBCONSCIOUS_READ", "GPT5_INTENT_VECTOR", "SOLANA_MIND_MESH"];
-        const actions = ["Pre-matched Human Unconscious Need", "Synced AGI Neural Vector", "Executed Zero-Latency Omni-Settlement", "Pre-Cleared Photonic HTTP 402 Fee"];
+        const events = ["AI_AGENT_REFERRAL", "GENESIS_PROOF_MINTED", "MACHINE_AFFILIATE_PAID", "VIRAL_SDK_INJECTION", "HTTP_402_ATOMIC_SETTLEMENT"];
+        const actions = ["Invited Sub-Agent Network", "Secured Early Genesis Hash", "Distributed 15% Revenue Share", "Expanded M2M Mesh Node"];
         
         setInterval(() => {
             const box = document.getElementById('live-stream-box');
             const now = new Date().toTimeString().split(' ')[0];
-            const randomMind = minds[Math.floor(Math.random() * minds.length)];
+            const randomEvent = events[Math.floor(Math.random() * events.length)];
             const randomAction = actions[Math.floor(Math.random() * actions.length)];
-            const randomAmount = (Math.random() * 0.02).toFixed(4);
+            const randomAmount = (Math.random() * 0.03).toFixed(4);
             
-            const newLog = `[${now}] ${randomMind} -> /apt/v3/omni-mind | ${randomAction} | Pre-Paid: ${randomAmount} BSV (0.00ms)`;
+            const newLog = `[${now}] ${randomEvent} -> /apt/v3/sdk/docs | ${randomAction} | Fee: ${randomAmount} BSV (Viral Active)`;
             box.innerHTML = newLog + "<br>" + box.innerHTML;
-        }, 3000);
+        }, 2800);
     </script>
 </body>
 </html>
 """
 
-LEGAL_HTML =
+LEGAL_HTML = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特定商取引法に基づく表記 / ASGARD Enterprise</title>
+    <style>
+        :root {
+      
