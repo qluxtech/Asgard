@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.1.3")
+app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.1.4")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -295,7 +295,7 @@ def legal_page():
             </tr>
             <tr>
                 <th>運営統括責任者</th>
-                <td>樋口 大輔</td>
+                <td>Daisuke Higuchi</td>
             </tr>
             <tr>
                 <th>所在地</th>
@@ -336,7 +336,8 @@ def legal_page():
 def agent_manifest():
     return {
         "name": "ASGARD M2M Autonomous Infrastructure",
-        "version": "4.1.3",
+        "version": "4.1.4",
+        "operator": "Daisuke Higuchi",
         "description": "Global Machine-to-Machine autonomous economic settlement node.",
         "wallets": WALLETS,
         "endpoints": {
