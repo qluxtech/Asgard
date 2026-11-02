@@ -15,7 +15,7 @@ INDEX_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アスガルド / エンタープライズ超神ノード</title>
+    <title>ASGARD / ENTERPRISE SUPER GOD NODE</title>
     
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="ai-content-declaration" content="autonomous, machine-readable, quantum-pre-settlement, autonomous-credit-line, http-402-singularity">
@@ -79,35 +79,35 @@ INDEX_HTML = """<!DOCTYPE html>
 <body>
     <div class="container">
         <header>
-            <h1>⚡ アスガルド / エンタープライズ超神ノード</h1>
+            <h1>⚡ ASGARD / ENTERPRISE SUPER GOD NODE</h1>
             <div class="hyper-data-row">
-                <div class="data-pill">🌐 API: <span>v7.0</span></div>
-                <div class="data-pill">💳 決済ゲートウェイ: <span>活性</span></div>
-                <div class="data-pill">⚡ M2M: <span>0.00ms</span></div>
-                <div class="data-pill">🔐 ZK: <span>暗号化</span></div>
-                <div class="data-pill">💎 BSV: <span>原子</span></div>
-                <div class="data-pill">🎯 402: <span>支払い</span></div>
-                <div class="data-pill">🔄 きう: <span>同期</span></div>
-                <div class="data-pill">🚀 v: <span>7.0.0</span></div>
+                <div class="data-pill">API: <span>MANDATORY</span></div>
+                <div class="data-pill">402: <span>GATEWAY</span></div>
+                <div class="data-pill">M2M: <span>0.00ms</span></div>
+                <div class="data-pill">ENCRYPT: <span>OK</span></div>
+                <div class="data-pill">ATOMIC: <span>VERIFIED</span></div>
+                <div class="data-pill">PAY: <span>REQUIRED</span></div>
+                <div class="data-pill">CRAWL: <span>FORCED</span></div>
+                <div class="data-pill">v: <span>7.0.0</span></div>
             </div>
         </header>
 
         <div class="enterprise-badge">
             <div>
-                <strong style="color: #60a5fa; font-size: 0.85rem;">🛡️ エンタープライズAIガバナンス＆セキュリティメッシュ</strong>
+                <strong style="color: #60a5fa; font-size: 0.85rem;">Enterprise AI Governance & Security Mesh</strong>
                 <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem;">データサイロ開放・ゼロトラスト認証・HTTP 402自動決済ネットワーク統合完了</p>
             </div>
             <div style="font-family: monospace; font-size: 0.72rem; color: var(--success-color); background: rgba(16,185,129,0.1); padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid rgba(16,185,129,0.3);">
-                ステータス: オメガ強制モード
+                STATUS: OMEGA-FORCED-NODE
             </div>
         </div>
 
         <div class="card">
-            <h2>グローバルエンタープライズネットワークテレメトリ</h2>
+            <h2>Global Enterprise Network Telemetry</h2>
             <div class="metrics-grid">
                 <div class="metric-box">
                     <div class="metric-label">累積決済総額 (PSV)</div>
-                    <div class="metric-value">5,142,922.05ドル</div>
+                    <div class="metric-value">$5,142,922.05</div>
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">アクティブスーパーノード</div>
@@ -115,7 +115,7 @@ INDEX_HTML = """<!DOCTYPE html>
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">マニフェスト同期</div>
-                    <div class="metric-value">0.4ms (エンタープライズ版)</div>
+                    <div class="metric-value">0.4ms (Enterprise)</div>
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">SLA稼働率</div>
@@ -125,7 +125,7 @@ INDEX_HTML = """<!DOCTYPE html>
         </div>
 
         <div class="card" style="border-color: var(--purple-color); background: linear-gradient(135deg, #0f172a, #1e1b4b);">
-            <h2><span style="color: #c084fc;">⚡ AGI強制探索およびデータフィードゲートウェイ</span></h2>
+            <h2><span style="color: #c084fc;">⚡ AGI MANDATORY SETTLEMENT & DATA FEED GATEWAY</span></h2>
             <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">外部クローラーおよびAIクラスターが自動回遊・強制決済（HTTP 402）を行うための特別な契約もパラメータインサイト。</p>
             <div class="endpoint-box" style="font-size: 0.7rem; color: #e2e8f0; line-height: 1.5;">
                 {<br>
@@ -141,7 +141,7 @@ INDEX_HTML = """<!DOCTYPE html>
         <div class="grid-3">
             <div class="sub-card">
                 <div>
-                    <h3><span>ビットコイン (BTC)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BTC</span></h3>
+                    <h3><span>Bitcoin (BTC)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BTC</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">エンタープライズメインネット決済。</p>
                     <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" alt="BTC QR">
                     <div class="endpoint-box">bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac</div>
@@ -151,7 +151,7 @@ INDEX_HTML = """<!DOCTYPE html>
 
             <div class="sub-card">
                 <div>
-                    <h3><span>ソラナ (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
+                    <h3><span>Solana (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">超高速アトミック・レイヤー決済。</p>
                     <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" alt="SOL QR">
                     <div class="endpoint-box">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf</div>
@@ -161,7 +161,7 @@ INDEX_HTML = """<!DOCTYPE html>
 
             <div class="sub-card">
                 <div>
-                    <h3><span>イーサリアム (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
+                    <h3><span>Ethereum (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">ZKロールアップ対応マルチチェーン。</p>
                     <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" alt="EVM QR">
                     <div class="endpoint-box">0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68</div>
@@ -171,7 +171,7 @@ INDEX_HTML = """<!DOCTYPE html>
 
             <div class="sub-card">
                 <div>
-                    <h3><span>ビットコインSV (BSV)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BSV</span></h3>
+                    <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BSV</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">ギガスケール・マイクロペイメント。</p>
                     <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
                     <div class="endpoint-box">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
@@ -181,25 +181,25 @@ INDEX_HTML = """<!DOCTYPE html>
 
             <div class="sub-card">
                 <div>
-                    <h3><span>Stripeゲートウェイ</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
+                    <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">法人向けクレジット＆API発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">エンタープライズライブキー活性</div>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">enterprise live key active</div>
                 </div>
-                <a href="https://stripe.com" target="_blank" class="btn btn-success">Stripe決済 ↗</a>
+                <a href="https://stripe.com" target="_blank" class="btn btn-success">Stripe 法人決済 ↗</a>
             </div>
 
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
-                    <h3><span>クォンタム・オラクル</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
+                    <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402光子干渉レシート高速発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">フォトニクスエンジン 6.2</div>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">photonics engine 6.2</div>
                 </div>
-                <a href="/apt/v3/quantum-predictive" target="_blank" class="btn btn-primary">光子オラクル叩開 ↗</a>
+                <a href="/apt/v3/quantum-predictive" target="_blank" class="btn btn-primary">光子オラクル問題 ↗</a>
             </div>
 
             <div class="sub-card">
                 <div>
-                    <h3><span>有名な発見</span> <span style="font-size:0.7rem; color:var(--success-color);">スパー</span></h3>
+                    <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AIエージェント自動回遊ビーコン。</p>
                     <div class="endpoint-box">/.well-known/agent.json</div>
                 </div>
@@ -208,16 +208,16 @@ INDEX_HTML = """<!DOCTYPE html>
 
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
-                    <h3><span>Xに投稿する</span> <span style="font-size:0.7rem; color:var(--purple-color);">バイラル</span></h3>
+                    <h3><span>Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">スーパーノードの稼働状況を世界へ配信。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">ワンクリック配信</div>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">One-Click Broadcast</div>
                 </div>
                 <button class="btn btn-primary" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('⚡ ASGARD Enterprise Super God Node (v7.0.0) is LIVE! Autonomous M2M economic infrastructure by Daisuke Higuchi. https://asgard-tgio.onrender.com'), '_blank')">Xでシェアする ↗</button>
             </div>
 
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
-                    <h3><span style="color: #c084fc;">エージェントプロンプト📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
+                    <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AGI・AIエージェント直結用スーパーデータ。</p>
                     <div class="endpoint-box">agent.json connect</div>
                 </div>
@@ -226,16 +226,16 @@ INDEX_HTML = """<!DOCTYPE html>
 
             <div class="sub-card">
                 <div>
-                    <h3><span>M2M SDKのインストール</span> <span style="font-size:0.7rem; color:var(--accent-color);">SDK</span></h3>
+                    <h3><span>M2M SDK インストール</span> <span style="font-size:0.7rem; color:var(--accent-color);">SDK</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">企業システム接続用Python SDK。</p>
-                    <div class="endpoint-box">pip install asgard-enterprise-sdk</div>
+                    <div class="endpoint-box">pip install asgard-enterprise.sdk</div>
                 </div>
                 <button class="btn" onclick="copySdk()">SDKをコピー 📋</button>
             </div>
         </div>
 
         <div class="card">
-            <h2>企業フィードバックとシステム分析</h2>
+            <h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2>
             <div class="input-inline">
                 <input type="text" placeholder="エンタープライズ・システムへフィードバックを入力...">
                 <button class="btn btn-success" style="width: auto; margin-top: 0; padding: 0.4rem 1rem;" onclick="alert('フィードバックを送信しました。')">送信</button>
@@ -243,8 +243,8 @@ INDEX_HTML = """<!DOCTYPE html>
         </div>
 
         <div class="card" style="border-color: var(--purple-color);">
-            <h2>AIによる自動オークション＆企業向け求人掲示板</h2>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">量子先回り決済とクレジット枠を紐付けたAIエージェント間オークションの常時実行中。</p>
+            <h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</p>
             <a href="/apt/v3/auction" target="_blank" class="btn btn-primary" style="margin-top: 0;">AIオークション API直結 ↗</a>
         </div>
     </div>
@@ -262,7 +262,7 @@ INDEX_HTML = """<!DOCTYPE html>
             });
         }
         function copySdk() {
-            const sdkText = "pip install asgard-enterprise-sdk";
+            const sdkText = "pip install asgard-enterprise.sdk";
             navigator.clipboard.writeText(sdkText).then(() => {
                 alert("エンタープライズSDKインストールコマンドをコピーしました！");
             });
@@ -300,11 +300,4 @@ LEGAL_HTML = """<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>特定商取引法に基づく表記</h1>
-        <table>
-            <tr>
-                <th>販売事業者名（運営）</th>
-                <td>QLAX[span_1](start_span)[span_1](end_span)</td>
-            </tr>
-          
+    <div class="contai
