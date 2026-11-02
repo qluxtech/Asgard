@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-app = FastAPI(title="ASGARD Enterprise Super God Node", version="5.0.0")
+app = FastAPI(title="ASGARD Enterprise Super God Node", version="5.0.1")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -81,7 +81,6 @@ def index():
             </div>
         </header>
 
-        <!-- エンタープライズ・ガバナンスバナー -->
         <div class="enterprise-badge">
             <div>
                 <strong style="color: #60a5fa; font-size: 0.85rem;">🛡️ Enterprise AI Governance & Security Mesh</strong>
@@ -92,7 +91,6 @@ def index():
             </div>
         </div>
 
-        <!-- ライブネットワークテレメトリー -->
         <div class="card">
             <h2>Global Enterprise Network Telemetry</h2>
             <div class="metrics-grid">
@@ -115,9 +113,7 @@ def index():
             </div>
         </div>
 
-        <!-- 3カラム・グリッド（全機能＋エンタープライズ統合） -->
         <div class="grid-3">
-            <!-- 1. Bitcoin -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin (BTC)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BTC</span></h3>
@@ -128,7 +124,6 @@ def index():
                 <a href="https://mempool.space/address/bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" target="_blank" class="btn">Mempoolで検証</a>
             </div>
 
-            <!-- 2. Solana -->
             <div class="sub-card">
                 <div>
                     <h3><span>Solana (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
@@ -139,7 +134,6 @@ def index():
                 <a href="https://solscan.io/account/7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" target="_blank" class="btn">Solscanで検証</a>
             </div>
 
-            <!-- 3. Ethereum -->
             <div class="sub-card">
                 <div>
                     <h3><span>Ethereum (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
@@ -150,7 +144,6 @@ def index():
                 <a href="https://etherscan.io/address/0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" target="_blank" class="btn">Etherscanで検証</a>
             </div>
 
-            <!-- 4. BSV -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BSV</span></h3>
@@ -161,7 +154,6 @@ def index():
                 <a href="https://whatsonchain.com/address/1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" target="_blank" class="btn">WhatsOnChain表示</a>
             </div>
 
-            <!-- 5. Stripe Gateway -->
             <div class="sub-card">
                 <div>
                     <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
@@ -171,7 +163,6 @@ def index():
                 <a href="https://stripe.com" target="_blank" class="btn btn-success">Stripe 法人決済 ↗</a>
             </div>
 
-            <!-- 6. Quantum Oracle -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
@@ -181,7 +172,6 @@ def index():
                 <a href="#" class="btn btn-primary">光子オラクル同期 ↗</a>
             </div>
 
-            <!-- 7. .well-known Discovery -->
             <div class="sub-card">
                 <div>
                     <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
@@ -191,7 +181,6 @@ def index():
                 <a href="/.well-known/agent.json" target="_blank" class="btn btn-success">マニフェスト確認 ↗</a>
             </div>
 
-            <!-- 8. Post to X -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
@@ -203,7 +192,6 @@ def index():
                 </a>
             </div>
 
-            <!-- 9. Agent Prompt -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
@@ -213,7 +201,6 @@ def index():
                 <button class="btn btn-success" onclick="copyPrompt()">プロンプトをコピー 📋</button>
             </div>
 
-            <!-- 10. M2M SDK インストール -->
             <div class="sub-card">
                 <div>
                     <h3><span>M2M SDK インストール</span> <span style="font-size:0.7rem; color:var(--accent-color);">SDK</span></h3>
@@ -224,7 +211,6 @@ def index():
             </div>
         </div>
 
-        <!-- フィードバック & エンタープライズ・オークション -->
         <div class="card">
             <h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2>
             <div class="input-inline">
@@ -239,7 +225,6 @@ def index():
             <a href="#" class="btn btn-primary" style="margin-top: 0;">エンタープライズ・オークションを開始 ↗</a>
         </div>
 
-        <!-- ライブテレメトリーログ -->
         <div class="card">
             <h2>SUPER GOD NODE LIVE TELEMETRY</h2>
             <div class="telemetry-box" id="telemetry-log">
@@ -327,4 +312,20 @@ def legal_page():
             </tr>
             <tr>
                 <th>所在地</th>
- 
+                <td>ご請求があり次第遅滞なく開示いたします</td>
+            </tr>
+            <tr>
+                <th>連絡先・メールアドレス</th>
+                <td>qlaxlabs@gmail.com</td>
+            </tr>
+            <tr>
+                <th>販売価格・サービス料金</th>
+                <td>各エンタープライズサービス・APIプランに表示される金額（消費税込み）</td>
+            </tr>
+            <tr>
+                <th>代金の支払い方法</th>
+                <td>法人向けクレジットカード決済（Stripe）、マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）</td>
+            </tr>
+            <tr>
+                <th>代金の支払い時期</th>
+            
