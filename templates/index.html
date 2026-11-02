@@ -181,12 +181,20 @@
       color: var(--text-secondary);
       word-break: break-all;
       background: rgba(0,0,0,0.5);
-      padding: 8px;
+      padding: 10px;
       border-radius: 6px;
       border: 1px solid var(--border);
       width: 100%;
       margin-top: 10px;
       text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .wallet-addr-text:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,255,128,0.03);
     }
     .action-btn {
       width: 100%;
@@ -341,7 +349,7 @@
       </div>
     </div>
 
-    <!-- Gateway Section (Your Real Wallet Addresses Integrated) -->
+    <!-- Gateway Section (Tap to Copy Enabled) -->
     <div class="gateway-section">
       <!-- Solana Gateway -->
       <div class="gateway-card">
@@ -353,7 +361,7 @@
         <div class="qr-container">
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf" alt="Solana QR">
         </div>
-        <div class="wallet-addr-text">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf</div>
+        <div class="wallet-addr-text" onclick="copyText(this, '7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf')">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf</div>
         <a href="https://solscan.io/account/7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf" target="_blank" class="action-btn">Solscanで表示</a>
       </div>
 
@@ -367,7 +375,7 @@
         <div class="qr-container">
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" alt="Ethereum QR">
         </div>
-        <div class="wallet-addr-text">0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68</div>
+        <div class="wallet-addr-text" onclick="copyText(this, '0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68')">0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68</div>
         <a href="https://etherscan.io/address/0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" target="_blank" class="action-btn">Etherscanで表示</a>
       </div>
 
@@ -381,7 +389,7 @@
         <div class="qr-container">
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1Mb66iHohUEg8eAnkgV9uTTVR235tuy95" alt="BSV QR">
         </div>
-        <div class="wallet-addr-text">1Mb66iHohUEg8eAnkgV9uTTVR235tuy95</div>
+        <div class="wallet-addr-text" onclick="copyText(this, '1Mb66iHohUEg8eAnkgV9uTTVR235tuy95')">1Mb66iHohUEg8eAnkgV9uTTVR235tuy95</div>
         <a href="https://whatsonchain.com/address/1Mb66iHohUEg8eAnkgV9uTTVR235tuy95" target="_blank" class="action-btn">WhatsOnChainで表示</a>
       </div>
 
@@ -493,6 +501,21 @@
       alert("Stripe決済キーが正常に認証されています。");
     }
 
+    // タップしてアドレスをコピーする汎用関数
+    function copyText(element, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = element.innerText;
+        element.innerText = "✓ COPIED TO CLIPBOARD!";
+        element.style.color = "var(--accent)";
+        element.style.borderColor = "var(--accent)";
+        setTimeout(() => {
+          element.innerText = originalText;
+          element.style.color = "var(--text-secondary)";
+          element.style.borderColor = "var(--border)";
+        }, 2000);
+      });
+    }
+
     function copyInstallCmd() {
       const cmdText = document.getElementById('install-cmd').innerText;
       navigator.clipboard.writeText(cmdText).then(() => {
@@ -527,16 +550,4 @@
       try {
         const res = await fetch('/api/v3/feedback/submit', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ message: input.value, rating: 5, type: 'user_insight' })
-        });
-        if(res.ok) {
-          input.value = '';
-          status.style.display = 'block';
-          setTimeout(() => { status.style.display = 'none'; }, 4000);
-        }
-      } catch(e) { console.error(e); }
-    }
-  </script>
-</body>
-</html>
+          headers: {'Content-Type': 'application/json'}
