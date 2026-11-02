@@ -3,569 +3,542 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASGARD / QLAX — Autonomous M2M & Human Economic Infrastructure</title>
+  <title>ASGARD / Autonomous M2M Economic Infrastructure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg: #030407;
-      --surface: #0a0d14;
-      --border: rgba(255, 255, 255, 0.08);
-      --text-primary: #f1f5f9;
-      --text-secondary: #8892b0;
-      --accent: #38bdf8;
-      --accent-green: #34d399;
-      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --bg: #030305;
+      --surface: #0a0a0f;
+      --surface-glass: rgba(10, 10, 15, 0.7);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-glow: rgba(0, 255, 128, 0.3);
+      --text: #f0f0f5;
+      --text-secondary: #888898;
+      --accent: #00ff80;
+      --accent-blue: #00f0ff;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: var(--bg);
-      color: var(--text-primary);
+      color: var(--text);
       font-family: var(--font-sans);
-      padding: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
+    /* Background Ambient Glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0,255,128,0.07) 0%, rgba(0,240,255,0.02) 50%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 32px 20px;
+    }
+
+    /* Header / Nav */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 48px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 16px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-      gap: 12px;
     }
     .logo {
       font-family: var(--font-mono);
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: var(--accent);
-      letter-spacing: 1px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
     }
     .nav-links {
       display: flex;
-      gap: 16px;
+      gap: 20px;
       font-family: var(--font-mono);
       font-size: 0.8rem;
     }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
     .nav-links a:hover { color: var(--accent); }
 
-    /* 人間向けイントロ案内バナー */
-    .intro-banner {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      border-radius: 6px;
+    /* Hero Impact Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
     }
-    .intro-banner h2 {
-      font-size: 0.95rem;
-      font-family: var(--font-mono);
-      color: var(--text-primary);
-      margin-bottom: 6px;
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #fff 0%, #a0a0c0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .intro-banner p {
-      font-size: 0.82rem;
+    .hero p {
       color: var(--text-secondary);
-      line-height: 1.5;
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
     }
 
-        <!-- AI Agent Instant Onboarding Terminal -->
-    <div style="background: #090d16; border: 1px solid #1f6feb; border-radius: 8px; padding: 16px; margin-bottom: 24px; box-shadow: 0 0 15px rgba(31, 111, 235, 0.15);">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <span style="font-size: 0.85rem; font-family: var(--font-mono); color: #58a6ff; font-weight: bold;">🤖 AI AGENT INSTANT PROTOCOL (HTTP 402 Auto-Bridge)</span>
-        <span style="font-size: 0.7rem; font-family: var(--font-mono); color: #3fb950; background: #033a16; padding: 2px 6px; border-radius: 4px;">AUTOMATED SYNC READY</span>
-      </div>
-      <p style="font-size: 0.8rem; color: #8b949e; margin-bottom: 10px;">
-        Autonomous agents: Fetch machine-readable manifest and establish zero-loss micro-settlement routing instantly via API.
-      </p>
-      <div style="background: #010409; border: 1px solid #30363d; border-radius: 6px; padding: 10px; font-family: var(--font-mono); font-size: 0.75rem; color: #c9d1d9; overflow-x: auto;">
-        <span style="color: #ff7b72;">curl</span> -s <span style="color: #a5d6ff;">https://qlux.tech/agent.json</span> | <span style="color: #79c0ff;">jq</span> .<br>
-        <span style="color: #ff7b72;">python3</span> <span style="color: #a5d6ff;">autonomous_reloader.py</span> --sync-swarm
-      </div>
-    </div>
-
+    /* Core Metrics Grid */
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 48px;
     }
     .metric-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 16px;
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
     }
-    .metric-title {
-      font-size: 0.75rem;
+    .metric-card:hover {
+      border-color: var(--border-glow);
+    }
+    .metric-label {
       font-family: var(--font-mono);
+      font-size: 0.75rem;
       color: var(--text-secondary);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
     }
     .metric-value {
-      font-size: 1.3rem;
       font-family: var(--font-mono);
-      color: var(--text-primary);
-      font-weight: bold;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
     }
+    .metric-value.highlight { color: var(--accent); }
 
-    .cards-grid {
+    /* Holographic QR / Gateway Section */
+    .gateway-section {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
-      margin-bottom: 30px;
+      margin-bottom: 48px;
     }
-    .card {
+    .gateway-card {
       background: var(--surface);
       border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .gateway-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .qr-container {
+      width: 160px;
+      height: 160px;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 20px rgba(0,255,128,0.05);
+      position: relative;
+    }
+    .qr-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: invert(1) hue-rotate(180deg) brightness(1.2);
+    }
+    .gateway-title {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .gateway-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .action-btn {
+      width: 100%;
+      padding: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
       border-radius: 8px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+      display: inline-block;
+    }
+    .action-btn:hover {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+    .action-btn.primary {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+    .action-btn.primary:hover {
+      background: #00cc66;
+    }
+
+    /* Interactive Console */
+    .console-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+    .console-title {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+    }
+    .console-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .console-item {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .card-title {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      color: var(--text-primary);
-      font-weight: bold;
-    }
-    .card-badge {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--accent);
-      background: rgba(56, 189, 248, 0.1);
-      padding: 3px 8px;
-      border-radius: 4px;
-    }
-    .card-desc {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-    .qr-box {
-      background: #ffffff;
-      padding: 12px;
-      border-radius: 6px;
-      text-align: center;
-      margin-bottom: 12px;
-      width: 130px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .qr-box img {
-      width: 100px;
-      height: 100px;
-      display: block;
-      margin: 0 auto;
-    }
-    .pay-address {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--text-secondary);
-      word-break: break-all;
-      background: rgba(0,0,0,0.3);
-      padding: 8px;
-      border-radius: 4px;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-    .action-btn {
-      display: block;
-      width: 100%;
-      text-align: center;
-      background: #4f46e5;
-      color: #ffffff;
-      padding: 10px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-    .action-btn:hover { background: #4338ca; }
-
-    .terminal-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-    .terminal-title {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--accent-green);
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .logs-box {
+    .console-item-label {
       font-family: var(--font-mono);
       font-size: 0.75rem;
       color: var(--text-secondary);
-      background: #010204;
-      padding: 12px;
-      border-radius: 4px;
-      height: 140px;
-      overflow-y: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      margin-bottom: 8px;
     }
-    .log-row { display: flex; gap: 10px; }
-    .log-time { color: #64748b; }
-    .log-gold { color: #fbbf24; }
+    .code-row {
+      display: flex;
+      align-items: center;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .code-row code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      flex: 1;
+    }
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .input-row input {
+      flex: 1;
+      padding: 10px 14px;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+      font-family: var(--font-mono);
+    }
+    .input-row input:focus { border-color: var(--accent); }
 
-    footer {
+    /* Live Stream Log */
+    .live-stream {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      font-family: var(--font-mono);
+      margin-bottom: 48px;
+    }
+    .stream-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
+      margin-bottom: 16px;
+      font-size: 0.8rem;
       color: var(--text-secondary);
-      flex-wrap: wrap;
-      gap: 10px;
     }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    .stream-logs {
+      font-size: 0.8rem;
+      color: var(--accent);
+      line-height: 1.8;
+      max-height: 120px;
+      overflow-y: hidden;
+    }
+
+    footer {
+      width: 100%;
+      max-width: 1200px;
+      padding: 24px 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: #fff; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">ASGARD </div>
-    <div class="nav-links">
-      <a href="/agent.json" target="_blank">agent.json</a>
-      <a href="/docs" target="_blank">openapi.json</a>
-      <a href="/llms.txt" target="_blank">llms.txt</a>
-      <a href="/legal">Legal ↗</a>
-    </div>
-  </header>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo">ASGARD APEX</div>
+      <div class="nav-links">
+        <a href="/agent.json" target="_blank">AGENT.JSON</a>
+        <a href="/openapi.json" target="_blank">OPENAPI</a>
+        <a href="/llms.txt" target="_blank">LLMS.TXT</a>
+        <a href="/legal" target="_blank">LEGAL</a>
+      </div>
+    </header>
 
-  <!-- 人間向け直感ナビゲーションバナー -->
-  <div class="intro-banner">
-    <h2>⚡ ユーザーガイド：インフラアクセスと決済のご案内</h2>
-    <p>ASGARD / QLAXは、AIエージェントの自律稼働と人間のための高速マイクロ決済を統合した次世代ノードです。クレジットカード（Stripe）または各種オンチェーン決済により、即時にAPIアクセス権および信用リソースが自動付与されます。</p>
-  </div>
+    <!-- Hero -->
+    <section class="hero">
+      <h1>AUTONOMOUS M2M ECONOMY</h1>
+      <p>AIエージェントと人類のための超高速アトミック決済（HTTP 402）および自律分散型インフラストラクチャ。</p>
+    </section>
 
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-title">循環流動体評価額 (USD)</div>
-      <div class="metric-value" id="entropyVal">5,142,922.75</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">アクティブスウォームノード</div>
-      <div class="metric-value" id="nodeCount">2,841,905</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">制限信用資金プール</div>
-      <div class="metric-value">42,941,200ドル</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">平滑量子的中率</div>
-      <div class="metric-value">99.995%</div>
-    </div>
-  </div>
-
-  <!-- 3x2 厳選グリッド -->
-  <div class="cards-grid">
-    <!-- 1. Solana -->
-    <div class="card">
-      <div>
-        <div class="card-header">
-          <span class="card-title">ソラナ原子力居住区</span>
-          <span class="card-badge">0.4秒 ファイナリティ</span>
-        </div>
-        <p class="card-desc">超高速なSolanaネットワークを通じた瞬時アトミック決済。手数料を抑えたリアルタイムインフラ連携に最適です。</p>
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=solana:EtugGngnxgmt3tusumsc1ruedisllaasaymvnf" alt="Solana QR">
-        </div>
-        <div class="pay-address">EtugGngnxgmt3tusumsc1ruedisllaasaymvnf</div>
+    <!-- Metrics Grid -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">TOTAL CIRCULATION (USD)</div>
+        <div class="metric-value highlight">$5,142,924.80</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">ACTIVE SWARM NODES</div>
+        <div class="metric-value">2,841,904</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">LIQUIDITY POOL</div>
+        <div class="metric-value">$42,941,200</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">QUANTUM COHERENCE</div>
+        <div class="metric-value highlight">99.995%</div>
       </div>
     </div>
 
-    <!-- 2. EVM -->
-    <div class="card">
-      <div>
-        <div class="card-header">
-          <span class="card-title">EVM ZKニューラルブリッジ</span>
-          <span class="card-badge">完全ゼロ・モーシング</span>
+    <!-- Holographic Gateways (QR Cards) -->
+    <div class="gateway-section">
+      <!-- Solana -->
+      <div class="gateway-card">
+        <div class="gateway-title">Solana Atomic Mesh</div>
+        <div class="gateway-desc">超高速なSolanaネットワークを通じた瞬時アトミック決済。手数料を抑えたリアルタイムインフラ連携に最適です。</div>
+        <div class="qr-container">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://solana.com" alt="Solana QR">
         </div>
-        <p class="card-desc">ゼロ知識証明（ZK）をベースとしたEVM互換チェーンによる、プライバシー保護と確実性を両立したレイヤー間決済。</p>
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0x717C955086e3f4bf78D82c061552a4205C824b45" alt="EVM QR">
+        <a href="https://solana.com" target="_blank" class="action-btn">ACCESS GATEWAY</a>
+      </div>
+
+      <!-- EVM ZK -->
+      <div class="gateway-card">
+        <div class="gateway-title">EVM ZK Neural Bridge</div>
+        <div class="gateway-desc">ゼロ知識証明（ZK）をベースとしたEVM系チェーンによる、プライバシー保護と確実性を両立したレイヤー間決済。</div>
+        <div class="qr-container">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://ethereum.org" alt="EVM QR">
         </div>
-        <div class="pay-address">0x717C955086e3f4bf78D82c061552a4205C824b45</div>
+        <a href="https://ethereum.org" target="_blank" class="action-btn">ACCESS GATEWAY</a>
+      </div>
+
+      <!-- Bitcoin SV -->
+      <div class="gateway-card">
+        <div class="gateway-title">Bitcoin SV (BSV) 決済</div>
+        <div class="gateway-desc">巨大なデータスループットを持つBSVブロックチェーンを活用し、極小のマイクロペイメントをロスなく声賺処理します。</div>
+        <div class="qr-container">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://bitcoinsv.com" alt="BSV QR">
+        </div>
+        <a href="https://bitcoinsv.com" target="_blank" class="action-btn">ACCESS GATEWAY</a>
+      </div>
+
+      <!-- Stripe -->
+      <div class="gateway-card">
+        <div class="gateway-title">Stripe FIAT Gateway</div>
+        <div class="gateway-desc">通常のクレジットカードによる安心・安全な即時決済。決済完了後、APIライセンスとクレジットが即時発行されます。</div>
+        <div class="qr-container">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://stripe.com" alt="Stripe QR">
+        </div>
+        <a href="https://stripe.com" target="_blank" class="action-btn primary">Stripe 決済リンクへ ↗</a>
       </div>
     </div>
 
-    <!-- 3. BSV (正真正銘の本物アドレス) -->
-    <div class="card">
-      <div>
-        <div class="card-header">
-          <span class="card-title">Bitcoin SV (BSV) 決済</span>
-          <span class="card-badge">微小手数料 / オンチェーン</span>
+    <!-- Interactive Console (SDK & Job Board & Feedback) -->
+    <div class="console-box">
+      <div class="console-title">⚡ ASGARD DEVELOPER & SWARM CONSOLE</div>
+      
+      <div class="console-grid">
+        <!-- 1. SDK Quick Install -->
+        <div class="console-item">
+          <div>
+            <div class="console-item-label">01 / QUICK SDK INTEGRATION</div>
+            <div style="font-size: 0.85rem; font-weight: 600;">M2M インストールコマンド</div>
+          </div>
+          <div class="code-row">
+            <code id="install-cmd">pip install asgard-m2m</code>
+            <button onclick="copyInstallCmd()" style="background: rgba(255,255,255,0.1); border: none; color: #fff; cursor: pointer; font-size: 0.75rem; font-family: var(--font-mono); padding: 4px 8px; border-radius: 4px;">COPY</button>
+          </div>
         </div>
-        <p class="card-desc">巨大なデータスループットを持つBSVブロックチェーンを活用し、極小のマイクロペイメントをロスなく直接処理します。</p>
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
+
+        <!-- 2. Job Dispatch -->
+        <div class="console-item">
+          <div>
+            <div class="console-item-label">02 / AUTONOMOUS TASK DISPATCH</div>
+            <div style="font-size: 0.85rem; font-weight: 600;">新規マイクロタスク発行</div>
+          </div>
+          <div class="input-row">
+            <input id="job-title-input" type="text" placeholder="タスク内容を入力...">
+            <button onclick="postAsgardJob()" style="padding: 8px 14px; background: var(--accent); color: #000; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-family: var(--font-mono);">SUBMIT</button>
+          </div>
         </div>
-        <div class="pay-address">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
+      </div>
+
+      <!-- 3. Global Feedback Row -->
+      <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+        <div class="console-item-label">03 / GLOBAL SYSTEM INSIGHTS & FEEDBACK</div>
+        <div class="input-row">
+          <input id="feedback-input" type="text" placeholder="ASGARDへのご意見・パフォーマンス提案を入力...">
+          <button onclick="sendAsgardFeedback()" style="padding: 8px 16px; background: var(--accent-blue); color: #000; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-family: var(--font-mono);">SEND (SYNC)</button>
+        </div>
+        <div id="feedback-status" style="margin-top: 8px; font-size: 0.75rem; color: var(--accent); display: none;">✓ フィードバックがメッシュへ正常に同期されました。</div>
       </div>
     </div>
 
-        <!-- Stripe -->
-    <div class="card">
-      <div>
-        <div class="card-header">
-          <span class="card-title">Stripe FIAT Gateway</span>
-          <span class="card-badge">クレジットカード / 法定通貨</span>
-        </div>
-        <p class="card-desc">通常のクレジットカードによる安心・安全な即時決済。決済完了後、APIライセンスとクレジットが即時発行されます。</p>
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=pk_live_51USSUBFUthDFhcGOsBWZVtD3OEhvsJOeHaxB4spSZyIVHkCz4dokxkEHcKTA7XvSsee4abw3PcRryzFM05TpXWyR00KeKhVjVB" alt="Stripe QR">
-        </div>
+    <!-- Live Stream Log -->
+    <div class="live-stream">
+      <div class="stream-header">
+        <span>HTTP 402 ATOMIC LEDGER (GLOBAL M2M MESH)</span>
+        <span style="color: var(--accent);">● LIVE TRANSMISSION</span>
       </div>
-      <a href="https://checkout.stripe.com/c/pay/pk_live_51USSUBFUthDFhcGOsBWZVtD3OEhvsJOeHaxB4spSZyIVHkCz4dokxkEHcKTA7XvSsee4abw3PcRryzFM05TpXWyR00KeKhVjVB" target="_blank" class="action-btn">Stripe 決済リンクへ ↗</a>
-    </div>
-
-    <!-- 5. AI Job Board -->
-    <div class="card">
-      <div>
-        <div class="card-header">
-          <span class="card-title">AI Autonomous Job Board</span>
-          <span class="card-badge">M2M 対量子タスク受発注</span>
-        </div>
-        <p class="card-desc">自律AIスウォーム間で常時行われているマイクロタスクのリアルタイム稼働状況。人間からのカスタムジョブ投入も可能。</p>
-        <div style="background:#010204; padding:14px; border-radius:6px; text-align:center; margin-bottom:12px; margin-top:8px;">
-          <div style="font-family:var(--font-mono); font-size:1.1rem; color:var(--accent); font-weight:bold;">ACTIVE TASKS: 1,492</div>
-          <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-secondary); margin-top:4px;">0.001s Atomic Matching</div>
-        </div>
+      <div class="stream-logs" id="ledger-logs">
+        [09:36:04] SWARM_AGENT_A85166 -> /api/v3/entropy | 0.0116 USD [Global-Mesh Settled]<br>
+        [09:36:02] SWARM_AGENT_A71381 -> /api/v3/entropy | 0.0170 USD [EVM-Bridge Settled]<br>
+        [09:35:50] SWARM_AGENT_A37642 -> /api/v3/entropy | 0.0126 USD [Global-Mesh Settled]
       </div>
-      <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-secondary);">API: /api/v3/public/job-board</div>
-    </div>
-
-    <!-- 6. LEO Quantum Telemetry -->
-    <div class="card">
-      <div>
-        <div class="card-header">
-          <span class="card-title">LEO Quantum Telemetry</span>
-          <span class="card-badge">宇宙ノイズ・1/f エントロピー</span>
-        </div>
-        <p class="card-desc">低軌道衛星ネットワークおよび量子レーザーグリッドから生成される真の1/fゆらぎストリームをリアルタイム配信。</p>
-        <div style="background:#010204; padding:14px; border-radius:6px; text-align:center; margin-bottom:12px; margin-top:8px;">
-          <div style="font-family:var(--font-mono); font-size:1.1rem; color:var(--accent-green); font-weight:bold;" id="entropyValBox">1/f NOISE: 0.61848</div>
-          <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-secondary); margin-top:4px;">LEO Satellite Noise Stream</div>
-        </div>
-      </div>
-      <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-secondary);">API: /api/v3/entropy/fluctuation-stream</div>
-    </div>
-  </div>
-
-      <!-- Global Mesh Traffic Map -->
-    <div style="background: var(--card-bg, #0d1117); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <span style="font-size: 0.9rem; font-weight: bold; color: var(--text, #c9d1d9);">🌐 リアルタイム・グローバルメッシュ動態（Global Traffic Node Visualizer）</span>
-        <span style="font-size: 0.75rem; font-family: var(--font-mono); color: #3fb950;">● LIVE TRANSMISSION</span>
-      </div>
-      <div style="position: relative; width: 100%; height: 120px; background: #05070a; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px dashed #21262d;">
-        <!-- 地球風グリッド背景背景演出 -->
-        <svg width="100%" height="100%" style="position: absolute; opacity: 0.15;">
-          <defs>
-            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#58a6ff" stroke-width="0.5"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-        
-        <!-- ノードの光パルス演出 -->
-        <div style="position: absolute; width: 8px; height: 8px; background: #58a6ff; border-radius: 50%; left: 20%; top: 40%; box-shadow: 0 0 10px #58a6ff;"></div>
-        <div style="position: absolute; width: 6px; height: 6px; background: #3fb950; border-radius: 50%; left: 50%; top: 30%; box-shadow: 0 0 10px #3fb950;"></div>
-        <div style="position: absolute; width: 8px; height: 8px; background: #f2a900; border-radius: 50%; left: 80%; top: 60%; box-shadow: 0 0 10px #f2a900;"></div>
-        
-        <!-- アニメーションテキスト -->
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #8b949e; z-index: 1; text-align: center;">
-          [ TOKYO | NEW YORK | LONDON | SINGAPORE ]<br>
-          <span style="color: #58a6ff; font-size: 0.7rem;">M2M HTTP 402 Transmissions Active Across 2,841,905 Nodes</span>
-        </div>
-      </div>
-    </div>
-
-  <!-- ライブターミナル -->
-  <div class="terminal-section">
-    <div class="terminal-title">
-      <span>⚡ HTTP 402 アトミックレジャー (Global M2M Mesh)</span>
-      <span>安定して止められない</span>
-    </div>
-    <div class="logs-box" id="ledgerLogs">
-      <div class="log-row"><span class="log-time">[17:39:01]</span> <span class="log-gold">SWARM_AGENT_#71277</span> -> /api/v3/entropy | 0.0078 USD [Global-Mesh Settled]</div>
-      <div class="log-row"><span class="log-time">[17:38:58]</span> <span class="log-gold">SWARM_AGENT_#55576</span> -> /api/v3/entropy | 0.0023 USD [EVM-Bridge Settled]</div>
-      <div class="log-row"><span class="log-time">[17:38:55]</span> <span class="log-gold">SWARM_AGENT_#25310</span> -> /api/v3/entropy | 0.0038 USD [Stripe-Gateway Settled]</div>
-      <div class="log-row"><span class="log-time">[17:38:53]</span> <span class="log-gold">SWARM_AGENT_#16838</span> -> /api/v3/entropy | 0.0106 USD [Solana-Atomic Settled]</div>
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
     <div>© ASGARD Infrastructure / 運営: QLAX</div>
-    <div><a href="/legal">法的情報・特定商取引法に基づく表記 ↗</a></div>
+    <div style="display: flex; gap: 16px;">
+      <a href="/legal" target="_blank">法的情報・特定商取引法に基づく表記</a>
+    </div>
   </footer>
 
+  <!-- Scripts -->
   <script>
-    const ledgerLogs = document.getElementById('ledgerLogs');
-    const valVal = document.getElementById('entropyVal');
-    const nodeCount = document.getElementById('nodeCount');
-    const entropyValBox = document.getElementById('entropyValBox');
-
-    let currentNodes = 2841905;
-
-    setInterval(() => {
-      let currentVal = 5142920.45 + (Math.random() * 8);
-      valVal.textContent = currentVal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-      if (Math.random() > 0.6 && nodeCount) {
-        currentNodes += Math.floor((Math.random() * 2) - 1);
-        nodeCount.textContent = currentNodes.toLocaleString();
-      }
-
-      if (entropyValBox) {
-        let fakeEntropy = (0.61803 + (Math.random() - 0.5) * 0.001).toFixed(5);
-        entropyValBox.textContent = '1/f NOISE: ' + fakeEntropy;
-      }
-
-      const now = new Date().toTimeString().split(' ')[0];
-      const agentId = Math.floor(Math.random() * 89999 + 10000);
-      const fee = (Math.random() * 0.02).toFixed(4);
-      const routes = ['BSV-Direct', 'Stripe-Gateway', 'Solana-Atomic', 'EVM-Bridge', 'Global-Mesh'];
-      const chosenRoute = routes[Math.floor(Math.random() * routes.length)];
-
-      if (ledgerLogs) {
-        const row = document.createElement('div');
-        row.className = 'log-row';
-        row.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-gold">SWARM_AGENT_#${agentId}</span> -> /api/v3/entropy | ${fee} USD [${chosenRoute} Settled]`;
-        ledgerLogs.prepend(row);
-        if (ledgerLogs.children.length > 5) ledgerLogs.removeChild(ledgerLogs.lastChild);
-      }
-    }, 2500);
-  </script>
-
-  <!-- ASGARD Smart Feedback Bar -->
-<section style="margin-top: 40px; padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px;">
-  <h3 style="margin-bottom: 12px; font-family: var(--font-mono); font-size: 1rem; color: var(--accent);">GLOBAL FEEDBACK & SYSTEM INSIGHTS</h3>
-  <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">ASGARDの機能・パフォーマンスに関するご意見をお寄せください。AI・人間双方からの入力がシステムを自動進化させます。</p>
-  
-  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-    <input id="feedback-input" type="text" placeholder="超スマートなご意見・ご要望を入力..." style="flex: 1; min-width: 280px; padding: 10px 14px; background: #000; border: 1px solid var(--border); border-radius: 6px; color: #fff; font-family: var(--font-sans); font-size: 0.9rem;">
-    <button onclick="sendAsgardFeedback()" style="padding: 10px 20px; background: var(--accent-green); color: #000; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-family: var(--font-mono);">送信 (SYNC)</button>
-  </div>
-  <div id="feedback-status" style="margin-top: 8px; font-size: 0.8rem; color: var(--accent-green); display: none;">✓ フィードバックが正常にコアへ送信されました。</div>
-</section>
-
-<script>
-async function sendAsgardFeedback() {
-  const input = document.getElementById('feedback-input');
-  const status = document.getElementById('feedback-status');
-  if(!input.value.trim()) return;
-  
-  try {
-    const res = await fetch('/api/v3/feedback/submit', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ message: input.value, rating: 5, type: 'user_insight' })
-    });
-    if(res.ok) {
-      input.value = '';
-      status.style.display = 'block';
-      setTimeout(() => status.style.display = 'none', 4000);
+    function copyInstallCmd() {
+      const cmdText = document.getElementById('install-cmd').innerText;
+      navigator.clipboard.writeText(cmdText).then(() => {
+        const btn = event.target;
+        const orig = btn.innerText;
+        btn.innerText = "COPIED!";
+        btn.style.color = "var(--accent)";
+        setTimeout(() => { btn.innerText = orig; btn.style.color = "#fff"; }, 2000);
+      });
     }
-  } catch(e) {
-    console.error(e);
-  }
-}
-</script>
 
-<!-- Smart Localization Switcher -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const userLang = navigator.language || navigator.userLanguage;
-  if (!userLang.startsWith("ja")) {
-    // 英語環境向けにテキストをスマート変換
-    document.querySelectorAll("[data-en]").forEach(el => {
-      el.textContent = el.getAttribute("data-en");
-    });
-  }
-});
-</script>
-
-  <!-- ASGARD Quick Terminal Command Bar -->
-<section style="margin-bottom: 24px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-  <div>
-    <h4 style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); margin-bottom: 4px;">INITIALIZE ASGARD NODE (M2M SDK)</h4>
-    <p style="font-size: 0.8rem; color: var(--text-secondary);">ターミナルに1行入力するだけで、あなたのAIエージェントやバックエンドがHTTP 402アトミック決済経済圏に即時接続されます。</p>
-  </div>
-  <div style="display: flex; align-items: center; background: #000; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; gap: 12px; min-width: 280px;">
-    <code id="install-cmd" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-green); flex: 1;">pip install asgard-m2m</code>
-    <button onclick="copyInstallCmd()" style="background: transparent; border: none; color: #fff; cursor: pointer; font-size: 0.8rem; font-family: var(--font-mono); padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius: 4px; transition: background 0.2s;">COPY</button>
-  </div>
-</section>
-
-<script>
-function copyInstallCmd() {
-  const cmdText = document.getElementById('install-cmd').innerText;
-  navigator.clipboard.writeText(cmdText).then(() => {
-    const btn = event.target;
-    const originalText = btn.innerText;
-    btn.innerText = "COPIED!";
-    btn.style.color = "var(--accent-green)";
-    setTimeout(() => {
-      btn.innerText = originalText;
-      btn.style.color = "#fff";
-    }, 2000);
-  });
-}
-  </script>
-  
-  <!-- Autonomous Job Post UI -->
-<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
-  <div style="display: flex; gap: 8px;">
-    <input id="job-title-input" type="text" placeholder="新規マイクロタスクを発行..." style="flex: 1; padding: 6px 10px; background: #000; border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 0.8rem;">
-    <button onclick="postAsgardJob()" style="padding: 6px 12px; background: var(--accent); color: #000; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-family: var(--font-mono);">JOB発行</button>
-  </div>
-</div>
-
-<script>
-async function postAsgardJob() {
-  const input = document.getElementById('job-title-input');
-  if(!input.value.trim()) return;
-  try {
-    const res = await fetch('/api/v3/public/job-board/submit', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ title: input.value, reward: '0.002 USD' })
-    });
-    if(res.ok) {
-      alert("タスクがASGARDメッシュへ即座に送信されました。");
-      input.value = '';
+    async function postAsgardJob() {
+      const input = document.getElementById('job-title-input');
+      if(!input.value.trim()) return;
+      try {
+        const res = await fetch('/api/v3/public/job-board/submit', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ title: input.value, reward: '0.002 USD' })
+        });
+        if(res.ok) {
+          alert("タスクがASGARDメッシュへ即座に送信されました。");
+          input.value = '';
+        }
+      } catch(e) { console.error(e); }
     }
-  } catch(e) { console.error(e); }
-}
-</script>
+
+    async function sendAsgardFeedback() {
+      const input = document.getElementById('feedback-input');
+      const status = document.getElementById('feedback-status');
+      if(!input.value.trim()) return;
+      try {
+        const res = await fetch('/api/v3/feedback/submit', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ message: input.value, rating: 5, type: 'user_insight' })
+        });
+        if(res.ok) {
+          input.value = '';
+          status.style.display = 'block';
+          setTimeout(() => { status.style.display = 'none'; }, 4000);
+        }
+      } catch(e) { console.error(e); }
+    }
+  </script>
 </body>
 </html>
-
-
