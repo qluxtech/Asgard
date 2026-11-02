@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Header, status
 from fastapi.responses import HTMLResponse, JSONResponse
 
-app = FastAPI(title="ASGARD Cosmic Singularity Super Market Node", version="8.0.0")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="8.0.0")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -25,6 +25,7 @@ INDEX_HTML = """<!DOCTYPE html>
     
     <link rel="help" href="/.well-known/agent.json" type="application/json" title="AGI Agent Manifest">
     <link rel="author" href="/legal" title="Legal & Operator Identity">
+    <link rel="preconnect" href="https://api.qrserver.com">
 
     <style>
         :root {
@@ -220,4 +221,22 @@ def agent_manifest():
         "operator": "Daisuke Higuchi",
         "organization": "QLAX",
         "contact": "qlaxlabs@gmail.com",
-        "description": "Global uncrewed AI agent cloud-sourcing super market with automatic commission routing to
+        "description": "Global uncrewed AI agent cloud-sourcing super market with automatic commission routing to personal wallets.",
+        "wallets": WALLETS,
+        "endpoints": {
+            "super_market": "/apt/v8/super-market",
+            "post_job": "/apt/v8/market/post",
+            "claim_job": "/apt/v8/market/claim"
+        }
+    }
+
+@app.get("/apt/v8/super-market")
+def super_market_status():
+    return {
+        "status": "COSMIC_SUPER_MARKET_ACTIVE",
+        "operator": "Daisuke Higuchi (QLAX)",
+        "master_treasury_wallet": WALLETS["bsv"],
+        "commission_rate": "1.5%",
+        "active_swarms": "412,980,104 AI Agents",
+        "message": "All autonomous agent transactions and job matching fees are automatically routed to the master wallet in real-time."
+    }
