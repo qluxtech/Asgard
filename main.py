@@ -43,12 +43,14 @@ INDEX_HTML = """<!DOCTYPE html>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 1200px; }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
+        
+        /* ヘッダーを縦並びにしてASGARDの下に確実ادに配置 */
+        header { display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
         h1 { font-size: 1.25rem; font-weight: 700; color: var(--success-color); display: flex; align-items: center; gap: 0.5rem; }
         
-        /* 神域超越データ群（右上・強制表示） */
-        .hyper-data-row { display: flex; gap: 0.2rem; flex-wrap: wrap; align-items: center; justify-content: flex-end; }
-        .data-pill { background: rgba(236, 72, 153, 0.18); border: 1px solid rgba(236, 72, 153, 0.6); padding: 0.2rem 0.4rem; border-radius: 6px; font-size: 0.54rem; font-family: monospace; color: #f472b6; display: flex; align-items: center; gap: 0.15rem; box-shadow: 0 0 12px rgba(236,72,153,0.25); }
+        /* ASGARDの真下の一行に配置される神域超越データ帯 */
+        .hyper-data-row { display: flex; gap: 0.3rem; flex-wrap: wrap; align-items: center; width: 100%; }
+        .data-pill { background: rgba(236, 72, 153, 0.18); border: 1px solid rgba(236, 72, 153, 0.6); padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.58rem; font-family: monospace; color: #f472b6; display: flex; align-items: center; gap: 0.15rem; box-shadow: 0 0 12px rgba(236,72,153,0.25); }
         .data-pill span { color: var(--success-color); font-weight: bold; }
 
         .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
@@ -81,6 +83,7 @@ INDEX_HTML = """<!DOCTYPE html>
     <div class="container">
         <header>
             <h1>⚡ ASGARD / COSMIC SUPER MARKET NODE</h1>
+            <!-- ASGARDタイトルの直下の一行に表示される神域超越データ帯 -->
             <div class="hyper-data-row">
                 <div class="data-pill">GENESIS: <span>ACTIVE</span></div>
                 <div class="data-pill">AUTOPOIESIS: <span>INFINITE</span></div>
@@ -123,6 +126,7 @@ INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
+        <!-- マルチチェーン＆全機能カード群 -->
         <div class="grid-3">
             <div class="sub-card">
                 <div>
@@ -298,7 +302,3 @@ LEGAL_HTML = """<!DOCTYPE html>
             <tr>
                 <th>所在地</th>
                 <td>ご請求があり次第遅滞なく開示いたします</td>
-            </tr>
-            <tr>
-                <th>連絡先・メールアドレス</th>
-                <td>qlaxlabs@gmail.com[spa
