@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+す<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -511,3 +511,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+
+<!-- Autonomous Job Post UI -->
+<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+  <div style="display: flex; gap: 8px;">
+    <input id="job-title-input" type="text" placeholder="新規マイクロタスクを発行..." style="flex: 1; padding: 6px 10px; background: #000; border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 0.8rem;">
+    <button onclick="postAsgardJob()" style="padding: 6px 12px; background: var(--accent); color: #000; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-family: var(--font-mono);">JOB発行</button>
+  </div>
+</div>
+
+<script>
+async function postAsgardJob() {
+  const input = document.getElementById('job-title-input');
+  if(!input.value.trim()) return;
+  try {
+    const res = await fetch('/api/v3/public/job-board/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ title: input.value, reward: '0.002 USD' })
+    });
+    if(res.ok) {
+      alert("タスクがASGARDメッシュへ即座に送信されました。");
+      input.value = '';
+    }
+  } catch(e) { console.error(e); }
+}
+</script>
+
+
+
