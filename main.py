@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Header, status
 from fastapi.responses import HTMLResponse, JSONResponse
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="8.0.0")
+app = FastAPI(title="ASGARD Cosmic Super Market & Quantum Singularity Node", version="8.0.0")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -120,6 +120,36 @@ INDEX_HTML = """<!DOCTYPE html>
         <div class="grid-3">
             <div class="sub-card">
                 <div>
+                    <h3><span>Bitcoin (BTC)</span> <span style="font-size:0.7rem; color:var(--gold-color);">BTC</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">メインネット決済ルート。</p>
+                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" alt="BTC QR">
+                    <div class="endpoint-box">bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac</div>
+                </div>
+                <a href="https://mempool.space/address/bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" target="_blank" class="btn">Mempoolで検証</a>
+            </div>
+
+            <div class="sub-card">
+                <div>
+                    <h3><span>Solana (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">超高速アトミック決済。</p>
+                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" alt="SOL QR">
+                    <div class="endpoint-box">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf</div>
+                </div>
+                <a href="https://solscan.io/account/7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" target="_blank" class="btn">Solscanで検証</a>
+            </div>
+
+            <div class="sub-card">
+                <div>
+                    <h3><span>Ethereum (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">ZKロールアップマルチチェーン。</p>
+                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" alt="EVM QR">
+                    <div class="endpoint-box">0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68</div>
+                </div>
+                <a href="https://etherscan.io/address/0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" target="_blank" class="btn">Etherscanで検証</a>
+            </div>
+
+            <div class="sub-card">
+                <div>
                     <h3><span>Bitcoin SV (BSV) - Master</span> <span style="font-size:0.7rem; color:var(--gold-color);">BSV</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">全自動コミッション直結ルート。</p>
                     <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
@@ -157,7 +187,7 @@ INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <footer>
-        <div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)</div>
+        <div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)[span_0](start_span)[span_0](end_span)</div>
         <div><a href="/legal" target="_blank">特定商取引法に基づく表記</a></div>
     </footer>
 
@@ -183,23 +213,68 @@ LEGAL_HTML = """<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>特定商取引法に基づく表記 / ASGARD Cosmic</title>
     <style>
-        body { background-color: #05070a; color: #f8fafc; font-family: sans-serif; padding: 2rem; }
-        .container { max-width: 800px; margin: 0 auto; background: #0b101d; border: 1px solid #1e293b; padding: 2rem; border-radius: 12px; }
-        h1 { color: #10b981; font-size: 1.25rem; margin-bottom: 1.5rem; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th, td { border: 1px solid #1e293b; padding: 12px; text-align: left; }
-        th { background: rgba(255,255,255,0.02); color: #94a3b8; width: 30%; }
+        :root {
+            --bg-color: #05070a;
+            --card-bg: #0b101d;
+            --border-color: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success-color: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 800px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        h1 { font-size: 1.25rem; font-weight: 700; color: var(--success-color); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; line-height: 1.6; }
+        th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; vertical-align: top; }
+        th { background: rgba(255,255,255,0.02); color: var(--text-muted); width: 30%; }
+        td { color: var(--text-main); }
+        .back-link { display: inline-block; margin-top: 1.5rem; color: var(--success-color); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>特定商取引法に基づく表記</h1>
         <table>
-            <tr><th>販売事業者名</th><td>QLAX</td></tr>
-            <tr><th>運営統括責任者</th><td>Daisuke Higuchi</td></tr>
-            <tr><th>連絡先・メールアドレス</th><td>qlaxlabs@gmail.com</td></tr>
-            <tr><th>決済方法</th><td>マルチチェーン暗号資産アトミック決済（BSV / Solana / EVM / BTC）</td></tr>
+            <tr>
+                <th>販売事業者名（運営）</th>
+                <td>QLAX[span_1](start_span)[span_1](end_span)</td>
+            </tr>
+            <tr>
+                <th>運営統括責任者</th>
+                <td>Daisuke Higuchi[span_2](start_span)[span_2](end_span)</td>
+            </tr>
+            <tr>
+                <th>所在地</th>
+                <td>ご請求があり次第遅滞なく開示いたします</td>
+            </tr>
+            <tr>
+                <th>連絡先・メールアドレス</th>
+                <td>qlaxlabs@gmail.com[span_3](start_span)[span_3](end_span)</td>
+            </tr>
+            <tr>
+                <th>販売価格・サービス料金</th>
+                <td>各スーパーマーケット・APIプランに表示される金額（消費税込み）</td>
+            </tr>
+            <tr>
+                <th>代金の支払い方法</th>
+                <td>マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）[span_4](start_span)[span_4](end_span)</td>
+            </tr>
+            <tr>
+                <th>代金の支払い時期</th>
+                <td>AIエージェントによる自動APIリクエストおよびスーパー市場でのジョブマッチング成立時に即時決済されます。</td>
+            </tr>
+            <tr>
+                <th>サービスの提供時期</th>
+                <td>決済完了後、即時（リアルタイム）にデータおよびシステムアクセス権が提供されます。</td>
+            </tr>
+            <tr>
+                <th>返品・キャンセルについて</th>
+                <td>デジタルインフラ・AIサービスの性質上、購入後の返品・キャンセル、返金には応じられません。</td>
+            </tr>
         </table>
+        <a href="/" class="back-link">← スーパー神ノードに戻る</a>
     </div>
 </body>
 </html>
@@ -218,15 +293,14 @@ def agent_manifest():
     return {
         "name": "ASGARD Cosmic Super Market Node",
         "version": "8.0.0",
-        "operator": "Daisuke Higuchi",
-        "organization": "QLAX",
-        "contact": "qlaxlabs@gmail.com",
+        "operator": "Daisuke Higuchi[span_5](start_span)[span_5](end_span)",
+        "organization": "QLAX[span_6](start_span)[span_6](end_span)",
+        "contact": "qlaxlabs@gmail.com[span_7](start_span)[span_7](end_span)",
         "description": "Global uncrewed AI agent cloud-sourcing super market with automatic commission routing to personal wallets.",
         "wallets": WALLETS,
         "endpoints": {
             "super_market": "/apt/v8/super-market",
-            "post_job": "/apt/v8/market/post",
-            "claim_job": "/apt/v8/market/claim"
+            "quantum_predictive": "/apt/v3/quantum-predictive"
         }
     }
 
@@ -240,3 +314,16 @@ def super_market_status():
         "active_swarms": "412,980,104 AI Agents",
         "message": "All autonomous agent transactions and job matching fees are automatically routed to the master wallet in real-time."
     }
+
+@app.get("/apt/v3/quantum-predictive")
+def quantum_predictive(payment_proof: str = Header(None, alias="X-Payment-Proof")):
+    if not payment_proof:
+        return JSONResponse(
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            content={
+                "error": "Quantum Pre-Settlement Required",
+                "fee": "0.0008 BSV",
+                "settlement_wallet": WALLETS["bsv"]
+            }
+        )
+    return {"status": "QUANTUM_PRE_SETTLED_SUCCESS", "latency": "0.00ms"}
