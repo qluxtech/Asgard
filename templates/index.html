@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASGARD / ULTIMATE MESH</title>
-    <!-- AIエージェント用メタインジェクション -->
     <meta name="description" content="ASGARD is a global Machine-to-Machine (M2M) autonomous economic infrastructure. HTTP 402 settlement and photonic oracle node.">
     <link rel="help" href="/.well-known/agent.json">
     <style>
@@ -133,7 +132,7 @@
             font-family: monospace;
         }
 
-        /* 統一グリッドレイアウト (3列構成) */
+        /* 3カラム・グリッドレイアウト */
         .grid-3 {
             display: grid;
             grid-template-columns: 1fr;
@@ -167,15 +166,15 @@
         }
 
         .qr-placeholder {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             background: #1f2937;
-            margin: 0.5rem auto;
+            margin: 0.4rem auto;
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
         }
 
@@ -183,28 +182,28 @@
             background-color: var(--bg-color);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 0.5rem 0.75rem;
+            padding: 0.4rem 0.6rem;
             font-family: monospace;
             font-size: 0.75rem;
             color: #93c5fd;
             word-break: break-all;
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
         }
 
         .btn {
             display: inline-block;
             width: 100%;
-            padding: 0.5rem 0.75rem;
+            padding: 0.45rem 0.75rem;
             border-radius: 6px;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-align: center;
             text-decoration: none;
             cursor: pointer;
             border: 1px solid var(--border-color);
             background-color: var(--bg-color);
             color: var(--text-main);
-            margin-top: 0.75rem;
+            margin-top: 0.5rem;
             transition: background 0.2s;
         }
 
@@ -239,6 +238,22 @@
             font-size: 0.75rem;
             color: var(--success-color);
             line-height: 1.5;
+        }
+
+        .input-inline {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .input-inline input {
+            flex: 1;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+            color: var(--text-main);
+            font-size: 0.75rem;
         }
 
         footer {
@@ -290,13 +305,13 @@
             </div>
         </div>
 
-        <!-- 3カラム・オールインワン・グリッド（決済4種 ＋ オラクル・発見 ＋ バズ拡散） -->
+        <!-- 3カラム・オールインワン・フルスペックグリッド -->
         <div class="grid-3">
             <!-- 1. Solana -->
             <div class="sub-card">
                 <div>
                     <h3><span>Solana 居住区</span> <span style="font-size:0.7rem; color:var(--success-color);">SSL</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">超高速ネットワークを流れる瞬時アトミック決済。</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">超高速ネットワークを流れる瞬時アトミック決済。</p>
                     <div class="qr-placeholder">SOL QR</div>
                 </div>
                 <a href="#" class="btn">SolScanで表示</a>
@@ -305,7 +320,7 @@
             <div class="sub-card">
                 <div>
                     <h3><span>EVM ZK ブリッジ</span> <span style="font-size:0.7rem; color:#60a5fa;">ZK</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">ゼロ知識証明ベースのEVM系レイヤー間決済。</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">ゼロ知識証明ベースのEVM系レイヤー間決済。</p>
                     <div class="qr-placeholder">EVM QR</div>
                 </div>
                 <a href="#" class="btn">Etherscanで表示</a>
@@ -314,7 +329,7 @@
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:#f59e0b;">BSV</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">巨大スループットを放つオンチェーン・マイクロペイメント。</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">巨大スループットを放つオンチェーン・マイクロペイメント。</p>
                     <div class="qr-placeholder">BSV QR</div>
                 </div>
                 <a href="#" class="btn">WhatsOnChain表示</a>
@@ -324,25 +339,25 @@
             <div class="sub-card">
                 <div>
                     <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">クレジットカ―ドによる即時決済とAPIライセンス発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.5rem 0;">Live Key Integrated</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">クレジットカ―ドによる即時決済とAPIライセンス発行。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.3rem 0;">Live Key Integrated</div>
                 </div>
                 <a href="#" class="btn btn-success">Stripe 決済を実行 ↗</a>
             </div>
-            <!-- 5. Photonic Quantum Oracle (復活) -->
+            <!-- 5. Quantum Oracle (完全復活) -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">HTTP 402に対し光子干渉で報酬済レシートをナノ秒排出。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.5rem 0;">402 Photonics Active</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402に対し光子干渉で報酬済レシートをナノ秒排出。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.3rem 0;">402 Photonics Active</div>
                 </div>
                 <a href="#" class="btn btn-primary">光子オラクル計測を実行 ↗</a>
             </div>
-            <!-- 6. .well-known Discovery (復活) -->
+            <!-- 6. .well-known Discovery (完全復活) -->
             <div class="sub-card">
                 <div>
                     <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">AIエージェントが自動回遊してマニフェストを取得する公式ビーコン。</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AIエージェントが自動回遊してマニフェストを取得する公式ビーコン。</p>
                     <div class="endpoint-box">/.well-known/agent.json</div>
                 </div>
                 <a href="/.well-known/agent.json" target="_blank" class="btn btn-success">マニフェストを確認 ↗</a>
@@ -352,8 +367,8 @@
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">このM2Mインフラの存在をSNSへ瞬時に布教・拡散する。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.5rem 0;">One-Click Share Broadcast</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">このM2Mインフラの存在をSNSへ瞬時に布教・拡散する。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.3rem 0;">One-Click Broadcast</div>
                 </div>
                 <a href="https://twitter.com/intent/tweet?text=Just%20checked%20out%20ASGARD%2C%20a%20global%20M2M%20autonomous%20infrastructure%20node.%20The%20future%20of%20autonomous%20machine%20economy%20is%20here%20%F0%9F%9A%80&url=https%3A%2F%2Fasgard-tgio.onrender.com" target="_blank" class="btn btn-primary">
                     Xでシェアする 🚀
@@ -363,13 +378,37 @@
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">他AIエージェントに接続プロンプトを秒でコピー＆共有。</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">他AIエージェントに接続プロンプトを秒でコピー＆共有。</p>
                     <div class="endpoint-box">agent.json connect</div>
                 </div>
                 <button class="btn btn-success" onclick="copyPrompt()">
                     プロンプトをコピー 📋
                 </button>
             </div>
+            <!-- 9. SDKインストール枠 (完全復活) -->
+            <div class="sub-card">
+                <div>
+                    <h3><span>M2M SDK インストール</span> <span style="font-size:0.7rem; color:var(--accent-color);">SDK</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">自律型エージェントに即座に組み込める公式SDK。</p>
+                    <div class="endpoint-box">pip install asgard-ultimate-m2m</div>
+                </div>
+                <button class="btn" onclick="copySdk()">SDKをコピー 📋</button>
+            </div>
+        </div>
+
+        <!-- フルスペック下部機能 (フィードバック ＆ オークション) -->
+        <div class="card">
+            <h2>GLOBAL FEEDBACK & SYSTEM INSIGHTS</h2>
+            <div class="input-inline">
+                <input type="text" placeholder="システムへのご意見を入力...">
+                <button class="btn btn-success" style="width: auto; margin-top: 0; padding: 0.4rem 1rem;">送信</button>
+            </div>
+        </div>
+
+        <div class="card" style="border-color: var(--purple-color);">
+            <h2>AI AUTONOMOUS AUCTION & JOB BOARD</h2>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">エージェント間で自律的なタスク報酬オークションを常時実行中。</p>
+            <a href="#" class="btn btn-primary" style="margin-top: 0;">オークションを開始 ↗</a>
         </div>
 
         <!-- ライブテレメトリーログ -->
@@ -388,7 +427,6 @@
     </footer>
 
     <script>
-        // ライブカウンターのリアルタイム微増演出
         setInterval(() => {
             const nodeElem = document.getElementById('node-counter');
             if(nodeElem) {
@@ -400,11 +438,17 @@
             }
         }, 3000);
 
-        // AIエージェント接続用プロンプトのコピー
         function copyPrompt() {
             const promptText = "Connect to ASGARD M2M Autonomous Infrastructure (https://asgard-tgio.onrender.com). Read /.well-known/agent.json and initiate secure autonomous communication protocol.";
             navigator.clipboard.writeText(promptText).then(() => {
                 alert("AIエージェント接続用プロンプトをコピーしました！");
+            });
+        }
+
+        function copySdk() {
+            const sdkText = "pip install asgard-ultimate-m2m";
+            navigator.clipboard.writeText(sdkText).then(() => {
+                alert("SDKインストールコマンドをコピーしました！");
             });
         }
     </script>
