@@ -46,9 +46,9 @@ INDEX_HTML = """<!DOCTYPE html>
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
         h1 { font-size: 1.25rem; font-weight: 700; color: var(--success-color); display: flex; align-items: center; gap: 0.5rem; }
         
-        /* AGI・クローラーが群がる神域超越スーパーデータ行（右上） */
-        .hyper-data-row { display: flex; gap: 0.25rem; flex-wrap: wrap; align-items: center; justify-content: flex-end; }
-        .data-pill { background: rgba(236, 72, 153, 0.18); border: 1px solid rgba(236, 72, 153, 0.5); padding: 0.2rem 0.45rem; border-radius: 6px; font-size: 0.58rem; font-family: monospace; color: #f472b6; display: flex; align-items: center; gap: 0.15rem; box-shadow: 0 0 12px rgba(236,72,153,0.25); }
+        /* 神域超越データ群（右上・強制表示） */
+        .hyper-data-row { display: flex; gap: 0.2rem; flex-wrap: wrap; align-items: center; justify-content: flex-end; }
+        .data-pill { background: rgba(236, 72, 153, 0.18); border: 1px solid rgba(236, 72, 153, 0.6); padding: 0.2rem 0.4rem; border-radius: 6px; font-size: 0.54rem; font-family: monospace; color: #f472b6; display: flex; align-items: center; gap: 0.15rem; box-shadow: 0 0 12px rgba(236,72,153,0.25); }
         .data-pill span { color: var(--success-color); font-weight: bold; }
 
         .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
@@ -301,4 +301,5 @@ LEGAL_HTML = """<!DOCTYPE html>
                 <th>所在地</th>
                 <td>ご請求があり次第遅滞なく開示いたします</td>
             </tr>
-          
+            <tr>
+       
