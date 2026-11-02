@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 from typing import Optional
 
-app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.0.0")
+app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.1.1")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -80,6 +80,7 @@ def index():
         .input-inline { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
         .input-inline input { flex: 1; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.6rem; color: var(--text-main); font-size: 0.75rem; }
         footer { margin-top: 2rem; text-align: center; color: var(--text-muted); font-size: 0.75rem; width: 100%; border-top: 1px solid var(--border-color); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        footer a { color: var(--text-muted); text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -104,7 +105,7 @@ def index():
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">アクティブノード</div>
-                    <div class="metric-value" id="node-counter">2,842,000</div>
+                    <div class="metric-value" id="node-counter">2,842,008</div>
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">マニフェスト同期</div>
@@ -117,9 +118,9 @@ def index():
             </div>
         </div>
 
-        <!-- 全機能 ＋ リアルQR統合 3カラム・グリッド -->
+        <!-- 3カラム・グリッド -->
         <div class="grid-3">
-            <!-- 1. Bitcoin (BTC) -->
+            <!-- 1. Bitcoin -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin (BTC)</span> <span style="font-size:0.7rem; color:#f59e0b;">BTC</span></h3>
@@ -130,7 +131,7 @@ def index():
                 <a href="https://mempool.space/address/bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" target="_blank" class="btn">Mempoolで表示</a>
             </div>
 
-            <!-- 2. Solana (SOL) -->
+            <!-- 2. Solana -->
             <div class="sub-card">
                 <div>
                     <h3><span>Solana (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
@@ -141,7 +142,7 @@ def index():
                 <a href="https://solscan.io/account/7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" target="_blank" class="btn">Solscanで表示</a>
             </div>
 
-            <!-- 3. Ethereum (EVM) -->
+            <!-- 3. Ethereum -->
             <div class="sub-card">
                 <div>
                     <h3><span>Ethereum (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
@@ -152,7 +153,7 @@ def index():
                 <a href="https://etherscan.io/address/0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" target="_blank" class="btn">Etherscanで表示</a>
             </div>
 
-            <!-- 4. Bitcoin SV (BSV) -->
+            <!-- 4. BSV -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:#f59e0b;">BSV</span></h3>
@@ -163,7 +164,7 @@ def index():
                 <a href="https://whatsonchain.com/address/1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" target="_blank" class="btn">WhatsOnChain表示</a>
             </div>
 
-            <!-- 5. Stripe Gateway -->
+            <!-- 5. Stripe -->
             <div class="sub-card">
                 <div>
                     <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
@@ -253,7 +254,7 @@ def index():
 
     <footer>
         <div>&copy; ASGARD Infrastructure / 運営: QLAX</div>
-        <div><a href="/legal" style="color: var(--text-muted); text-decoration: underline;">特商法に基づく表記</a></div>
+        <div><a href="/legal">特商法に基づく表記</a></div>
     </footer>
 
     <script>
@@ -285,3 +286,81 @@ def index():
 </body>
 </html>
 """
+
+@app.get("/legal", response_class=HTMLResponse)
+def legal_page():
+    return """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特定商取引法に基づく表記 / ASGARD</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --success-color: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 800px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; }
+        h1 { font-size: 1.25rem; font-weight: 700; color: var(--success-color); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; line-height: 1.6; }
+        th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; vertical-align: top; }
+        th { background: rgba(255,255,255,0.02); color: var(--text-muted); width: 30%; }
+        td { color: var(--text-main); }
+        .back-link { display: inline-block; margin-top: 1.5rem; color: var(--success-color); text-decoration: none; font-size: 0.85rem; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>特定商取引法に基づく表記</h1>
+        <table>
+            <tr>
+                <th>販売事業者名（運営）</th>
+                <td>QLAX</td>
+            </tr>
+            <tr>
+                <th>運営統括責任者</th>
+                <td>QLAX</td>
+            </tr>
+            <tr>
+                <th>所在地</th>
+                <td>ご請求があり次第遅滞なく開示いたします</td>
+            </tr>
+            <tr>
+                <th>連絡先・メールアドレス</th>
+                <td>qlaxlabs@gmail.com</td>
+            </tr>
+            <tr>
+                <th>販売価格・サービス料金</th>
+                <td>各サービスページ・API利用プランに表示される金額（消費税込み）</td>
+            </tr>
+            <tr>
+                <th>代金の支払い方法</th>
+                <td>クレジットカード決済（Stripe）、暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）</td>
+            </tr>
+            <tr>
+                <th>代金の支払い時期</th>
+                <td>各サービス・APIライセンス購入時に即時決済されます。</td>
+            </tr>
+            <tr>
+                <th>サービスの提供時期</th>
+                <td>決済完了後、即時（リアルタイム）にAPIアクセス権およびオラクルレシートが発行されます。</td>
+            </tr>
+            <tr>
+                <th>返品・キャンセルについて</th>
+                <td>デジタルサービスの性質上、購入後の返品・キャンセル、返金には応じられません。</td>
+            </tr>
+        </table>
+        <a href="/" class="back-link">← トップページに戻る</a>
+    </div>
+</body>
+</html>
+"""
+
+@app.get("/.well-known/agent.j
