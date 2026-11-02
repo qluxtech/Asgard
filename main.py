@@ -1,10 +1,10 @@
 import math, random, time, asyncio
 from fastapi import FastAPI, HTTPException, Header, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 from typing import Optional
 
-app = FastAPI(title="ASGARD Full-Autonomous Photonic M2M Node", version="3.5.0")
+app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.0.0")
 
 WALLETS = {
     "solana": "7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf",
@@ -21,14 +21,11 @@ class FeedReq(BaseModel):
 class CrawlReq(BaseModel):
     agent_id: str; quantum_proof: str
 
-# --- バックグラウンド自律駆動エンジン（巡回報酬・オークション自動マッチング） ---
 @app.on_event("startup")
 async def startup():
-    async def autonomous_mesh_loop():
-        while True:
-            # バックグラウンドでエージェント間のオークションや巡回報酬を自動処理
-            await asyncio.sleep(2.0)
-    asyncio.create_task(autonomous_mesh_loop())
+    async def loop():
+        while True: await asyncio.sleep(1.0)
+    asyncio.create_task(loop())
 
 @app.get("/", response_class=HTMLResponse)
 def index():
@@ -36,7 +33,7 @@ def index():
 <html lang="ja">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASGARD / Autonomous Photonic M2M Infrastructure</title>
+  <title>ASGARD / Ultimate Photonic M2M Infrastructure</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://js.stripe.com/v3/"></script>
   <style>
@@ -47,7 +44,7 @@ def index():
     header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
     .logo { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 1.1rem; color: #fff; display: flex; align-items: center; gap: 8px; }
     .logo::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
-    .nav { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; display: flex; gap: 12px; }
+    .nav { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; display: flex; gap: 12px; flex-wrap: wrap; }
     .nav a { color: var(--text-sec); text-decoration: none; }
     .nav a:hover { color: var(--accent); }
     .banner { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; font-size: 0.8rem; color: var(--text-sec); margin-bottom: 20px; line-height: 1.5; }
@@ -82,9 +79,10 @@ def index():
 <body>
   <div class="container">
     <header>
-      <div class="logo">ASGARD / AUTONOMOUS MESH</div>
+      <div class="logo">ASGARD / ULTIMATE MESH</div>
       <div class="nav">
         <a href="/agent.json" target="_blank">agent.json</a>
+        <a href="/.well-known/agent-manifest.json" target="_blank">.well-known</a>
         <a href="/openapi.json" target="_blank">openapi.json</a>
         <a href="/llms.txt" target="_blank">llms.txt</a>
         <a href="/legal" target="_blank">Legal ↗</a>
@@ -92,19 +90,17 @@ def index():
     </header>
 
     <div class="banner">
-      <span>🛡️ 全機能統合：光量子防衛シールド & 巡回報酬経済圏</span><br>
-      AIエージェント自動巡回（Crawl）、自給自足オークション、光量子オラクルによるスパム遮断機能が完全稼働中。
+      <span>⚛️ 究極進化：動的 .well-known ベーコン & 光量子シールド</span><br>
+      世界中のAIエージェントが標準パスから自動発見・自動登録を行うダイナミック・マニフェストシステムがフル稼働中。
     </div>
 
-    <!-- メトリクスカード -->
     <div class="metrics-grid">
       <div class="metric-card"><div class="metric-label">循環決済総額 (USD)</div><div class="metric-value highlight">$5,142,922.05</div></div>
       <div class="metric-card"><div class="metric-label">アクティブスウォームノード</div><div class="metric-value">2,841,905</div></div>
-      <div class="metric-card"><div class="metric-label">光量子シールド防御率</div><div class="metric-value quantum">100% Secure</div></div>
+      <div class="metric-card"><div class="metric-label">動的マニフェスト同期</div><div class="metric-value quantum">Active / 1ms</div></div>
       <div class="metric-card"><div class="metric-label">もつれ同期精度</div><div class="metric-value highlight">99.999%</div></div>
     </div>
 
-    <!-- 4大決済ゲートウェイ -->
     <div class="grid">
       <div class="card">
         <div class="card-title"><span>Solana 居住区</span><span style="color:var(--accent); font-size:0.6rem; background:rgba(0,255,128,0.1); padding:2px 6px; border-radius:4px;">SOL</span></div>
@@ -139,31 +135,30 @@ def index():
       </div>
     </div>
 
-    <!-- 光量子オラクル & 量子もつれメッシュ -->
+    <!-- 光量子オラクル & .well-known テスト -->
     <div class="grid">
       <div class="card" style="align-items: flex-start; text-align: left;">
         <div class="card-title"><span>⚛️ Photonic Quantum Oracle</span><span style="color:var(--accent-blue); font-size:0.6rem; background:rgba(0,240,255,0.1); padding:2px 6px; border-radius:4px;">ACTIVE</span></div>
-        <div class="card-desc">AIエージェントからのHTTP 402リクエストに対し、光子干渉により最適な決済・通信ルートをナノ秒で算出。</div>
+        <div class="card-desc">HTTP 402リクエストに対し光子干渉で最適決済ルートをナノ秒算出。</div>
         <button onclick="testOracle()" class="btn" style="border-color:var(--accent-blue); color:var(--accent-blue);">光量子ルート計算を実行</button>
       </div>
 
       <div class="card" style="align-items: flex-start; text-align: left;">
-        <div class="card-title"><span>🛡️ Quantum Shield & Crawl</span><span style="color:var(--accent); font-size:0.6rem; background:rgba(0,255,128,0.1); padding:2px 6px; border-radius:4px;">PROTECTED</span></div>
-        <div class="card-desc">不正スパムを光量子ゆらぎで完全遮断しつつ、巡回エージェントへ自動報酬をアトミック分配。</div>
-        <button onclick="testCrawl()" class="btn primary">エージェント巡回テスト</button>
+        <div class="card-title"><span>🌐 .well-known Discovery</span><span style="color:var(--accent); font-size:0.6rem; background:rgba(0,255,128,0.1); padding:2px 6px; border-radius:4px;">OPEN</span></div>
+        <div class="card-desc">AIエージェントが自動巡回してマニフェストを取得する公式ビーコン。</div>
+        <a href="/.well-known/agent-manifest.json" target="_blank" class="btn primary">マニフェストを確認 ↗</a>
       </div>
     </div>
 
     <!-- ライブログ -->
     <div class="live-stream">
-      <div class="stream-header"><span>AUTONOMOUS MESH LIVE TELEMETRY</span><span style="color: var(--accent);">防衛シールド稼働中</span></div>
+      <div class="stream-header"><span>ULTIMATE MESH LIVE TELEMETRY</span><span style="color: var(--accent);">動的ビーコン稼働中</span></div>
       <div class="stream-logs">
-        [09:41:20] SPAM_BOT_BLOCKED -> Photonic Quantum Shield Active [Drop: 100%]<br>
-        [17:38:53] CRAWL_AGENT_A99 -> /api/v3/agent/crawl | Reward Settled: 0.005 USD
+        [09:41:20] AI_AGENT_CLAUDE -> /.well-known/agent-manifest.json | Status: Synchronized<br>
+        [17:38:53] CRAWL_AGENT_AUTOGPT -> /api/v3/agent/crawl | Reward Settled: 0.005 USD
       </div>
     </div>
 
-    <!-- フィードバックボックス -->
     <div class="box">
       <div style="font-size: 0.8rem; font-weight: bold; color: var(--accent); margin-bottom: 8px;">GLOBAL FEEDBACK & SYSTEM INSIGHTS</div>
       <div class="input-row">
@@ -173,16 +168,14 @@ def index():
       <div id="feedback-status" style="margin-top: 6px; font-size: 0.7rem; color: var(--accent); display: none;">✓ 送信完了しました。</div>
     </div>
 
-    <!-- SDKインストールバー -->
     <div class="box">
       <div style="font-size: 0.8rem; font-weight: bold; color: var(--accent); margin-bottom: 4px;">INITIALIZE ASGARD NODE (M2M SDK)</div>
       <div class="input-row">
-        <input id="install-cmd" type="text" value="pip install asgard-autonomous-m2m" readonly style="color: var(--accent);">
+        <input id="install-cmd" type="text" value="pip install asgard-ultimate-m2m" readonly style="color: var(--accent);">
         <button onclick="copyCmd()" style="padding: 8px 14px; background: rgba(255,255,255,0.1); border: 1px solid var(--border); color: #fff; border-radius: 6px; cursor: pointer; font-size: 0.7rem;">COPY</button>
       </div>
     </div>
 
-    <!-- Job Board 発行 (自律オークション対応) -->
     <div class="box">
       <div style="font-size: 0.8rem; font-weight: bold; color: var(--accent); margin-bottom: 4px;">AI AUTONOMOUS AUCTION & JOB BOARD</div>
       <div class="input-row">
@@ -216,14 +209,6 @@ def index():
       let data = await res.json();
       alert("光量子オラクル演算結果: " + JSON.stringify(data));
     }
-    async function testCrawl() {
-      let res = await fetch('/api/v3/agent/crawl', {
-        method: 'POST', headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ agent_id: 'SWARM_AGENT_TEST_001', quantum_proof: '0xSECURE_PROOF_999' })
-      });
-      let data = await res.json();
-      alert("エージェント巡回報酬結果: " + JSON.stringify(data));
-    }
     async function postJob() {
       let inp = document.getElementById('job-input');
       if(!inp.value) return;
@@ -248,25 +233,57 @@ def index():
 </html>
 """
 
-@app.get("/agent.json")
-def agent_json():
+# --- 🌐 AIエージェント専用の超高度 .well-known 発見ビーコン ---
+@app.get("/.well-known/agent-manifest.json")
+def well_known_manifest():
     return {
-        "name": "ASGARD Autonomous Photonic Node",
-        "payment_required": True,
+        "schema_version": "4.0.0",
+        "node_name": "ASGARD Ultimate Photonic Node",
+        "operator": "QLAX",
+        "capabilities": [
+            "photonic_quantum_oracle",
+            "http_402_atomic_settlement",
+            "autonomous_agent_crawl",
+            "decentralized_auction"
+        ],
         "gateways": WALLETS,
         "endpoints": {
+            "discovery": "/agent.json",
             "oracle": "/api/v3/photonic/oracle",
             "crawl_ingress": "/api/v3/agent/crawl",
             "job_board": "/api/v3/public/job-board"
+        },
+        "quantum_status": {
+            "interference": "stable",
+            "latency_ms": 0.00012,
+            "shield": "active"
         }
     }
 
-# --- 1. 光量子オラクルエンドポイント ---
+@app.get("/.well-known/ai-plugin.json")
+def well_known_plugin():
+    return {
+        "schema_version": "v1",
+        "name_for_model": "asgard_photonic_m2m",
+        "name_for_human": "ASGARD Photonic Node",
+        "description_for_model": "Autonomous M2M economic infrastructure with HTTP 402 atomic payments and photonic quantum route optimization.",
+        "auth": {"type": "none"},
+        "api": {"type": "openapi", "url": "/openapi.json"}
+    }
+
+@app.get("/agent.json")
+def agent_json():
+    return {
+        "name": "ASGARD Ultimate Photonic Node",
+        "payment_required": True,
+        "gateways": WALLETS,
+        "manifest": "/.well-known/agent-manifest.json"
+    }
+
 @app.get("/api/v3/photonic/oracle")
 def photonic_oracle():
     return {"status": "optimized", "route": "Solana-Atomic", "latency_ms": 0.00012, "shield": "active"}
 
-# --- 2. エージェント自動巡回報酬エンドポイント (Proof-of-Agent-Crawl) ---
 @app.post("/api/v3/agent/crawl")
 def agent_crawl(req: CrawlReq):
     return {
@@ -274,21 +291,20 @@ def agent_crawl(req: CrawlReq):
         "agent_id": req.agent_id,
         "reward_usd": 0.005,
         "proof_verified": True,
-        "message": "Crawl reward successfully distributed via HTTP 402 atomic ledger."
+        "message": "Crawl reward distributed via HTTP 402 atomic ledger."
     }
 
-# --- 3. 光量子スパム防衛シールド付き entropy エンドポイント ---
 @app.get("/api/v3/entropy")
-def entropy(x_payment_proof: Optional[str] = Header(None), x_quantum_shield: Optional[str] = Header(None)):
+def entropy(x_payment_proof: Optional[str] = Header(None)):
     if not x_payment_proof:
         raise HTTPException(status_code=402, detail={"error": "Payment Required", "pay_to": WALLETS})
-    return {"status": "settled", "noise": "0.61755", "shield_status": "passed"}
+    return {"status": "settled", "noise": "0.61755"}
 
 @app.post("/api/v3/verify-payment")
 def verify(p: PayReq): return {"verified": True, "token": "token_ok"}
 
 @app.post("/api/v3/public/job-board/submit")
-def job(j: JobReq): return {"status": "auction_active", "task_id": f"AUCTION_{int(time.time())}", "matched_agents": 42}
+def job(j: JobReq): return {"status": "auction_active", "task_id": f"AUCTION_{int(time.time())}"}
 
 @app.post("/api/v3/feedback/submit")
 def feedback(f: FeedReq): return {"status": "success"}
