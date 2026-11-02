@@ -68,8 +68,8 @@ def index():
         @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
         .sub-card { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; }
         .sub-card h3 { font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .qr-img { width: 100px; height: 100px; margin: 0.4rem auto; border-radius: 6px; background: #fff; padding: 4px; display: block; }
-        .endpoint-box { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.6rem; font-family: monospace; font-size: 0.68rem; color: #93c5fd; word-break: break-all; margin-top: 0.4rem; }
+        .qr-img { width: 95px; height: 95px; margin: 0.4rem auto; border-radius: 6px; background: #fff; padding: 4px; display: block; }
+        .endpoint-box { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.6rem; font-family: monospace; font-size: 0.65rem; color: #93c5fd; word-break: break-all; margin-top: 0.4rem; }
         .btn { display: inline-block; width: 100%; padding: 0.45rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.75rem; text-align: center; text-decoration: none; cursor: pointer; border: 1px solid var(--border-color); background-color: var(--bg-color); color: var(--text-main); margin-top: 0.5rem; transition: background 0.2s; }
         .btn:hover { background-color: var(--border-color); }
         .btn-success { background-color: rgba(16, 185, 129, 0.1); color: var(--success-color); border-color: rgba(16, 185, 129, 0.3); }
