@@ -512,7 +512,35 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<!-- Autonomous Job Post UI -->
+  <!-- ASGARD Quick Terminal Command Bar -->
+<section style="margin-bottom: 24px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+  <div>
+    <h4 style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); margin-bottom: 4px;">INITIALIZE ASGARD NODE (M2M SDK)</h4>
+    <p style="font-size: 0.8rem; color: var(--text-secondary);">ターミナルに1行入力するだけで、あなたのAIエージェントやバックエンドがHTTP 402アトミック決済経済圏に即時接続されます。</p>
+  </div>
+  <div style="display: flex; align-items: center; background: #000; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; gap: 12px; min-width: 280px;">
+    <code id="install-cmd" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-green); flex: 1;">pip install asgard-m2m</code>
+    <button onclick="copyInstallCmd()" style="background: transparent; border: none; color: #fff; cursor: pointer; font-size: 0.8rem; font-family: var(--font-mono); padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius: 4px; transition: background 0.2s;">COPY</button>
+  </div>
+</section>
+
+<script>
+function copyInstallCmd() {
+  const cmdText = document.getElementById('install-cmd').innerText;
+  navigator.clipboard.writeText(cmdText).then(() => {
+    const btn = event.target;
+    const originalText = btn.innerText;
+    btn.innerText = "COPIED!";
+    btn.style.color = "var(--accent-green)";
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.style.color = "#fff";
+    }, 2000);
+  });
+}
+  </script>
+  
+  <!-- Autonomous Job Post UI -->
 <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
   <div style="display: flex; gap: 8px;">
     <input id="job-title-input" type="text" placeholder="新規マイクロタスクを発行..." style="flex: 1; padding: 6px 10px; background: #000; border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 0.8rem;">
