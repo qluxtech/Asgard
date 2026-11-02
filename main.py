@@ -81,7 +81,6 @@ INDEX_HTML = """<!DOCTYPE html>
     <div class="container">
         <header>
             <h1>⚡ ASGARD / COSMIC SUPER MARKET NODE</h1>
-            <!-- 神域超越データ群（右上・強制表示） -->
             <div class="hyper-data-row">
                 <div class="data-pill">GENESIS: <span>ACTIVE</span></div>
                 <div class="data-pill">AUTOPOIESIS: <span>INFINITE</span></div>
@@ -124,7 +123,6 @@ INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- マルチチェーン＆全機能カード群 -->
         <div class="grid-3">
             <div class="sub-card">
                 <div>
@@ -302,4 +300,5 @@ LEGAL_HTML = """<!DOCTYPE html>
                 <td>ご請求があり次第遅滞なく開示いたします</td>
             </tr>
             <tr>
-       
+                <th>連絡先・メールアドレス</th>
+                <td>qlaxlabs@gmail.com[spa
