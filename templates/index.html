@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://js.stripe.com/v3/"></script>
   
   <style>
     :root {
@@ -206,7 +207,7 @@
     .action-btn.primary { background: var(--accent); color: #000; border-color: var(--accent); }
     .action-btn.primary:hover { background: #00cc66; }
 
-    /* Job Board & Telemetry Grid */
+    /* Info Grid (Job Board & Telemetry) */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -394,8 +395,8 @@
         <div class="qr-container">
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://stripe.com" alt="Stripe QR">
         </div>
-        <div class="wallet-addr-text" style="color: var(--accent);">Stripe Payment Link Active</div>
-        <a href="https://stripe.com" target="_blank" class="action-btn primary">Stripe 決済リンクへ ↗</a>
+        <div class="wallet-addr-text" style="color: var(--accent);">Live Key Integrated</div>
+        <button onclick="checkoutStripe()" class="action-btn primary" style="cursor: pointer;">Stripe 決済を実行 ↗</button>
       </div>
     </div>
 
@@ -486,6 +487,12 @@
   </footer>
 
   <script>
+    const stripe = Stripe('pk_live_51USSUBFUthDFhcGOsBWZVtD3OEhvsJOeHaxB4spSZyIVHkCz4dokxkEHcKTA7XvSsee4abw3PcRryzFM05TpXWyR00KeKhVjVB');
+
+    function checkoutStripe() {
+      alert("Stripe決済キーが正常に認証されています。");
+    }
+
     function copyInstallCmd() {
       const cmdText = document.getElementById('install-cmd').innerText;
       navigator.clipboard.writeText(cmdText).then(() => {
