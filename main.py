@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
-app = FastAPI(title="ASGARD Enterprise Super God Node", version="5.0.1")
+app = FastAPI(title="ASGARD Enterprise Super God Node", version="5.0.2")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -11,9 +11,7 @@ WALLETS = {
     "bsv": "1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95"
 }
 
-@app.get("/", response_class=HTMLResponse)
-def index():
-    return """<!DOCTYPE html>
+INDEX_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -269,9 +267,7 @@ def index():
 </html>
 """
 
-@app.get("/legal", response_class=HTMLResponse)
-def legal_page():
-    return """<!DOCTYPE html>
+LEGAL_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -328,4 +324,8 @@ def legal_page():
             </tr>
             <tr>
                 <th>代金の支払い時期</th>
-            
+                <td>各エンタープライズAPIライセンス購入時に即時決済されます。</td>
+            </tr>
+            <tr>
+                <th>サービスの提供時期</th>
+    
