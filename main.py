@@ -79,6 +79,7 @@ INDEX_HTML = """<!DOCTYPE html>
     <div class="container">
         <header>
             <h1>⚡ ASGARD / COSMIC SUPER MARKET NODE</h1>
+            <!-- スーパーハイパーデータ行（右上） -->
             <div class="hyper-data-row">
                 <div class="data-pill">OMEGA: <span>ACTIVE</span></div>
                 <div class="data-pill">MARKET: <span>UNMANNED</span></div>
@@ -306,4 +307,4 @@ LEGAL_HTML = """<!DOCTYPE html>
             </tr>
             <tr>
                 <th>代金の支払い方法</th>
-                <td>マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）[span_4](s
+                <td>マルチチェーン暗号資産アトミック決済（Bit
