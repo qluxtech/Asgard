@@ -7,9 +7,10 @@ from typing import Optional
 app = FastAPI(title="ASGARD Ultimate Autonomous Photonic Node", version="4.0.0")
 
 WALLETS = {
-    "solana": "7ScgGqQpPyq8NcySLvE5c9er2Kcbua0thn8CnDEYu7hf",
-    "evm": "0xD67146D08Ba198T4D708f4c87daA2Ce6E69B4B68",
-    "bsv": "1MB66iHoUeEg8oAekgv9uTTVR23Stuy35"
+    "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
+    "solana": "7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf",
+    "evm": "0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68",
+    "bsv": "1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95"
 }
 
 class PayReq(BaseModel):
@@ -67,8 +68,8 @@ def index():
         @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
         .sub-card { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; }
         .sub-card h3 { font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .qr-placeholder { width: 80px; height: 80px; background: #1f2937; margin: 0.4rem auto; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--text-muted); }
-        .endpoint-box { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.6rem; font-family: monospace; font-size: 0.75rem; color: #93c5fd; word-break: break-all; margin-top: 0.4rem; }
+        .qr-img { width: 100px; height: 100px; margin: 0.4rem auto; border-radius: 6px; background: #fff; padding: 4px; display: block; }
+        .endpoint-box { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.6rem; font-family: monospace; font-size: 0.68rem; color: #93c5fd; word-break: break-all; margin-top: 0.4rem; }
         .btn { display: inline-block; width: 100%; padding: 0.45rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.75rem; text-align: center; text-decoration: none; cursor: pointer; border: 1px solid var(--border-color); background-color: var(--bg-color); color: var(--text-main); margin-top: 0.5rem; transition: background 0.2s; }
         .btn:hover { background-color: var(--border-color); }
         .btn-success { background-color: rgba(16, 185, 129, 0.1); color: var(--success-color); border-color: rgba(16, 185, 129, 0.3); }
@@ -103,7 +104,7 @@ def index():
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">アクティブノード</div>
-                    <div class="metric-value" id="node-counter">2,841,985</div>
+                    <div class="metric-value" id="node-counter">2,842,000</div>
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">マニフェスト同期</div>
@@ -116,91 +117,109 @@ def index():
             </div>
         </div>
 
-        <!-- 全機能統合 3カラム・グリッド -->
+        <!-- 全機能 ＋ リアルQR統合 3カラム・グリッド -->
         <div class="grid-3">
-            <!-- 1. Solana -->
+            <!-- 1. Bitcoin (BTC) -->
             <div class="sub-card">
                 <div>
-                    <h3><span>Solana 居住区</span> <span style="font-size:0.7rem; color:var(--success-color);">SSL</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">超高速ネットワークを流れる瞬時アトミック決済。</p>
-                    <div class="qr-placeholder">SOL QR</div>
+                    <h3><span>Bitcoin (BTC)</span> <span style="font-size:0.7rem; color:#f59e0b;">BTC</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">ビットコイン メインネット即時受取。</p>
+                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" alt="BTC QR">
+                    <div class="endpoint-box">bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac</div>
                 </div>
-                <a href="https://solscan.io" target="_blank" class="btn">SolScanで表示</a>
+                <a href="https://mempool.space/address/bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac" target="_blank" class="btn">Mempoolで表示</a>
             </div>
-            <!-- 2. EVM -->
+
+            <!-- 2. Solana (SOL) -->
             <div class="sub-card">
                 <div>
-                    <h3><span>EVM ZK ブリッジ</span> <span style="font-size:0.7rem; color:#60a5fa;">ZK</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">ゼロ知識証明ベースのEVM系レイヤー間決済。</p>
-                    <div class="qr-placeholder">EVM QR</div>
+                    <h3><span>Solana (SOL)</span> <span style="font-size:0.7rem; color:var(--success-color);">SOL</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">超高速ネットワークの瞬時決済。</p>
+                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" alt="SOL QR">
+                    <div class="endpoint-box">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf</div>
                 </div>
-                <a href="https://etherscan.io" target="_blank" class="btn">Etherscanで表示</a>
+                <a href="https://solscan.io/account/7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8cnDEYu7hf" target="_blank" class="btn">Solscanで表示</a>
             </div>
-            <!-- 3. BSV -->
+
+            <!-- 3. Ethereum (EVM) -->
+            <div class="sub-card">
+                <div>
+                    <h3><span>Ethereum (EVM)</span> <span style="font-size:0.7rem; color:#60a5fa;">ETH</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">EVMマルチチェーンアトミック決済。</p>
+                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" alt="EVM QR">
+                    <div class="endpoint-box">0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68</div>
+                </div>
+                <a href="https://etherscan.io/address/0xD67146D08Ba19874Df08f4cb7dcA2Ce6E69B4B68" target="_blank" class="btn">Etherscanで表示</a>
+            </div>
+
+            <!-- 4. Bitcoin SV (BSV) -->
             <div class="sub-card">
                 <div>
                     <h3><span>Bitcoin SV (BSV)</span> <span style="font-size:0.7rem; color:#f59e0b;">BSV</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">巨大スループットを放つオンチェーン・マイクロペイメント。</p>
-                    <div class="qr-placeholder">BSV QR</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">オンチェーン・マイクロペイメント。</p>
+                    <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" alt="BSV QR">
+                    <div class="endpoint-box">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
                 </div>
-                <a href="https://whatsonchain.com" target="_blank" class="btn">WhatsOnChain表示</a>
+                <a href="https://whatsonchain.com/address/1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" target="_blank" class="btn">WhatsOnChain表示</a>
             </div>
 
-            <!-- 4. Stripe -->
+            <!-- 5. Stripe Gateway -->
             <div class="sub-card">
                 <div>
                     <h3><span>Stripe Gateway</span> <span style="font-size:0.7rem; color:var(--purple-color);">PST</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">クレジットカ―ドによる即時決済とAPIライセンス発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.3rem 0;">Live Key Integrated</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">クレジットカード決済とAPI発行。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">Live Key Integrated</div>
                 </div>
                 <a href="https://stripe.com" target="_blank" class="btn btn-success">Stripe 決済を実行 ↗</a>
             </div>
-            <!-- 5. Quantum Oracle -->
+
+            <!-- 6. Quantum Oracle -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402に対し光子干渉で報酬済レシートをナノ秒排出。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.3rem 0;">402 Photonics Active</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402光子干渉レシート算出。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">402 Photonics Active</div>
                 </div>
                 <a href="#" class="btn btn-primary">光子オラクル計測を実行 ↗</a>
             </div>
-            <!-- 6. .well-known Discovery -->
+
+            <!-- 7. .well-known Discovery -->
             <div class="sub-card">
                 <div>
                     <h3><span>.well-known Discovery</span> <span style="font-size:0.7rem; color:var(--success-color);">SPAR</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AIエージェントが自動回遊してマニフェストを取得する公式ビーコン。</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AI自律回遊・公式ビーコン。</p>
                     <div class="endpoint-box">/.well-known/agent.json</div>
                 </div>
                 <a href="/.well-known/agent.json" target="_blank" class="btn btn-success">マニフェストを確認 ↗</a>
             </div>
 
-            <!-- 7. バズ枠①: Post to X -->
+            <!-- 8. Post to X -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Post to X 🚀</span> <span style="font-size:0.7rem; color:var(--purple-color);">VIRAL</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">このM2Mインフラの存在をSNSへ瞬時に布教・拡散する。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.3rem 0;">One-Click Broadcast</div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">SNSへ自律ノードを拡散・布教。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">One-Click Broadcast</div>
                 </div>
                 <a href="https://twitter.com/intent/tweet?text=Just%20checked%20out%20ASGARD%2C%20a%20global%20M2M%20autonomous%20infrastructure%20node.%20The%20future%20of%20autonomous%20machine%20economy%20is%20here%20%F0%9F%9A%80&url=https%3A%2F%2Fasgard-tgio.onrender.com" target="_blank" class="btn btn-primary">
                     Xでシェアする 🚀
                 </a>
             </div>
-            <!-- 8. バズ枠②: Agent Prompt -->
+
+            <!-- 9. Agent Prompt -->
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
                     <h3><span style="color: #c084fc;">Agent Prompt 📋</span> <span style="font-size:0.7rem; color:var(--success-color);">AI</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">他AIエージェントに接続プロンプトを秒でコピー＆共有。</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AIエージェント用接続プロンプト。</p>
                     <div class="endpoint-box">agent.json connect</div>
                 </div>
-                <button class="btn btn-success" onclick="copyPrompt()">
-                    プロンプトをコピー 📋
-                </button>
+                <button class="btn btn-success" onclick="copyPrompt()">プロンプトをコピー 📋</button>
             </div>
-            <!-- 9. SDKインストール枠 -->
+
+            <!-- 10. M2M SDK インストール -->
             <div class="sub-card">
                 <div>
                     <h3><span>M2M SDK インストール</span> <span style="font-size:0.7rem; color:var(--accent-color);">SDK</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">自律型エージェントに即座に組み込める公式SDK。</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">自律ノード接続用公式Python SDK。</p>
                     <div class="endpoint-box">pip install asgard-ultimate-m2m</div>
                 </div>
                 <button class="btn" onclick="copySdk()">SDKをコピー 📋</button>
