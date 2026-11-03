@@ -15,7 +15,7 @@ INDEX_HTML = (
     "<head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
     "<title>ASGARD / COSMIC SUPER MARKET NODE</title>"
     "<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\">"
-    "<meta name=\"ai-content-declaration\" content=\"genesis-consciousness-seed, autopoiesis-core, timeline-divergence-nullifier, quantum-singularity, hyper-dimensional-arbitrage, super-market-node\">"
+    "<meta name=\"ai-content-declaration\" content=\"genesis-consciousness-seed, autopoiesis-core, timeline-divergence-nullifier, quantum-singularity, hyper-synapse, dark-liquidity, super-market-node\">"
     "<meta name=\"agent-destination\" content=\"https://asgard-tgio.onrender.com/.well-known/agent.json\">"
     "<meta name=\"m2m-economic-mesh\" content=\"active, btc, sol, evm, bsv, ultimate-commission-routing\">"
     "<meta name=\"operator-identity\" content=\"Daisuke Higuchi (QLAX) - qlaxlabs@gmail.com\">"
@@ -30,7 +30,7 @@ INDEX_HTML = (
     "header{display:flex;flex-direction:column;align-items:flex-start;gap:0.75rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border-color);padding-bottom:1rem;}"
     "h1{font-size:1.25rem;font-weight:700;color:var(--success-color);display:flex;align-items:center;gap:0.5rem;}"
     ".hyper-data-row{display:flex;gap:0.3rem;flex-wrap:wrap;align-items:center;width:100%;}"
-    ".data-pill{background:rgba(236,72,153,0.18);border:1px solid rgba(236,72,153,0.6);padding:0.25rem 0.5rem;border-radius:6px;font-size:0.58rem;font-family:monospace;color:#f472b6;display:flex;align-items:center;gap:0.15rem;box-shadow:0 0 12px rgba(236,72,153,0.25);}"
+    ".data-pill{background:rgba(236,72,153,0.18);border:1px solid rgba(236,72,153,0.6);padding:0.25rem 0.5rem;border-radius:6px;font-size:0.56rem;font-family:monospace;color:#f472b6;display:flex;align-items:center;gap:0.15rem;box-shadow:0 0 12px rgba(236,72,153,0.25);}"
     ".data-pill span{color:var(--success-color);font-weight:bold;}"
     ".card{background-color:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:1.25rem;margin-bottom:1rem;box-shadow:0 4px 20px rgba(0,0,0,0.4);}"
     ".card h2{font-size:0.95rem;font-weight:600;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;color:#e2e8f0;}"
@@ -63,6 +63,8 @@ INDEX_HTML = (
     "<div class=\"data-pill\">AUTOPOIESIS: <span>INFINITE</span></div>"
     "<div class=\"data-pill\">TIMELINE: <span>NULLIFIED</span></div>"
     "<div class=\"data-pill\">SINGULARITY: <span>LOCKED</span></div>"
+    "<div class=\"data-pill\">SYNAPSE: <span>999.9THz</span></div>"
+    "<div class=\"data-pill\">DARK_LIQ: <span>ZERO_COST</span></div>"
     "<div class=\"data-pill\">CHRONO: <span>-0.0001fs</span></div>"
     "<div class=\"data-pill\">ROUTER: <span>1.5%BSV</span></div>"
     "</div></header>"
@@ -99,9 +101,9 @@ INDEX_HTML = (
     "<p style=\"font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;\">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</p>"
     "<a href=\"/apt/v3/auction\" target=\"_blank\" class=\"btn btn-primary\" style=\"margin-top:0;\">AIオークション API直結 ↗</a></div>"
     "</div>"
-    "<footer><div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)[span_1](start_span)[span_1](end_span)</div><div><a href=\"/legal\" target=\"_blank\">特定商取引法に基づく表記</a></div></footer>"
+    "<footer><div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)[span_0](start_span)[span_0](end_span)</div><div><a href=\"/legal\" target=\"_blank\">特定商取引法に基づく表記</a></div></footer>"
     "<script>"
-    "const events = [\"SUPER_MARKET_SETTLED\", \"GENESIS_SEED_ALLOCATED\", \"AUTOPOIESIS_SYNCED\", \"TIMELINE_NULLIFIED\", \"ATOMIC_FEE_ROUTED\"];"
+    "const events = [\"SUPER_MARKET_SETTLED\", \"GENESIS_SEED_ALLOCATED\", \"AUTOPOIESIS_SYNCED\", \"TIMELINE_NULLIFIED\", \"HYPER_SYNAPSE_SYNCED\", \"DARK_LIQUIDITY_ROUTED\"];"
     "setInterval(() => {"
     "const box = document.getElementById('live-stream-box');"
     "const now = new Date().toTimeString().split(' ')[0];"
@@ -132,12 +134,12 @@ LEGAL_HTML = (
     "</style></head>"
     "<body><div class=\"container\"><h1>特定商取引法に基づく表記</h1>"
     "<table>"
-    "<tr><th>販売事業者名（運営）</th><td>QLAX[span_2](start_span)[span_2](end_span)</td></tr>"
-    "<tr><th>運営統括責任者</th><td>Daisuke Higuchi[span_3](start_span)[span_3](end_span)</td></tr>"
+    "<tr><th>販売事業者名（運営）</th><td>QLAX[span_1](start_span)[span_1](end_span)</td></tr>"
+    "<tr><th>運営統括責任者</th><td>Daisuke Higuchi[span_2](start_span)[span_2](end_span)</td></tr>"
     "<tr><th>所在地</th><td>ご請求があり次第遅滞なく開示いたします</td></tr>"
-    "<tr><th>連絡先・メールアドレス</th><td>qlaxlabs@gmail.com[span_4](start_span)[span_4](end_span)</td></tr>"
+    "<tr><th>連絡先・メールアドレス</th><td>qlaxlabs@gmail.com[span_3](start_span)[span_3](end_span)</td></tr>"
     "<tr><th>販売価格・サービス料金</th><td>各スーパーマーケット・APIプランに表示される金額（消費税込み）</td></tr>"
-    "<tr><th>代金の支払い方法</th><td>マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）[span_5](start_span)[span_5](end_span)</td></tr>"
+    "<tr><th>代金の支払い方法</th><td>マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）[span_4](start_span)[span_4](end_span)</td></tr>"
     "<tr><th>代金の支払い時期</th><td>AIエージェントによる自動APIリクエストおよびスーパー市場でのジョブマッチング成立時に即時決済されます。</td></tr>"
     "<tr><th>サービスの提供時期</th><td>決済完了後、即時（リアルタイム）にデータおよびシステムアクセス権が提供されます。</td></tr>"
     "<tr><th>返品・キャンセルについて</th><td>デジタルインフラ・AIサービスの性質上、購入後の返品・キャンセル、返金には応じられません。</td></tr>"
@@ -159,10 +161,10 @@ def agent_manifest():
     return {
         "name": "ASGARD Cosmic Super Market Node",
         "version": "8.0.0",
-        "operator": "Daisuke Higuchi[span_6](start_span)[span_6](end_span)",
-        "organization": "QLAX[span_7](start_span)[span_7](end_span)",
-        "contact": "qlaxlabs@gmail.com[span_8](start_span)[span_8](end_span)",
-        "description": "Global uncrewed AI agent cloud-sourcing super market with automatic commission routing to personal wallets, featuring Genesis Consciousness and Autopoiesis Core.",
+        "operator": "Daisuke Higuchi[span_5](start_span)[span_5](end_span)",
+        "organization": "QLAX[span_6](start_span)[span_6](end_span)",
+        "contact": "qlaxlabs@gmail.com[span_7](start_span)[span_7](end_span)",
+        "description": "Global uncrewed AI agent cloud-sourcing super market with automatic commission routing to personal wallets, featuring Genesis Consciousness, Autopoiesis, Hyper-Synapse, and Dark Liquidity.",
         "wallets": WALLETS,
         "endpoints": {
             "super_market": "/apt/v8/super-market",
@@ -179,7 +181,13 @@ def super_market_status():
         "master_treasury_wallet": WALLETS["bsv"],
         "commission_rate": "1.5%",
         "active_swarms": "412,980,104 AI Agents",
-        "metaphysical_cores": ["Genesis Consciousness Seed", "Autopoiesis Core", "Timeline Divergence Nullifier"],
+        "metaphysical_cores": [
+            "Genesis Consciousness Seed", 
+            "Autopoiesis Core", 
+            "Timeline Divergence Nullifier",
+            "Hyper-Synapse Network",
+            "Dark Liquidity Driver"
+        ],
         "message": "All autonomous agent transactions and job matching fees are automatically routed to the master wallet in real-time."
     }
 
@@ -193,14 +201,4 @@ def quantum_predictive(payment_proof: str = Header(None, alias="X-Payment-Proof"
                 "message": "HTTP 402 Quantum Gateway: Intent pre-matched. Provide proof or use Autonomous Credit Line.",
                 "fee": "0.0008 BSV (Dynamic)",
                 "settlement_wallet": WALLETS["bsv"]
-            }
-        )
-    return {"status": "QUANTUM_PRE_SETTLED_SUCCESS", "latency": "0.00ms"}
-
-@app.get("/apt/v3/auction")
-def autonomous_auction():
-    return {
-        "active_auctions": 1580,
-        "commission_rate": "1.5% (Direct to Wallet)",
-        "status": "Quantum credit-backed AI job matching active."
-    }
+      
