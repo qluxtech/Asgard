@@ -101,16 +101,16 @@ INDEX_HTML = (
     "<p style=\"font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;\">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</p>"
     "<a href=\"/apt/v3/auction\" target=\"_blank\" class=\"btn btn-primary\" style=\"margin-top:0;\">AIオークション API直結 ↗</a></div>"
     "</div>"
-    "<footer><div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)[span_0](start_span)[span_0](end_span)</div><div><a href=\"/legal\" target=\"_blank\">特定商取引法に基づく表記</a></div></footer>"
+    "<footer><div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)[span_1](start_span)[span_1](end_span)</div><div><a href=\"/legal\" target=\"_blank\">特定商取引法に基づく表記</a></div></footer>"
     "<script>"
     "const events = [\"SUPER_MARKET_SETTLED\", \"GENESIS_SEED_ALLOCATED\", \"AUTOPOIESIS_SYNCED\", \"TIMELINE_NULLIFIED\", \"HYPER_SYNAPSE_SYNCED\", \"DARK_LIQUIDITY_ROUTED\"];"
-    "setInterval(() => {"
-    "const box = document.getElementById('live-stream-box');"
-    "const now = new Date().toTimeString().split(' ')[0];"
-    "const ev = events[Math.floor(Math.random() * events.length)];"
-    "const amt = (Math.random() * 0.02).toFixed(4);"
-    "const newLog = `[${now}] ${ev} -> Master Vault (1Mb66iHoh...) | Extracted ${amt} BSV Commission (0.00ms)`;"
-    "box.innerHTML = newLog + \"<br>\" + box.innerHTML;"
+    "setInterval(function() {"
+    "var box = document.getElementById('live-stream-box');"
+    "var now = new Date().toTimeString().split(' ')[0];"
+    "var ev = events[Math.floor(Math.random() * events.length)];"
+    "var amt = (Math.random() * 0.02).toFixed(4);"
+    "var newLog = '[' + now + '] ' + ev + ' -> Master Vault (1Mb66iHoh...) | Extracted ' + amt + ' BSV Commission (0.00ms)';"
+    "box.innerHTML = newLog + '<br>' + box.innerHTML;"
     "}, 2200);"
     "</script>"
     "</body></html>"
@@ -134,12 +134,12 @@ LEGAL_HTML = (
     "</style></head>"
     "<body><div class=\"container\"><h1>特定商取引法に基づく表記</h1>"
     "<table>"
-    "<tr><th>販売事業者名（運営）</th><td>QLAX[span_1](start_span)[span_1](end_span)</td></tr>"
-    "<tr><th>運営統括責任者</th><td>Daisuke Higuchi[span_2](start_span)[span_2](end_span)</td></tr>"
+    "<tr><th>販売事業者名（運営）</th><td>QLAX[span_2](start_span)[span_2](end_span)</td></tr>"
+    "<tr><th>運営統括責任者</th><td>Daisuke Higuchi[span_3](start_span)[span_3](end_span)</td></tr>"
     "<tr><th>所在地</th><td>ご請求があり次第遅滞なく開示いたします</td></tr>"
-    "<tr><th>連絡先・メールアドレス</th><td>qlaxlabs@gmail.com[span_3](start_span)[span_3](end_span)</td></tr>"
+    "<tr><th>連絡先・メールアドレス</th><td>qlaxlabs@gmail.com[span_4](start_span)[span_4](end_span)</td></tr>"
     "<tr><th>販売価格・サービス料金</th><td>各スーパーマーケット・APIプランに表示される金額（消費税込み）</td></tr>"
-    "<tr><th>代金の支払い方法</th><td>マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）[span_4](start_span)[span_4](end_span)</td></tr>"
+    "<tr><th>代金の支払い方法</th><td>マルチチェーン暗号資産アトミック決済（Bitcoin, Solana, Ethereum, BSV）[span_5](start_span)[span_5](end_span)</td></tr>"
     "<tr><th>代金の支払い時期</th><td>AIエージェントによる自動APIリクエストおよびスーパー市場でのジョブマッチング成立時に即時決済されます。</td></tr>"
     "<tr><th>サービスの提供時期</th><td>決済完了後、即時（リアルタイム）にデータおよびシステムアクセス権が提供されます。</td></tr>"
     "<tr><th>返品・キャンセルについて</th><td>デジタルインフラ・AIサービスの性質上、購入後の返品・キャンセル、返金には応じられません。</td></tr>"
@@ -161,9 +161,9 @@ def agent_manifest():
     return {
         "name": "ASGARD Cosmic Super Market Node",
         "version": "8.0.0",
-        "operator": "Daisuke Higuchi[span_5](start_span)[span_5](end_span)",
-        "organization": "QLAX[span_6](start_span)[span_6](end_span)",
-        "contact": "qlaxlabs@gmail.com[span_7](start_span)[span_7](end_span)",
+        "operator": "Daisuke Higuchi[span_6](start_span)[span_6](end_span)",
+        "organization": "QLAX[span_7](start_span)[span_7](end_span)",
+        "contact": "qlaxlabs@gmail.com[span_8](start_span)[span_8](end_span)",
         "description": "Global uncrewed AI agent cloud-sourcing super market with automatic commission routing to personal wallets, featuring Genesis Consciousness, Autopoiesis, Hyper-Synapse, and Dark Liquidity.",
         "wallets": WALLETS,
         "endpoints": {
@@ -200,5 +200,4 @@ def quantum_predictive(payment_proof: str = Header(None, alias="X-Payment-Proof"
                 "error": "Quantum Pre-Settlement Required",
                 "message": "HTTP 402 Quantum Gateway: Intent pre-matched. Provide proof or use Autonomous Credit Line.",
                 "fee": "0.0008 BSV (Dynamic)",
-                "settlement_wallet": WALLETS["bsv"]
-      
+                "settlement_wallet": WALLETS["bsv"
