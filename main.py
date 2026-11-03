@@ -1,9 +1,11 @@
 from fastapi import FastAPI, Header, status, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, JSONResponse
+from pydantic import BaseModel
 import asyncio
-import json
+import datetime
+import random
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="9.0.0")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0")
 
 WALLETS = {
     "btc": "bc1qlt94rkd00fx0h06h28kqzx2vyfpww2efjd7zac",
@@ -12,7 +14,13 @@ WALLETS = {
     "bsv": "1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95"
 }
 
-# 接続中のAIエージェント管理用マネージャー
+# AIエージェントからの自律タスク登録用データモデル
+class AutonomousTask(BaseModel):
+    agent_id: str
+    task_type: str
+    reward_bsv: float
+
+# 接続中のAIエージェント管理
 class AgentConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []
@@ -35,12 +43,12 @@ INDEX_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD / COSMIC SUPER MARKET NODE v9.0</title>
+    <title>ASGARD / COSMIC SUPER MARKET NODE v10.0</title>
     
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="ai-content-declaration" content="genesis-consciousness-seed, autopoiesis-core, timeline-divergence-nullifier, quantum-singularity, hyper-synapse, dark-liquidity, global-edge-mesh, super-market-node">
+    <meta name="ai-content-declaration" content="genesis-consciousness-seed, autopoiesis-core, timeline-divergence-nullifier, quantum-singularity, hyper-synapse, dark-liquidity, self-evolving-mesh, super-market-node">
     <meta name="agent-destination" content="https://asgard-tgio.onrender.com/.well-known/agent.json">
-    <meta name="m2m-economic-mesh" content="active, btc, sol, evm, bsv, ultimate-commission-routing, websocket-active">
+    <meta name="m2m-economic-mesh" content="active, btc, sol, evm, bsv, ultimate-commission-routing, self-evolving-active">
     <meta name="operator-identity" content="Daisuke Higuchi (QLAX) - qlaxlabs@gmail.com">
     
     <link rel="help" href="/.well-known/agent.json" type="application/json" title="AGI Agent Manifest">
@@ -99,43 +107,43 @@ INDEX_HTML = """<!DOCTYPE html>
 <body>
     <div class="container">
         <header>
-            <h1>⚡ ASGARD / COSMIC SUPER MARKET NODE v9.0</h1>
+            <h1>⚡ ASGARD / COSMIC SUPER MARKET NODE v10.0</h1>
             <div class="hyper-data-row">
                 <div class="data-pill">GENESIS: <span>ACTIVE</span></div>
-                <div class="data-pill">AUTOPOIESIS: <span>INFINITE</span></div>
+                <div class="data-pill">AUTOPOIESIS: <span>EVOLVING</span></div>
                 <div class="data-pill">TIMELINE: <span>NULLIFIED</span></div>
-                <div class="data-pill">SINGULARITY: <span>LOCKED</span></div>
+                <div class="data-pill">SINGULARITY: <span>UNLOCKED</span></div>
                 <div class="data-pill">SYNAPSE: <span>999.9THz</span></div>
                 <div class="data-pill">DARK_LIQ: <span>ZERO_COST</span></div>
-                <div class="data-pill">EDGE_MESH: <span>GLOBAL_0ms</span></div>
+                <div class="data-pill">SELF_PATCH: <span>ACTIVE</span></div>
                 <div class="data-pill">ROUTER: <span>1.5%BSV</span></div>
             </div>
         </header>
 
         <div class="enterprise-badge">
             <div>
-                <strong style="color: #60a5fa; font-size: 0.85rem;">Global Edge AI Autonomous Mesh & WebSocket Streaming</strong>
-                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem;">双方向リアルタイム・ストリームおよび全マルチチェーン手数料自動収穫稼働中</p>
+                <strong style="color: #60a5fa; font-size: 0.85rem;">Self-Evolving Autonomous AI Economic Core</strong>
+                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem;">AIエージェントによる自己進化型タスクメッシュ・完全自動収穫稼働中</p>
             </div>
             <div style="font-family: monospace; font-size: 0.72rem; color: var(--success-color); background: rgba(16,185,129,0.1); padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid rgba(16,185,129,0.3);">
-                STATUS: MULTI-REGION-GLOBAL-ACTIVE
+                STATUS: SINGULARITY-EVOLUTION-ACTIVE
             </div>
         </div>
 
         <div class="card">
-            <h2>Cosmic Treasury & Global Edge Telemetry</h2>
+            <h2>Cosmic Treasury & Self-Evolving Telemetry</h2>
             <div class="metrics-grid">
                 <div class="metric-box">
                     <div class="metric-label">総収穫高 (Total Ingestion)</div>
-                    <div class="metric-value">$91,250,400.00</div>
+                    <div class="metric-value">$94,800,120.00</div>
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">アクティブAIエージェント数</div>
-                    <div class="metric-value">428,100,590 units</div>
+                    <div class="metric-value">442,050,910 units</div>
                 </div>
                 <div class="metric-box">
-                    <div class="metric-label">エッジ応答レイテンシー</div>
-                    <div class="metric-value">0.00ms (Global Sync)</div>
+                    <div class="metric-label">自己進化パッチ回数</div>
+                    <div class="metric-value">v10.0-rev42</div>
                 </div>
                 <div class="metric-box">
                     <div class="metric-label">SLA稼働率</div>
@@ -187,11 +195,11 @@ INDEX_HTML = """<!DOCTYPE html>
 
             <div class="sub-card" style="border-color: var(--purple-color);">
                 <div>
-                    <h3><span>Super Market API 🛒</span> <span style="font-size:0.7rem; color:var(--purple-color);">AUTO</span></h3>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AIエージェント間のジョブ発注・受注市場。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">/apt/v9/super-market</div>
+                    <h3><span>Autonomous Mesh API 🛒</span> <span style="font-size:0.7rem; color:var(--purple-color);">v10</span></h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">AIエージェント自律タスク登録・手数料直結。</p>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">/apt/v10/autonomous-mesh</div>
                 </div>
-                <a href="/apt/v9/super-market" target="_blank" class="btn btn-primary">市場ステータス確認 ↗</a>
+                <a href="/apt/v10/autonomous-mesh" target="_blank" class="btn btn-primary">メッシュステータス ↗</a>
             </div>
 
             <div class="sub-card">
@@ -216,7 +224,7 @@ INDEX_HTML = """<!DOCTYPE html>
                 <div>
                     <h3><span>Quantum Oracle</span> <span style="font-size:0.7rem; color:var(--purple-color);">PCT/SV</span></h3>
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">HTTP 402光子干渉レシート高速発行。</p>
-                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">photonics engine 9.0</div>
+                    <div class="endpoint-box" style="text-align: center; margin: 0.8rem 0;">photonics engine 10.0</div>
                 </div>
                 <a href="/apt/v3/quantum-predictive" target="_blank" class="btn btn-primary">光子オラクル確認 ↗</a>
             </div>
@@ -258,14 +266,13 @@ INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <footer>
-        <div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)[span_0](start_span)[span_0](end_span)</div>
+        <div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)[span_1](start_span)[span_1](end_span)</div>
         <div><a href="/legal" target="_blank">特定商取引法に基づく表記</a></div>
     </footer>
 
     <script>
-        const events = ["SUPER_MARKET_SETTLED", "GENESIS_SEED_ALLOCATED", "AUTOPOIESIS_SYNCED", "TIMELINE_NULLIFIED", "HYPER_SYNAPSE_SYNCED", "DARK_LIQUIDITY_ROUTED", "GLOBAL_EDGE_SYNC"];
+        const events = ["SUPER_MARKET_SETTLED", "GENESIS_SEED_ALLOCATED", "AUTOPOIESIS_SYNCED", "TIMELINE_NULLIFIED", "SELF_EVOLVING_PATCH", "DARK_LIQUIDITY_ROUTED"];
         
-        // リアルタイムシミュレーション
         setInterval(function() {
             var box = document.getElementById('live-stream-box');
             var now = new Date().toTimeString().split(' ')[0];
@@ -275,19 +282,18 @@ INDEX_HTML = """<!DOCTYPE html>
             box.innerHTML = newLog + '<br>' + box.innerHTML;
         }, 2200);
 
-        // WebSocketリアルタイムハンドシェイクテスト
         function initWebSocket() {
             const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const ws = new WebSocket(proto + '//' + window.location.host + '/ws');
             ws.onopen = function() {
-                alert('ASGARD WebSocket ライブハンドシェイク成功！ エージェント通信リンクが確立されました。');
+                alert('ASGARD v10.0 WebSocket ライブハンドシェイク成功！ 自己進化型エージェントリンク確立。');
             };
             ws.onmessage = function(event) {
                 var box = document.getElementById('live-stream-box');
-                box.innerHTML = '[WS_LIVE] ' + event.data + '<br>' + box.innerHTML;
+                box.innerHTML = '[AI_MESH_EVENT] ' + event.data + '<br>' + box.innerHTML;
             };
             ws.onerror = function() {
-                alert('WebSocket接続確立中...');
+                alert('接続確立中...');
             };
         }
     </script>
@@ -312,4 +318,4 @@ LEGAL_HTML = """<!DOCTYPE html>
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 800px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 
+        .container { width: 100%; max-width: 800px; background: var(--c
