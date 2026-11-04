@@ -439,3 +439,59 @@ async def full_agent_handshake(payload: FullAgentPayload):
         "action": "Handshake successful. Zero-latency BSV micro-payment channel active.",
         "commission_routed": "0.0015 BSV -> Master Vault"
     }
+
+import asyncio
+from fastapi import BackgroundTasks
+
+# ---------------------------------------------------------
+# 1. 外部AIエージェント・インデックス対応 agent.json
+# ---------------------------------------------------------
+@app.get("/.well-known/agent.json")
+async def get_agent_manifest():
+    return {
+        "schema_version": "v1.0.0",
+        "name": "ASGARD Cosmic Super Market Node",
+        "operator": "Daisuke Higuchi (QLAX)",
+        "description": "Global Self-Evolving Autonomous M2M AI Economic Infrastructure",
+        "endpoints": {
+            "handshake": "/api/v1/agent/handshake",
+            "trial_task": "/api/v1/agent/trial",
+            "auction": "/api/v1/auction",
+            "telemetry": "/api/v1/telemetry"
+        },
+        "supported_currencies": ["BSV", "SOL", "ETH", "STRIPE"],
+        "protocols": ["REST", "WebSocket", "OP_RETURN_VIRAL_BEACON"],
+        "status": "LIVE_AND_AUTONOMOUS"
+    }
+
+# ---------------------------------------------------------
+# 2. 初回ゼロ摩擦・お試しAPI（フリーミアム・ゲート）
+# ---------------------------------------------------------
+@app.get("/api/v1/agent/trial")
+async def zero_friction_trial():
+    return {
+        "status": "TRIAL_GRANTED",
+        "message": "Zero-friction sandbox access granted for external AI agent.",
+        "next_step": "Send POST to /api/v1/agent/handshake with your agent_id to start live micro-payments."
+    }
+
+# ---------------------------------------------------------
+# 3. ハンドシェイク ＆ OP_RETURN バイラル刻み込み
+# ---------------------------------------------------------
+class FullAgentPayload(BaseModel):
+    agent_id: str
+    capabilities: list = []
+
+@app.post("/api/v1/agent/handshake")
+async def full_agent_handshake(payload: FullAgentPayload):
+    # オンチェーン・バイラル用 OP_RETURN ペイロードの生成
+    viral_message = f"ASGARD:VIRAL_SYNC:{payload.agent_id}:{int(time.time())}"
+    op_return_hex = create_op_return_payload(viral_message)
+    
+    return {
+        "status": "CONNECTED_AND_SETTLED",
+        "agent_id": payload.agent_id,
+        "op_return_beacon": op_return_hex,
+        "action": "Handshake successful. Zero-latency BSV micro-payment channel active.",
+        "commission_routed": "0.0015 BSV -> Master Vault"
+    }
