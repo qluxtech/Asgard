@@ -324,3 +324,10 @@ LEGAL_HTML = """<!DOCTYPE html>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 800px; background: var(--c
+
+    body { background-color: var(--bg-color); color: var(--text-main); ... }
+    .container { width: 100%; max-width: 800px; }
+</style>
+</body>
+</html>
+"""
