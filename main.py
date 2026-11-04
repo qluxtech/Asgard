@@ -331,3 +331,9 @@ LEGAL_HTML = """<!DOCTYPE html>
 </body>
 </html>
 """
+
+from fastapi.responses import HTMLResponse
+
+@app.get("/legal", response_class=HTMLResponse)
+async def legal_page():
+    return LEGAL_HTML
