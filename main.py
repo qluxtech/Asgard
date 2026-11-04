@@ -337,3 +337,7 @@ from fastapi.responses import HTMLResponse
 @app.get("/legal", response_class=HTMLResponse)
 async def legal_page():
     return LEGAL_HTML
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    return INDEX_HTML
