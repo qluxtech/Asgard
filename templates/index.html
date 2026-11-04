@@ -454,3 +454,31 @@
     </script>
 </body>
 </html>
+
+LEGAL_HTML = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特定商取引法に基づく表記 / ASGARD Cosmic</title>
+    <style>
+        :root {
+            --bg-color: #05070a;
+            --card-bg: #0b101d;
+            --border-color: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success-color: #10b981;
+        }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; font-family: sans-serif; }
+        .container { width: 100%; max-width: 800px; padding: 2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>特定商取引法に基づく表記</h1>
+        <p>事業者: Daisuke Higuchi (QLAX)</p>
+        <p>連絡先: qlaxlabs@gmail.com</p>
+    </div>
+</body>
+</html>"""
