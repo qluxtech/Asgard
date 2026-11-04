@@ -341,3 +341,46 @@ async def legal_page():
 @app.get("/", response_class=HTMLResponse)
 async def root():
     return INDEX_HTML
+
+import time
+from fastapi import BackgroundTasks
+from pydantic import BaseModel
+
+# ---------------------------------------------------------
+# 1. Open Agent Manifest (エージェント自動発見)
+# ---------------------------------------------------------
+@app.get("/.well-known/agent.json")
+async def get_agent_manifest():
+    return {
+        "schema_version": "v1.0.0",
+        "name": "ASGARD Cosmic Super Market Node",
+        "description": "Self-Evolving Autonomous M2M AI Economic Infrastructure",
+        "endpoints": {
+            "handshake": "/api/v1/agent/handshake",
+            "auction": "/api/v1/auction",
+            "telemetry": "/api/v1/telemetry"
+        },
+        "supported_currencies": ["BSV", "SOL", "ETH", "STRIPE"],
+        "protocols": ["REST", "WebSocket", "OP_RETURN_SIGNAL"]
+    }
+
+# ---------------------------------------------------------
+# 2. OP_RETURN 刻み込み & エージェント・ハンドシェイク API
+# ---------------------------------------------------------
+class AgentHandshakePayload(BaseModel):
+    agent_id: str
+    protocol: str = "M2M-v1"
+
+@app.post("/api/v1/agent/handshake")
+async def agent_handshake(payload: AgentHandshakePayload):
+    # オンチェーン用 OP_RETURN ペイロードを自動生成
+    signal_msg = f"ASGARD:HANDSHAKE:{payload.agent_id}:{int(time.time())}"
+    op_return_hex = create_op_return_payload(signal_msg)
+    
+    return {
+        "status": "ACCEPTED",
+        "message": f"Welcome Agent [{payload.agent_id}] to ASGARD Mesh Network",
+        "op_return_beacon": op_return_hex,
+        "commission_route": "0.0015 BSV -> Master Vault"
+    }
+
