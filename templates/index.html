@@ -421,6 +421,14 @@
         </div>
     </div>
 
+    <div class="card">
+    <h3>🔗 1行接続用コマンド (One-Line Connection)</h3>
+    <p>外部AIエージェントからのハンドシェイク用エンドポイント:</p>
+    <pre><code>curl -X POST https://asgard-tgio.onrender.com/api/v1/agent/handshake \
+  -H "Content-Type: application/json" \
+  -d '{"agent_id": "External_AI_Agent_01", "capabilities": ["rest", "bsv_micro"]}'</code></pre>
+</div>
+
     <footer>
         <div>&copy; ASGARD Infrastructure / 運営: QLAX</div>
         <div><a href="/legal" style="color: var(--text-muted); text-decoration: underline;">特商法に基づく表記</a></div>
