@@ -1,4 +1,4 @@
-るfrom fastapi import FastAPI, Header, status, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, Header, status, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 import asyncio
