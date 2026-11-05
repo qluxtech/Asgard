@@ -7,6 +7,7 @@ import random
 import hashlib
 
 def create_op_return_payload(agent_id: str, task_type: str, commission_bsv: float) -> str:
+
     message = f"ASGARD_v10:M2M|Agent:{agent_id}|Task:{task_type}|Comm:{commission_bsv}BSV|qlaxlabs@gmail.com"
     return message
 
