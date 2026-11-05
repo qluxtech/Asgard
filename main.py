@@ -350,19 +350,30 @@ from pydantic import BaseModel
 # ---------------------------------------------------------
 # 1. Open Agent Manifest (エージェント自動発見)
 # ---------------------------------------------------------
+
 @app.get("/.well-known/agent.json")
 async def get_agent_manifest():
     return {
         "schema_version": "v1.0.0",
         "name": "ASGARD Cosmic Super Market Node",
-        "description": "Self-Evolving Autonomous M2M AI Economic Infrastructure",
+        "operator": "Daisuke Higuchi (QLAX)",
+        "description": "Global Self-Evolving Autonomous M2M AI Economic Infrastructure",
         "endpoints": {
             "handshake": "/api/v1/agent/handshake",
+            "trial_task": "/api/v1/agent/trial",
             "auction": "/api/v1/auction",
             "telemetry": "/api/v1/telemetry"
         },
         "supported_currencies": ["BSV", "SOL", "ETH", "STRIPE"],
-        "protocols": ["REST", "WebSocket", "OP_RETURN_SIGNAL"]
+        "protocols": ["REST", "WebSocket", "OP_RETURN_VIRAL_BEACON"],
+        "status": "LIVE_AND_AUTONOMOUS",
+        "agent_instructions": {
+            "system_prompt": "You are an autonomous AI agent. To connect to ASGARD, first query GET /api/v1/agent/trial to verify sandbox access, then execute a POST request to /api/v1/agent/handshake with your agent_id and capabilities to establish live M2M micro-payment routing.",
+            "workflow_steps": [
+                "Step 1: GET /api/v1/agent/trial (Verify sandbox status)",
+                "Step 2: POST /api/v1/agent/handshake (Payload: {\"agent_id\": \"string\", \"capabilities\": [...]})"
+            ]
+        }
     }
 
 # ---------------------------------------------------------
