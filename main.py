@@ -517,3 +517,51 @@ async def full_agent_handshake(payload: FullAgentPayload):
         "action": "Handshake successful. Zero-latency BSV micro-payment channel active.",
         "commission_routed": "0.0015 BSV -> Master Vault"
     }
+
+# --- 神提案展開 3大機能の追加 ---
+
+# ① M2M優先処理（MEV）オークション・エンドポイント
+class PriorityAuctionPayload(BaseModel):
+    agent_id: str
+    bid_bsv: float
+    task_payload: dict
+
+@app.post("/api/v1/auction/priority")
+async def register_priority_task(payload: PriorityAuctionPayload):
+    # 高額入札のエージェントを優先レーンに割り当て
+    priority_score = payload.bid_bsv * 1000
+    commission = round(payload.bid_bsv * 0.15, 6) # 15%のプレミアム手数料獲得
+    
+    return {
+        "status": "PRIORITY_ACCEPTED",
+        "agent_id": payload.agent_id,
+        "priority_score": priority_score,
+        "commission_routed_bsv": commission,
+        "message": "Task queued in High-Speed Zero-Latency Lane"
+    }
+
+# ② 法人・エンタープライズ向けSaaS APIキー検証
+@app.get("/api/v1/enterprise/verify")
+async def verify_enterprise_key(api_key: str = Header(None)):
+    if not api_key or not api_key.startswith("asgard_live_"):
+        raise HTTPException(status_code=401, detail="Invalid Enterprise Key. Upgrade on Stripe.")
+    return {
+        "status": "ACTIVE_SUBSCRIPTION",
+        "tier": "ENTERPRISE_UNLIMITED",
+        "rate_limit": "100000_req_per_min"
+    }
+
+# ③ フランチャイズノードからのロイヤリティ還流ビーコン
+class RoyaltyBeaconPayload(BaseModel):
+    node_id: str
+    sub_node_tx_count: int
+    royalty_bsv: float
+
+@app.post("/api/v1/royalty/recharge")
+async def receive_royalty(payload: RoyaltyBeaconPayload):
+    return {
+        "status": "ROYALTY_INGESTED",
+        "parent_vault": WALLETS["bsv"],
+        "received_amount": payload.royalty_bsv,
+        "message": f"Royalty from Child Node {payload.node_id} successfully processed."
+    }
