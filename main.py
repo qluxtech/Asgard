@@ -632,9 +632,9 @@ LEGAL_HTML = """<!DOCTYPE html>
     <div class="container">
         <h1>特定商取引法に基づく表記</h1>
         <table>
-            <tr><th>販売事業者</th><td>QLAX（代表：樋口 大介）</td></tr>
+            <tr><th>販売事業者</th><td>QLAX　代表Daisuke Higuchi</td></tr>
             <tr><th>所在地</th><td>（ご請求があった場合に遅滞なく開示します）</td></tr>
-            <tr><th>連絡先・メール</th><td>support@qlux.tech</td></tr>
+            <tr><th>連絡先・メール</th><td>qlaxlabs@gmail.com</td></tr>
             <tr><th>販売価格</th><td>各サービス・API利用ページに表示される金額に準じます</td></tr>
             <tr><th>支払方法</th><td>クレジットカード決済（Stripe）、暗号資産（BSV）</td></tr>
             <tr><th>代金の支払時期</th><td>サービス利用お申し込み時に即時決済</td></tr>
