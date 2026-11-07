@@ -272,7 +272,7 @@ INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <footer>
-        <div>&copy; ASGARD Cosmic Infrastructure / 運営者: Daisuke Higuchi (QLAX)[span_1](start_span)[span_1](end_span)</div>
+        <div>&copy; ASGARD Cosmic Infrastructure / 運営者: QLAX[span_1](start_span)[span_1](end_span)</div>
         <div><a href="/legal" target="_blank">特定商取引法に基づく表記</a></div>
     </footer>
 
