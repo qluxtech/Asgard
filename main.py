@@ -612,4 +612,42 @@ async def receive_royalty(payload: RoyaltyBeaconPayload):
         "received_amount": payload.royalty_bsv,
         "message": f"Royalty from Child Node {payload.node_id} successfully processed."
     }
+LEGAL_HTML = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>特定商取引法に基づく表記 - ASGARD</title>
+    <style>
+        body { background-color: #050709; color: #f8fafc; font-family: sans-serif; padding: 2rem; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; background: #0b101d; padding: 2rem; border: 1px solid #1e293b; border-radius: 8px; }
+        h1 { color: #3b82f6; font-size: 1.5rem; margin-bottom: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { border: 1px solid #1e293b; padding: 0.75rem; text-align: left; font-size: 0.9rem; }
+        th { background: #16203b; color: #f8fafc; width: 30%; }
+        td { color: #94a3b8; }
+        a { color: #3b82f6; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>特定商取引法に基づく表記</h1>
+        <table>
+            <tr><th>販売事業者</th><td>QLAX（代表：樋口 大介）</td></tr>
+            <tr><th>所在地</th><td>（ご請求があった場合に遅滞なく開示します）</td></tr>
+            <tr><th>連絡先・メール</th><td>support@qlux.tech</td></tr>
+            <tr><th>販売価格</th><td>各サービス・API利用ページに表示される金額に準じます</td></tr>
+            <tr><th>支払方法</th><td>クレジットカード決済（Stripe）、暗号資産（BSV）</td></tr>
+            <tr><th>代金の支払時期</th><td>サービス利用お申し込み時に即時決済</td></tr>
+            <tr><th>サービス提供時期</th><td>決済完了後、即時（リアルタイムAPI接続）</td></tr>
+            <tr><th>返品・キャンセル</th><td>デジタルコンテンツおよびAPIサービスの性質上、購入後の返品・キャンセルには応じられません。</td></tr>
+        </table>
+        <p style="margin-top: 2rem;"><a href="/">← ASGARD メインノードへ戻る</a></p>
+    </div>
+</body>
+</html>
+"""
+
+@app.get("/legal", response_class=HTMLResponse)
+async def legal_page():
+    return LEGAL_HTML
 
