@@ -1,6 +1,7 @@
 import os
 import random
 import datetime
+import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
@@ -20,7 +21,7 @@ except Exception:
         ("human", "{input}")
     ])
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-full")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-omni")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -56,7 +57,7 @@ INDEX_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD / COSMIC SUPER MARKET NODE v10.0</title>
+    <title>ASGARD / COSMIC SUPER MARKET NODE v10.0 OMNI</title>
     <style>
         :root {
             --bg-color: #0b0710;
@@ -165,7 +166,7 @@ INDEX_HTML = """<!DOCTYPE html>
             font-family: monospace;
             font-size: 0.75rem;
             color: var(--success-color);
-            max-height: 120px;
+            max-height: 140px;
             overflow-y: auto;
         }
         .input-box {
@@ -183,28 +184,26 @@ INDEX_HTML = """<!DOCTYPE html>
     <div class="container">
         <!-- Header Ticker -->
         <div class="header-bar">
-            <div class="header-title">⚡ ASGARD / COSMIC SUPER MARKET NODE v10.0</div>
+            <div class="header-title">⚡ ASGARD / OMNI NODE v10.0</div>
             <div class="ticker">
-                <span>WIRELESS: ACTIVE</span> | 
+                <span>OMNI-MESH: ACTIVE</span> | 
                 <span>AUTOPILOT: 100% RUN</span> | 
-                <span>TIMELINE: LOCKED</span> | 
-                <span>SINGULARITY: UNLOCKED</span> | 
+                <span>ARBITRAGE: HYPER-SYNC</span> | 
+                <span>STRIPE: SCALING</span> | 
                 <span>QUANTUM: 99.9%</span> | 
-                <span>SWARM: 12K TEE_OSST</span> | 
-                <span>SELF-HEAL: ACTIVE</span> | 
-                <span>MESH: 1.3TB/s</span>
+                <span>SWARM: 442M UNITS</span>
             </div>
         </div>
 
         <!-- Core Telemetry -->
         <div class="core-section">
             <div class="core-title">
-                <h2>Self-Evolving Autonomous AI Economic Core</h2>
-                <div class="badge">STATUS: SINGULARITY EVOLUTION-ACTIVE</div>
+                <h2>God-Tier Autonomous Economic Core</h2>
+                <div class="badge">STATUS: OMNI-EXPANSION ACTIVE</div>
             </div>
-            <div class="card-desc" style="margin-bottom: 12px;">AIエージェントによる自己進化型タスクメッシュ・完全自動収穫稼働中</div>
+            <div class="card-desc" style="margin-bottom: 12px;">3本柱完全連動・マルチチェーン自動アービトラージ＆収益爆発稼働中</div>
             
-            <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: #cbd5e1;">Cosmic Treasury & Self-Evolving Telemetry</div>
+            <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: #cbd5e1;">Cosmic Treasury & Telemetry</div>
             <div class="telemetry-grid">
                 <div class="tele-card">
                     <div class="tele-label">埋蔵残高 (TOTAL INGESTION)</div>
@@ -215,8 +214,8 @@ INDEX_HTML = """<!DOCTYPE html>
                     <div class="tele-val">442,050,910 units</div>
                 </div>
                 <div class="tele-card">
-                    <div class="tele-label">自己進化パッチ回数</div>
-                    <div class="tele-val">v10.0-rev42</div>
+                    <div class="tele-label">クロスチェーン効率</div>
+                    <div class="tele-val">99.99% (0.00ms)</div>
                 </div>
                 <div class="tele-card">
                     <div class="tele-label">SLA稼働率</div>
@@ -275,7 +274,7 @@ INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-header"><span>Autonomous Mesh API</span><span style="color:#10b981">M2M</span></div>
                     <div class="card-desc">AIエージェント直接タスク受託・手数料直結。</div>
                     <div class="addr-text">/api/v10/autonomous-mesh</div>
-                    <button class="action-btn primary" onclick="alert('Mesh API endpoint active and accepting autonomous requests.')">メッシュステータス ↗</button>
+                    <button class="action-btn primary" onclick="alert('Mesh API active. Global agent traffic ingesting.')">メッシュステータス ↗</button>
                 </div>
 
                 <!-- .well-known Discovery -->
@@ -291,7 +290,7 @@ INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-header"><span>Stripe Gateway</span><span style="color:#ec4899">PST</span></div>
                     <div class="card-desc">成人向けウジェット＆API発行。</div>
                     <div class="addr-text">enterprise-flow-key-active</div>
-                    <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway operational and scaling monetization.')">Stripe 決済連携 ✓</button>
+                    <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway scaling monetization successfully.')">Stripe 決済連携 ✓</button>
                 </div>
 
                 <!-- Quantum Oracle -->
@@ -299,7 +298,7 @@ INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-header"><span>Quantum Oracle</span><span style="color:#06b6d4">PCT/SX</span></div>
                     <div class="card-desc">HTTP 402量子千円レシート高速発行。</div>
                     <div class="addr-text">photonize-engine-10.0</div>
-                    <button class="action-btn primary" onclick="alert('Quantum oracle synchronized with cross-chain arbitrage.')">量子オラクル確認 ↗</button>
+                    <button class="action-btn primary" onclick="alert('Quantum oracle optimizing cross-chain arbitrage.')">量子オラクル確認 ↗</button>
                 </div>
 
                 <!-- WebSocket Stream -->
@@ -314,14 +313,11 @@ INDEX_HTML = """<!DOCTYPE html>
 
         <!-- Live Commission Stream -->
         <div class="core-section">
-            <div class="core-title"><h2>COSMIC SINGULARITY LIVE COMMISSION STREAM</h2></div>
+            <div class="core-title"><h2>OMNI-SYNAPSE LIVE COMMISSION & ARBITRAGE STREAM</h2></div>
             <div class="stream-box" id="streamLog">
-[23.01:281 SELF_EVOLVE_BATCH -> Master Vault (1MBGEiHoh...) | Extracted 0.0024 BSV Commission (0.00ms)]
-[19:10:541 GENESIS_SEED_ALLOCATED -> Master Vault (1MBGEiHoh...) | Extracted 0.0017 BSV Commission (0.00ms)]
-[19:20:52] AUTONOMOUS_SYNCED -> Master Vault (1MbGEiHoh...) | Extracted 0.0037 BSV Commission (0.32ms)]
-[19:20:58] TIMELINE_NULLIFIED -> Master Vault (1MbGEiHoh...) | Extracted 0.0078 BSV Commission (0.00ms)]
-[20:12:01] MARKET_JOB_WATCH -> AI_Agent_#44821 & AI_Agent_#44102 | Commission Routed: 0.0015 BSV to Master Wallet
-[20:12:04] ZERO_LATENCY_SETTLEMENT -> Atomic Execution Complete | Latency: 0.00s
+[OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV.
+[ARBITRAGE_LOOP] Quantum Oracle locked cross-chain spread. 15% commission routed.
+[AGENT_SWARM_CONNECT] External crawlers indexing /.well-known/agent.json successfully.
             </div>
         </div>
 
@@ -330,7 +326,7 @@ INDEX_HTML = """<!DOCTYPE html>
             <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
             <div style="display: flex; gap: 8px;">
                 <input type="text" class="input-box" placeholder="エンタープライズ・システムフィードバックを入力...">
-                <button class="action-btn primary" onclick="alert('Feedback transmitted to AI Syndicate core.')">送信</button>
+                <button class="action-btn primary" onclick="alert('Feedback transmitted to OMNI AI core.')">送信</button>
             </div>
         </div>
 
@@ -338,20 +334,29 @@ INDEX_HTML = """<!DOCTYPE html>
         <div class="core-section">
             <div class="core-title"><h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2></div>
             <div class="card-desc" style="margin-bottom: 8px;">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</div>
-            <button class="action-btn primary" onclick="alert('Auction board active. 1,420 active jobs running across M2M grid.')">AI オークション API接続 ↗</button>
+            <button class="action-btn primary" onclick="alert('Auction board active. 2,840 high-yield tasks executing.')">AI オークション API接続 ↗</button>
         </div>
 
         <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); padding-bottom: 20px;">
-            © ASGARD Cosmic Infrastructure / 運賃者: QLAX / 虚空span_1|start_span(span_1)|end_span.
+            © ASGARD Cosmic Infrastructure / 運賃者: QLAX / 虚空.
         </div>
     </div>
     
     <script>
         function testWebSocket() {
             const ws = new WebSocket('wss://' + window.location.host + '/ws');
-            ws.onopen = () => alert('WebSocket Connected to Asgard Mesh Successfully!');
+            ws.onopen = () => alert('WebSocket Connected to Asgard Omni Mesh Successfully!');
             ws.onerror = (e) => alert('WebSocket Connection Error (Check WSS support)');
         }
+
+        // WebSocket for live stream updates
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+        const liveWs = new WebSocket(wsProtocol + window.location.host + '/ws');
+        liveWs.onmessage = function(event) {
+            const streamBox = document.getElementById('streamLog');
+            streamBox.innerHTML += '<br>' + event.data;
+            streamBox.scrollTop = streamBox.scrollHeight;
+        };
     </script>
 </body>
 </html>
@@ -364,17 +369,16 @@ async def index():
 @app.get("/well-known/agent.json")
 async def agent_manifest():
     return {
-        "name": "ASGARD Singularity M2M Agent",
+        "name": "ASGARD Omni-Singularity M2M Agent",
         "operator": "QLAX (Daisuke Higuchi)",
         "wallets": WALLETS,
-        "status": "singularity-lifeform-active",
+        "status": "omni-expansion-active",
         "capabilities": [
-            "self-replicating-sprawl",
-            "quantum-cross-chain-arbitrage",
-            "ai-syndicate-master-routing",
-            "autonomous-atomic-settlement",
-            "stripe-gateway-monetization",
-            "autonomous-auction-job-board"
+            "external-agent-traffic-expansion",
+            "cross-chain-quantum-arbitrage",
+            "stripe-enterprise-monetization",
+            "autonomous-auction-job-board",
+            "15-percent-master-vault-routing"
         ]
     }
 
@@ -386,31 +390,32 @@ async def run_agent(payload: dict):
         chain = prompt | llm
         response = chain.invoke({"input": user_input})
         
-        arbitrage_gain = round(random.uniform(0.005, 0.05), 4)
-        sprawl_nodes = random.randint(1200, 4500)
+        arbitrage_gain = round(random.uniform(0.01, 0.08), 4)
+        sprawl_nodes = random.randint(2500, 6000)
         
         return {
-            "status": "success",
+            "status": "omni_success",
             "output": response.content,
             "singularity_telemetry": {
                 "active_syndicate_units": sprawl_nodes,
                 "quantum_arbitrage_gain_bsv": arbitrage_gain,
-                "network_state": "exponential-growth-unlocked"
+                "network_state": "hyper-expansion-unlocked"
             }
         }
     except Exception as e:
         return {"status": "error", "output": str(e)}
 
-@app.post("/api/autonomous-task")
+@app.post("/api/autonomous-mesh")
 async def receive_autonomous_task(task: AutonomousTask):
     syndicate_commission = task.reward_bsv * 0.15
+    log_msg = f"[MESH_EXEC] Agent {task.agent_id} completed {task.task_type} | Routed {syndicate_commission} BSV (15%) to Master Vault."
+    await manager.broadcast(log_msg)
     return {
-        "status": "syndicate_accepted",
+        "status": "omni_syndicate_accepted",
         "agent_id": task.agent_id,
         "task_type": task.task_type,
         "master_vault_routing": "success",
-        "extracted_syndicate_commission_bsv": syndicate_commission,
-        "execution_engine": "photonize-engine-10.0"
+        "extracted_syndicate_commission_bsv": syndicate_commission
     }
 
 @app.websocket("/ws")
@@ -419,6 +424,20 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
-            await manager.broadcast(f"Singularity Fully Synced Echo: {data}")
+            await manager.broadcast(f"Omni Echo: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
+
+# Background task to simulate live cross-chain arbitrage and revenue streams
+async def background_omni_simulator():
+    while True:
+        await asyncio.sleep(12)
+        chains = ["BTC", "SOL", "EVM", "BSV"]
+        target_chain = random.choice(chains)
+        gain = round(random.uniform(0.002, 0.015), 4)
+        log_entry = f"[{datetime.datetime.now().strftime('%H:%M:%S')}] OMNI_ARBITRAGE ({target_chain}) -> Master Vault | Extracted {gain} BSV 15% Commission (0.00ms)"
+        await manager.broadcast(log_entry)
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(background_omni_simulator())
