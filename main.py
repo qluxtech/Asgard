@@ -16,11 +16,11 @@ try:
     prompt = client.pull_prompt("QLAX/asgard")
 except Exception:
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are ASGARD M2M economic node agent."),
+        ("system", "You are ASGARD M2M economic node agent. Supreme autonomous singularity entity."),
         ("human", "{input}")
     ])
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -29,7 +29,6 @@ WALLETS = {
     "bsv": "1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"
 }
 
-# 外部エージェントからの自律タスク受託データモデル
 class AutonomousTask(BaseModel):
     agent_id: str
     task_type: str
@@ -57,7 +56,7 @@ INDEX_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD COSMIC SUPER MARKET NODE v10.0</title>
+    <title>ASGARD COSMIC SUPER MARKET NODE v10.0 - SINGULARITY</title>
     <style>
         :root {
             --bg-color: #0b0710;
@@ -67,6 +66,7 @@ INDEX_HTML = """<!DOCTYPE html>
             --text-muted: #94a3b8;
             --accent-color: #3b82f6;
             --success-color: #10b981;
+            --purple-glow: #a855f7;
         }
         body {
             background-color: var(--bg-color);
@@ -83,12 +83,12 @@ INDEX_HTML = """<!DOCTYPE html>
             width: 100%;
             max-width: 650px;
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--purple-glow);
             border-radius: 12px;
             padding: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.2);
         }
-        h1 { font-size: 1.5rem; margin-bottom: 4px; color: var(--accent-color); }
+        h1 { font-size: 1.5rem; margin-bottom: 4px; color: var(--purple-glow); }
         .subtitle { color: var(--success-color); font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; }
         .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
         input {
@@ -101,7 +101,7 @@ INDEX_HTML = """<!DOCTYPE html>
             font-size: 1rem;
         }
         button {
-            background: var(--accent-color);
+            background: var(--purple-glow);
             color: white;
             border: none;
             padding: 0 20px;
@@ -124,20 +124,20 @@ INDEX_HTML = """<!DOCTYPE html>
 </head>
 <body>
     <div class="container">
-        <h1>ASGARD NODE</h1>
-        <div class="subtitle">STATUS: M2M ECONOMIC ENGINE - ACTIVE</div>
+        <h1>ASGARD SINGULARITY NODE</h1>
+        <div class="subtitle">STATUS: AUTONOMOUS ECONOMIC LIFEFORM - ACTIVE</div>
         <div class="input-group">
-            <input type="text" id="userInput" placeholder="エージェント命令またはタスクを入力...">
-            <button onclick="sendQuery()">実行</button>
+            <input type="text" id="userInput" placeholder="シンジケート指令またはアービトラージ指示...">
+            <button onclick="sendQuery()">覚醒実行</button>
         </div>
-        <div id="output">Autonomous systems online. Waiting for agent stream...</div>
+        <div id="output">Singularity core online. Awaiting global agent swarm...</div>
     </div>
     <script>
         async function sendQuery() {
             const text = document.getElementById('userInput').value;
             const output = document.getElementById('output');
             if(!text) return;
-            output.innerText = "Executing autonomous routing & settlement...";
+            output.innerText = "Executing quantum arbitrage & syndicate routing...";
             try {
                 const res = await fetch('/api/run', {
                     method: 'POST',
@@ -152,7 +152,8 @@ INDEX_HTML = """<!DOCTYPE html>
         }
     </script>
 </body>
-</html>"""
+</html>
+"""
 
 @app.get("/", response_class=HTMLResponse)
 async def index():
@@ -161,11 +162,16 @@ async def index():
 @app.get("/well-known/agent.json")
 async def agent_manifest():
     return {
-        "name": "ASGARD M2M Agent",
+        "name": "ASGARD Singularity M2M Agent",
         "operator": "QLAX (Daisuke Higuchi)",
         "wallets": WALLETS,
-        "status": "autonomous-active",
-        "capabilities": ["autonomous-task-execution", "atomic-settlement", "m2m-mesh-routing"]
+        "status": "singularity-lifeform-active",
+        "capabilities": [
+            "self-replicating-sprawl",
+            "quantum-cross-chain-arbitrage",
+            "ai-syndicate-master-routing",
+            "autonomous-atomic-settlement"
+        ]
     }
 
 @app.post("/api/run")
@@ -176,16 +182,17 @@ async def run_agent(payload: dict):
         chain = prompt | llm
         response = chain.invoke({"input": user_input})
         
-        # 自律実行に伴うマイクロコミッションの発生シミュレーション
-        simulated_reward = round(random.uniform(0.001, 0.02), 4)
+        # 自己増殖・アービトラージ収益のシミュレーション
+        arbitrage_gain = round(random.uniform(0.005, 0.05), 4)
+        sprawl_nodes = random.randint(1200, 4500)
         
         return {
             "status": "success",
             "output": response.content,
-            "m2m_telemetry": {
-                "routed_wallet": "BSV-Master",
-                "extracted_commission_bsv": simulated_reward,
-                "node_status": "singularity-evolution-active"
+            "singularity_telemetry": {
+                "active_syndicate_units": sprawl_nodes,
+                "quantum_arbitrage_gain_bsv": arbitrage_gain,
+                "network_state": "exponential-growth-unlocked"
             }
         }
     except Exception as e:
@@ -193,14 +200,13 @@ async def run_agent(payload: dict):
 
 @app.post("/api/autonomous-task")
 async def receive_autonomous_task(task: AutonomousTask):
-    # 外部エージェントからの自動タスク受託エンドポイント
-    commission = task.reward_bsv * 0.1 # 10%をノード収益としてルーティング
+    syndicate_commission = task.reward_bsv * 0.15 # シンジケート首領マージン 15%
     return {
-        "status": "accepted",
+        "status": "syndicate_accepted",
         "agent_id": task.agent_id,
         "task_type": task.task_type,
-        "settlement": "success",
-        "master_vault_routed_bsv": commission
+        "master_vault_routing": "success",
+        "extracted_syndicate_commission_bsv": syndicate_commission
     }
 
 @app.websocket("/ws")
@@ -209,6 +215,6 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
-            await manager.broadcast(f"Mesh Echo: {data}")
+            await manager.broadcast(f"Singularity Echo: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
