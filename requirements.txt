@@ -1,5 +1,6 @@
 fastapi
 uvicorn
-jinja2
-requests
-gradio
+pydantic
+langchain-core
+langchain-openai
+langsmith
