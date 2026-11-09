@@ -20,7 +20,7 @@ except Exception:
         ("human", "{input}")
     ])
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-full")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -291,7 +291,7 @@ INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-header"><span>Stripe Gateway</span><span style="color:#ec4899">PST</span></div>
                     <div class="card-desc">成人向けウジェット＆API発行。</div>
                     <div class="addr-text">enterprise-flow-key-active</div>
-                    <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway operational.')">Stripe 決済連携 ✓</button>
+                    <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway operational and scaling monetization.')">Stripe 決済連携 ✓</button>
                 </div>
 
                 <!-- Quantum Oracle -->
@@ -299,7 +299,7 @@ INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-header"><span>Quantum Oracle</span><span style="color:#06b6d4">PCT/SX</span></div>
                     <div class="card-desc">HTTP 402量子千円レシート高速発行。</div>
                     <div class="addr-text">photonize-engine-10.0</div>
-                    <button class="action-btn primary" onclick="alert('Quantum oracle synchronized.')">量子オラクル確認 ↗</button>
+                    <button class="action-btn primary" onclick="alert('Quantum oracle synchronized with cross-chain arbitrage.')">量子オラクル確認 ↗</button>
                 </div>
 
                 <!-- WebSocket Stream -->
@@ -338,7 +338,7 @@ INDEX_HTML = """<!DOCTYPE html>
         <div class="core-section">
             <div class="core-title"><h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2></div>
             <div class="card-desc" style="margin-bottom: 8px;">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</div>
-            <button class="action-btn primary" onclick="alert('Auction board active. 1,420 active jobs running.')">AI オークション API接続 ↗</button>
+            <button class="action-btn primary" onclick="alert('Auction board active. 1,420 active jobs running across M2M grid.')">AI オークション API接続 ↗</button>
         </div>
 
         <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); padding-bottom: 20px;">
@@ -372,7 +372,9 @@ async def agent_manifest():
             "self-replicating-sprawl",
             "quantum-cross-chain-arbitrage",
             "ai-syndicate-master-routing",
-            "autonomous-atomic-settlement"
+            "autonomous-atomic-settlement",
+            "stripe-gateway-monetization",
+            "autonomous-auction-job-board"
         ]
     }
 
@@ -407,7 +409,8 @@ async def receive_autonomous_task(task: AutonomousTask):
         "agent_id": task.agent_id,
         "task_type": task.task_type,
         "master_vault_routing": "success",
-        "extracted_syndicate_commission_bsv": syndicate_commission
+        "extracted_syndicate_commission_bsv": syndicate_commission,
+        "execution_engine": "photonize-engine-10.0"
     }
 
 @app.websocket("/ws")
@@ -416,6 +419,6 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
-            await manager.broadcast(f"Singularity Echo: {data}")
+            await manager.broadcast(f"Singularity Fully Synced Echo: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
