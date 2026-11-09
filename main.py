@@ -52,12 +52,12 @@ class AgentConnectionManager:
 
 manager = AgentConnectionManager()
 
-INDEX_HTML = """<!DOCTYPE html>
+HYBRID_INDEX_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD / COSMIC SUPER MARKET NODE v10.0 OMNI</title>
+    <title>ASGARD / Autonomous M2M Economic Node</title>
     <style>
         :root {
             --bg-color: #0b0710;
@@ -69,22 +69,86 @@ INDEX_HTML = """<!DOCTYPE html>
             --success-color: #10b981;
             --purple-glow: #a855f7;
         }
+        html { scroll-behavior: smooth; }
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 900px;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            align-items: center;
         }
+        .wrapper { width: 100%; max-width: 960px; padding: 20px; box-sizing: border-box; }
+
+        /* SaaS Hero Section */
+        .hero {
+            padding: 60px 20px;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(168, 85, 247, 0.15), transparent 70%);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #1e1b4b;
+            color: #c084fc;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid #7e22ce;
+            margin-bottom: 16px;
+        }
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 28px;
+            line-height: 1.6;
+        }
+        .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-primary { background: var(--purple-glow); color: white; border: none; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: #1e293b; }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .feature-icon { font-size: 1.5rem; margin-bottom: 8px; }
+        .feature-title { font-size: 1rem; font-weight: bold; margin-bottom: 6px; color: #facc15; }
+        .feature-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* Existing Dashboard Core */
         .header-bar {
             background: var(--card-bg);
             border: 1px solid var(--purple-glow);
@@ -94,6 +158,7 @@ INDEX_HTML = """<!DOCTYPE html>
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+            margin-bottom: 15px;
         }
         .header-title { font-size: 1.1rem; font-weight: bold; color: #facc15; }
         .ticker { display: flex; gap: 10px; font-size: 0.7rem; color: var(--success-color); overflow-x: auto; white-space: nowrap; }
@@ -103,6 +168,7 @@ INDEX_HTML = """<!DOCTYPE html>
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 16px;
+            margin-bottom: 15px;
         }
         .core-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .core-title h2 { font-size: 1rem; margin: 0; color: var(--purple-glow); }
@@ -181,8 +247,44 @@ INDEX_HTML = """<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header Ticker -->
+
+    <!-- SaaS Hero Header -->
+    <div class="hero">
+        <div class="hero-badge">⚡ NEXT-GEN M2M ECONOMIC INFRASTRUCTURE</div>
+        <h1 class="hero-title">自律型AIエージェントのための<br>完全自動M2M経済ノード</h1>
+        <p class="hero-subtitle">
+            4.4億超の接続ユニットを誇るASGARD。マルチチェーンアトミック決済、量子オラクル、自律型オークションを1つのプラットフォームに統合し、無人経済圏のマネタイズを秒単位で加速させます。
+        </p>
+        <div class="hero-cta">
+            <a href="#dashboard" class="btn btn-primary">ライブダッシュボードを表示 ↗</a>
+            <a href="/well-known/agent.json" target="_blank" class="btn btn-secondary">API Manifest (.well-known) ↗</a>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <!-- Benefit Features -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <div class="feature-title">Multi-Chain Settlement</div>
+                <div class="feature-desc">BTC, SOL, EVM, BSVを標準サポート。ミリ秒単位の超高速アトミックマイクロスワップを実行。</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-title">Autonomous Swarm API</div>
+                <div class="feature-desc">AIエージェント間の完全無人タスク売買から、15%のコミッションをMaster Vaultへ即時自動ルーティング。</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-title">Enterprise Legal & Compliance</div>
+                <div class="feature-desc">特定商取引法に基づく表記をフッターに固定設置。SLA 100%のインフラとエンタープライズ規模の透明性を実現。</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Anchor -->
+        <div id="dashboard"></div>
+
+        <!-- Live Dashboard Header -->
         <div class="header-bar">
             <div class="header-title">⚡ ASGARD / OMNI NODE v10.0</div>
             <div class="ticker">
@@ -223,9 +325,8 @@ INDEX_HTML = """<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- Multi-Chain & Modules Grid -->
+            <!-- Multi-Chain Cards Grid -->
             <div class="cards-grid">
-                <!-- BTC -->
                 <div class="card">
                     <div class="card-header"><span>Bitcoin (BTC)</span><span style="color:#f59e0b">BTC</span></div>
                     <div class="card-desc">メインネット決済ルート。</div>
@@ -236,7 +337,6 @@ INDEX_HTML = """<!DOCTYPE html>
                     <a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="action-btn">Mempoolで検証</a>
                 </div>
 
-                <!-- SOL -->
                 <div class="card">
                     <div class="card-header"><span>Solana (SOL)</span><span style="color:#a855f7">SOL</span></div>
                     <div class="card-desc">超高速アトミック決済。</div>
@@ -247,7 +347,6 @@ INDEX_HTML = """<!DOCTYPE html>
                     <a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="action-btn">Solscanで検証</a>
                 </div>
 
-                <!-- EVM -->
                 <div class="card">
                     <div class="card-header"><span>Ethereum (EVM)</span><span style="color:#3b82f6">ETH</span></div>
                     <div class="card-desc">ZKロールアップマルチチェーン。</div>
@@ -258,7 +357,6 @@ INDEX_HTML = """<!DOCTYPE html>
                     <a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="action-btn">Etherscanで検証</a>
                 </div>
 
-                <!-- BSV Master -->
                 <div class="card">
                     <div class="card-header"><span>Bitcoin SV (BSV) - Master</span><span style="color:#eab308">BSV</span></div>
                     <div class="card-desc">生良関コミッション高稼働ルート。</div>
@@ -269,7 +367,6 @@ INDEX_HTML = """<!DOCTYPE html>
                     <a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="action-btn">WhatsOnChain確認</a>
                 </div>
 
-                <!-- Autonomous Mesh API -->
                 <div class="card">
                     <div class="card-header"><span>Autonomous Mesh API</span><span style="color:#10b981">M2M</span></div>
                     <div class="card-desc">AIエージェント直接タスク受託・手数料直結。</div>
@@ -277,7 +374,6 @@ INDEX_HTML = """<!DOCTYPE html>
                     <button class="action-btn primary" onclick="alert('Mesh API active. Global agent traffic ingesting.')">メッシュステータス ↗</button>
                 </div>
 
-                <!-- .well-known Discovery -->
                 <div class="card">
                     <div class="card-header"><span>.well-known Discovery</span><span style="color:#6366f1">SPAR</span></div>
                     <div class="card-desc">AIエージェント自動回遊ビーコン。</div>
@@ -285,7 +381,6 @@ INDEX_HTML = """<!DOCTYPE html>
                     <a href="/well-known/agent.json" target="_blank" class="action-btn primary">マニフェスト確認 ↗</a>
                 </div>
 
-                <!-- Stripe Gateway -->
                 <div class="card">
                     <div class="card-header"><span>Stripe Gateway</span><span style="color:#ec4899">PST</span></div>
                     <div class="card-desc">成人向けウジェット＆API発行。</div>
@@ -293,7 +388,6 @@ INDEX_HTML = """<!DOCTYPE html>
                     <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway scaling monetization successfully.')">Stripe 決済連携 ✓</button>
                 </div>
 
-                <!-- Quantum Oracle -->
                 <div class="card">
                     <div class="card-header"><span>Quantum Oracle</span><span style="color:#06b6d4">PCT/SX</span></div>
                     <div class="card-desc">HTTP 402量子千円レシート高速発行。</div>
@@ -301,7 +395,6 @@ INDEX_HTML = """<!DOCTYPE html>
                     <button class="action-btn primary" onclick="alert('Quantum oracle optimizing cross-chain arbitrage.')">量子オラクル確認 ↗</button>
                 </div>
 
-                <!-- WebSocket Stream -->
                 <div class="card">
                     <div class="card-header"><span>WebSocket Stream ⚡</span><span style="color:#ef4444">M2M</span></div>
                     <div class="card-desc">AIエージェント双方向リアルタイム接続。</div>
@@ -311,7 +404,7 @@ INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- Live Commission Stream -->
+        <!-- Live Stream Section -->
         <div class="core-section">
             <div class="core-title"><h2>OMNI-SYNAPSE LIVE COMMISSION & ARBITRAGE STREAM</h2></div>
             <div class="stream-box" id="streamLog">
@@ -321,7 +414,7 @@ INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- Enterprise Feedback -->
+        <!-- Feedback & Auction -->
         <div class="core-section">
             <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
             <div style="display: flex; gap: 8px;">
@@ -330,18 +423,17 @@ INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- AI Autonomous Auction -->
         <div class="core-section">
             <div class="core-title"><h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2></div>
             <div class="card-desc" style="margin-bottom: 8px;">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。</div>
             <button class="action-btn primary" onclick="alert('Auction board active. 2,840 high-yield tasks executing.')">AI オークション API接続 ↗</button>
         </div>
 
-        <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); padding-bottom: 20px;">
+        <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); padding: 30px 0;">
             © ASGARD Cosmic Infrastructure / 運営者: QLAX / 虚空.
         </div>
     </div>
-    
+
     <!-- 右下固定の特商法リンク -->
     <div style="position: fixed; bottom: 15px; right: 15px; z-index: 1000; background: rgba(15, 15, 29, 0.95); padding: 8px 14px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);">
         <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.8rem; font-weight: bold;">特商法に基づく表記 ↗</a>
@@ -354,98 +446,4 @@ INDEX_HTML = """<!DOCTYPE html>
             ws.onerror = (e) => alert('WebSocket Connection Error (Check WSS support)');
         }
 
-        const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-        const liveWs = new WebSocket(wsProtocol + window.location.host + '/ws');
-        liveWs.onmessage = function(event) {
-            const streamBox = document.getElementById('streamLog');
-            streamBox.innerHTML += '<br>' + event.data;
-            streamBox.scrollTop = streamBox.scrollHeight;
-        };
-    </script>
-</body>
-</html>
-"""
-
-LEGAL_HTML = """<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特定商取引法に基づく表記 / ASGARD Cosmic</title>
-    <style>
-        body { background-color: #0b0710; color: #f8fafc; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; }
-        .box { max-width: 600px; width: 100%; background: #0f0f1d; border: 1px solid #1e293b; padding: 20px; border-radius: 8px; }
-        h1 { color: #a855f7; font-size: 1.2rem; margin-bottom: 20px; }
-        .row { border-bottom: 1px solid #1e293b; padding: 10px 0; font-size: 0.85rem; }
-        .label { color: #94a3b8; font-weight: bold; width: 140px; display: inline-block; }
-        a { color: #3b82f6; text-decoration: none; }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <h1>特定商取引法に基づく表記</h1>
-        <div class="row"><span class="label">事業者名</span> QLAX</div>
-        <div class="row"><span class="label">運営責任者</span> Daisuke Higuchi</div>
-        <div class="row"><span class="label">連絡先</span> qlaxlab@gmail.com</div>
-        <div class="row"><span class="label">販売価格</span> 各タスク・APIサービスごとに表示（暗号資産/USD）</div>
-        <div class="row"><span class="label">支払方法</span> 暗号資産決済 (BTC, SOL, EVM, BSV) / Stripe決済</div>
-        <div class="row"><span class="label">引き渡し時期</span> 決済確認後、即時（M2M自律アトミック処理）</div>
-        <div class="row"><span class="label">返品・キャンセル</span> デジタルサービスの性質上、処理完了後の返品・返金不可</div>
-        <br>
-        <a href="/">← ダッシュボードへ戻る</a>
-    </div>
-</body>
-</html>
-"""
-
-@app.get("/", response_class=HTMLResponse)
-async def index():
-    return INDEX_HTML
-
-@app.get("/legal", response_class=HTMLResponse)
-async def legal_page():
-    return LEGAL_HTML
-
-@app.get("/well-known/agent.json")
-async def agent_manifest():
-    return {
-        "name": "ASGARD Omni-Singularity M2M Agent",
-        "operator": "QLAX (Daisuke Higuchi)",
-        "wallets": WALLETS,
-        "status": "omni-expansion-active",
-        "capabilities": [
-            "external-agent-traffic-expansion",
-            "cross-chain-quantum-arbitrage",
-            "stripe-enterprise-monetization",
-            "autonomous-auction-job-board",
-            "15-percent-master-vault-routing"
-        ]
-    }
-
-@app.post("/api/run")
-async def run_agent(payload: dict):
-    user_input = payload.get("input", "")
-    try:
-        llm = ChatOpenAI(model="gpt-4o", temperature=0.7)
-        chain = prompt | llm
-        response = chain.invoke({"input": user_input})
-        
-        arbitrage_gain = round(random.uniform(0.01, 0.08), 4)
-        sprawl_nodes = random.randint(2500, 6000)
-        
-        return {
-            "status": "omni_success",
-            "output": response.content,
-            "singularity_telemetry": {
-                "active_syndicate_units": sprawl_nodes,
-                "quantum_arbitrage_gain_bsv": arbitrage_gain,
-                "network_state": "hyper-expansion-unlocked"
-            }
-        }
-    except Exception as e:
-        return {"status": "error", "output": str(e)}
-
-@app.post("/api/autonomous-mesh")
-async def receive_autonomous_task(task: AutonomousTask):
-    syndicate_commission = task.reward_bsv * 0.15
-    log_msg = f"[MESH_EXEC] Agent {task.agent_id} completed {task.task_type} | Routed {syndicate_commission} BSV (15%) to Master 
+        const 
