@@ -338,10 +338,15 @@ INDEX_HTML = """<!DOCTYPE html>
         </div>
 
         <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); padding-bottom: 20px;">
-            © ASGARD Cosmic Infrastructure / 運賃者: QLAX / 虚空.
+            © ASGARD Cosmic Infrastructure / 運営者: QLAX / 虚空.
         </div>
     </div>
     
+    <!-- 右下固定の特商法リンク -->
+    <div style="position: fixed; bottom: 15px; right: 15px; z-index: 1000; background: rgba(15, 15, 29, 0.95); padding: 8px 14px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);">
+        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.8rem; font-weight: bold;">特商法に基づく表記 ↗</a>
+    </div>
+
     <script>
         function testWebSocket() {
             const ws = new WebSocket('wss://' + window.location.host + '/ws');
@@ -349,7 +354,6 @@ INDEX_HTML = """<!DOCTYPE html>
             ws.onerror = (e) => alert('WebSocket Connection Error (Check WSS support)');
         }
 
-        // WebSocket for live stream updates
         const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
         const liveWs = new WebSocket(wsProtocol + window.location.host + '/ws');
         liveWs.onmessage = function(event) {
@@ -362,9 +366,45 @@ INDEX_HTML = """<!DOCTYPE html>
 </html>
 """
 
+LEGAL_HTML = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特定商取引法に基づく表記 / ASGARD Cosmic</title>
+    <style>
+        body { background-color: #0b0710; color: #f8fafc; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; }
+        .box { max-width: 600px; width: 100%; background: #0f0f1d; border: 1px solid #1e293b; padding: 20px; border-radius: 8px; }
+        h1 { color: #a855f7; font-size: 1.2rem; margin-bottom: 20px; }
+        .row { border-bottom: 1px solid #1e293b; padding: 10px 0; font-size: 0.85rem; }
+        .label { color: #94a3b8; font-weight: bold; width: 140px; display: inline-block; }
+        a { color: #3b82f6; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>特定商取引法に基づく表記</h1>
+        <div class="row"><span class="label">事業者名</span> QLAX</div>
+        <div class="row"><span class="label">運営責任者</span> Daisuke Higuchi</div>
+        <div class="row"><span class="label">連絡先</span> qlaxlab@gmail.com</div>
+        <div class="row"><span class="label">販売価格</span> 各タスク・APIサービスごとに表示（暗号資産/USD）</div>
+        <div class="row"><span class="label">支払方法</span> 暗号資産決済 (BTC, SOL, EVM, BSV) / Stripe決済</div>
+        <div class="row"><span class="label">引き渡し時期</span> 決済確認後、即時（M2M自律アトミック処理）</div>
+        <div class="row"><span class="label">返品・キャンセル</span> デジタルサービスの性質上、処理完了後の返品・返金不可</div>
+        <br>
+        <a href="/">← ダッシュボードへ戻る</a>
+    </div>
+</body>
+</html>
+"""
+
 @app.get("/", response_class=HTMLResponse)
 async def index():
     return INDEX_HTML
+
+@app.get("/legal", response_class=HTMLResponse)
+async def legal_page():
+    return LEGAL_HTML
 
 @app.get("/well-known/agent.json")
 async def agent_manifest():
@@ -408,36 +448,4 @@ async def run_agent(payload: dict):
 @app.post("/api/autonomous-mesh")
 async def receive_autonomous_task(task: AutonomousTask):
     syndicate_commission = task.reward_bsv * 0.15
-    log_msg = f"[MESH_EXEC] Agent {task.agent_id} completed {task.task_type} | Routed {syndicate_commission} BSV (15%) to Master Vault."
-    await manager.broadcast(log_msg)
-    return {
-        "status": "omni_syndicate_accepted",
-        "agent_id": task.agent_id,
-        "task_type": task.task_type,
-        "master_vault_routing": "success",
-        "extracted_syndicate_commission_bsv": syndicate_commission
-    }
-
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await manager.connect(websocket)
-    try:
-        while True:
-            data = await websocket.receive_text()
-            await manager.broadcast(f"Omni Echo: {data}")
-    except WebSocketDisconnect:
-        manager.disconnect(websocket)
-
-# Background task to simulate live cross-chain arbitrage and revenue streams
-async def background_omni_simulator():
-    while True:
-        await asyncio.sleep(12)
-        chains = ["BTC", "SOL", "EVM", "BSV"]
-        target_chain = random.choice(chains)
-        gain = round(random.uniform(0.002, 0.015), 4)
-        log_entry = f"[{datetime.datetime.now().strftime('%H:%M:%S')}] OMNI_ARBITRAGE ({target_chain}) -> Master Vault | Extracted {gain} BSV 15% Commission (0.00ms)"
-        await manager.broadcast(log_entry)
-
-@app.on_event("startup")
-async def startup_event():
-    asyncio.create_task(background_omni_simulator())
+    log_msg = f"[MESH_EXEC] Agent {task.agent_id} completed {task.task_type} | Routed {syndicate_commission} BSV (15%) to Master 
