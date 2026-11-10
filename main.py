@@ -22,7 +22,7 @@ except Exception:
         ("human", "{input}")
     ])
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-omni-full")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-live")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -82,7 +82,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             align-items: center;
         }
 
-        /* 画面最上部の8連データ帯（確実に一番上に固定表示） */
         .top-8-data-bar {
             width: 100%;
             background: #000000;
@@ -278,7 +277,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 </head>
 <body>
 
-    <!-- 🌟 確実に最上部に位置する8連データ群バッジ帯 🌟 -->
     <div class="top-8-data-bar">
         <span class="data-badge">VAPORLOCK: ACTIVE</span>
         <span class="data-badge green">AUTOPILOT: 100% RUN</span>
@@ -290,7 +288,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <span class="data-badge">KROK_SYNC</span>
     </div>
 
-    <!-- SaaS Hero Section -->
     <div class="hero">
         <div class="hero-badge">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
         <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
@@ -354,7 +351,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- 全9大モジュールカード群の完全網羅 -->
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-header"><span>Bitcoin (BTC)</span><span style="color:#f59e0b">BTC</span></div>
@@ -425,7 +421,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- ライブストリーム欄 -->
         <div class="core-section">
             <div class="core-title"><h2>OMNI-SYNAPSE LIVE COMMISSION STREAM</h2></div>
             <div class="stream-box" id="streamLog">
@@ -433,7 +428,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- エンタープライズフィードバック機能 -->
         <div class="core-section">
             <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
             <div class="input-group">
@@ -442,7 +436,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- AIオークション＆ジョブボード機能 -->
         <div class="core-section">
             <div class="core-title"><h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2></div>
             <div style="font-size: 0.6rem; color: var(--text-muted); margin-bottom: 8px;">
@@ -461,4 +454,8 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <script>
-        asy
+        async function generateApiKey() {
+            try {
+                const res = await fetch('/api/v10/generate-key', { method: 'POST' });
+                const data = await res.json();
+                document.getElementById('apiKeyDisplay').innerText = da
