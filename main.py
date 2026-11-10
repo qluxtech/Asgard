@@ -84,7 +84,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         }
         .wrapper { width: 100%; max-width: 1000px; padding: 12px; box-sizing: border-box; }
         
-        /* 完璧に復活させた最上部サイバーデータ群ティッカー帯 */
         .cyber-top-bar {
             width: 100%;
             background: #080812;
@@ -105,7 +104,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             border-radius: 4px;
             border: 1px solid #2a275f;
         }
-
         .hero {
             width: 100%;
             padding: 40px 10px 25px;
@@ -247,7 +245,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             font-family: monospace;
             font-size: 0.55rem;
             color: var(--success-color);
-            max-height: 80px;
+            max-height: 90px;
             overflow-y: auto;
         }
         .input-box {
@@ -264,7 +262,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 </head>
 <body>
 
-    <!-- 最上部サイバーデータ群バッジ帯 -->
     <div class="cyber-top-bar">
         <span class="cyber-badge">VAPORLOCK: ACTIVE</span>
         <span class="cyber-badge">AUTOPILOT: 100% RUN</span>
@@ -276,7 +273,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <span class="cyber-badge">KROK_STREAM</span>
     </div>
 
-    <!-- SaaS Hero Section -->
     <div class="hero">
         <div class="hero-badge">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
         <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
@@ -459,3 +455,5 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         }
 
         function testWebSocket() {
+            const ws = new WebSocket('wss://' + window.location.host + '/ws');
+            ws.onopen
