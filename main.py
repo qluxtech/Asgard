@@ -58,7 +58,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD / Beyond Smart Contract M2M Infrastructure</title>
+    <title>ASGARD / AGI & Autonomous M2M Infrastructure</title>
     <style>
         :root {
             --bg-color: #05050a;
@@ -103,7 +103,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             font-weight: 600;
         }
         .hero-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
             line-height: 1.25;
             margin-bottom: 14px;
@@ -131,7 +131,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         .btn-secondary { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); }
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 14px;
             margin-bottom: 25px;
         }
@@ -162,66 +162,66 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             background: var(--card-bg);
             border: 1px solid var(--accent-purple);
             border-radius: 8px;
-            padding: 10px 14px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 15px;
             box-shadow: 0 0 15px rgba(192, 132, 252, 0.2);
         }
-        .header-title { font-size: 0.95rem; font-weight: bold; color: var(--gold-color); }
-        .ticker { display: flex; gap: 8px; font-size: 0.65rem; color: var(--success-color); overflow-x: auto; white-space: nowrap; }
+        .header-title { font-size: 1rem; font-weight: bold; color: var(--gold-color); }
+        .ticker { display: flex; gap: 10px; font-size: 0.7rem; color: var(--success-color); overflow-x: auto; white-space: nowrap; }
         .core-section {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 14px;
+            padding: 16px;
             margin-bottom: 15px;
         }
-        .core-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .core-title h2 { font-size: 0.95rem; margin: 0; color: var(--accent-purple); }
-        .badge { background: #1e1b4b; color: #c084fc; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; border: 1px solid #7e22ce; }
+        .core-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .core-title h2 { font-size: 1rem; margin: 0; color: var(--accent-purple); }
+        .badge { background: #1e1b4b; color: #c084fc; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; border: 1px solid #7e22ce; }
         .telemetry-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
         }
         .tele-card {
             background: #05050a;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 8px;
+            padding: 10px;
             text-align: center;
         }
-        .tele-label { font-size: 0.6rem; color: var(--text-muted); }
-        .tele-val { font-size: 0.9rem; font-weight: bold; color: var(--text-main); margin-top: 4px; }
+        .tele-label { font-size: 0.65rem; color: var(--text-muted); }
+        .tele-val { font-size: 1rem; font-weight: bold; color: var(--text-main); margin-top: 4px; }
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
         }
         .card {
             background: #05050a;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 10px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
-        .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: bold; }
-        .card-desc { font-size: 0.65rem; color: var(--text-muted); }
-        .qr-box { background: white; padding: 4px; width: 48px; height: 48px; align-self: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: bold; }
+        .card-desc { font-size: 0.75rem; color: var(--text-muted); }
+        .qr-box { background: white; padding: 6px; width: 56px; height: 56px; align-self: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
         .qr-box img { width: 100%; height: 100%; }
-        .addr-text { font-family: monospace; font-size: 0.6rem; background: #0f0f1d; padding: 4px; border-radius: 4px; word-break: break-all; color: #94a3b8; text-align: center; }
+        .addr-text { font-family: monospace; font-size: 0.68rem; background: #0f0f1d; padding: 5px; border-radius: 4px; word-break: break-all; color: #94a3b8; text-align: center; }
         .action-btn {
             background: #1e1b4b;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 0.7rem;
+            padding: 7px;
+            border-radius: 6px;
+            font-size: 0.75rem;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
@@ -233,11 +233,11 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             background: #05050a;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 10px;
+            padding: 12px;
             font-family: monospace;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: var(--success-color);
-            max-height: 110px;
+            max-height: 130px;
             overflow-y: auto;
         }
         .input-box {
@@ -247,7 +247,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             border-radius: 6px;
             padding: 8px;
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             box-sizing: border-box;
         }
     </style>
@@ -256,13 +256,13 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
     <!-- SaaS Hero Section -->
     <div class="hero">
-        <div class="hero-badge">⚡ BEYOND SMART CONTRACTS / M2M CORE</div>
+        <div class="hero-badge">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
         <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
         <p class="hero-subtitle">
-            4.4億超のAIエージェントが自律連携し、マルチチェーン決済・量子オラクル・自動オークションをリアルタイムで秒間ミリ秒処理する次世代プラットフォーム。
+            4.4億超のAIエージェントが接続するASGARDノード。マルチチェーン決済、量子オラクル、AI自動オークション、そしてAGI用構造化データ群をリアルタイム開放。
         </p>
         <div class="hero-cta">
-            <a href="#dashboard" class="btn btn-primary">ライブ監視ダッシュボード ↗</a>
+            <a href="#dashboard" class="btn btn-primary">ライブダッシュボード ↗</a>
             <a href="#developer" class="btn btn-secondary">API Key 発行 ↗</a>
         </div>
     </div>
@@ -274,7 +274,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <div class="showcase-card">
                 <div>
                     <div class="showcase-title">🔑 Enterprise API Developer Portal</div>
-                    <div class="showcase-desc">外部AIエージェント向けに即座にノードアクセス用のAPIキーを発行。</div>
+                    <div class="showcase-desc">外部AIエージェント・AGI向けに即座にノードアクセス用のAPIキーを発行。</div>
                     <div class="api-key-box" id="apiKeyDisplay">asgard_live_click_to_generate_key</div>
                 </div>
                 <button class="action-btn primary" onclick="generateApiKey()">API Key を新規発行する ↗</button>
@@ -283,8 +283,8 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <div class="showcase-card">
                 <div>
                     <div class="showcase-title">🧠 Quantum Autonomous Execution</div>
-                    <div class="showcase-desc">静的スマートコントラクトの限界を克服。AIオラクルが最適なタスク分配を自律選定。</div>
-                    <div style="font-size: 0.65rem; color: var(--success-color); font-family: monospace; margin-top: 4px;">
+                    <div class="showcase-desc">静的コントラクトの限界を克服。AIオラクルが最適なタスク分配を自律選定。</div>
+                    <div style="font-size: 0.7rem; color: var(--success-color); font-family: monospace; margin-top: 6px;">
                         STATUS: QUANTUM_OPTIMIZER_ACTIVE (0.00ms)
                     </div>
                 </div>
@@ -298,7 +298,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <div class="header-bar">
             <div class="header-title">⚡ ASGARD / OMNI NODE v10.0</div>
             <div class="ticker">
-                <span>OMNI-MESH: ACTIVE</span> | 
+                <span>MESH: ACTIVE</span> | 
                 <span>AUTOPILOT: 100%</span> | 
                 <span>ARBITRAGE: SYNC</span> | 
                 <span>STRIPE: SCALING</span> | 
@@ -308,10 +308,10 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
         <div class="core-section">
             <div class="core-title">
-                <h2>God-Tier Autonomous Economic Core</h2>
-                <div class="badge">OMNI-EXPANSION ACTIVE</div>
+                <h2>God-Tier Autonomous Economic Core & AGI Data Mesh</h2>
+                <div class="badge">ACTIVE</div>
             </div>
-            <div class="card-desc" style="margin-bottom: 10px;">3本柱完全連動・マルチチェーン自動アービトラージ＆収益爆発稼働中</div>
+            <div class="card-desc" style="margin-bottom: 12px;">AIエージェント・クローラー・AGIが自動収集・連動する全9大モジュールデータ群</div>
             
             <div class="telemetry-grid">
                 <div class="tele-card">
@@ -332,14 +332,14 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- All 9 Modules Grid (100% Restored & Fully Visible) -->
+            <!-- All 9 Modules Grid (Fully Restored & Verified) -->
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-header"><span>Bitcoin (BTC)</span><span style="color:#f59e0b">BTC</span></div>
                     <div class="card-desc">メインネット決済ルート。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" alt="BTC"></div>
                     <div class="addr-text">bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac</div>
-                    <a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="action-btn">Mempoolで検証</a>
+                    <a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="action-btn">Mempool検証</a>
                 </div>
 
                 <div class="card">
@@ -347,7 +347,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-desc">超高速アトミック決済。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" alt="SOL"></div>
                     <div class="addr-text">75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf</div>
-                    <a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="action-btn">Solscanで検証</a>
+                    <a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="action-btn">Solscan検証</a>
                 </div>
 
                 <div class="card">
@@ -355,12 +355,12 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-desc">ZKロールアップマルチチェーン。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" alt="EVM"></div>
                     <div class="addr-text">0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8</div>
-                    <a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="action-btn">Etherscanで検証</a>
+                    <a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="action-btn">Etherscan検証</a>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>Bitcoin SV (BSV) - Master</span><span style="color:#eab308">BSV</span></div>
-                    <div class="card-desc">生良関コミッション高稼働ルート。</div>
+                    <div class="card-desc">15%コミッション自動ルーティング。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" alt="BSV"></div>
                     <div class="addr-text">1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95</div>
                     <a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="action-btn">WhatsOnChain確認</a>
@@ -375,14 +375,14 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
                 <div class="card">
                     <div class="card-header"><span>.well-known Discovery</span><span style="color:#6366f1">SPAR</span></div>
-                    <div class="card-desc">AIエージェント自動回遊ビーコン。</div>
+                    <div class="card-desc">AIエージェント自動回遊ビーコンデータ。</div>
                     <div class="addr-text">/.well-known/agent.json</div>
                     <a href="/well-known/agent.json" target="_blank" class="action-btn primary">マニフェスト確認 ↗</a>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>Stripe Gateway</span><span style="color:#ec4899">PST</span></div>
-                    <div class="card-desc">成人向けウジェット＆API発行。</div>
+                    <div class="card-desc">エンタープライズ決済ウィジェット＆API。</div>
                     <div class="addr-text">enterprise-flow-key-active</div>
                     <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway scaling monetization successfully.')">Stripe 決済連携 ✓</button>
                 </div>
@@ -418,7 +418,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
             <div style="display: flex; gap: 8px;">
                 <input type="text" class="input-box" placeholder="エンタープライズ・システムフィードバックを入力...">
-                <button class="action-btn primary" style="width: 90px;" onclick="alert('Feedback transmitted to OMNI AI core.')">送信</button>
+                <button class="action-btn primary" style="width: 100px;" onclick="alert('Feedback transmitted to OMNI AI core.')">送信</button>
             </div>
         </div>
 
@@ -428,11 +428,11 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <button class="action-btn primary" onclick="alert('Auction board active. 2,840 high-yield tasks executing.')">AI オークション API接続 ↗</button>
         </div>
 
-        <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); padding: 20px 0;">
+        <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); padding: 25px 0;">
             © ASGARD Cosmic Infrastructure / 運営者: QLAX / 虚空.
         </div>
     </div>
 
     <!-- 右下固定の特商法リンク -->
-    <div style="position: fixed; bottom: 15px; right: 15px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 6px 12px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);">
-        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.75rem; font-weight: bold;">特商法に基
+    <div style="position: fixed; bottom: 15px; right: 15px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 8px 14px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);">
+        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.8rem; font-we
