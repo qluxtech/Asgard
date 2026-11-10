@@ -468,4 +468,4 @@ async def background_omni_simulator():
 
 @app.on_event("startup")
 async def startup_event():
-    asyncio.create_
+    asyncio.create_task(background_omni_simulator())
