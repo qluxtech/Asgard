@@ -133,7 +133,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 16px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         .showcase-card {
             background: var(--card-bg);
@@ -167,9 +167,10 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             align-items: center;
             justify-content: space-between;
             margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(192, 132, 252, 0.2);
         }
-        .header-title { font-size: 1rem; font-weight: bold; color: var(--gold-color); }
-        .ticker { display: flex; gap: 8px; font-size: 0.65rem; color: var(--success-color); overflow-x: auto; white-space: nowrap; }
+        .header-title { font-size: 1.1rem; font-weight: bold; color: var(--gold-color); }
+        .ticker { display: flex; gap: 10px; font-size: 0.7rem; color: var(--success-color); overflow-x: auto; white-space: nowrap; }
         .core-section {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -293,6 +294,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
         <div id="dashboard" style="scroll-margin-top: 20px;"></div>
 
+        <!-- Restored Top Header Bar / Ticker -->
         <div class="header-bar">
             <div class="header-title">⚡ ASGARD / OMNI NODE v10.0</div>
             <div class="ticker">
@@ -433,7 +435,4 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
     <!-- 右下固定の特商法リンク -->
     <div style="position: fixed; bottom: 15px; right: 15px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 8px 14px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);">
-        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.8rem; font-weight: bold;">特商法に基づく表記 ↗</a>
-    </div>
-
-    <sc
+        <a href="/legal" style="co
