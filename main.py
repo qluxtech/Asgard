@@ -458,4 +458,4 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             try {
                 const res = await fetch('/api/v10/generate-key', { method: 'POST' });
                 const data = await res.json();
-                document.getElementById('apiKeyDisplay').innerText = da
+                document.getElementById('apiKeyDisplay').inner
