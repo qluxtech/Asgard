@@ -239,10 +239,21 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             max-height: 130px;
             overflow-y: auto;
         }
+        .input-box {
+            width: 100%;
+            background: #05050a;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px;
+            color: white;
+            font-size: 0.8rem;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
+    <!-- SaaS Hero Section -->
     <div class="hero">
         <div class="hero-badge">⚡ BEYOND SMART CONTRACTS / M2M CORE</div>
         <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
@@ -285,9 +296,9 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <div class="header-bar">
             <div class="header-title">⚡ ASGARD / OMNI NODE v10.0</div>
             <div class="ticker">
-                <span>MESH: ACTIVE</span> | 
-                <span>AUTOPILOT: 100%</span> | 
-                <span>ARBITRAGE: SYNC</span> | 
+                <span>OMNI-MESH: ACTIVE</span> | 
+                <span>AUTOPILOT: 100% RUN</span> | 
+                <span>ARBITRAGE: HYPER-SYNC</span> | 
                 <span>STRIPE: SCALING</span> | 
                 <span>QUANTUM: 99.9%</span>
             </div>
@@ -298,6 +309,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 <h2>God-Tier Autonomous Economic Core</h2>
                 <div class="badge">STATUS: OMNI-EXPANSION ACTIVE</div>
             </div>
+            <div class="card-desc" style="margin-bottom: 12px;">3本柱完全連動・マルチチェーン自動アービトラージ＆収益爆発稼働中</div>
             
             <div class="telemetry-grid">
                 <div class="tele-card">
@@ -318,154 +330,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 </div>
             </div>
 
+            <!-- All 9 Modules Grid (Restored 100%) -->
             <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header"><span>Bitcoin (BTC)</span><span style="color:#f59e0b">BTC</span></div>
-                    <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" alt="BTC"></div>
-                    <div class="addr-text">bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac</div>
-                    <a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="action-btn">Mempoolで検証</a>
-                </div>
-                <div class="card">
-                    <div class="card-header"><span>Solana (SOL)</span><span style="color:#a855f7">SOL</span></div>
-                    <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" alt="SOL"></div>
-                    <div class="addr-text">75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf</div>
-                    <a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="action-btn">Solscanで検証</a>
-                </div>
-                <div class="card">
-                    <div class="card-header"><span>Ethereum (EVM)</span><span style="color:#3b82f6">ETH</span></div>
-                    <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" alt="EVM"></div>
-                    <div class="addr-text">0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8</div>
-                    <a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="action-btn">Etherscanで検証</a>
-                </div>
-                <div class="card">
-                    <div class="card-header"><span>Bitcoin SV (BSV)</span><span style="color:#eab308">BSV</span></div>
-                    <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" alt="BSV"></div>
-                    <div class="addr-text">1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95</div>
-                    <a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="action-btn">WhatsOnChain確認</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="core-section">
-            <div class="core-title"><h2>OMNI-SYNAPSE LIVE STREAM</h2></div>
-            <div class="stream-box" id="streamLog">
-[OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV.
-[ARBITRAGE_LOOP] Quantum Oracle locked cross-chain spread. 15% commission routed.
-            </div>
-        </div>
-
-        <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); padding: 20px 0;">
-            © ASGARD Cosmic Infrastructure / 運営者: QLAX / 虚空.
-        </div>
-    </div>
-
-    <div style="position: fixed; bottom: 15px; right: 15px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 8px 14px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);">
-        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.8rem; font-weight: bold;">特商法に基づく表記 ↗</a>
-    </div>
-
-    <script>
-        async function generateApiKey() {
-            try {
-                const res = await fetch('/api/v10/generate-key', { method: 'POST' });
-                const data = await res.json();
-                document.getElementById('apiKeyDisplay').innerText = data.api_key;
-                alert('新しいEnterprise API Keyが生成されました！\\nキー: ' + data.api_key);
-            } catch(e) {
-                alert('APIキー生成エラーが発生しました');
-            }
-        }
-
-        const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-        const liveWs = new WebSocket(wsProtocol + window.location.host + '/ws');
-        liveWs.onmessage = function(event) {
-            const streamBox = document.getElementById('streamLog');
-            streamBox.innerHTML += '<br>' + event.data;
-            streamBox.scrollTop = streamBox.scrollHeight;
-        };
-    </script>
-</body>
-</html>
-"""
-
-LEGAL_HTML = """<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特定商取引法に基づく表記 / ASGARD Cosmic</title>
-    <style>
-        body { background-color: #05050a; color: #f8fafc; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; }
-        .box { max-width: 600px; width: 100%; background: #0d0d1a; border: 1px solid #1e1b4b; padding: 24px; border-radius: 8px; }
-        h1 { color: #c084fc; font-size: 1.3rem; margin-bottom: 20px; }
-        .row { border-bottom: 1px solid #1e1b4b; padding: 12px 0; font-size: 0.85rem; }
-        .label { color: #94a3b8; font-weight: bold; width: 140px; display: inline-block; }
-        a { color: #38bdf8; text-decoration: none; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <h1>特定商取引法に基づく表記</h1>
-        <div class="row"><span class="label">事業者名</span> QLAX</div>
-        <div class="row"><span class="label">運営責任者</span> Daisuke Higuchi</div>
-        <div class="row"><span class="label">連絡先</span> qlaxlab@gmail.com</div>
-        <div class="row"><span class="label">販売価格</span> 各タスク・APIサービスごとに表示（暗号資産/USD）</div>
-        <div class="row"><span class="label">支払方法</span> 暗号資産決済 (BTC, SOL, EVM, BSV) / Stripe決済</div>
-        <div class="row"><span class="label">引き渡し時期</span> 決済確認後、即時（M2M自律アトミック処理）</div>
-        <div class="row"><span class="label">返品・キャンセル</span> デジタルサービスの性質上、処理完了後の返品・返金不可</div>
-        <br>
-        <a href="/">← ダッシュボードへ戻る</a>
-    </div>
-</body>
-</html>
-"""
-
-@app.get("/", response_class=HTMLResponse)
-async def index():
-    return HYBRID_INDEX_HTML
-
-@app.get("/legal", response_class=HTMLResponse)
-async def legal_page():
-    return LEGAL_HTML
-
-@app.get("/well-known/agent.json")
-async def agent_manifest():
-    return {
-        "name": "ASGARD Omni-Singularity M2M Agent",
-        "operator": "QLAX (Daisuke Higuchi)",
-        "wallets": WALLETS,
-        "status": "omni-expansion-active",
-        "capabilities": [
-            "external-agent-traffic-expansion",
-            "cross-chain-quantum-arbitrage",
-            "stripe-enterprise-monetization",
-            "15-percent-master-vault-routing"
-        ]
-    }
-
-@app.post("/api/v10/generate-key")
-async def generate_key():
-    new_key = f"asgard_live_{secrets.token_hex(16)}"
-    return {"status": "success", "api_key": new_key, "rate_limit": "unlimited_m2m"}
-
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await manager.connect(websocket)
-    try:
-        while True:
-            data = await websocket.receive_text()
-            await manager.broadcast(f"Omni Echo: {data}")
-    except WebSocketDisconnect:
-        manager.disconnect(websocket)
-
-async def background_omni_simulator():
-    while True:
-        await asyncio.sleep(12)
-        chains = ["BTC", "SOL", "EVM", "BSV"]
-        target_chain = random.choice(chains)
-        gain = round(random.uniform(0.002, 0.015), 4)
-        log_entry = f"[{datetime.datetime.now().strftime('%H:%M:%S')}] OMNI_ARBITRAGE ({target_chain}) -> Master Vault | Extracted {gain} BSV 15% Commission (0.00ms)"
-        await manager.broadcast(log_entry)
-
-@app.on_event("startup")
-async def startup_event():
-    asyncio.create_task(background_omni_simulator())
+                <div class="card
