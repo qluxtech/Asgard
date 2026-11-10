@@ -83,8 +83,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             align-items: center;
         }
         .wrapper { width: 100%; max-width: 1000px; padding: 12px; box-sizing: border-box; }
-        
-        /* Top Cyber Data Bar (Restored from image 876) */
         .cyber-top-bar {
             width: 100%;
             background: #080812;
@@ -105,7 +103,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             border-radius: 4px;
             border: 1px solid #2a275f;
         }
-
         .hero {
             width: 100%;
             padding: 40px 10px 25px;
@@ -263,8 +260,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </style>
 </head>
 <body>
-
-    <!-- Restored Cyber Data Bar (Top) -->
     <div class="cyber-top-bar">
         <span class="cyber-badge">VAPORLOCK: ACTIVE</span>
         <span class="cyber-badge">AUTOPILOT: 100% RUN</span>
@@ -276,7 +271,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <span class="cyber-badge">KROK_STREAM</span>
     </div>
 
-    <!-- SaaS Hero Section -->
     <div class="hero">
         <div class="hero-badge">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
         <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
@@ -290,7 +284,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <div class="wrapper">
-        <!-- Developer Portal & Quantum Execution Showcase -->
         <div id="developer" style="scroll-margin-top: 10px;"></div>
         <div class="showcase-grid">
             <div class="showcase-card">
@@ -342,7 +335,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- All 9 Modules Grid -->
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-header"><span>Bitcoin</span><span style="color:#f59e0b">BTC</span></div>
@@ -380,7 +372,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-header"><span>Mesh API</span><span style="color:#10b981">M2M</span></div>
                     <div class="card-desc">AI直結受託。</div>
                     <div class="addr-text">/api/v10/autonomous-mesh</div>
-                    <button class="action-btn primary" onclick="alert('Mesh API active. Global agent traffic ingesting.')">ステータス ↗</button>
+                    <button class="action-btn primary" onclick="alert('Mesh API active.')">ステータス ↗</button>
                 </div>
 
                 <div class="card">
@@ -394,14 +386,14 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                     <div class="card-header"><span>Stripe</span><span style="color:#ec4899">PST</span></div>
                     <div class="card-desc">ウィジェット＆API。</div>
                     <div class="addr-text">enterprise-flow-active</div>
-                    <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway scaling monetization successfully.')">決済連携 ✓</button>
+                    <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway active.')">決済連携 ✓</button>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>Quantum Oracle</span><span style="color:#06b6d4">PCT</span></div>
                     <div class="card-desc">HTTP 402量子千円。</div>
                     <div class="addr-text">photonize-engine-10.0</div>
-                    <button class="action-btn primary" onclick="alert('Quantum oracle optimizing cross-chain arbitrage.')">オラクル確認 ↗</button>
+                    <button class="action-btn primary" onclick="alert('Quantum oracle active.')">オラクル確認 ↗</button>
                 </div>
 
                 <div class="card">
@@ -413,7 +405,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- Live Stream Section -->
         <div class="core-section">
             <div class="core-title"><h2>OMNI-SYNAPSE LIVE COMMISSION STREAM</h2></div>
             <div class="stream-box" id="streamLog">
@@ -422,19 +413,18 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- Feedback & Auction -->
         <div class="core-section">
             <div class="core-title"><h2>ENTERPRISE FEEDBACK</h2></div>
             <div style="display: flex; gap: 6px;">
                 <input type="text" class="input-box" placeholder="システムフィードバックを入力...">
-                <button class="action-btn primary" style="width: 70px;" onclick="alert('Feedback transmitted to OMNI AI core.')">送信</button>
+                <button class="action-btn primary" style="width: 70px;" onclick="alert('Feedback transmitted.')">送信</button>
             </div>
         </div>
 
         <div class="core-section">
             <div class="core-title"><h2>AI AUTONOMOUS AUCTION & JOB BOARD</h2></div>
             <div class="card-desc" style="margin-bottom: 4px;">AIエージェント間の自律的エンタープライズ・タスクオークション実行中。</div>
-            <button class="action-btn primary" onclick="alert('Auction board active. 2,840 high-yield tasks executing.')">AI オークション接続 ↗</button>
+            <button class="action-btn primary" onclick="alert('Auction board active.')">AI オークション接続 ↗</button>
         </div>
 
         <div style="text-align: center; font-size: 0.55rem; color: var(--text-muted); padding: 10px 0;">
@@ -442,7 +432,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         </div>
     </div>
 
-    <!-- 右下固定の特商法リンク -->
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 5px 8px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 10px rgba(192, 132, 252, 0.4);">
         <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.65rem; font-weight: bold;">特商法に基づく表記 ↗</a>
     </div>
@@ -455,4 +444,15 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 document.getElementById('apiKeyDisplay').innerText = data.api_key;
                 alert('新しいEnterprise API Keyが生成されました！\\nキー: ' + data.api_key);
             } catch(e) {
-      
+                alert('APIキー生成エラーが発生しました');
+            }
+        }
+
+        function testWebSocket() {
+            const ws = new WebSocket('wss://' + window.location.host + '/ws');
+            ws.onopen = () => alert('WebSocket Connected Successfully!');
+            ws.onerror = (e) => alert('WebSocket Connection Error');
+        }
+
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+        const liveWs = new WebSocket(wsProtocol + window.locat
