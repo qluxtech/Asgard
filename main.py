@@ -160,7 +160,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             text-align: center;
         }
 
-        /* 完全独立させた横一行のサイバーデータ帯 */
+        /* 横一行専用の完全独立データ帯 (Ticker Bar) */
         .full-line-ticker {
             width: 100%;
             background: #080812;
@@ -463,4 +463,4 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 </html>
 """
 
-LEGAL_HTML = 
+LEGAL
