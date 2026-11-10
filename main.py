@@ -256,6 +256,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <div class="wrapper">
+        <!-- Developer Portal & Quantum Execution Showcase -->
         <div id="developer" style="scroll-margin-top: 20px;"></div>
         <div class="showcase-grid">
             <div class="showcase-card">
@@ -368,7 +369,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 const res = await fetch('/api/v10/generate-key', { method: 'POST' });
                 const data = await res.json();
                 document.getElementById('apiKeyDisplay').innerText = data.api_key;
-                alert('新しいEnterprise API Keyが生成されました！\nキー: ' + data.api_key);
+                alert('新しいEnterprise API Keyが生成されました！\\nキー: ' + data.api_key);
             } catch(e) {
                 alert('APIキー生成エラーが発生しました');
             }
@@ -467,4 +468,4 @@ async def background_omni_simulator():
 
 @app.on_event("startup")
 async def startup_event():
-    asyncio.create_task(background_omni_simulator())
+    asyncio.create_
