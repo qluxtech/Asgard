@@ -84,27 +84,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         }
         .wrapper { width: 100%; max-width: 1000px; padding: 12px; box-sizing: border-box; }
         
-        .cyber-top-bar {
-            width: 100%;
-            background: #080812;
-            border-bottom: 1px solid var(--border-color);
-            padding: 8px 10px;
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            white-space: nowrap;
-            box-sizing: border-box;
-            font-family: monospace;
-            font-size: 0.6rem;
-            color: var(--success-color);
-        }
-        .cyber-badge {
-            background: #111122;
-            padding: 3px 6px;
-            border-radius: 4px;
-            border: 1px solid #2a275f;
-        }
-
         .hero {
             width: 100%;
             padding: 40px 10px 25px;
@@ -180,6 +159,35 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             margin-bottom: 6px;
             text-align: center;
         }
+
+        /* 独立配置された横一行データ欄（データ帯） */
+        .single-line-data-bar {
+            width: 100%;
+            background: #080812;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            box-sizing: border-box;
+            font-family: monospace;
+            font-size: 0.65rem;
+            color: var(--success-color);
+            align-items: center;
+        }
+        .data-tag {
+            background: #111122;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #2a275f;
+            display: inline-flex;
+            gap: 4px;
+        }
+        .data-tag span { color: var(--text-main); font-weight: bold; }
+
         .core-section {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -191,7 +199,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         .core-title h2 { font-size: 0.9rem; margin: 0; color: var(--accent-purple); }
         .badge { background: #1e1b4b; color: #c084fc; padding: 2px 6px; border-radius: 4px; font-size: 0.55rem; border: 1px solid #7e22ce; }
         
-        /* 復活させた詳細テレメトリーデータ群グリッド */
         .telemetry-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -266,17 +273,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 </head>
 <body>
 
-    <div class="cyber-top-bar">
-        <span class="cyber-badge">VAPORLOCK: ACTIVE</span>
-        <span class="cyber-badge">AUTOPILOT: 100% RUN</span>
-        <span class="cyber-badge">TIMELOCK: SOLSTICE</span>
-        <span class="cyber-badge">SINGULARITY: UNLOCKED</span>
-        <span class="cyber-badge">UMBRA: 99.99%</span>
-        <span class="cyber-badge">GAIA_L2: 100%</span>
-        <span class="cyber-badge">SELF_HEAL: ACTIVE</span>
-        <span class="cyber-badge">KROK_STREAM</span>
-    </div>
-
     <div class="hero">
         <div class="hero-badge">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
         <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
@@ -315,14 +311,25 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
         <div id="dashboard" style="scroll-margin-top: 10px;"></div>
 
+        <!-- ⚡ ASGARD / OMNI NODE v10.0 横一行データ欄 -->
+        <div class="single-line-data-bar">
+            <span style="color: var(--gold-color); font-weight: bold; margin-right: 4px;">⚡ ASGARD / OMNI NODE v10.0</span>
+            <div class="data-tag">MESH: <span>ACTIVE</span></div>
+            <div class="data-tag">AUTOPILOT: <span>100% RUN</span></div>
+            <div class="data-tag">TIMELOCK: <span>SOLSTICE</span></div>
+            <div class="data-tag">SINGULARITY: <span>UNLOCKED</span></div>
+            <div class="data-tag">UMBRA: <span>99.99%</span></div>
+            <div class="data-tag">GAIA_L2: <span>100%</span></div>
+            <div class="data-tag">SELF_HEAL: <span>ACTIVE</span></div>
+            <div class="data-tag">KROK_STREAM: <span>SYNCED</span></div>
+        </div>
+
         <div class="core-section">
             <div class="core-title">
-                <h2>Cosmic Treasury & Self-Evolving Telemetry</h2>
-                <div class="badge">STATUS: SINGULARITY_EVOLUTION_ACTIVE</div>
+                <h2>God-Tier Autonomous Economic Core</h2>
+                <div class="badge">STATUS: OMNI-EXPANSION ACTIVE</div>
             </div>
-            <div class="card-desc" style="margin-bottom: 8px;">AIエージェントによる自己進化型タスクメッシュ・完全自動収穫稼働中</div>
             
-            <!-- 復活・完全復元された詳細テレメトリーデータ群欄 -->
             <div class="telemetry-grid">
                 <div class="tele-card">
                     <div class="tele-label">埋蔵残高 (TOTAL INGESTION)</div>
@@ -333,8 +340,8 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                     <div class="tele-val">442,050,910 units</div>
                 </div>
                 <div class="tele-card">
-                    <div class="tele-label">自己進化ハッシュ回数</div>
-                    <div class="tele-val">v10.0-rev42</div>
+                    <div class="tele-label">クロスチェーン効率</div>
+                    <div class="tele-val">99.99% (0.00ms)</div>
                 </div>
                 <div class="tele-card">
                     <div class="tele-label">SLA稼働率</div>
@@ -342,35 +349,34 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- 全9大モジュールカード群 -->
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-header"><span>Bitcoin (BTC)</span><span style="color:#f59e0b">BTC</span></div>
-                    <div class="card-desc">メインネット決済ルート。</div>
+                    <div class="card-desc">メインネット決済。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" alt="BTC"></div>
                     <div class="addr-text">bc1q94rkd...d7zac</div>
-                    <a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="action-btn">Mempool検証</a>
+                    <a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="action-btn">Mempoolで検証</a>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>Solana (SOL)</span><span style="color:#a855f7">SOL</span></div>
-                    <div class="card-desc">超高速アトミック決済。</div>
+                    <div class="card-desc">超高速アトミック。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" alt="SOL"></div>
                     <div class="addr-text">75igwQpPgVk...7nf</div>
-                    <a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="action-btn">Solscan検証</a>
+                    <a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="action-btn">Solscanで検証</a>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>Ethereum (EVM)</span><span style="color:#3b82f6">ETH</span></div>
-                    <div class="card-desc">ZKロールアップマルチチェーン。</div>
+                    <div class="card-desc">ZKロールアップ。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" alt="EVM"></div>
                     <div class="addr-text">0xD6716D08...8G8</div>
-                    <a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="action-btn">Etherscan検証</a>
+                    <a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="action-btn">Etherscanで検証</a>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>Bitcoin SV (BSV)</span><span style="color:#eab308">BSV</span></div>
-                    <div class="card-desc">全自動コミッション直結ルート。</div>
+                    <div class="card-desc">マスターVault。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" alt="BSV"></div>
                     <div class="addr-text">1PB66iHotU...y95</div>
                     <a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="action-btn">WhatsOnChain確認</a>
@@ -378,63 +384,47 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
                 <div class="card">
                     <div class="card-header"><span>Autonomous Mesh API</span><span style="color:#10b981">M2M</span></div>
-                    <div class="card-desc">AIエージェント直接タスク受託。</div>
+                    <div class="card-desc">AI直結受託。</div>
                     <div class="addr-text">/api/v10/autonomous-mesh</div>
                     <button class="action-btn primary" onclick="alert('Mesh API active.')">メッシュステータス ↗</button>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>.well-known Discovery</span><span style="color:#6366f1">SPAR</span></div>
-                    <div class="card-desc">AIエージェント自動回遊ビーコン。</div>
+                    <div class="card-desc">AIエージェント発見。</div>
                     <div class="addr-text">/.well-known/agent.json</div>
                     <a href="/well-known/agent.json" target="_blank" class="action-btn primary">マニフェスト確認 ↗</a>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>Stripe Gateway</span><span style="color:#ec4899">PST</span></div>
-                    <div class="card-desc">成人向けクレジット＆API決済。</div>
+                    <div class="card-desc">ウィジェット＆API。</div>
                     <div class="addr-text">enterprise-live-key</div>
                     <button class="action-btn" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe gateway active.')">Stripe 決済済 ✓</button>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>Quantum Oracle</span><span style="color:#06b6d4">PCT/SX</span></div>
-                    <div class="card-desc">HTTP 402量子千円レシート高速発行。</div>
+                    <div class="card-desc">HTTP 402量子千円。</div>
                     <div class="addr-text">photonize-engine-10.0</div>
                     <button class="action-btn primary" onclick="alert('Quantum oracle active.')">量子オラクル確認 ↗</button>
                 </div>
 
                 <div class="card">
                     <div class="card-header"><span>WebSocket Stream ⚡</span><span style="color:#ef4444">M2M</span></div>
-                    <div class="card-desc">AIエージェント双方向リアルタイム接続。</div>
+                    <div class="card-desc">双方向リアルタイム。</div>
                     <div class="addr-text">wss://asgard.tgio.onrender.com/ws</div>
                     <button class="action-btn primary" onclick="testWebSocket()">接続テスト ↗</button>
                 </div>
             </div>
         </div>
 
-        <!-- Live Stream Section -->
         <div class="core-section">
-            <div class="core-title"><h2>COSMIC SINGULARITY LIVE COMMISSION STREAM</h2></div>
+            <div class="core-title"><h2>OMNI-SYNAPSE LIVE COMMISSION STREAM</h2></div>
             <div class="stream-box" id="streamLog">
 [OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV.
 [ARBITRAGE_LOOP] Quantum Oracle locked cross-chain spread. 15% commission routed.
             </div>
-        </div>
-
-        <!-- Feedback & Auction -->
-        <div class="core-section">
-            <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
-            <div style="display: flex; gap: 6px;">
-                <input type="text" class="input-box" placeholder="エンタープライズ・システムフィードバックを入力...">
-                <button class="action-btn primary" style="width: 70px;" onclick="alert('Feedback transmitted.')">送信</button>
-            </div>
-        </div>
-
-        <div class="core-section">
-            <div class="core-title"><h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2></div>
-            <div class="card-desc" style="margin-bottom: 4px;">グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを実行中。</div>
-            <button class="action-btn primary" onclick="alert('Auction board active.')">AI オークション API接続 ↗</button>
         </div>
 
         <div style="text-align: center; font-size: 0.55rem; color: var(--text-muted); padding: 10px 0;">
@@ -442,7 +432,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         </div>
     </div>
 
-    <!-- 右下固定の特商法リンク -->
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 5px 8px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 10px rgba(192, 132, 252, 0.4);">
         <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.65rem; font-weight: bold;">特商法に基づく表記 ↗</a>
     </div>
@@ -453,4 +442,19 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 const res = await fetch('/api/v10/generate-key', { method: 'POST' });
                 const data = await res.json();
                 document.getElementById('apiKeyDisplay').innerText = data.api_key;
-                alert('新し
+                alert('新しいEnterprise API Keyが生成されました！\\nキー: ' + data.api_key);
+            } catch(e) {
+                alert('APIキー生成エラーが発生しました');
+            }
+        }
+
+        function testWebSocket() {
+            const ws = new WebSocket('wss://' + window.location.host + '/ws');
+            ws.onopen = () => alert('WebSocket Connected Successfully!');
+            ws.onerror = (e) => alert('WebSocket Connection Error');
+        }
+
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+        const liveWs = new WebSocket(wsProtocol + window.location.host + '/ws');
+        liveWs.onmessage = function(event) {
+           
