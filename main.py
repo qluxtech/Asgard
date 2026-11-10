@@ -82,14 +82,14 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             flex-direction: column;
             align-items: center;
         }
-        .wrapper { width: 100%; max-width: 1000px; padding: 20px; box-sizing: border-box; }
+        .wrapper { width: 100%; max-width: 1000px; padding: 15px; box-sizing: border-box; }
         .hero {
             width: 100%;
-            padding: 60px 20px 40px;
+            padding: 50px 15px 30px;
             text-align: center;
             background: radial-gradient(circle at 50% 20%, rgba(192, 132, 252, 0.18), transparent 75%);
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         .hero-badge {
             display: inline-block;
@@ -99,30 +99,30 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             border-radius: 20px;
             font-size: 0.75rem;
             border: 1px solid rgba(192, 132, 252, 0.4);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             font-weight: 600;
         }
         .hero-title {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 800;
             line-height: 1.25;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .hero-subtitle {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             max-width: 700px;
-            margin: 0 auto 24px;
+            margin: 0 auto 20px;
             line-height: 1.6;
         }
-        .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .hero-cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .btn {
-            padding: 10px 22px;
+            padding: 10px 20px;
             border-radius: 8px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             text-decoration: none;
             cursor: pointer;
@@ -131,28 +131,28 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         .btn-secondary { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); }
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 14px;
+            margin-bottom: 25px;
         }
         .showcase-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 20px;
+            padding: 18px;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        .showcase-title { font-size: 1rem; font-weight: bold; color: var(--gold-color); margin-bottom: 6px; }
-        .showcase-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px; }
+        .showcase-title { font-size: 0.95rem; font-weight: bold; color: var(--gold-color); margin-bottom: 6px; }
+        .showcase-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
         .api-key-box {
             background: #05050a;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 8px;
             font-family: monospace;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--accent-blue);
             word-break: break-all;
             margin-bottom: 10px;
@@ -162,66 +162,66 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             background: var(--card-bg);
             border: 1px solid var(--accent-purple);
             border-radius: 8px;
-            padding: 12px 16px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 15px;
             box-shadow: 0 0 15px rgba(192, 132, 252, 0.2);
         }
-        .header-title { font-size: 1.1rem; font-weight: bold; color: var(--gold-color); }
-        .ticker { display: flex; gap: 10px; font-size: 0.7rem; color: var(--success-color); overflow-x: auto; white-space: nowrap; }
+        .header-title { font-size: 0.95rem; font-weight: bold; color: var(--gold-color); }
+        .ticker { display: flex; gap: 8px; font-size: 0.65rem; color: var(--success-color); overflow-x: auto; white-space: nowrap; }
         .core-section {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
+            padding: 14px;
+            margin-bottom: 15px;
         }
-        .core-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .core-title h2 { font-size: 1rem; margin: 0; color: var(--accent-purple); }
-        .badge { background: #1e1b4b; color: #c084fc; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; border: 1px solid #7e22ce; }
+        .core-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .core-title h2 { font-size: 0.95rem; margin: 0; color: var(--accent-purple); }
+        .badge { background: #1e1b4b; color: #c084fc; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; border: 1px solid #7e22ce; }
         .telemetry-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
-            margin-bottom: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
         }
         .tele-card {
             background: #05050a;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
         }
-        .tele-label { font-size: 0.65rem; color: var(--text-muted); }
-        .tele-val { font-size: 1rem; font-weight: bold; color: var(--text-main); margin-top: 4px; }
+        .tele-label { font-size: 0.6rem; color: var(--text-muted); }
+        .tele-val { font-size: 0.9rem; font-weight: bold; color: var(--text-main); margin-top: 4px; }
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
         }
         .card {
             background: #05050a;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 12px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
-        .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: bold; }
-        .card-desc { font-size: 0.7rem; color: var(--text-muted); }
-        .qr-box { background: white; padding: 6px; width: 56px; height: 56px; align-self: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: bold; }
+        .card-desc { font-size: 0.65rem; color: var(--text-muted); }
+        .qr-box { background: white; padding: 4px; width: 48px; height: 48px; align-self: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
         .qr-box img { width: 100%; height: 100%; }
-        .addr-text { font-family: monospace; font-size: 0.65rem; background: #0f0f1d; padding: 4px; border-radius: 4px; word-break: break-all; color: #94a3b8; text-align: center; }
+        .addr-text { font-family: monospace; font-size: 0.6rem; background: #0f0f1d; padding: 4px; border-radius: 4px; word-break: break-all; color: #94a3b8; text-align: center; }
         .action-btn {
             background: #1e1b4b;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 6px;
-            border-radius: 6px;
-            font-size: 0.75rem;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 0.7rem;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
@@ -233,11 +233,11 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             background: #05050a;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 12px;
+            padding: 10px;
             font-family: monospace;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--success-color);
-            max-height: 130px;
+            max-height: 110px;
             overflow-y: auto;
         }
         .input-box {
@@ -247,7 +247,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             border-radius: 6px;
             padding: 8px;
             color: white;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             box-sizing: border-box;
         }
     </style>
@@ -259,22 +259,22 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <div class="hero-badge">⚡ BEYOND SMART CONTRACTS / M2M CORE</div>
         <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
         <p class="hero-subtitle">
-            4.4億超のAIエージェントが自律連携し、マルチチェーン決済・量子オラクル・自動オークションをリアルタイムで秒間ミリ秒処理する次世代の無人経済プラットフォーム。
+            4.4億超のAIエージェントが自律連携し、マルチチェーン決済・量子オラクル・自動オークションをリアルタイムで秒間ミリ秒処理する次世代プラットフォーム。
         </p>
         <div class="hero-cta">
-            <a href="#dashboard" class="btn btn-primary">ライブノード監視ダッシュボード ↗</a>
-            <a href="#developer" class="btn btn-secondary">API Key 発行ポータル ↗</a>
+            <a href="#dashboard" class="btn btn-primary">ライブ監視ダッシュボード ↗</a>
+            <a href="#developer" class="btn btn-secondary">API Key 発行 ↗</a>
         </div>
     </div>
 
     <div class="wrapper">
         <!-- Developer Portal & Quantum Execution Showcase -->
-        <div id="developer" style="scroll-margin-top: 20px;"></div>
+        <div id="developer" style="scroll-margin-top: 15px;"></div>
         <div class="showcase-grid">
             <div class="showcase-card">
                 <div>
                     <div class="showcase-title">🔑 Enterprise API Developer Portal</div>
-                    <div class="showcase-desc">外部AIエージェント向けに、即座にノードアクセス用のAPIキーを発行。M2Mネットワークへのアクセスを数秒で有効化。</div>
+                    <div class="showcase-desc">外部AIエージェント向けに即座にノードアクセス用のAPIキーを発行。</div>
                     <div class="api-key-box" id="apiKeyDisplay">asgard_live_click_to_generate_key</div>
                 </div>
                 <button class="action-btn primary" onclick="generateApiKey()">API Key を新規発行する ↗</button>
@@ -283,8 +283,8 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <div class="showcase-card">
                 <div>
                     <div class="showcase-title">🧠 Quantum Autonomous Execution</div>
-                    <div class="showcase-desc">静的スマートコントラクトの限界を克服。AIオラクルが最適な流動性・タスク分配をリアルタイム自律選定。</div>
-                    <div style="font-size: 0.7rem; color: var(--success-color); font-family: monospace; margin-top: 6px;">
+                    <div class="showcase-desc">静的スマートコントラクトの限界を克服。AIオラクルが最適なタスク分配を自律選定。</div>
+                    <div style="font-size: 0.65rem; color: var(--success-color); font-family: monospace; margin-top: 4px;">
                         STATUS: QUANTUM_OPTIMIZER_ACTIVE (0.00ms)
                     </div>
                 </div>
@@ -292,15 +292,15 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
-        <div id="dashboard" style="scroll-margin-top: 20px;"></div>
+        <div id="dashboard" style="scroll-margin-top: 15px;"></div>
 
-        <!-- Restored Top Header Bar / Ticker -->
+        <!-- Top Header Bar / Ticker -->
         <div class="header-bar">
             <div class="header-title">⚡ ASGARD / OMNI NODE v10.0</div>
             <div class="ticker">
                 <span>OMNI-MESH: ACTIVE</span> | 
-                <span>AUTOPILOT: 100% RUN</span> | 
-                <span>ARBITRAGE: HYPER-SYNC</span> | 
+                <span>AUTOPILOT: 100%</span> | 
+                <span>ARBITRAGE: SYNC</span> | 
                 <span>STRIPE: SCALING</span> | 
                 <span>QUANTUM: 99.9%</span>
             </div>
@@ -309,9 +309,9 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <div class="core-section">
             <div class="core-title">
                 <h2>God-Tier Autonomous Economic Core</h2>
-                <div class="badge">STATUS: OMNI-EXPANSION ACTIVE</div>
+                <div class="badge">OMNI-EXPANSION ACTIVE</div>
             </div>
-            <div class="card-desc" style="margin-bottom: 12px;">3本柱完全連動・マルチチェーン自動アービトラージ＆収益爆発稼働中</div>
+            <div class="card-desc" style="margin-bottom: 10px;">3本柱完全連動・マルチチェーン自動アービトラージ＆収益爆発稼働中</div>
             
             <div class="telemetry-grid">
                 <div class="tele-card">
@@ -332,7 +332,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- All 9 Modules Grid (100% Restored & Complete) -->
+            <!-- All 9 Modules Grid (100% Restored & Fully Visible) -->
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-header"><span>Bitcoin (BTC)</span><span style="color:#f59e0b">BTC</span></div>
@@ -418,7 +418,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
             <div style="display: flex; gap: 8px;">
                 <input type="text" class="input-box" placeholder="エンタープライズ・システムフィードバックを入力...">
-                <button class="action-btn primary" style="width: 100px;" onclick="alert('Feedback transmitted to OMNI AI core.')">送信</button>
+                <button class="action-btn primary" style="width: 90px;" onclick="alert('Feedback transmitted to OMNI AI core.')">送信</button>
             </div>
         </div>
 
@@ -428,11 +428,11 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <button class="action-btn primary" onclick="alert('Auction board active. 2,840 high-yield tasks executing.')">AI オークション API接続 ↗</button>
         </div>
 
-        <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); padding: 30px 0;">
+        <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); padding: 20px 0;">
             © ASGARD Cosmic Infrastructure / 運営者: QLAX / 虚空.
         </div>
     </div>
 
     <!-- 右下固定の特商法リンク -->
-    <div style="position: fixed; bottom: 15px; right: 15px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 8px 14px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);">
-        <a href="/legal" style="co
+    <div style="position: fixed; bottom: 15px; right: 15px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 6px 12px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);">
+        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.75rem; font-weight: bold;">特商法に基
