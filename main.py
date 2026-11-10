@@ -160,33 +160,33 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             text-align: center;
         }
 
-        /* 独立配置された横一行データ欄（データ帯） */
-        .single-line-data-bar {
+        /* 完全独立させた横一行のサイバーデータ帯 */
+        .full-line-ticker {
             width: 100%;
             background: #080812;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             margin-bottom: 15px;
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 12px;
             overflow-x: auto;
             white-space: nowrap;
             box-sizing: border-box;
             font-family: monospace;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: var(--success-color);
-            align-items: center;
         }
-        .data-tag {
+        .ticker-item {
             background: #111122;
             padding: 4px 8px;
             border-radius: 4px;
             border: 1px solid #2a275f;
             display: inline-flex;
-            gap: 4px;
+            gap: 6px;
         }
-        .data-tag span { color: var(--text-main); font-weight: bold; }
+        .ticker-item span { color: var(--text-main); font-weight: bold; }
 
         .core-section {
             background: var(--card-bg);
@@ -311,17 +311,14 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
         <div id="dashboard" style="scroll-margin-top: 10px;"></div>
 
-        <!-- ⚡ ASGARD / OMNI NODE v10.0 横一行データ欄 -->
-        <div class="single-line-data-bar">
-            <span style="color: var(--gold-color); font-weight: bold; margin-right: 4px;">⚡ ASGARD / OMNI NODE v10.0</span>
-            <div class="data-tag">MESH: <span>ACTIVE</span></div>
-            <div class="data-tag">AUTOPILOT: <span>100% RUN</span></div>
-            <div class="data-tag">TIMELOCK: <span>SOLSTICE</span></div>
-            <div class="data-tag">SINGULARITY: <span>UNLOCKED</span></div>
-            <div class="data-tag">UMBRA: <span>99.99%</span></div>
-            <div class="data-tag">GAIA_L2: <span>100%</span></div>
-            <div class="data-tag">SELF_HEAL: <span>ACTIVE</span></div>
-            <div class="data-tag">KROK_STREAM: <span>SYNCED</span></div>
+        <!-- ⚡ 横一行専用の完全独立データ帯 (Ticker Bar) -->
+        <div class="full-line-ticker">
+            <span style="color: var(--gold-color); font-weight: bold;">⚡ ASGARD OMNI NODE v10.0</span>
+            <div class="ticker-item">MESH: <span>ACTIVE</span></div>
+            <div class="ticker-item">AUTOPILOT: <span>100% RUN</span></div>
+            <div class="ticker-item">ARBITRAGE: <span>SYNC</span></div>
+            <div class="ticker-item">STRIPE: <span>SCALING</span></div>
+            <div class="ticker-item">QUANTUM: <span>99.9%</span></div>
         </div>
 
         <div class="core-section">
@@ -433,7 +430,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 5px 8px; border: 1px solid #7e22ce; border-radius: 6px; box-shadow: 0 0 10px rgba(192, 132, 252, 0.4);">
-        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.65rem; font-weight: bold;">特商法に基づく表記 ↗</a>
+        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.65rem; font-weight: bold;">特定商取引法に基づく表記 ↗</a>
     </div>
 
     <script>
@@ -457,4 +454,13 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
         const liveWs = new WebSocket(wsProtocol + window.location.host + '/ws');
         liveWs.onmessage = function(event) {
-           
+            const streamBox = document.getElementById('streamLog');
+            streamBox.innerHTML += '<br>' + event.data;
+            streamBox.scrollTop = streamBox.scrollHeight;
+        };
+    </script>
+</body>
+</html>
+"""
+
+LEGAL_HTML = 
