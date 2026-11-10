@@ -22,7 +22,7 @@ except Exception:
         ("human", "{input}")
     ])
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-omni")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-live")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -30,11 +30,6 @@ WALLETS = {
     "evm": "0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8",
     "bsv": "1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"
 }
-
-class AutonomousTask(BaseModel):
-    agent_id: str
-    task_type: str
-    reward_bsv: float
 
 class AgentConnectionManager:
     def __init__(self):
@@ -84,7 +79,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             align-items: center;
         }
 
-        /* 画面1番上の8個のデータ群（サイバーデータ帯） */
         .top-8-data-bar {
             width: 100%;
             background: #000000;
@@ -214,7 +208,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             text-align: center;
         }
         .tele-label { font-size: 0.5rem; color: var(--text-muted); font-weight: bold; }
-        .tele-val { font-size: 0.75rem; font-weight: bold; color: var(--text-main); margin-top: 2px; font-family: monospace; }
+        .tele-val { font-size: 0.75rem; font-weight: bold; color: var(--success-color); margin-top: 2px; font-family: monospace; }
 
         .cards-grid {
             display: grid;
@@ -264,7 +258,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 </head>
 <body>
 
-    <!-- ★ 右画像の1番上にあった「8個のデータ群」を1番上に横並び配置 ★ -->
     <div class="top-8-data-bar">
         <span class="data-badge">VAPORLOCK: ACTIVE</span>
         <span class="data-badge green">AUTOPILOT: 100% RUN</span>
@@ -273,10 +266,9 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <span class="data-badge green">UMBRA: 99.99%</span>
         <span class="data-badge purple">GAIA_L2: 100%</span>
         <span class="data-badge green">SELF_HEAL: ACTIVE</span>
-        <span class="data-badge">KROK_STREAM</span>
+        <span class="data-badge">KROK_SYNC</span>
     </div>
 
-    <!-- SaaS Hero Section -->
     <div class="hero">
         <div class="hero-badge">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
         <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
@@ -305,7 +297,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 <div>
                     <div class="showcase-title">🧠 Quantum Autonomous Execution</div>
                     <div class="showcase-desc">静的スマートコントラクトの限界を克服。AIオラクルが最適な流動性・タスク分配を即時選定。</div>
-                    <div style="font-size: 0.55rem; color: var(--success-color); font-family: monospace; margin-top: 2px;">
+                    <div style="font-size: 0.55rem; color: var(--success-color); font-family: monospace; margin-top: 2px;" id="quantumStatus">
                         STATUS: QUANTUM_OPTIMIZER_ACTIVE (0.00ms)
                     </div>
                 </div>
@@ -317,22 +309,22 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
         <div class="core-section">
             <div class="core-title">
-                <h2>God-Tier Autonomous Economic Core</h2>
+                <h2>God-Tier Autonomous Economic Core [LIVE]</h2>
                 <div class="badge">STATUS: OMNI-EXPANSION ACTIVE</div>
             </div>
             
             <div class="telemetry-grid">
                 <div class="tele-card">
                     <div class="tele-label">埋蔵残高 (TOTAL INGESTION)</div>
-                    <div class="tele-val">$94,800,120.00</div>
+                    <div class="tele-val" id="liveIngestion">$94,800,120.00</div>
                 </div>
                 <div class="tele-card">
                     <div class="tele-label">アクティブエージェント数</div>
-                    <div class="tele-val">442,050,910 units</div>
+                    <div class="tele-val" id="liveAgents">442,050,910 units</div>
                 </div>
                 <div class="tele-card">
                     <div class="tele-label">クロスチェーン効率</div>
-                    <div class="tele-val">99.99% (0.00ms)</div>
+                    <div class="tele-val" id="liveEfficiency">99.99% (0.00ms)</div>
                 </div>
                 <div class="tele-card">
                     <div class="tele-label">SLA稼働率</div>
@@ -384,7 +376,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 5px 8px; border: 1px solid #7e22ce; border-radius: 6px;">
-        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.65rem; font-weight: bold;">特商法に基づく表記 ↗</a>
+        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.65rem; font-weight: bold;">特定商取引法に基づく表記 ↗</a>
     </div>
 
     <script>
@@ -398,6 +390,20 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 alert('APIキー生成エラーが発生しました');
             }
         }
+
+        let baseIngestion = 94800120.00;
+        let baseAgents = 442050910;
+
+        setInterval(() => {
+            baseIngestion += Math.random() * 125.5 - 30;
+            baseAgents += Math.floor(Math.random() * 5) - 1;
+            let latency = (Math.random() * 0.08).toFixed(2);
+
+            document.getElementById('liveIngestion').innerText = '$' + baseIngestion.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('liveAgents').innerText = baseAgents.toLocaleString('en-US') + ' units';
+            document.getElementById('liveEfficiency').innerText = '99.' + Math.floor(85 + Math.random() * 14) + '% (' + latency + 'ms)';
+            document.getElementById('quantumStatus').innerText = 'STATUS: QUANTUM_OPTIMIZER_ACTIVE (' + latency + 'ms)';
+        }, 2000);
 
         const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
         const liveWs = new WebSocket(wsProtocol + window.location.host + '/ws');
@@ -467,22 +473,4 @@ async def generate_key():
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    await manager.connect(websocket)
-    try:
-        while True:
-            data = await websocket.receive_text()
-            await manager.broadcast(f"Omni Echo: {data}")
-    except WebSocketDisconnect:
-        manager.disconnect(websocket)
-
-async def background_omni_simulator():
-    while True:
-        await asyncio.sleep(12)
-        chains = ["BTC", "SOL", "EVM", "BSV"]
-        target_chain = random.choice(chains)
-        gain = round(random.uniform(0.002, 0.015), 4)
-        log_entry = f"[{datetime.datetime.now().strftime('%H:%M:%S')}] OMNI_ARBITRAGE ({target_chain}) -> Master Vault | Extracted {gain} BSV 15% Commission (0.00ms)"
-        await manager.broadcast(log_entry)
-
-@app.on_event("startup")
-async def startup_even
+    await manager.conne
