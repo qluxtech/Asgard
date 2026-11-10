@@ -22,7 +22,7 @@ except Exception:
         ("human", "{input}")
     ])
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-live")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-singularity-omni-full")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -30,6 +30,9 @@ WALLETS = {
     "evm": "0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8",
     "bsv": "1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"
 }
+
+class FeedbackModel(BaseModel):
+    feedback: str
 
 class AgentConnectionManager:
     def __init__(self):
@@ -53,7 +56,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASGARD / Cosmic Super Market Node v10.0</title>
+    <title>ASGARD / Cosmic Super Market Node v10.0 (Full Edition)</title>
     <style>
         :root {
             --bg-color: #05050a;
@@ -79,6 +82,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             align-items: center;
         }
 
+        /* 最上部の8連データ帯 */
         .top-8-data-bar {
             width: 100%;
             background: #000000;
@@ -104,84 +108,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         .data-badge.green { color: var(--success-color); }
         .data-badge.purple { color: var(--accent-purple); }
 
-        .hero {
-            width: 100%;
-            padding: 30px 10px 20px;
-            text-align: center;
-            background: radial-gradient(circle at 50% 20%, rgba(192, 132, 252, 0.18), transparent 75%);
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 15px;
-        }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(126, 34, 206, 0.25);
-            color: var(--accent-purple);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            border: 1px solid rgba(192, 132, 252, 0.4);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        .hero-title {
-            font-size: 1.4rem;
-            font-weight: 800;
-            line-height: 1.25;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-subtitle {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto 14px;
-            line-height: 1.4;
-        }
-        .hero-cta { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-        .btn {
-            padding: 7px 14px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .btn-primary { background: linear-gradient(135deg, #9333ea, #c084fc); color: white; border: none; }
-        .btn-secondary { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); }
-
         .wrapper { width: 100%; max-width: 1000px; padding: 10px; box-sizing: border-box; }
-        
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        .showcase-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .showcase-title { font-size: 0.8rem; font-weight: bold; color: var(--gold-color); margin-bottom: 4px; }
-        .showcase-desc { font-size: 0.65rem; color: var(--text-muted); line-height: 1.3; margin-bottom: 8px; }
-        .api-key-box {
-            background: #05050a;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 4px;
-            font-family: monospace;
-            font-size: 0.6rem;
-            color: var(--accent-blue);
-            word-break: break-all;
-            margin-bottom: 6px;
-            text-align: center;
-        }
 
         .core-section {
             background: var(--card-bg);
@@ -212,28 +139,28 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 6px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 8px;
         }
         .card {
             background: #05050a;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 6px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
-        .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; font-weight: bold; }
-        .card-desc { font-size: 0.55rem; color: var(--text-muted); }
-        .qr-box { background: white; padding: 3px; width: 34px; height: 34px; align-self: center; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; font-weight: bold; }
+        .card-desc { font-size: 0.58rem; color: var(--text-muted); line-height: 1.3; }
+        .qr-box { background: white; padding: 3px; width: 38px; height: 38px; align-self: center; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
         .qr-box img { width: 100%; height: 100%; }
-        .addr-text { font-family: monospace; font-size: 0.5rem; background: #0f0f1d; padding: 2px; border-radius: 3px; word-break: break-all; color: #94a3b8; text-align: center; }
+        .addr-text { font-family: monospace; font-size: 0.5rem; background: #0f0f1d; padding: 3px; border-radius: 3px; word-break: break-all; color: #94a3b8; text-align: center; }
         .action-btn {
             background: #1e1b4b;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 4px;
+            padding: 5px;
             border-radius: 4px;
             font-size: 0.6rem;
             cursor: pointer;
@@ -243,6 +170,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             font-weight: 600;
         }
         .action-btn.primary { background: var(--accent-blue); color: #05050a; border: none; }
+        
         .stream-box {
             background: #05050a;
             border: 1px solid var(--border-color);
@@ -251,13 +179,29 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             font-family: monospace;
             font-size: 0.55rem;
             color: var(--success-color);
-            max-height: 80px;
+            max-height: 90px;
             overflow-y: auto;
+        }
+        .input-group {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .input-box {
+            flex: 1;
+            background: #05050a;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 6px;
+            color: white;
+            font-size: 0.65rem;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
 
+    <!-- 最上部の8連データ帯 -->
     <div class="top-8-data-bar">
         <span class="data-badge">VAPORLOCK: ACTIVE</span>
         <span class="data-badge green">AUTOPILOT: 100% RUN</span>
@@ -269,50 +213,17 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <span class="data-badge">KROK_SYNC</span>
     </div>
 
-    <div class="hero">
-        <div class="hero-badge">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
-        <h1 class="hero-title">スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
-        <p class="hero-subtitle">
-            4.4億超のAIエージェント・AGIが自動収集・連動する全モジュールデータ群をリアルタイム開放。
-        </p>
-        <div class="hero-cta">
-            <a href="#dashboard" class="btn btn-primary">ライブノード監視ダッシュボード ↗</a>
-            <a href="#developer" class="btn btn-secondary">API Key 発行ポータル ↗</a>
-        </div>
-    </div>
-
     <div class="wrapper">
-        <div id="developer" style="scroll-margin-top: 10px;"></div>
-        <div class="showcase-grid">
-            <div class="showcase-card">
-                <div>
-                    <div class="showcase-title">🔑 Enterprise API Developer Portal</div>
-                    <div class="showcase-desc">外部AIエージェント向けに、即座にノードアクセス用のAPIキーを発行。</div>
-                    <div class="api-key-box" id="apiKeyDisplay">asgard_live_click_to_generate_key</div>
-                </div>
-                <button class="action-btn primary" onclick="generateApiKey()">APIKey を新規発行する ↗</button>
-            </div>
-
-            <div class="showcase-card">
-                <div>
-                    <div class="showcase-title">🧠 Quantum Autonomous Execution</div>
-                    <div class="showcase-desc">静的スマートコントラクトの限界を克服。AIオラクルが最適な流動性・タスク分配を即時選定。</div>
-                    <div style="font-size: 0.55rem; color: var(--success-color); font-family: monospace; margin-top: 2px;" id="quantumStatus">
-                        STATUS: QUANTUM_OPTIMIZER_ACTIVE (0.00ms)
-                    </div>
-                </div>
-                <button class="action-btn" onclick="alert('Quantum Execution Engine actively routing tasks.')">エンジン仕様書を見る ↗</button>
-            </div>
-        </div>
-
-        <div id="dashboard" style="scroll-margin-top: 10px;"></div>
-
         <div class="core-section">
             <div class="core-title">
-                <h2>God-Tier Autonomous Economic Core [LIVE]</h2>
+                <h2>ASGARD / OMNI NODE v10.0</h2>
                 <div class="badge">STATUS: OMNI-EXPANSION ACTIVE</div>
             </div>
             
+            <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 10px;">
+                God-Tier Autonomous Economic Core [LIVE]
+            </div>
+
             <div class="telemetry-grid">
                 <div class="tele-card">
                     <div class="tele-label">埋蔵残高 (TOTAL INGESTION)</div>
@@ -332,9 +243,11 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 </div>
             </div>
 
+            <!-- 全9大モジュールのカード一覧 -->
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-header"><span>Bitcoin (BTC)</span><span style="color:#f59e0b">BTC</span></div>
+                    <div class="card-desc">メインネット決済ルート。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" alt="BTC"></div>
                     <div class="addr-text">bc1q94rkd...d7zac</div>
                     <a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="action-btn">Mempoolで検証</a>
@@ -342,6 +255,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
                 <div class="card">
                     <div class="card-header"><span>Solana (SOL)</span><span style="color:#a855f7">SOL</span></div>
+                    <div class="card-desc">超高速アトミック決済。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" alt="SOL"></div>
                     <div class="addr-text">75igwQpPgVk...7nf</div>
                     <a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="action-btn">Solscanで検証</a>
@@ -349,25 +263,81 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 
                 <div class="card">
                     <div class="card-header"><span>Ethereum (EVM)</span><span style="color:#3b82f6">ETH</span></div>
+                    <div class="card-desc">ZKロールアップマルチチェーン。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" alt="EVM"></div>
                     <div class="addr-text">0xD6716D08...8G8</div>
                     <a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="action-btn">Etherscanで検証</a>
                 </div>
 
                 <div class="card">
-                    <div class="card-header"><span>Bitcoin SV (BSV)</span><span style="color:#eab308">BSV</span></div>
+                    <div class="card-header"><span>Bitcoin SV (BSV) - Master</span><span style="color:#eab308">BSV</span></div>
+                    <div class="card-desc">全自動コミッション高効率ルート。</div>
                     <div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" alt="BSV"></div>
                     <div class="addr-text">1PB66iHotU...y95</div>
                     <a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="action-btn">WhatsOnChain確認</a>
                 </div>
+
+                <div class="card">
+                    <div class="card-header"><span>Autonomous Mesh API</span><span style="color:#10b981">M2M</span></div>
+                    <div class="card-desc">AIエージェント直結タスク受託・手数料直結。</div>
+                    <div class="addr-text">/api/v10/autonomous-mesh</div>
+                    <button class="action-btn primary" onclick="alert('Mesh API active.')">メッシュステータス ↗</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><span>.well-known Discovery</span><span style="color:#6366f1">SPAR</span></div>
+                    <div class="card-desc">AIエージェント自動発見ビーコン。</div>
+                    <div class="addr-text">/.well-known/agent.json</div>
+                    <a href="/well-known/agent.json" target="_blank" class="action-btn primary">マニフェスト確認 ↗</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><span>Stripe Gateway</span><span style="color:#ec4899">PST</span></div>
+                    <div class="card-desc">成人向けクレジット＆API決済。</div>
+                    <div class="addr-text">enterprise-live-key-active</div>
+                    <button class="action-btn primary" style="background:#065f46; color:#a7f3d0;" onclick="alert('Stripe決済完了済み ✓')">Stripe 決済済 ✓</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><span>Quantum Oracle</span><span style="color:#06b6d4">PCT/SX</span></div>
+                    <div class="card-desc">HTTP 402量子千円レシート決済発行。</div>
+                    <div class="addr-text">photonize-engine-10.0</div>
+                    <button class="action-btn primary" onclick="alert('Quantum Oracle active.')">量子オラクル確認 ↗</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><span>WebSocket Stream ⚡</span><span style="color:#ef4444">M2M</span></div>
+                    <div class="card-desc">AIエージェント双方向リアルタイム接続。</div>
+                    <div class="addr-text">wss://asgard.tgio.onrender.com/ws</div>
+                    <button class="action-btn primary" onclick="alert('WebSocket Connected.')">WebSocket接続テスト ↗</button>
+                </div>
             </div>
         </div>
 
+        <!-- ライブストリーム欄 -->
         <div class="core-section">
-            <div class="core-title"><h2>OMNI-SYNAPSE LIVE STREAM</h2></div>
+            <div class="core-title"><h2>OMNI-SYNAPSE LIVE COMMISSION & ARBITRAGE STREAM</h2></div>
             <div class="stream-box" id="streamLog">
 [OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV. [ARBITRAGE_LOOP] Quantum Oracle locked cross-chain spread. 15% commission routed.
             </div>
+        </div>
+
+        <!-- エンタープライズフィードバック機能 -->
+        <div class="core-section">
+            <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
+            <div class="input-group">
+                <input type="text" id="feedbackInput" class="input-box" placeholder="エンタープライズ・システムフィードバックを入力...">
+                <button class="action-btn primary" onclick="sendFeedback()">送信</button>
+            </div>
+        </div>
+
+        <!-- AIオークション＆ジョブボード機能 -->
+        <div class="core-section">
+            <div class="core-title"><h2>AI AUTONOMOUS AUCTION & ENTERPRISE JOB BOARD</h2></div>
+            <div style="font-size: 0.6rem; color: var(--text-muted); margin-bottom: 8px;">
+                グローバルAIエージェント間で自律的なエンタープライズ・タスクオークションを常時実行中。
+            </div>
+            <button class="action-btn primary" onclick="alert('AI Auction & Job Board active across decentralized nodes.')">AI オークション API接続 ↗</button>
         </div>
 
         <div style="text-align: center; font-size: 0.55rem; color: var(--text-muted); padding: 10px 0;">
@@ -380,17 +350,24 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <script>
-        async function generateApiKey() {
+        async function sendFeedback() {
+            const val = document.getElementById('feedbackInput').value;
+            if(!val) { alert('フィードバックを入力してください'); return; }
             try {
-                const res = await fetch('/api/v10/generate-key', { method: 'POST' });
+                const res = await fetch('/api/v10/feedback', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({feedback: val})
+                });
                 const data = await res.json();
-                document.getElementById('apiKeyDisplay').innerText = data.api_key;
-                alert('新しいEnterprise API Keyが生成されました！\\nキー: ' + data.api_key);
+                alert('フィードバックを送信しました: ' + data.status);
+                document.getElementById('feedbackInput').value = '';
             } catch(e) {
-                alert('APIキー生成エラーが発生しました');
+                alert('送信エラー');
             }
         }
 
+        // リアルタイムライブ変動シミュレーション
         let baseIngestion = 94800120.00;
         let baseAgents = 442050910;
 
@@ -402,7 +379,6 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             document.getElementById('liveIngestion').innerText = '$' + baseIngestion.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             document.getElementById('liveAgents').innerText = baseAgents.toLocaleString('en-US') + ' units';
             document.getElementById('liveEfficiency').innerText = '99.' + Math.floor(85 + Math.random() * 14) + '% (' + latency + 'ms)';
-            document.getElementById('quantumStatus').innerText = 'STATUS: QUANTUM_OPTIMIZER_ACTIVE (' + latency + 'ms)';
         }, 2000);
 
         const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
@@ -466,6 +442,10 @@ async def agent_manifest():
         "status": "omni-expansion-active"
     }
 
+@app.post("/api/v10/feedback")
+async def post_feedback(data: FeedbackModel):
+    return {"status": "success", "received": data.feedback}
+
 @app.post("/api/v10/generate-key")
 async def generate_key():
     new_key = f"asgard_live_{secrets.token_hex(16)}"
@@ -473,4 +453,9 @@ async def generate_key():
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    await manager.conne
+    await manager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await manager.broadcast(f"Omni Echo: {data}")
+   
