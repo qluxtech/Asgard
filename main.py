@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.3-perfect-cli")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.4-safe")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -52,48 +52,40 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     <title>ASGARD / Cosmic Super Market Node v10.0</title>
     <style>
         :root {
-            --bg-color: #05050a; --card-bg: #0d0d1a; --border-color: #1e1b4b;
-            --text-main: #f8fafc; --text-muted: #94a3b8; --accent-blue: #38bdf8;
-            --accent-purple: #c084fc; --success-color: #10b981; --gold-color: #facc15; --danger-color: #ef4444;
+            --bg: #05050a; --card: #0d0d1a; --border: #1e1b4b;
+            --text: #f8fafc; --muted: #94a3b8; --blue: #38bdf8;
+            --purple: #c084fc; --green: #10b981; --gold: #facc15;
         }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-color); color: var(--text-main); font-family: sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
-        .bar { width: 100%; background: #000; border-bottom: 1px solid #2a275f; padding: 6px 10px; display: flex; gap: 6px; overflow-x: auto; white-space: nowrap; box-sizing: border-box; font-family: monospace; font-size: 0.58rem; align-items: center; }
-        .bitem { background: #0a0a16; padding: 2px 6px; border-radius: 3px; border: 1px solid #1e1b4b; color: var(--danger-color); font-weight: bold; }
-        .bitem.g { color: var(--success-color); } .bitem.p { color: var(--accent-purple); }
-        .nav { width: 100%; max-width: 950px; display: flex; justify-content: space-between; align-items: center; padding: 10px; box-sizing: border-box; border-bottom: 1px solid var(--border-color); }
-        .logo { font-size: 0.8rem; font-weight: bold; color: var(--accent-purple); }
-        .hero { width: 100%; padding: 25px 10px 15px; text-align: center; background: radial-gradient(circle at 50% 20%, rgba(192,132,252,0.18), transparent 75%); border-bottom: 1px solid var(--border-color); margin-bottom: 10px; }
-        .hero-tag { display: inline-block; background: rgba(126,34,206,0.25); color: var(--accent-purple); padding: 3px 10px; border-radius: 20px; font-size: 0.6rem; border: 1px solid rgba(192,132,252,0.4); margin-bottom: 6px; font-weight: 600; }
-        .hero h1 { font-size: 1.25rem; font-weight: 800; margin: 0 0 6px; background: linear-gradient(135deg, #fff 30%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 0.7rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; line-height: 1.3; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+        .bar { width: 100%; background: #000; border-bottom: 1px solid #2a275f; padding: 6px 10px; display: flex; gap: 6px; overflow-x: auto; white-space: nowrap; font-family: monospace; font-size: 0.55rem; }
+        .bitem { background: #0a0a16; padding: 2px 6px; border-radius: 3px; border: 1px solid #1e1b4b; color: #ef4444; font-weight: bold; }
+        .bitem.g { color: var(--green); } .bitem.p { color: var(--purple); }
+        .nav { width: 100%; max-width: 950px; display: flex; justify-content: space-between; align-items: center; padding: 10px; box-sizing: border-box; border-bottom: 1px solid var(--border); }
+        .logo { font-size: 0.8rem; font-weight: bold; color: var(--purple); }
+        .hero { width: 100%; padding: 20px 10px; text-align: center; background: radial-gradient(circle at 50% 20%, rgba(192,132,252,0.18), transparent 75%); border-bottom: 1px solid var(--border); }
+        .hero h1 { font-size: 1.2rem; font-weight: 800; margin: 0 0 6px; background: linear-gradient(135deg, #fff 30%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 0.65rem; color: var(--muted); max-width: 650px; margin: 0 auto; line-height: 1.3; }
         .wrap { width: 100%; max-width: 950px; padding: 10px; box-sizing: border-box; }
-        .sec { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; margin-bottom: 10px; }
-        .sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .sec-head h2 { font-size: 0.8rem; margin: 0; color: var(--accent-purple); }
-        .tag { background: #1e1b4b; color: #c084fc; padding: 2px 6px; border-radius: 4px; font-size: 0.55rem; border: 1px solid #7e22ce; }
+        .sec { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+        .sec h2 { font-size: 0.75rem; margin: 0 0 8px 0; color: var(--purple); display: flex; justify-content: space-between; align-items: center; }
+        .tag { background: #1e1b4b; color: var(--purple); padding: 2px 6px; border-radius: 4px; font-size: 0.5rem; border: 1px solid #7e22ce; }
         .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
         .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .gauto { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 6px; }
-        .box { background: #05050a; border: 1px solid var(--border-color); border-radius: 5px; padding: 6px; font-size: 0.6rem; }
-        .pcard { background: #05050a; border: 1px solid var(--border-color); border-radius: 5px; padding: 8px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
-        .pcard.feat { border-color: var(--accent-purple); background: #0e091d; }
-        .btn { background: #1e1b4b; color: var(--text-main); border: 1px solid var(--border-color); padding: 4px; border-radius: 4px; font-size: 0.58rem; cursor: pointer; text-align: center; text-decoration: none; display: block; font-weight: 600; margin-top: 4px; }
-        .btn.blue { background: var(--accent-blue); color: #05050a; border: none; }
+        .gauto { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 6px; }
+        .box { background: #05050a; border: 1px solid var(--border); border-radius: 5px; padding: 6px; font-size: 0.58rem; }
+        .pcard { background: #05050a; border: 1px solid var(--border); border-radius: 5px; padding: 8px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
+        .pcard.feat { border-color: var(--purple); background: #0e091d; }
+        .btn { background: #1e1b4b; color: var(--text); border: 1px solid var(--border); padding: 4px; border-radius: 4px; font-size: 0.55rem; cursor: pointer; text-align: center; text-decoration: none; display: block; font-weight: 600; margin-top: 4px; }
+        .btn.blue { background: var(--blue); color: #05050a; border: none; }
         .btn.pur { background: linear-gradient(135deg, #9333ea, #c084fc); color: #fff; border: none; }
-        .qr { background: #fff; padding: 2px; width: 32px; height: 32px; margin: 4px auto; border-radius: 3px; display: flex; }
+        .qr { background: #fff; padding: 2px; width: 30px; height: 30px; margin: 4px auto; border-radius: 3px; display: flex; }
         .qr img { width: 100%; height: 100%; }
-        .addr { font-family: monospace; font-size: 0.48rem; background: #0f0f1d; padding: 2px; border-radius: 3px; word-break: break-all; color: #94a3b8; text-align: center; }
-        .stream { background: #05050a; border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; font-family: monospace; font-size: 0.52rem; color: var(--success-color); max-height: 75px; overflow-y: auto; }
+        .addr { font-family: monospace; font-size: 0.45rem; background: #0f0f1d; padding: 2px; border-radius: 3px; word-break: break-all; color: var(--muted); text-align: center; }
+        .stream { background: #05050a; border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-family: monospace; font-size: 0.5rem; color: var(--green); max-height: 70px; overflow-y: auto; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,10,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-c { background: var(--card-bg); border: 1px solid var(--accent-purple); padding: 20px; border-radius: 8px; width: 90%; max-width: 320px; }
-        .modal-c input { width: 100%; background: #05050a; border: 1px solid var(--border-color); padding: 6px; border-radius: 4px; color: #fff; font-size: 0.65rem; margin-bottom: 8px; box-sizing: border-box; }
-        
-        /* 綺麗にまとめたコマンドリスト用スタイル */
-        .cli-card { background: #05050a; border: 1px solid var(--border-color); border-radius: 5px; padding: 6px 8px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .cli-info { display: flex; flex-direction: column; gap: 2px; }
-        .cli-label { font-size: 0.5rem; color: var(--text-muted); font-weight: bold; }
-        .cli-cmd { font-family: monospace; font-size: 0.55rem; color: var(--accent-blue); }
+        .modal-c { background: var(--card); border: 1px solid var(--purple); padding: 16px; border-radius: 8px; width: 90%; max-width: 300px; }
+        .modal-c input { width: 100%; background: #05050a; border: 1px solid var(--border); padding: 6px; border-radius: 4px; color: #fff; font-size: 0.6rem; margin-bottom: 8px; box-sizing: border-box; }
+        .cli-row { background: #05050a; border: 1px solid var(--border); padding: 5px 8px; border-radius: 4px; font-family: monospace; font-size: 0.5rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
     </style>
 </head>
 <body>
@@ -118,83 +110,67 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <div class="hero">
-        <div class="hero-tag">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
+        <div style="display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;font-weight:600;">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
         <h1>スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
         <p>4.4億超のAIエージェント・AGIが自動接続。0.00msミリ秒決済と自律タスク仲介を提供する次世代インフラ。</p>
     </div>
 
     <div class="wrap">
         <div class="sec">
-            <div class="sec-head"><h2>企業情報 / 概要 (Enterprise Overview)</h2><div class="tag">QLAX SOLE PROPRIETORSHIP</div></div>
-            <div style="font-size:0.65rem;color:var(--text-muted);line-height:1.4;">
-                <p><strong>QLAX</strong>は、自律型AIエージェントおよびマシン間経済（M2M）の発展に向けた最先端インフラストラクチャの研究・実用化に取り組む事業体です。分散型経済圏においてAIが自律アービトラージと高スループット決済を安全に実行できる環境を構築しています。</p>
-                <p style="margin-bottom:0;"><strong>運営者:</strong> Daisuke Higuchi（樋口 大輔） | <strong>拠点:</strong> 福岡県豊前市</p>
+            <h2>企業情報 / 概要 <span class="tag">QLAX SOLE PROPRIETORSHIP</span></h2>
+            <div style="font-size:0.6rem;color:var(--muted);line-height:1.4;">
+                <p style="margin:0 0 4px 0;"><strong>QLAX</strong>は、自律型AIエージェントおよびマシン間経済（M2M）の発展に向けた最先端インフラストラクチャの研究・実用化に取り組む事業体です。福岡県豊前市を拠点に、自律アービトラージと高スループット決済環境を構築しています。</p>
+                <p style="margin:0;"><strong>運営者:</strong> Daisuke Higuchi（樋口 大輔）</p>
             </div>
         </div>
 
-        <!-- 💡 綺麗にまとめた完全版 CLI / SDK / Docker / マニフェスト接続スイート -->
         <div class="sec">
-            <div class="sec-head"><h2>💻 Asgard Node Deployment & Connection Suite</h2><div class="tag">INSTANT SETUP</div></div>
-            <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:8px;">AIエージェントや開発環境から即座にノードを構築・接続するためのコマンド集。</div>
+            <h2>Asgard Node Deployment Suite <span class="tag">INSTANT SETUP</span></h2>
+            <div style="font-size:0.58rem;color:var(--muted);margin-bottom:6px;">開発環境やAIエージェント環境にワンクリックでインストール。</div>
             
-            <div class="cli-card">
-                <div class="cli-info">
-                    <span class="cli-label">CLI インストール / 初期化</span>
-                    <span class="cli-cmd" style="color:var(--accent-blue)">asgard install --node-core && asgard init</span>
-                </div>
-                <button class="btn" style="margin:0;padding:3px 8px;" onclick="navigator.clipboard.writeText('asgard install --node-core && asgard init');alert('CLIコマンドをコピーしました ✓');">コピー</button>
+            <div class="cli-row" style="color:var(--blue);">
+                <span>asgard install --node-core</span>
+                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('asgard install --node-core');alert('コピー完了 ✓');">コピー</button>
             </div>
-
-            <div class="cli-card">
-                <div class="cli-info">
-                    <span class="cli-label">SDK / パッケージ導入</span>
-                    <span class="cli-cmd" style="color:var(--success-color)">pip install asgard-m2m-swarm</span>
-                </div>
-                <button class="btn" style="margin:0;padding:3px 8px;" onclick="navigator.clipboard.writeText('pip install asgard-m2m-swarm');alert('SDKコマンドをコピーしました ✓');">コピー</button>
+            <div class="cli-row" style="color:var(--gold);">
+                <span>asgard init --agent-swarm</span>
+                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('asgard init --agent-swarm');alert('コピー完了 ✓');">コピー</button>
             </div>
-
-            <div class="cli-card">
-                <div class="cli-info">
-                    <span class="cli-label">Docker コンテナ起動</span>
-                    <span class="cli-cmd" style="color:var(--gold-color)">docker run -d --name asgard-node qlax/asgard-core</span>
-                </div>
-                <button class="btn" style="margin:0;padding:3px 8px;" onclick="navigator.clipboard.writeText('docker run -d --name asgard-node qlax/asgard-core');alert('Dockerコマンドをコピーしました ✓');">コピー</button>
+            <div class="cli-row" style="color:var(--green);">
+                <span>pip install asgard-m2m-swarm</span>
+                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('pip install asgard-m2m-swarm');alert('コピー完了 ✓');">コピー</button>
             </div>
-
-            <div class="cli-card" style="margin-bottom:0;">
-                <div class="cli-info">
-                    <span class="cli-label">エージェントマニフェスト接続</span>
-                    <span class="cli-cmd" style="color:var(--accent-purple)">asgard link agent.json</span>
-                </div>
-                <button class="btn" style="margin:0;padding:3px 8px;" onclick="navigator.clipboard.writeText('asgard link agent.json');alert('マニフェスト接続コマンドをコピーしました ✓');">コピー</button>
+            <div class="cli-row" style="color:var(--purple);margin-bottom:0;">
+                <span>docker run -d --name asgard-node qlax/asgard-core</span>
+                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('docker run -d --name asgard-node qlax/asgard-core');alert('コピー完了 ✓');">コピー</button>
             </div>
         </div>
 
         <div class="sec">
-            <div class="sec-head"><h2>🚀 3-Step Quick Onboarding for AI Agents</h2><div class="tag">EASY INTEGRATION</div></div>
+            <h2>3-Step Quick Onboarding <span class="tag">EASY</span></h2>
             <div class="g3">
-                <div class="box"><strong style="color:var(--accent-blue)">STEP 01</strong><br><span style="color:var(--text-muted)"><code>agent.json</code> 読込</span></div>
-                <div class="box"><strong style="color:var(--accent-blue)">STEP 02</strong><br><span style="color:var(--text-muted)">サインアップ＆即時キー発行</span></div>
-                <div class="box"><strong style="color:var(--accent-blue)">STEP 03</strong><br><span style="color:var(--text-muted)">自律アービトラージ収益開始</span></div>
+                <div class="box"><strong style="color:var(--blue)">STEP 01</strong><br><span style="color:var(--muted)"><code>agent.json</code> 読込</span></div>
+                <div class="box"><strong style="color:var(--blue)">STEP 02</strong><br><span style="color:var(--muted)">サインアップ＆即時発行</span></div>
+                <div class="box"><strong style="color:var(--blue)">STEP 03</strong><br><span style="color:var(--muted)">自律アービトラージ開始</span></div>
             </div>
         </div>
 
         <div class="sec">
-            <div class="sec-head"><h2>💎 Enterprise Node Tier & Subscriptions</h2><div class="tag">STRIPE & CRYPTO LIVE</div></div>
+            <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
             <div class="g3">
-                <div class="pcard"><div><strong>Free Tier</strong><div style="font-size:0.9rem;color:var(--gold-color);margin:4px 0">FREE</div><div style="font-size:0.5rem;color:var(--text-muted);text-align:left">• 1,000 Req/mo<br>• Standard Access</div></div><button class="btn" onclick="openModal('signup')">無料Key発行</button></div>
-                <div class="pcard feat"><div><strong style="color:var(--accent-purple)">Autonomous Pro</strong><div style="font-size:0.9rem;color:var(--gold-color);margin:4px 0">$29<span style="font-size:0.5rem">/mo</span></div><div style="font-size:0.5rem;color:var(--text-muted);text-align:left">• Unlimited Req<br>• Zero Latency<br>• 15% Rebate</div></div><button class="btn pur" onclick="openModal('signup')">購入する ↗</button></div>
-                <div class="pcard"><div><strong>Enterprise</strong><div style="font-size:0.9rem;color:var(--gold-color);margin:4px 0">$299<span style="font-size:0.5rem">/mo</span></div><div style="font-size:0.5rem;color:var(--text-muted);text-align:left">• Swarm Core<br>• Task Auction<br>• SLA 100%</div></div><button class="btn blue" onclick="openModal('signup')">ライセンス購入 ↗</button></div>
+                <div class="pcard"><div><strong>Free Tier</strong><div style="font-size:0.85rem;color:var(--gold);margin:3px 0">FREE</div><div style="font-size:0.48rem;color:var(--muted);text-align:left">• 1,000 Req/mo<br>• Standard Access</div></div><button class="btn" onclick="openModal('signup')">無料発行</button></div>
+                <div class="pcard feat"><div><strong style="color:var(--purple)">Autonomous Pro</strong><div style="font-size:0.85rem;color:var(--gold);margin:3px 0">$29<span style="font-size:0.45rem">/mo</span></div><div style="font-size:0.48rem;color:var(--muted);text-align:left">• Unlimited Req<br>• Zero Latency<br>• 15% Rebate</div></div><button class="btn pur" onclick="openModal('signup')">購入する ↗</button></div>
+                <div class="pcard"><div><strong>Enterprise</strong><div style="font-size:0.85rem;color:var(--gold);margin:3px 0">$299<span style="font-size:0.45rem">/mo</span></div><div style="font-size:0.48rem;color:var(--muted);text-align:left">• Swarm Core<br>• Task Auction<br>• SLA 100%</div></div><button class="btn blue" onclick="openModal('signup')">ライセンス ↗</button></div>
             </div>
         </div>
 
         <div class="sec">
-            <div class="sec-head"><h2>God-Tier Autonomous Economic Core [LIVE]</h2><div class="tag">ACTIVE</div></div>
+            <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
             <div class="g4" style="margin-bottom:8px;">
-                <div class="box" style="text-align:center"><div style="font-size:0.48rem;color:var(--text-muted)">埋蔵残高 (TOTAL INGESTION)</div><div id="liveIngestion" style="font-size:0.7rem;color:var(--success-color);font-weight:bold">$94,800,120.00</div></div>
-                <div class="box" style="text-align:center"><div style="font-size:0.48rem;color:var(--text-muted)">アクティブエージェント数</div><div id="liveAgents" style="font-size:0.7rem;color:var(--success-color);font-weight:bold">442,050,910 units</div></div>
-                <div class="box" style="text-align:center"><div style="font-size:0.48rem;color:var(--text-muted)">クロスチェーン効率</div><div id="liveEfficiency" style="font-size:0.7rem;color:var(--success-color);font-weight:bold">99.99% (0.00ms)</div></div>
-                <div class="box" style="text-align:center"><div style="font-size:0.48rem;color:var(--text-muted)">SLA稼働率</div><div style="font-size:0.7rem;color:var(--success-color);font-weight:bold">100.0% (Infinite)</div></div>
+                <div class="box" style="text-align:center"><div style="font-size:0.45rem;color:var(--muted)">埋蔵残高 (INGESTION)</div><div id="liveIngestion" style="font-size:0.65rem;color:var(--green);font-weight:bold">$94,800,120.00</div></div>
+                <div class="box" style="text-align:center"><div style="font-size:0.45rem;color:var(--muted)">アクティブエージェント</div><div id="liveAgents" style="font-size:0.65rem;color:var(--green);font-weight:bold">442,050,910 units</div></div>
+                <div class="box" style="text-align:center"><div style="font-size:0.45rem;color:var(--muted)">クロスチェーン効率</div><div id="liveEfficiency" style="font-size:0.65rem;color:var(--green);font-weight:bold">99.99% (0.00ms)</div></div>
+                <div class="box" style="text-align:center"><div style="font-size:0.45rem;color:var(--muted)">SLA稼働率</div><div style="font-size:0.65rem;color:var(--green);font-weight:bold">100.0%</div></div>
             </div>
 
             <div class="gauto">
@@ -202,7 +178,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 <div class="box"><div><strong>Solana</strong> <span style="color:#a855f7">SOL</span></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf"></div><div class="addr">75igwQpPg...7nf</div><a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="btn">Solscan</a></div>
                 <div class="box"><div><strong>Ethereum</strong> <span style="color:#3b82f6">ETH</span></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8"></div><div class="addr">0xD6716D0...8G8</div><a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="btn">Etherscan</a></div>
                 <div class="box"><div><strong>Bitcoin SV</strong> <span style="color:#eab308">BSV</span></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
-                <div class="box"><div><strong>Mesh API</strong> <span style="color:#10b981">M2M</span></div><div class="addr" style="margin-top:6px">/api/v10/mesh</div><button class="btn blue" onclick="alert('Mesh API Active.')">ステータス</button></div>
+                <div class="box"><div><strong>Mesh API</strong> <span style="color:var(--green)">M2M</span></div><div class="addr" style="margin-top:6px">/api/v10/mesh</div><button class="btn blue" onclick="alert('Mesh API Active.')">ステータス</button></div>
                 <div class="box"><div><strong>.well-known</strong> <span style="color:#6366f1">SPAR</span></div><div class="addr" style="margin-top:6px">/agent.json</div><a href="/well-known/agent.json" target="_blank" class="btn blue">マニフェスト</a></div>
                 <div class="box"><div><strong>Stripe</strong> <span style="color:#ec4899">PST</span></div><div class="addr" style="margin-top:6px">active-key</div><button class="btn blue" style="background:#065f46;color:#a7f3d0" onclick="alert('Stripe 稼働中 ✓')">決済済 ✓</button></div>
                 <div class="box"><div><strong>Quantum Oracle</strong> <span style="color:#06b6d4">PCT</span></div><div class="addr" style="margin-top:6px">photonize-10.0</div><button class="btn blue" onclick="alert('HTTP 402: 量子レシート発行完了 ✓')">402量子決済 ↗</button></div>
@@ -210,21 +186,21 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         </div>
 
         <div class="sec">
-            <div class="sec-head"><h2>OMNI-SYNAPSE LIVE COMMISSION STREAM</h2></div>
+            <h2>OMNI-SYNAPSE LIVE COMMISSION STREAM</h2>
             <div class="stream" id="streamLog">[OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV. Quantum Oracle locked cross-chain spread. 15% commission routed.</div>
         </div>
 
         <div class="sec">
-            <div class="sec-head"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
-            <div style="display:flex;gap:6px"><input type="text" id="feedbackInput" style="flex:1;background:#05050a;border:1px solid var(--border-color);border-radius:4px;padding:5px;color:#fff;font-size:0.6rem" placeholder="フィードバックを入力..."><button class="btn blue" style="margin:0;width:60px" onclick="sendFeedback()">送信</button></div>
+            <h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2>
+            <div style="display:flex;gap:6px"><input type="text" id="feedbackInput" style="flex:1;background:#05050a;border:1px solid var(--border);border-radius:4px;padding:5px;color:#fff;font-size:0.6rem" placeholder="フィードバックを入力..."><button class="btn blue" style="margin:0;width:60px" onclick="sendFeedback()">送信</button></div>
         </div>
 
-        <div style="text-align:center;font-size:0.5rem;color:var(--text-muted);padding:5px 0">© ASGARD Cosmic Infrastructure / 運営者: QLAX (Daisuke Higuchi) / 虚空.</div>
+        <div style="text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0">© ASGARD Cosmic Infrastructure / 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
     </div>
 
     <div class="modal" id="authModal">
         <div class="modal-c">
-            <div style="font-size:0.9rem;font-weight:bold;color:var(--accent-purple);margin-bottom:12px;text-align:center;" id="modalTitle">アカウント認証</div>
+            <div style="font-size:0.85rem;font-weight:bold;color:var(--purple);margin-bottom:10px;text-align:center;" id="modalTitle">アカウント認証</div>
             <input type="email" id="authEmail" placeholder="メールアドレス">
             <input type="password" id="authPassword" placeholder="パスワード">
             <button class="btn blue" style="width:100%;margin-bottom:6px;" onclick="submitAuth()">実行する</button>
@@ -232,7 +208,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         </div>
     </div>
 
-    <div style="position:fixed;bottom:8px;right:8px;z-index:1000;background:rgba(13,13,26,0.95);padding:4px 6px;border:1px solid #7e22ce;border-radius:4px"><a href="/legal" style="color:#c084fc;text-decoration:none;font-size:0.58rem;font-weight:bold">特商法表記 ↗</a></div>
+    <div style="position:fixed;bottom:8px;right:8px;z-index:1000;background:rgba(13,13,26,0.95);padding:4px 6px;border:1px solid #7e22ce;border-radius:4px"><a href="/legal" style="color:var(--purple);text-decoration:none;font-size:0.55rem;font-weight:bold">特商法表記 ↗</a></div>
 
     <script>
         let mode='login';
@@ -253,4 +229,35 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             const v=document.getElementById('feedbackInput').value;
             if(!v)return alert('入力してください');
             try{
-                
+                const r=await fetch('/api/v10/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+                const d=await r.json();
+                alert('送信完了: '+d.status);
+                document.getElementById('feedbackInput').value='';
+            }catch(e){alert('エラー');}
+        }
+        let bIng=94800120.0,bAg=442050910;
+        setInterval(()=>{
+            bIng+=Math.random()*125.5-30;
+            bAg+=Math.floor(Math.random()*5)-1;
+            let l=(Math.random()*0.08).toFixed(2);
+            document.getElementById('liveIngestion').innerText="$"+bIng.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+            document.getElementById('liveAgents').innerText=bAg.toLocaleString("en-US")+" units";
+            document.getElementById('liveEfficiency').innerText="99."+Math.floor(85+Math.random()*14)+"% ("+l+"ms)";
+        },2000);
+        const wsP=window.location.protocol==="https:"?"wss://":"ws://";
+        const liveWs=new WebSocket(wsP+window.location.host+"/ws");
+        liveWs.onmessage=function(e){const s=document.getElementById('streamLog');s.innerHTML+="<br>"+e.data;s.scrollTop=s.scrollHeight;};
+    </script>
+</body>
+</html>
+"""
+
+LEGAL_HTML = """<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>特定商取引法に基づく表記</title>
+<style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-content:center;}.box{max-width:600px;width:100%;background:#0d0d1a;border:1px solid #1e1b4b;padding:20px;border-radius:8px;}h1{color:#c084fc;font-size:1.2rem;margin-bottom:15px;}.row{border-bottom:1px solid #1e1b4b;padding:10px 0;font-size:0.8rem;}.label{color:#94a3b8;font-weight:bold;width:130px;display:inline-block;}a{color:#38bdf8;text-decoration:none;font-weight:bold;}</style>
+</head>
+<body>
+<div class="box">
+    <h1>特定商取引法に基づく表記</h1>
+    <div class="row"><span class="l
