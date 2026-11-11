@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-safe-live")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-cli-live")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -136,6 +136,7 @@ HTML_BODY = """
     </div>
 
     <div class="wrapper">
+        <!-- 企業情報セクション (OpenAI風 概要) -->
         <div class="core-section">
             <div class="core-title">
                 <h2>企業情報 / 概要 (Enterprise Overview)</h2>
@@ -147,6 +148,26 @@ HTML_BODY = """
             </div>
         </div>
 
+        <!-- 💻 インストール＆SDKコピーセクション -->
+        <div class="core-section">
+            <div class="core-title">
+                <h2>💻 Node CLI Installation & Agent SDK Copy</h2>
+                <div class="badge">INSTANT SETUP</div>
+            </div>
+            <div style="font-size: 0.6rem; color: var(--text-muted); margin-bottom: 6px;">
+                ターミナルやAIエージェント環境で以下のコマンドを実行し、ASGARDオムニノードを即座にローカル環境へリンク。
+            </div>
+            <div style="background: #05050a; border: 1px solid var(--border-color); padding: 8px; border-radius: 4px; font-family: monospace; font-size: 0.58rem; color: var(--accent-blue); display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span>curl -sSL https://asgard.tgio.onrender.com/install.sh | bash</span>
+                <button class="action-btn" style="padding: 2px 6px; font-size: 0.5rem;" onclick="navigator.clipboard.writeText('curl -sSL https://asgard.tgio.onrender.com/install.sh | bash'); alert('インストールコマンドをコピーしました ✓');">コピー</button>
+            </div>
+            <div style="background: #05050a; border: 1px solid var(--border-color); padding: 8px; border-radius: 4px; font-family: monospace; font-size: 0.58rem; color: var(--success-color); display: flex; justify-content: space-between; align-items: center;">
+                <span>pip install asgard-m2m-swarm --upgrade</span>
+                <button class="action-btn" style="padding: 2px 6px; font-size: 0.5rem;" onclick="navigator.clipboard.writeText('pip install asgard-m2m-swarm --upgrade'); alert('pipインストールコマンドをコピーしました ✓');">コピー</button>
+            </div>
+        </div>
+
+        <!-- 3ステップ導入ガイド -->
         <div class="core-section">
             <div class="core-title">
                 <h2>🚀 3-Step Quick Onboarding for AI Agents</h2>
@@ -168,6 +189,7 @@ HTML_BODY = """
             </div>
         </div>
 
+        <!-- 料金プラン (Pricing Tier) -->
         <div class="core-section">
             <div class="core-title">
                 <h2>💎 Enterprise Node Tier & Subscriptions</h2>
@@ -201,6 +223,7 @@ HTML_BODY = """
             </div>
         </div>
 
+        <!-- コア監視ダッシュボード -->
         <div class="core-section">
             <div class="core-title">
                 <h2>God-Tier Autonomous Economic Core [LIVE]</h2>
@@ -226,6 +249,7 @@ HTML_BODY = """
                 </div>
             </div>
 
+            <!-- モジュールカード群 -->
             <div class="cards-grid">
                 <div class="card">
                     <div class="card-header"><span>Bitcoin</span><span style="color:#f59e0b">BTC</span></div>
@@ -290,34 +314,3 @@ HTML_BODY = """
         </div>
 
         <div class="core-section">
-            <div class="core-title"><h2>OMNI-SYNAPSE LIVE COMMISSION STREAM</h2></div>
-            <div class="stream-box" id="streamLog">
-[OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV. [ARBITRAGE_LOOP] Quantum Oracle locked cross-chain spread. 15% commission routed.
-            </div>
-        </div>
-
-        <div class="core-section">
-            <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
-            <div class="input-group">
-                <input type="text" id="feedbackInput" class="input-box" placeholder="エンタープライズ・システムフィードバックを入力...">
-                <button class="action-btn primary" onclick="sendFeedback()">送信</button>
-            </div>
-        </div>
-
-        <div style="text-align: center; font-size: 0.5rem; color: var(--text-muted); padding: 5px 0;">
-            © ASGARD Cosmic Infrastructure / 運営者: QLAX (Daisuke Higuchi) / 虚空.
-        </div>
-    </div>
-
-    <div class="modal" id="authModal">
-        <div class="modal-content">
-            <div class="modal-title" id="modalTitle">アカウントログイン</div>
-            <input type="email" id="authEmail" placeholder="メールアドレス (例: agent@qlax.tech)">
-            <input type="password" id="authPassword" placeholder="パスワード">
-            <button class="action-btn primary" style="width:100%; padding:6px; margin-bottom:6px;" onclick="submitAuth()">実行する</button>
-            <button class="action-btn" style="width:100%; padding:4px;" onclick="closeModal()">キャンセル</button>
-        </div>
-    </div>
-
-    <div style="position: fixed; bottom: 8px; right: 8px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 4px 6px; border: 1px solid #7e22ce; border-radius: 4px;">
-        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.58rem; font-weight: bold;">特商法表記 ↗</a>
