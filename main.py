@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-final-full")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-enterprise-auth")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -18,6 +18,10 @@ WALLETS = {
 
 class FeedbackModel(BaseModel):
     feedback: str
+
+class AuthModel(BaseModel):
+    email: str
+    password: str
 
 class AgentConnectionManager:
     def __init__(self):
@@ -95,6 +99,20 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         .data-badge.green { color: var(--success-color); }
         .data-badge.purple { color: var(--accent-purple); }
 
+        /* ヘッダーナビ */
+        .navbar {
+            width: 100%;
+            max-width: 950px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-logo { font-size: 0.8rem; font-weight: bold; color: var(--accent-purple); }
+        .nav-links { display: flex; gap: 8px; }
+
         .hero {
             width: 100%;
             padding: 25px 10px 15px;
@@ -144,72 +162,26 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         .badge { background: #1e1b4b; color: #c084fc; padding: 2px 6px; border-radius: 4px; font-size: 0.55rem; border: 1px solid #7e22ce; }
 
         /* 3ステップガイド */
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-        .step-card {
-            background: #05050a;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 6px;
-            font-size: 0.6rem;
-        }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .step-card { background: #05050a; border: 1px solid var(--border-color); border-radius: 5px; padding: 6px; font-size: 0.6rem; }
         .step-num { font-weight: bold; color: var(--accent-blue); margin-bottom: 2px; }
         .step-desc { color: var(--text-muted); font-size: 0.5rem; line-height: 1.2; }
 
-        /* 料金プラン (Pricing Tier) */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-        .price-card {
-            background: #05050a;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 8px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+        /* 料金プラン */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .price-card { background: #05050a; border: 1px solid var(--border-color); border-radius: 5px; padding: 8px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
         .price-card.featured { border-color: var(--accent-purple); background: #0e091d; }
         .price-title { font-size: 0.65rem; font-weight: bold; color: var(--text-main); }
         .price-val { font-size: 0.95rem; font-weight: bold; color: var(--gold-color); margin: 4px 0; font-family: monospace; }
         .price-features { font-size: 0.5rem; color: var(--text-muted); text-align: left; margin-bottom: 6px; line-height: 1.3; }
 
-        .telemetry-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-        .tele-card {
-            background: #05050a;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 6px;
-            text-align: center;
-        }
+        .telemetry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
+        .tele-card { background: #05050a; border: 1px solid var(--border-color); border-radius: 4px; padding: 6px; text-align: center; }
         .tele-label { font-size: 0.48rem; color: var(--text-muted); font-weight: bold; }
         .tele-val { font-size: 0.7rem; font-weight: bold; color: var(--success-color); margin-top: 2px; font-family: monospace; }
 
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 6px;
-        }
-        .card {
-            background: #05050a;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 6px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 6px; }
+        .card { background: #05050a; border: 1px solid var(--border-color); border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 4px; }
         .card-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.6rem; font-weight: bold; }
         .card-desc { font-size: 0.52rem; color: var(--text-muted); }
         .qr-box { background: white; padding: 2px; width: 32px; height: 32px; align-self: center; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
@@ -217,42 +189,31 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         .addr-text { font-family: monospace; font-size: 0.48rem; background: #0f0f1d; padding: 2px; border-radius: 3px; word-break: break-all; color: #94a3b8; text-align: center; }
         
         .action-btn {
-            background: #1e1b4b;
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 4px;
-            border-radius: 4px;
-            font-size: 0.58rem;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            font-weight: 600;
+            background: #1e1b4b; color: var(--text-main); border: 1px solid var(--border-color);
+            padding: 4px; border-radius: 4px; font-size: 0.58rem; cursor: pointer; text-align: center; text-decoration: none; display: block; font-weight: 600;
         }
         .action-btn.primary { background: var(--accent-blue); color: #05050a; border: none; }
         .action-btn.purple { background: linear-gradient(135deg, #9333ea, #c084fc); color: white; border: none; }
 
         .stream-box {
-            background: #05050a;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 8px;
-            font-family: monospace;
-            font-size: 0.52rem;
-            color: var(--success-color);
-            max-height: 75px;
-            overflow-y: auto;
+            background: #05050a; border: 1px solid var(--border-color); border-radius: 6px; padding: 8px;
+            font-family: monospace; font-size: 0.52rem; color: var(--success-color); max-height: 75px; overflow-y: auto;
         }
         .input-group { display: flex; gap: 6px; margin-top: 6px; }
         .input-box {
-            flex: 1;
-            background: #05050a;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 5px;
-            color: white;
-            font-size: 0.6rem;
+            flex: 1; background: #05050a; border: 1px solid var(--border-color); border-radius: 4px; padding: 5px; color: white; font-size: 0.6rem;
         }
+
+        /* 認証モーダル */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5,5,10,0.85); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--accent-purple); padding: 20px; border-radius: 8px; width: 90%; max-width: 320px;
+        }
+        .modal-title { font-size: 0.9rem; font-weight: bold; color: var(--accent-purple); margin-bottom: 12px; text-align: center; }
+        .modal input { width: 100%; background: #05050a; border: 1px solid var(--border-color); padding: 6px; border-radius: 4px; color: #fff; font-size: 0.65rem; margin-bottom: 8px; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -269,6 +230,15 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         <span class="data-badge">KROK_SYNC</span>
     </div>
 
+    <!-- 企業風ナビゲーション (OpenAIスタイル) -->
+    <div class="navbar">
+        <div class="nav-logo">ASGARD / QLAX</div>
+        <div class="nav-links">
+            <button class="action-btn" onclick="openModal('login')">ログイン</button>
+            <button class="action-btn primary" onclick="openModal('signup')">サインアップ</button>
+        </div>
+    </div>
+
     <!-- Hero -->
     <div class="hero">
         <div class="hero-badge">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
@@ -277,6 +247,18 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <div class="wrapper">
+        <!-- 企業情報セクション (OpenAI風 概要) -->
+        <div class="core-section">
+            <div class="core-title">
+                <h2>企業情報 / 概要 (Enterprise Overview)</h2>
+                <div class="badge">QLAX SOLE PROPRIETORSHIP</div>
+            </div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); line-height: 1.4;">
+                <p><strong>QLAX</strong>は、自律型AIエージェントおよびマシン間経済（M2M）の発展に向けた最先端インフラストラクチャの研究・実用化に取り組む事業体です。私たちの使命は、分散型経済圏においてAIが人類全体の恩恵をもたらす自律アービトラージと高スループット決済を安全に実行できる環境を構築することです。</p>
+                <p style="margin-bottom:0;"><strong>運営者:</strong> Daisuke Higuchi（樋口 大輔） | <strong>拠点:</strong> 福岡県豊前市</p>
+            </div>
+        </div>
+
         <!-- 3ステップ導入ガイド -->
         <div class="core-section">
             <div class="core-title">
@@ -290,7 +272,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                 </div>
                 <div class="step-card">
                     <div class="step-num">STEP 02</div>
-                    <div class="step-desc">Stripe / 暗号資産で即時キー発行</div>
+                    <div class="step-desc">サインアップ＆即時キー発行</div>
                 </div>
                 <div class="step-card">
                     <div class="step-num">STEP 03</div>
@@ -312,7 +294,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                         <div class="price-val">FREE</div>
                         <div class="price-features">• 1,000 Req/mo<br>• Standard Access</div>
                     </div>
-                    <button class="action-btn" onclick="alert('Developer Free Key Issued!')">無料Key発行</button>
+                    <button class="action-btn" onclick="openModal('signup')">無料Key発行</button>
                 </div>
                 <div class="price-card featured">
                     <div>
@@ -320,7 +302,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                         <div class="price-val">$29<span style="font-size:0.5rem">/mo</span></div>
                         <div class="price-features">• Unlimited Req<br>• Zero Latency<br>• 15% Rebate</div>
                     </div>
-                    <button class="action-btn purple" onclick="alert('Stripe Checkout: Pro Tier Activated ✓')">購入する ↗</button>
+                    <button class="action-btn purple" onclick="openModal('signup')">購入する ↗</button>
                 </div>
                 <div class="price-card">
                     <div>
@@ -328,7 +310,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
                         <div class="price-val">$299<span style="font-size:0.5rem">/mo</span></div>
                         <div class="price-features">• Swarm Core<br>• Task Auction<br>• SLA 100%</div>
                     </div>
-                    <button class="action-btn primary" onclick="alert('Enterprise License Active ✓')">ライセンス購入 ↗</button>
+                    <button class="action-btn primary" onclick="openModal('signup')">ライセンス購入 ↗</button>
                 </div>
             </div>
         </div>
@@ -428,36 +410,4 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <div class="core-title"><h2>OMNI-SYNAPSE LIVE COMMISSION STREAM</h2></div>
             <div class="stream-box" id="streamLog">
 [OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV. [ARBITRAGE_LOOP] Quantum Oracle locked cross-chain spread. 15% commission routed.
-            </div>
-        </div>
-
-        <!-- フィードバック -->
-        <div class="core-section">
-            <div class="core-title"><h2>ENTERPRISE FEEDBACK & SYSTEM INSIGHTS</h2></div>
-            <div class="input-group">
-                <input type="text" id="feedbackInput" class="input-box" placeholder="エンタープライズ・システムフィードバックを入力...">
-                <button class="action-btn primary" onclick="sendFeedback()">送信</button>
-            </div>
-        </div>
-
-        <div style="text-align: center; font-size: 0.5rem; color: var(--text-muted); padding: 5px 0;">
-            © ASGARD Cosmic Infrastructure / 運営者: QLAX / 虚空.
-        </div>
-    </div>
-
-    <div style="position: fixed; bottom: 8px; right: 8px; z-index: 1000; background: rgba(13, 13, 26, 0.95); padding: 4px 6px; border: 1px solid #7e22ce; border-radius: 4px;">
-        <a href="/legal" style="color: #c084fc; text-decoration: none; font-size: 0.58rem; font-weight: bold;">特商法表記 ↗</a>
-    </div>
-
-    <script>
-        async function sendFeedback() {
-            const val = document.getElementById('feedbackInput').value;
-            if(!val) { alert('フィードバックを入力してください'); return; }
-            try {
-                const res = await fetch('/api/v10/feedback', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({feedback: val})
-                });
-                const data = await res.json();
-                alert('送
+            </div
