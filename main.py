@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-prod")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-full-prod")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -44,7 +44,7 @@ class AgentConnectionManager:
 
 manager = AgentConnectionManager()
 
-HYBRID_INDEX_HTML = """<!DOCTYPE html>
+HTML_HEAD = """<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -91,7 +91,9 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </style>
 </head>
 <body>
+"""
 
+HTML_BODY = """
     <div class="bar">
         <span class="bitem">VAPORLOCK: ACTIVE</span>
         <span class="bitem g">AUTOPILOT: 100% RUN</span>
@@ -245,7 +247,9 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 </html>
 """
 
+HYBRID_INDEX_HTML = HTML_HEAD + HTML_BODY
+
 LEGAL_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head><meta charset="UTF-8"><title>特定商取引法に基づく表記</title>
-<style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-content:center;}.box{max-width:600px;width:100%;background:#0d0d1
+<style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-conte
