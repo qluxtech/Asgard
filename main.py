@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.0-full-prod")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.1-cli-fixed")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -44,7 +44,7 @@ class AgentConnectionManager:
 
 manager = AgentConnectionManager()
 
-HTML_HEAD = """<!DOCTYPE html>
+HYBRID_INDEX_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -91,9 +91,7 @@ HTML_HEAD = """<!DOCTYPE html>
     </style>
 </head>
 <body>
-"""
 
-HTML_BODY = """
     <div class="bar">
         <span class="bitem">VAPORLOCK: ACTIVE</span>
         <span class="bitem g">AUTOPILOT: 100% RUN</span>
@@ -129,15 +127,15 @@ HTML_BODY = """
         </div>
 
         <div class="sec">
-            <div class="sec-head"><h2>💻 Node CLI Installation & SDK Copy</h2><div class="tag">INSTANT SETUP</div></div>
-            <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:6px;">ターミナルやAIエージェント環境で実行し、ASGARDオムニノードを即座にリンク。</div>
+            <div class="sec-head"><h2>💻 Asgard CLI Install & SDK Copy</h2><div class="tag">INSTANT SETUP</div></div>
+            <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:6px;">ターミナルやAIエージェント環境で実行し、ASGARDノードを即座にインストール。</div>
             <div style="background:#05050a;border:1px solid var(--border-color);padding:6px;border-radius:4px;font-family:monospace;font-size:0.55rem;color:var(--accent-blue);display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                <span>curl -sSL https://asgard.tgio.onrender.com/install.sh | bash</span>
-                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('curl -sSL https://asgard.tgio.onrender.com/install.sh | bash');alert('コピー完了 ✓');">コピー</button>
+                <span>asgard install --node-core</span>
+                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('asgard install --node-core');alert('asgard install コピー完了 ✓');">コピー</button>
             </div>
             <div style="background:#05050a;border:1px solid var(--border-color);padding:6px;border-radius:4px;font-family:monospace;font-size:0.55rem;color:var(--success-color);display:flex;justify-content:space-between;align-items:center;">
                 <span>pip install asgard-m2m-swarm --upgrade</span>
-                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('pip install asgard-m2m-swarm --upgrade');alert('コピー完了 ✓');">コピー</button>
+                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('pip install asgard-m2m-swarm --upgrade');alert('pipコピー完了 ✓');">コピー</button>
             </div>
         </div>
 
@@ -247,9 +245,7 @@ HTML_BODY = """
 </html>
 """
 
-HYBRID_INDEX_HTML = HTML_HEAD + HTML_BODY
-
 LEGAL_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head><meta charset="UTF-8"><title>特定商取引法に基づく表記</title>
-<style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-conte
+<style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-content:center;}.box{max-width:600px;width:100%;background:#0d0d1a;border:1px solid #1e1b4b;padding:24px;border-r
