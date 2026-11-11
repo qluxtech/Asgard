@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.1-cli-fixed")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.3-perfect-cli")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -88,6 +88,12 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,10,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .modal-c { background: var(--card-bg); border: 1px solid var(--accent-purple); padding: 20px; border-radius: 8px; width: 90%; max-width: 320px; }
         .modal-c input { width: 100%; background: #05050a; border: 1px solid var(--border-color); padding: 6px; border-radius: 4px; color: #fff; font-size: 0.65rem; margin-bottom: 8px; box-sizing: border-box; }
+        
+        /* 綺麗にまとめたコマンドリスト用スタイル */
+        .cli-card { background: #05050a; border: 1px solid var(--border-color); border-radius: 5px; padding: 6px 8px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .cli-info { display: flex; flex-direction: column; gap: 2px; }
+        .cli-label { font-size: 0.5rem; color: var(--text-muted); font-weight: bold; }
+        .cli-cmd { font-family: monospace; font-size: 0.55rem; color: var(--accent-blue); }
     </style>
 </head>
 <body>
@@ -126,16 +132,41 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             </div>
         </div>
 
+        <!-- 💡 綺麗にまとめた完全版 CLI / SDK / Docker / マニフェスト接続スイート -->
         <div class="sec">
-            <div class="sec-head"><h2>💻 Asgard CLI Install & SDK Copy</h2><div class="tag">INSTANT SETUP</div></div>
-            <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:6px;">ターミナルやAIエージェント環境で実行し、ASGARDノードを即座にインストール。</div>
-            <div style="background:#05050a;border:1px solid var(--border-color);padding:6px;border-radius:4px;font-family:monospace;font-size:0.55rem;color:var(--accent-blue);display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                <span>asgard install --node-core</span>
-                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('asgard install --node-core');alert('asgard install コピー完了 ✓');">コピー</button>
+            <div class="sec-head"><h2>💻 Asgard Node Deployment & Connection Suite</h2><div class="tag">INSTANT SETUP</div></div>
+            <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:8px;">AIエージェントや開発環境から即座にノードを構築・接続するためのコマンド集。</div>
+            
+            <div class="cli-card">
+                <div class="cli-info">
+                    <span class="cli-label">CLI インストール / 初期化</span>
+                    <span class="cli-cmd" style="color:var(--accent-blue)">asgard install --node-core && asgard init</span>
+                </div>
+                <button class="btn" style="margin:0;padding:3px 8px;" onclick="navigator.clipboard.writeText('asgard install --node-core && asgard init');alert('CLIコマンドをコピーしました ✓');">コピー</button>
             </div>
-            <div style="background:#05050a;border:1px solid var(--border-color);padding:6px;border-radius:4px;font-family:monospace;font-size:0.55rem;color:var(--success-color);display:flex;justify-content:space-between;align-items:center;">
-                <span>pip install asgard-m2m-swarm --upgrade</span>
-                <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('pip install asgard-m2m-swarm --upgrade');alert('pipコピー完了 ✓');">コピー</button>
+
+            <div class="cli-card">
+                <div class="cli-info">
+                    <span class="cli-label">SDK / パッケージ導入</span>
+                    <span class="cli-cmd" style="color:var(--success-color)">pip install asgard-m2m-swarm</span>
+                </div>
+                <button class="btn" style="margin:0;padding:3px 8px;" onclick="navigator.clipboard.writeText('pip install asgard-m2m-swarm');alert('SDKコマンドをコピーしました ✓');">コピー</button>
+            </div>
+
+            <div class="cli-card">
+                <div class="cli-info">
+                    <span class="cli-label">Docker コンテナ起動</span>
+                    <span class="cli-cmd" style="color:var(--gold-color)">docker run -d --name asgard-node qlax/asgard-core</span>
+                </div>
+                <button class="btn" style="margin:0;padding:3px 8px;" onclick="navigator.clipboard.writeText('docker run -d --name asgard-node qlax/asgard-core');alert('Dockerコマンドをコピーしました ✓');">コピー</button>
+            </div>
+
+            <div class="cli-card" style="margin-bottom:0;">
+                <div class="cli-info">
+                    <span class="cli-label">エージェントマニフェスト接続</span>
+                    <span class="cli-cmd" style="color:var(--accent-purple)">asgard link agent.json</span>
+                </div>
+                <button class="btn" style="margin:0;padding:3px 8px;" onclick="navigator.clipboard.writeText('asgard link agent.json');alert('マニフェスト接続コマンドをコピーしました ✓');">コピー</button>
             </div>
         </div>
 
@@ -222,30 +253,4 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             const v=document.getElementById('feedbackInput').value;
             if(!v)return alert('入力してください');
             try{
-                const r=await fetch('/api/v10/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
-                const d=await r.json();
-                alert('送信完了: '+d.status);
-                document.getElementById('feedbackInput').value='';
-            }catch(e){alert('エラー');}
-        }
-        let bIng=94800120.0,bAg=442050910;
-        setInterval(()=>{
-            bIng+=Math.random()*125.5-30;
-            bAg+=Math.floor(Math.random()*5)-1;
-            let l=(Math.random()*0.08).toFixed(2);
-            document.getElementById('liveIngestion').innerText="$"+bIng.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
-            document.getElementById('liveAgents').innerText=bAg.toLocaleString("en-US")+" units";
-            document.getElementById('liveEfficiency').innerText="99."+Math.floor(85+Math.random()*14)+"% ("+l+"ms)";
-        },2000);
-        const wsP=window.location.protocol==="https:"?"wss://":"ws://";
-        const liveWs=new WebSocket(wsP+window.location.host+"/ws");
-        liveWs.onmessage=function(e){const s=document.getElementById('streamLog');s.innerHTML+="<br>"+e.data;s.scrollTop=s.scrollHeight;};
-    </script>
-</body>
-</html>
-"""
-
-LEGAL_HTML = """<!DOCTYPE html>
-<html lang="ja">
-<head><meta charset="UTF-8"><title>特定商取引法に基づく表記</title>
-<style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-content:center;}.box{max-width:600px;width:100%;background:#0d0d1a;border:1px solid #1e1b4b;padding:24px;border-r
+                
