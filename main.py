@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="27.0")
+app = FastAPI(title="ASGARD", version="28.0")
 W = {"btc":"bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac","solana":"75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf","evm":"0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8","bsv":"1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"}
 
 class F(BaseModel): feedback: str
@@ -24,8 +24,6 @@ m_mgr = CM()
 HTML_PAGE = (
     "<!DOCTYPE html><html lang='ja'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1.0'>"
     "<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate'>"
-    "<meta http-equiv='Pragma' content='no-cache'>"
-    "<meta http-equiv='Expires' content='0'>"
     "<title>ASGARD / M2M Node</title><style>"
     ":root{--bg:#05050a;--card:#0d0d1a;--border:#1e1b4b;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}"
     "body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}"
@@ -43,6 +41,7 @@ HTML_PAGE = (
     ".tag{background:#1e1b4b;color:var(--purple);padding:2px 6px;border-radius:4px;font-size:0.5rem;border:1px solid #7e22ce;}"
     ".g3{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;}"
     ".g4{display:grid;grid-template-columns:repeat(4, 1fr);gap:6px;}"
+    "@media(max-width:768px){.g4{grid-template-columns:repeat(2, 1fr);}}"
     ".box{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:6px;font-size:0.58rem;}"
     ".pcard{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;text-align:center;display:flex;flex-direction:column;justify-content:space-between;}"
     ".pcard.feat{border-color:var(--purple);background:#0e091d;}"
@@ -59,7 +58,7 @@ HTML_PAGE = (
     ".cli{background:#05050a;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:monospace;font-size:0.5rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}"
     "</style></head><body>"
     "<div class='bar'><span class='bitem'>VAPORLOCK: ACTIVE</span><span class='bitem g'>AUTOPILOT: 100%</span><span class='bitem p'>TIMELOCK: SOLSTICE</span><span class='bitem g'>SINGULARITY: UNLOCKED</span><span class='bitem g'>UMBRA: 99.99%</span><span class='bitem p'>GAIA_L2: 100%</span><span class='bitem g'>SELF_HEAL: ACTIVE</span></div>"
-    "<div class='nav'><div class='logo'>ASGARD / QLAX (v27.0)</div><div><button class='btn' style='display:inline-block;padding:3px 8px;' onclick='openModal(\"login\")'>ログイン</button><button class='btn blue' style='display:inline-block;padding:3px 8px;margin-left:4px;' onclick='openModal(\"signup\")'>サインアップ</button></div></div>"
+    "<div class='nav'><div class='logo'>ASGARD / QLAX (v28.0)</div><div><button class='btn' style='display:inline-block;padding:3px 8px;' onclick='openModal(\"login\")'>ログイン</button><button class='btn blue' style='display:inline-block;padding:3px 8px;margin-left:4px;' onclick='openModal(\"signup\")'>サインアップ</button></div></div>"
     "<div class='hero'><div style='display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;font-weight:600;'>⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div><h1>スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1><p>4.4億超のAIエージェント・AGIが自動接続。0.00msミリ秒決済と自律タスク仲介を提供する次世代インフラ。</p></div>"
     "<div class='wrap'>"
     "<div class='sec'><h2>ASGARD Installation Suite <span class='tag'>SETUP</span></h2>"
@@ -93,10 +92,10 @@ HTML_PAGE = (
     "<div class='box'><div><strong>Solana</strong> <span style='color:#a855f7'>SOL</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>"
     "<div class='box'><div><strong>Ethereum</strong> <span style='color:#3b82f6'>ETH</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8'></div><div class='addr'>0xD6716D0...8G8</div><a href='https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8' target='_blank' class='btn'>Etherscan</a></div>"
     "<div class='box'><div><strong>Bitcoin SV</strong> <span style='color:#eab308'>BSV</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95'></div><div class='addr'>1PB66iHot...y95</div><a href='https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95' target='_blank' class='btn'>WhatsOnChain</a></div>"
-    "<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v27/mesh</div><button class='btn blue' onclick='alert(\"Mesh API Active.\")'>ステータス</button></div>"
+    "<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v28/mesh</div><button class='btn blue' onclick='alert(\"Mesh API Active.\")'>ステータス</button></div>"
     "<div class='box'><div><strong>.well-known</strong> <span style='color:#6366f1'>SPAR</span></div><div class='addr' style='margin-top:6px'>/agent.json</div><a href='/well-known/agent.json' target='_blank' class='btn blue'>マニフェスト</a></div>"
     "<div class='box'><div><strong>Stripe</strong> <span style='color:#ec4899'>PST</span></div><div class='addr' style='margin-top:6px'>active-key</div><button class='btn blue' style='background:#065f46;color:#a7f3d0' onclick='alert(\"Stripe 稼働中 ✓\")'>決済済 ✓</button></div>"
-    "<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-27.0</div><button class='btn blue' onclick='alert(\"HTTP 402: 量子レシート発行完了 ✓\")'>402量子決済 ↗</button></div>"
+    "<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-28.0</div><button class='btn blue' onclick='alert(\"HTTP 402: 量子レシート発行完了 ✓\")'>402量子決済 ↗</button></div>"
     "<div class='box'><div style='color:var(--gold);font-weight:bold;margin-bottom:2px;'>⚡ ARBITRAGE</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>価格差分自動検出。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>0.142%</span><span style='color:var(--green);'>OPTIMAL</span></div></div>"
     "<div class='box'><div style='color:var(--blue);font-weight:bold;margin-bottom:2px;'>💎 QUANTUM 402</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>ゼロレイテンシ決済。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>ACTIVE</span><span style='color:var(--green);'>0.00ms</span></div></div>"
     "<div class='box'><div style='color:var(--purple);font-weight:bold;margin-bottom:2px;'>🌐 UMBRA SYNC</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>自律ノード同期。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>99.99%</span><span style='color:var(--green);'>SECURE</span></div></div>"
@@ -121,4 +120,4 @@ HTML_PAGE = (
     "<div style='font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:5px;border-radius:3px;'>[AUCTION_NODE_#704] Active Bid: 0.045 BSV | Winner: Agent_Swarm_Alpha ✓</div></div></div>"
     "<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_4](start_span)[span_4](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_5](start_span)[span_5](end_span) / 豊前市[span_6](start_span)[span_6](end_span).</div></div></div>"
     "<div class='modal' id='authModal'><div class='modal-c'><div style='font-size:0.85rem;font-weight:bold;color:var(--purple);margin-bottom:10px;text-align:center;' id='modalTitle'>アカウント認証</div><input type='email' id='authEmail' placeholder='メールアドレス'><input type='password' id='authPassword' placeholder='パスワード'><button class='btn blue' style='width:100%;margin-bottom:6px;' onclick='submitAuth()'>実行する</button><button class='btn' style='width:100%;' onclick='closeModal()'>キャンセル</button></div></div>"
-    "<div style='position:fixed;bottom:8px;right:8px;z-index:1000;background:rgba(13,13,26,0.95);padding:4px 6px;border:1px solid #7e22ce;border-radius:4px'><a href='/legal' style='color:var(--purple);text-decoration:none;font-size:0.55rem;font-
+    "<div style='position:fixed;bottom:8px;right:8px;z-index:1000;background:rgba(13,13,26,0.95);padding:4px 6px;border:1px solid #7e22ce;border-radius:4px'><a href='/legal' style='color:var(--purple);text-decoration:none;font-size:0.55rem;font-weight:bold'>特定商取引法表記 ↗<
