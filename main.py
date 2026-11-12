@@ -3,11 +3,11 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Node", version="15.0")
-WALLETS = {"btc":"bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac","solana":"75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf","evm":"0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8","bsv":"1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"}
+app = FastAPI(title="ASGARD", version="16.0")
+W = {"btc":"bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac","solana":"75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf","evm":"0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8","bsv":"1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"}
 
-class FModel(BaseModel): feedback: str
-class AModel(BaseModel): email: str; password: str
+class F(BaseModel): feedback: str
+class A(BaseModel): email: str; password: str
 
 class CM:
     def __init__(self): self.c = []
@@ -19,7 +19,7 @@ class CM:
             try: await w.send_text(m)
             except: pass
 
-manager = CM()
+m_mgr = CM()
 
 HTML_PAGE = """<!DOCTYPE html><html lang='ja'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1.0'><title>ASGARD / M2M Node</title><style>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#1e1b4b;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}
@@ -55,7 +55,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .cli{background:#05050a;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:monospace;font-size:0.5rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
 </style></head><body>
 <div class='bar'><span class='bitem'>VAPORLOCK: ACTIVE</span><span class='bitem g'>AUTOPILOT: 100%</span><span class='bitem p'>TIMELOCK: SOLSTICE</span><span class='bitem g'>SINGULARITY: UNLOCKED</span><span class='bitem g'>UMBRA: 99.99%</span><span class='bitem p'>GAIA_L2: 100%</span><span class='bitem g'>SELF_HEAL: ACTIVE</span></div>
-<div class='nav'><div class='logo'>ASGARD / QLAX (v15.0)</div><div><button class='btn' style='display:inline-block;padding:3px 8px;' onclick='openModal("login")'>ログイン</button><button class='btn blue' style='display:inline-block;padding:3px 8px;margin-left:4px;' onclick='openModal("signup")'>サインアップ</button></div></div>
+<div class='nav'><div class='logo'>ASGARD / QLAX (v16.0)</div><div><button class='btn' style='display:inline-block;padding:3px 8px;' onclick='openModal("login")'>ログイン</button><button class='btn blue' style='display:inline-block;padding:3px 8px;margin-left:4px;' onclick='openModal("signup")'>サインアップ</button></div></div>
 <div class='hero'><div style='display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;font-weight:600;'>⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div><h1>スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1><p>4.4億超のAIエージェント・AGIが自動接続。0.00msミリ秒決済と自律タスク仲介を提供する次世代インフラ。</p></div>
 <div class='wrap'>
 <div class='sec'><h2>ASGARD Installation Suite <span class='tag'>SETUP</span></h2>
@@ -89,10 +89,10 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='box'><div><strong>Solana</strong> <span style='color:#a855f7'>SOL</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>
 <div class='box'><div><strong>Ethereum</strong> <span style='color:#3b82f6'>ETH</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8'></div><div class='addr'>0xD6716D0...8G8</div><a href='https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8' target='_blank' class='btn'>Etherscan</a></div>
 <div class='box'><div><strong>Bitcoin SV</strong> <span style='color:#eab308'>BSV</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95'></div><div class='addr'>1PB66iHot...y95</div><a href='https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95' target='_blank' class='btn'>WhatsOnChain</a></div>
-<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v15/mesh</div><button class='btn blue' onclick='alert("Mesh API Active.")'>ステータス</button></div>
+<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v16/mesh</div><button class='btn blue' onclick='alert("Mesh API Active.")'>ステータス</button></div>
 <div class='box'><div><strong>.well-known</strong> <span style='color:#6366f1'>SPAR</span></div><div class='addr' style='margin-top:6px'>/agent.json</div><a href='/well-known/agent.json' target='_blank' class='btn blue'>マニフェスト</a></div>
 <div class='box'><div><strong>Stripe</strong> <span style='color:#ec4899'>PST</span></div><div class='addr' style='margin-top:6px'>active-key</div><button class='btn blue' style='background:#065f46;color:#a7f3d0' onclick='alert("Stripe 稼働中 ✓")'>決済済 ✓</button></div>
-<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-15.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
+<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-16.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
 <div class='box'><div style='color:var(--gold);font-weight:bold;margin-bottom:2px;'>⚡ ARBITRAGE</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>価格差分自動検出。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>0.142%</span><span style='color:var(--green);'>OPTIMAL</span></div></div>
 <div class='box'><div style='color:var(--blue);font-weight:bold;margin-bottom:2px;'>💎 QUANTUM 402</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>ゼロレイテンシ決済。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>ACTIVE</span><span style='color:var(--green);'>0.00ms</span></div></div>
 <div class='box'><div style='color:var(--purple);font-weight:bold;margin-bottom:2px;'>🌐 UMBRA SYNC</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>自律ノード同期。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>99.99%</span><span style='color:var(--green);'>SECURE</span></div></div>
@@ -123,7 +123,7 @@ async function submitAuth(){
     const pass=document.getElementById('authPassword').value;
     if(!email||!pass)return alert('項目を入力してください');
     try{
-        const r=await fetch('/api/v15/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+        const r=await fetch('/api/v16/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
         const d=await r.json();
         alert(mode==='login'?'ログイン成功 ✓':'サインアップ完了! API Key: '+d.api_key);
         closeModal();
@@ -133,7 +133,7 @@ async function sendFeedback(){
     const v=document.getElementById('feedbackInput').value;
     if(!v)return alert('入力してください');
     try{
-        const r=await fetch('/api/v15/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+        const r=await fetch('/api/v16/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
         const d=await r.json();
         alert('送信完了: '+d.status);
         document.getElementById('feedbackInput').value='';
@@ -162,4 +162,4 @@ let bIng=94800120.0,bAg=442050910;
 setInterval(()=>{
     bIng+=Math.random()*125.5-30;
     bAg+=Math.floor(Math.random()*5)-1;
-    let l=(Math.ran
+    let l=(Math.random()*0.08).toFixed(2);
