@@ -218,7 +218,7 @@ HTML_LINES = [
     "<h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>",
     "<div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>",
     "<p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>",
-    "<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_1](start_span)[span_1](end_span)。</p>",
+    "<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県を拠点にM2Mと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_1](start_span)[span_1](end_span)。</p>",
     "<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_2](start_span)[span_2](end_span)</p>",
     "</div>",
     "</div>",
