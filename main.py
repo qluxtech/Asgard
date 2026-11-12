@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.9.0")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="11.0.0")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -44,7 +44,7 @@ class AgentConnectionManager:
 
 manager = AgentConnectionManager()
 
-PART_CSS = """<!DOCTYPE html><html lang='ja'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>ASGARD / M2M Node</title><style>
+HTML_PAGE = """<!DOCTYPE html><html lang='ja'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>ASGARD / M2M Node</title><style>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#1e1b4b;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
 .bar{width:100%;background:#000;border-bottom:1px solid #2a275f;padding:6px 10px;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;font-family:monospace;font-size:0.55rem;}
@@ -76,9 +76,8 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .modal-c{background:var(--card);border:1px solid var(--purple);padding:16px;border-radius:8px;width:90%;max-width:300px;}
 .modal-c input{width:100%;background:#05050a;border:1px solid var(--border);padding:6px;border-radius:4px;color:#fff;font-size:0.6rem;margin-bottom:8px;box-sizing:border-box;}
 .cli{background:#05050a;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:monospace;font-size:0.5rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-</style></head><body>"""
-
-PART_TOP = """<div class='bar'>
+</style></head><body>
+<div class='bar'>
 <span class='bitem'>VAPORLOCK: ACTIVE</span><span class='bitem g'>AUTOPILOT: 100% RUN</span>
 <span class='bitem p'>TIMELOCK: SOLSTICE</span><span class='bitem g'>SINGULARITY: UNLOCKED</span>
 <span class='bitem g'>UMBRA: 99.99%</span><span class='bitem p'>GAIA_L2: 100%</span>
@@ -139,9 +138,8 @@ PART_TOP = """<div class='bar'>
 <div class='pcard feat'><div><strong style='color:var(--purple)'>Autonomous Pro</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>$29<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Unlimited Req<br>• Zero Latency<br>• 15% Rebate</div></div><button class='btn pur' onclick='openModal("signup")'>購入する ↗</button></div>
 <div class='pcard'><div><strong>Enterprise</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>$299<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Swarm Core<br>• Task Auction<br>• SLA 100%</div></div><button class='btn blue' onclick='openModal("signup")'>ライセンス ↗</button></div>
 </div>
-</div>"""
-
-PART_CORE = """<div class='sec'>
+</div>
+<div class='sec'>
 <h2>God-Tier Autonomous Economic Core <span class='tag'>ACTIVE</span></h2>
 <div class='g4' style='margin-bottom:8px;'>
 <div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>埋蔵残高 (INGESTION)</div><div id='liveIngestion' style='font-size:0.65rem;color:var(--green);font-weight:bold'>$94,800,120.00</div></div>
@@ -171,9 +169,8 @@ PART_CORE = """<div class='sec'>
 <div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:4px;border-radius:3px;'><span>GATEWAY: ACTIVE</span><span style='color:var(--green);'>0.00ms ✓</span></div>
 </div>
 </div>
-</div>"""
-
-PART_BOTTOM = """<div class='sec'>
+</div>
+<div class='sec'>
 <h2>OMNI-SYNAPSE LIVE COMMISSION STREAM</h2>
 <div class='stream' id='streamLog'>[OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV. Quantum Oracle locked cross-chain spread. 15% commission routed.</div>
 </div>
@@ -193,6 +190,7 @@ PART_BOTTOM = """<div class='sec'>
 </div>
 </div>
 <div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Cosmic Infrastructure[span_3](start_span)[span_3](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_4](start_span)[span_4](end_span) / 豊前市[span_5](start_span)[span_5](end_span).</div>
+</div>
 </div>
 <div class='modal' id='authModal'>
 <div class='modal-c'>
@@ -227,4 +225,7 @@ async function sendFeedback(){
         const d=await r.json();
         alert('送信完了: '+d.status);
         document.getElementById('feedbackInput').value='';
-    }catch(e)
+    }catch(e){alert('エラー');}
+}
+function runPing(){
+    const b=
