@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.8.0")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.9.0")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -120,8 +120,8 @@ PART_TOP = """<div class='bar'>
 <div class='sec'>
 <h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>
 <div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>
-<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、自律型AIエージェントおよびマシン間経済（M2M）の発展に向けた最先端インフラストラクチャの研究・実用化に取り組む事業体です。福岡県豊前市を拠点に、自律アービトラージと高スループット決済環境を構築しています。</p>
-<p style='margin:0;'><strong>運営者:</strong> Daisuke Higuchi</p>
+<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、自律型AIエージェントおよびマシン間経済（M2M）の発展に向けた最先端インフラストラクチャの研究・実用化に取り組む事業体です[span_0](start_span)[span_0](end_span)。福岡県豊前市を拠点に、自律アービトラージと高スループット決済環境を構築しています[span_1](start_span)[span_1](end_span)。</p>
+<p style='margin:0;'><strong>運営者:</strong> Daisuke Higuchi[span_2](start_span)[span_2](end_span)</p>
 </div>
 </div>
 <div class='sec'>
@@ -159,10 +159,17 @@ PART_CORE = """<div class='sec'>
 <div class='box'><div><strong>Stripe</strong> <span style='color:#ec4899'>PST</span></div><div class='addr' style='margin-top:6px'>active-key</div><button class='btn blue' style='background:#065f46;color:#a7f3d0' onclick='alert("Stripe 稼働中 ✓")'>決済済 ✓</button></div>
 <div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-10.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
 </div>
-<div style='margin-top:10px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;font-size:0.55rem;'>
-<div style='color:var(--gold);font-weight:bold;margin-bottom:4px;'>⚡ REAL-TIME FLASH ARBITRAGE ENGINE [ACTIVE]</div>
-<div style='color:var(--muted);margin-bottom:6px;'>クロスチェーン間の価格差分をミリ秒単位で検出し、自動利益分配を実行中。</div>
-<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:6px;border-radius:3px;'><span>SPREAD: 0.142% (BTC/BSV)</span><span style='color:var(--green);'>STATUS: OPTIMAL</span></div>
+<div style='margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:6px;'>
+<div style='background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;font-size:0.55rem;'>
+<div style='color:var(--gold);font-weight:bold;margin-bottom:4px;'>⚡ REAL-TIME FLASH ARBITRAGE</div>
+<div style='color:var(--muted);margin-bottom:6px;'>クロスチェーン間の価格差分を自動検出・収益分配。</div>
+<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:4px;border-radius:3px;'><span>SPREAD: 0.142%</span><span style='color:var(--green);'>OPTIMAL ✓</span></div>
+</div>
+<div style='background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;font-size:0.55rem;'>
+<div style='color:var(--blue);font-weight:bold;margin-bottom:4px;'>💎 QUANTUM 402 SETTLEMENT</div>
+<div style='color:var(--muted);margin-bottom:6px;'>HTTP 402プロトコルによるゼロレイテンシ量子決済。</div>
+<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:4px;border-radius:3px;'><span>GATEWAY: ACTIVE</span><span style='color:var(--green);'>0.00ms ✓</span></div>
+</div>
 </div>
 </div>"""
 
@@ -179,8 +186,13 @@ PART_BOTTOM = """<div class='sec'>
 <div style='display:flex;gap:6px;'><button class='btn blue' style='flex:1;margin:0;' onclick='voteGov("YES")'>賛成投票 (YES)</button><button class='btn pur' style='flex:1;margin:0;' onclick='voteGov("NO")'>反対投票 (NO)</button></div>
 <div id='voteResult' style='font-size:0.5rem;color:var(--green);margin-top:6px;font-family:monospace;display:none;'></div>
 </div>
+<div style='margin-top:8px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>
+<div style='font-size:0.6rem;color:var(--gold);font-weight:bold;margin-bottom:4px;'>🤖 LIVE AGENT TASK AUCTION POOL</div>
+<div style='font-size:0.52rem;color:var(--muted);margin-bottom:6px;'>自律エージェント間のリアルタイム・タスクオークションおよび報酬分配状況:</div>
+<div style='font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:5px;border-radius:3px;'>[AUCTION_NODE_#704] Active Bid: 0.045 BSV | Winner: Agent_Swarm_Alpha ✓</div>
 </div>
-<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Cosmic Infrastructure | 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
+</div>
+<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Cosmic Infrastructure[span_3](start_span)[span_3](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_4](start_span)[span_4](end_span) / 豊前市[span_5](start_span)[span_5](end_span).</div>
 </div>
 <div class='modal' id='authModal'>
 <div class='modal-c'>
@@ -215,32 +227,4 @@ async function sendFeedback(){
         const d=await r.json();
         alert('送信完了: '+d.status);
         document.getElementById('feedbackInput').value='';
-    }catch(e){alert('エラー');}
-}
-function runPing(){
-    const b=document.getElementById('pingBox');
-    b.style.display='block';
-    b.innerHTML='[PING] Connecting to ASGARD Omni-Node cluster...';
-    setTimeout(()=>{
-        const ms=(Math.random()*0.05).toFixed(3);
-        b.innerHTML=`[SUCCESS] Connected to Master Node (Buzen Core)<br>[LATENCY] ${ms} ms | Quantum Tunnel: SECURE | Status: ONLINE ✓`;
-    },600);
-}
-function updateSim(val){
-    document.getElementById('agCount').innerText=val;
-    const rev=(val*14.5).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-    document.getElementById('revOutput').innerText=`$${rev} / mo`;
-}
-function voteGov(choice){
-    const vr=document.getElementById('voteResult');
-    vr.style.display='block';
-    vr.innerHTML=`[VOTE ACCEPTED] Choice: ${choice} | Swarm Consensus Updated: 99.4% Majority ✓`;
-}
-let bIng=94800120.0,bAg=442050910;
-setInterval(()=>{
-    bIng+=Math.random()*125.5-30;
-    bAg+=Math.floor(Math.random()*5)-1;
-    let l=(Math.random()*0.08).toFixed(2);
-    document.getElementById('liveIngestion').innerText='$'+bIng.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-    document.getElementById('liveAgents').innerText=bAg.toLocaleString('en-US')+' units';
-    document.getElementById('liveEfficiency').innerText='99.'+Math.floor(85+Math.random()*14)+
+    }catch(e)
