@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="37.0")
+app = FastAPI(title="ASGARD", version="38.0")
 W = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
     "solana": "75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf",
@@ -66,7 +66,7 @@ class ConnectionManager:
 
 m_mgr = ConnectionManager()
 
-# --- 安全なリスト結合方式によるHTMLテンプレート（構文エラーを100%防止） ---
+# --- 企業情報を一番下に正しく配置したHTMLテンプレート ---
 HTML_LINES = [
     "<!DOCTYPE html>",
     "<html lang='ja'>",
@@ -121,7 +121,7 @@ HTML_LINES = [
     "<span class='bitem g'>SELF_HEAL: ACTIVE</span>",
     "</div>",
     "<div class='nav'>",
-    "<div class='logo'>ASGARD / QLAX (v37.0)</div>",
+    "<div class='logo'>ASGARD / QLAX (v38.0)</div>",
     "<div style='display:flex;align-items:center;gap:4px;'>",
     "<a href='/docs' class='btn' style='margin:0;border-color:var(--blue);color:var(--blue);'>API Docs ↗</a>",
     "<button class='btn' style='margin:0;' onclick='openModal(\"login\")'>ログイン</button>",
@@ -177,7 +177,7 @@ HTML_LINES = [
     "<div class='box'><div><strong>Solana</strong> <span style='color:#a855f7'>SOL</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>",
     "<div class='box'><div><strong>Ethereum</strong> <span style='color:#3b82f6'>ETH</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8'></div><div class='addr'>0xD6716D0...8G8</div><a href='https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8' target='_blank' class='btn'>Etherscan</a></div>",
     "<div class='box'><div><strong>Bitcoin SV</strong> <span style='color:#eab308'>BSV</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95'></div><div class='addr'>1PB66iHot...y95</div><a href='https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95' target='_blank' class='btn'>WhatsOnChain</a></div>",
-    "<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v37/mesh</div><a href='/docs' class='btn blue'>仕様書 ↗</a></div>",
+    "<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v38/mesh</div><a href='/docs' class='btn blue'>仕様書 ↗</a></div>",
     "<div class='box'><div><strong>.well-known</strong> <span style='color:#6366f1'>SPAR</span></div><div class='addr' style='margin-top:6px'>/agent.json</div><a href='/.well-known/agent.json' target='_blank' class='btn blue'>マニフェスト</a></div>",
     "<div class='box'><div><strong>Stripe</strong> <span style='color:#ec4899'>PST</span></div><div class='addr' style='margin-top:6px'>active-key</div><button class='btn blue' style='background:#065f46;color:#a7f3d0' onclick='alert(\"Stripe M2M Billing 稼働中 ✓\")'>決済済 ✓</button></div>",
     "<div class='box'><div><strong>Quantum 402</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>HTTP-402-LIVE</div><button class='btn blue' onclick='test402()'>402検証 ↗</button></div>",
@@ -213,16 +213,17 @@ HTML_LINES = [
     "</div>",
     "</div>",
     "",
+    "<!-- 企業情報セクション（一番下に正しく配置） -->",
     "<div class='sec'>",
     "<h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>",
     "<div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>",
     "<p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>",
-    "<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_0](start_span)[span_0](end_span)。</p>",
-    "<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_1](start_span)[span_1](end_span)</p>",
+    "<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_1](start_span)[span_1](end_span)。</p>",
+    "<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_2](start_span)[span_2](end_span)</p>",
     "</div>",
     "</div>",
     "",
-    "<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_2](start_span)[span_2](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_3](start_span)[span_3](end_span) / 豊前市[span_4](start_span)[span_4](end_span).</div>",
+    "<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_3](start_span)[span_3](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_4](start_span)[span_4](end_span) / 豊前市[span_5](start_span)[span_5](end_span).</div>",
     "</div>",
     "</div>",
     "",
@@ -243,4 +244,4 @@ HTML_LINES = [
     "<script>",
     "let mode='login';",
     "function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}",
-    "function openModal(m){mode=m;document.getElementById('modalTitle').innerText=m==='login'?'ASGARD ログイン':'エージェント サインアップ (APIキー即時発行)';do
+    "function openModal(m){mode=m;document.getElementById('modalTitle').innerText=m==='login'?'ASGARD ログイン':'エージ
