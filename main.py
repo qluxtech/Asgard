@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="12.0.0")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="13.0.0")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -61,7 +61,8 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .tag{background:#1e1b4b;color:var(--purple);padding:2px 6px;border-radius:4px;font-size:0.5rem;border:1px solid #7e22ce;}
 .g3{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;}
 .g4{display:grid;grid-template-columns:repeat(4, 1fr);gap:6px;}
-.gauto{display:grid;grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));gap:6px;}
+.gfixed4{display:grid;grid-template-columns:repeat(4, 1fr);gap:6px;}
+@media(max-width:768px){.gfixed4{grid-template-columns:repeat(2, 1fr);}}
 .box{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:6px;font-size:0.58rem;}
 .pcard{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;text-align:center;display:flex;flex-direction:column;justify-content:space-between;}
 .pcard.feat{border-color:var(--purple);background:#0e091d;}
@@ -84,7 +85,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <span class='bitem g'>SELF_HEAL: ACTIVE</span><span class='bitem'>KROK_SYNC</span>
 </div>
 <div class='nav'>
-<div class='logo'>ASGARD / QLAX (v12.0)</div>
+<div class='logo'>ASGARD / QLAX (v13.0)</div>
 <div>
 <button class='btn' style='display:inline-block;padding:3px 8px;' onclick='openModal("login")'>ログイン</button>
 <button class='btn blue' style='display:inline-block;padding:3px 8px;margin-left:4px;' onclick='openModal("signup")'>サインアップ</button>
@@ -147,26 +148,36 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>クロスチェーン効率</div><div id='liveEfficiency' style='font-size:0.65rem;color:var(--green);font-weight:bold'>99.99% (0.00ms)</div></div>
 <div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>SLA稼働率</div><div style='font-size:0.65rem;color:var(--green);font-weight:bold'>100.0%</div></div>
 </div>
-<div class='gauto'>
+<div class='gfixed4'>
 <div class='box'><div><strong>Bitcoin</strong> <span style='color:#f59e0b'>BTC</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac'></div><div class='addr'>bc1q94rkd...d7zac</div><a href='https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac' target='_blank' class='btn'>Mempool</a></div>
 <div class='box'><div><strong>Solana</strong> <span style='color:#a855f7'>SOL</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>
 <div class='box'><div><strong>Ethereum</strong> <span style='color:#3b82f6'>ETH</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8'></div><div class='addr'>0xD6716D0...8G8</div><a href='https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8' target='_blank' class='btn'>Etherscan</a></div>
 <div class='box'><div><strong>Bitcoin SV</strong> <span style='color:#eab308'>BSV</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95'></div><div class='addr'>1PB66iHot...y95</div><a href='https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95' target='_blank' class='btn'>WhatsOnChain</a></div>
-<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v10/mesh</div><button class='btn blue' onclick='alert("Mesh API Active.")'>ステータス</button></div>
+<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v13/mesh</div><button class='btn blue' onclick='alert("Mesh API Active.")'>ステータス</button></div>
 <div class='box'><div><strong>.well-known</strong> <span style='color:#6366f1'>SPAR</span></div><div class='addr' style='margin-top:6px'>/agent.json</div><a href='/well-known/agent.json' target='_blank' class='btn blue'>マニフェスト</a></div>
 <div class='box'><div><strong>Stripe</strong> <span style='color:#ec4899'>PST</span></div><div class='addr' style='margin-top:6px'>active-key</div><button class='btn blue' style='background:#065f46;color:#a7f3d0' onclick='alert("Stripe 稼働中 ✓")'>決済済 ✓</button></div>
-<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-12.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
+<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-13.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
 </div>
-<div style='margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:6px;'>
-<div style='background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;font-size:0.55rem;'>
-<div style='color:var(--gold);font-weight:bold;margin-bottom:4px;'>⚡ FLASH ARBITRAGE</div>
-<div style='color:var(--muted);margin-bottom:6px;'>自動価格差分検出・分配。</div>
-<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:4px;border-radius:3px;'><span>SPREAD: 0.142%</span><span style='color:var(--green);'>OPTIMAL ✓</span></div>
+<div style='margin-top:10px;' class='gfixed4'>
+<div class='box'>
+<div style='color:var(--gold);font-weight:bold;margin-bottom:2px;'>⚡ FLASH ARBITRAGE</div>
+<div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>価格差分自動検出。</div>
+<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>0.142%</span><span style='color:var(--green);'>OPTIMAL</span></div>
 </div>
-<div style='background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;font-size:0.55rem;'>
-<div style='color:var(--blue);font-weight:bold;margin-bottom:4px;'>💎 QUANTUM 402</div>
-<div style='color:var(--muted);margin-bottom:6px;'>ゼロレイテンシ量子決済。</div>
-<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:4px;border-radius:3px;'><span>GATEWAY: ACTIVE</span><span style='color:var(--green);'>0.00ms ✓</span></div>
+<div class='box'>
+<div style='color:var(--blue);font-weight:bold;margin-bottom:2px;'>💎 QUANTUM 402</div>
+<div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>ゼロレイテンシ決済。</div>
+<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>ACTIVE</span><span style='color:var(--green);'>0.00ms</span></div>
+</div>
+<div class='box'>
+<div style='color:var(--purple);font-weight:bold;margin-bottom:2px;'>🌐 SWARM UMBRA</div>
+<div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>自律ノード同期。</div>
+<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>99.99%</span><span style='color:var(--green);'>SECURE</span></div>
+</div>
+<div class='box'>
+<div style='color:var(--green);font-weight:bold;margin-bottom:2px;'>🤖 AGI AUCTION</div>
+<div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>自動タスク仲介。</div>
+<div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>BID #704</span><span style='color:var(--green);'>WIN ✓</span></div>
 </div>
 </div>
 </div>
@@ -201,7 +212,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <button class='btn' style='width:100%;' onclick='closeModal()'>キャンセル</button>
 </div>
 </div>
-<div style='position:fixed;bottom:8px;right:8px;z-index:1000;background:rgba(13,13,26,0.95);padding:4px 6px;border:1px solid #7e22ce;border-radius:4px'><a href='/legal' style='color:var(--purple);text-decoration:none;font-size:0.55rem;font-weight:bold'>特商法表記 ↗</a></div>
+<div style='position:fixed;bottom:8px;right:8px;z-index:1000;background:rgba(13,13,26,0.95);padding:4px 6px;border:1px solid #7e22ce;border-radius:4px'><a href='/legal' style='color:var(--purple);text-decoration:none;font-size:0.55rem;font-weight:bold'>特定商取引法表記 ↗</a></div>
 <script>
 let mode='login';
 function openModal(m){mode=m;document.getElementById('modalTitle').innerText=m==='login'?'ASGARD ログイン':'エージェント サインアップ';document.getElementById('authModal').style.display='flex';}
@@ -211,22 +222,6 @@ async function submitAuth(){
     const pass=document.getElementById('authPassword').value;
     if(!email||!pass)return alert('項目を入力してください');
     try{
-        const r=await fetch('/api/v10/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+        const r=await fetch('/api/v13/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
         const d=await r.json();
-        alert(mode==='login'?'ログイン成功 ✓':'サインアップ完了! API Key: '+d.api_key);
-        closeModal();
-    }catch(e){alert('認証エラー');}
-}
-async function sendFeedback(){
-    const v=document.getElementById('feedbackInput').value;
-    if(!v)return alert('入力してください');
-    try{
-        const r=await fetch('/api/v10/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
-        const d=await r.json();
-        alert('送信完了: '+d.status);
-        document.getElementById('feedbackInput').value='';
-    }catch(e){alert('エラー');}
-}
-function runPing(){
-    const b=document.getElementById('pingBox');
-    b.style.display='blo
+        alert(mode==='login'?'ログイン成功 ✓':'サインアップ
