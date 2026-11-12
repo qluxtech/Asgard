@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.4-safe")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="10.0.5-final")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -116,14 +116,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
     </div>
 
     <div class="wrap">
-        <div class="sec">
-            <h2>企業情報 / 概要 <span class="tag">QLAX SOLE PROPRIETORSHIP</span></h2>
-            <div style="font-size:0.6rem;color:var(--muted);line-height:1.4;">
-                <p style="margin:0 0 4px 0;"><strong>QLAX</strong>は、自律型AIエージェントおよびマシン間経済（M2M）の発展に向けた最先端インフラストラクチャの研究・実用化に取り組む事業体です。福岡県豊前市を拠点に、自律アービトラージと高スループット決済環境を構築しています。</p>
-                <p style="margin:0;"><strong>運営者:</strong> Daisuke Higuchi（樋口 大輔）</p>
-            </div>
-        </div>
-
+        <!-- 💻 最上部に強制配置したインストール＆コマンドスイート -->
         <div class="sec">
             <h2>Asgard Node Deployment Suite <span class="tag">INSTANT SETUP</span></h2>
             <div style="font-size:0.58rem;color:var(--muted);margin-bottom:6px;">開発環境やAIエージェント環境にワンクリックでインストール。</div>
@@ -143,6 +136,14 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <div class="cli-row" style="color:var(--purple);margin-bottom:0;">
                 <span>docker run -d --name asgard-node qlax/asgard-core</span>
                 <button class="btn" style="margin:0;padding:2px 6px;" onclick="navigator.clipboard.writeText('docker run -d --name asgard-node qlax/asgard-core');alert('コピー完了 ✓');">コピー</button>
+            </div>
+        </div>
+
+        <div class="sec">
+            <h2>企業情報 / 概要 <span class="tag">QLAX SOLE PROPRIETORSHIP</span></h2>
+            <div style="font-size:0.6rem;color:var(--muted);line-height:1.4;">
+                <p style="margin:0 0 4px 0;"><strong>QLAX</strong>は、自律型AIエージェントおよびマシン間経済（M2M）の発展に向けた最先端インフラストラクチャの研究・実用化に取り組む事業体です。福岡県豊前市を拠点に、自律アービトラージと高スループット決済環境を構築しています[span_1](start_span)[span_1](end_span)。</p>
+                <p style="margin:0;"><strong>運営者:</strong> Daisuke Higuchi（樋口 大輔）[span_2](start_span)[span_2](end_span)</p>
             </div>
         </div>
 
@@ -195,7 +196,7 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
             <div style="display:flex;gap:6px"><input type="text" id="feedbackInput" style="flex:1;background:#05050a;border:1px solid var(--border);border-radius:4px;padding:5px;color:#fff;font-size:0.6rem" placeholder="フィードバックを入力..."><button class="btn blue" style="margin:0;width:60px" onclick="sendFeedback()">送信</button></div>
         </div>
 
-        <div style="text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0">© ASGARD Cosmic Infrastructure / 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
+        <div style="text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0">© ASGARD Cosmic Infrastructure / 運営者: QLAX (Daisuke Higuchi) / 豊前市[span_3](start_span)[span_3](end_span).</div>
     </div>
 
     <div class="modal" id="authModal">
@@ -255,9 +256,4 @@ HYBRID_INDEX_HTML = """<!DOCTYPE html>
 LEGAL_HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head><meta charset="UTF-8"><title>特定商取引法に基づく表記</title>
-<style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-content:center;}.box{max-width:600px;width:100%;background:#0d0d1a;border:1px solid #1e1b4b;padding:20px;border-radius:8px;}h1{color:#c084fc;font-size:1.2rem;margin-bottom:15px;}.row{border-bottom:1px solid #1e1b4b;padding:10px 0;font-size:0.8rem;}.label{color:#94a3b8;font-weight:bold;width:130px;display:inline-block;}a{color:#38bdf8;text-decoration:none;font-weight:bold;}</style>
-</head>
-<body>
-<div class="box">
-    <h1>特定商取引法に基づく表記</h1>
-    <div class="row"><span class="l
+<style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-content:center;}.box{max-width:600px;width:100%;background:#0d0d1a;border:1px solid #1e1b4b;padding:20px;border-radius:8px;}h1{color:#c084fc;font-size:1.2rem;margin-bottom:15px;}.row{border-bottom:1px solid #1e1b4b;padding:10px 0;font-size:0.8rem;}.label{color:#94a3b8;font-weight:bold;width:130px;display:inline-bloc
