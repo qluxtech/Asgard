@@ -7,7 +7,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD Cosmic Super Market Node", version="11.0.0")
+app = FastAPI(title="ASGARD Cosmic Super Market Node", version="12.0.0")
 
 WALLETS = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
@@ -84,7 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <span class='bitem g'>SELF_HEAL: ACTIVE</span><span class='bitem'>KROK_SYNC</span>
 </div>
 <div class='nav'>
-<div class='logo'>ASGARD / QLAX</div>
+<div class='logo'>ASGARD / QLAX (v12.0)</div>
 <div>
 <button class='btn' style='display:inline-block;padding:3px 8px;' onclick='openModal("login")'>ログイン</button>
 <button class='btn blue' style='display:inline-block;padding:3px 8px;margin-left:4px;' onclick='openModal("signup")'>サインアップ</button>
@@ -155,17 +155,17 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v10/mesh</div><button class='btn blue' onclick='alert("Mesh API Active.")'>ステータス</button></div>
 <div class='box'><div><strong>.well-known</strong> <span style='color:#6366f1'>SPAR</span></div><div class='addr' style='margin-top:6px'>/agent.json</div><a href='/well-known/agent.json' target='_blank' class='btn blue'>マニフェスト</a></div>
 <div class='box'><div><strong>Stripe</strong> <span style='color:#ec4899'>PST</span></div><div class='addr' style='margin-top:6px'>active-key</div><button class='btn blue' style='background:#065f46;color:#a7f3d0' onclick='alert("Stripe 稼働中 ✓")'>決済済 ✓</button></div>
-<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-10.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
+<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-12.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
 </div>
-<div style='margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:6px;'>
+<div style='margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:6px;'>
 <div style='background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;font-size:0.55rem;'>
-<div style='color:var(--gold);font-weight:bold;margin-bottom:4px;'>⚡ REAL-TIME FLASH ARBITRAGE</div>
-<div style='color:var(--muted);margin-bottom:6px;'>クロスチェーン間の価格差分を自動検出・収益分配。</div>
+<div style='color:var(--gold);font-weight:bold;margin-bottom:4px;'>⚡ FLASH ARBITRAGE</div>
+<div style='color:var(--muted);margin-bottom:6px;'>自動価格差分検出・分配。</div>
 <div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:4px;border-radius:3px;'><span>SPREAD: 0.142%</span><span style='color:var(--green);'>OPTIMAL ✓</span></div>
 </div>
 <div style='background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;font-size:0.55rem;'>
-<div style='color:var(--blue);font-weight:bold;margin-bottom:4px;'>💎 QUANTUM 402 SETTLEMENT</div>
-<div style='color:var(--muted);margin-bottom:6px;'>HTTP 402プロトコルによるゼロレイテンシ量子決済。</div>
+<div style='color:var(--blue);font-weight:bold;margin-bottom:4px;'>💎 QUANTUM 402</div>
+<div style='color:var(--muted);margin-bottom:6px;'>ゼロレイテンシ量子決済。</div>
 <div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:4px;border-radius:3px;'><span>GATEWAY: ACTIVE</span><span style='color:var(--green);'>0.00ms ✓</span></div>
 </div>
 </div>
@@ -179,13 +179,13 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div style='display:flex;gap:6px'><input type='text' id='feedbackInput' style='flex:1;background:#05050a;border:1px solid var(--border);border-radius:4px;padding:5px;color:#fff;font-size:0.6rem' placeholder='フィードバックを入力...'><button class='btn blue' style='margin:0;width:60px' onclick='sendFeedback()'>送信</button></div>
 <div style='margin-top:10px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>
 <div style='font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;'>🌐 SWARM GOVERNANCE VOTING CONSOLE</div>
-<div style='font-size:0.52rem;color:var(--muted);margin-bottom:6px;'>接続中エージェントによる次期プロトコル手数料削減（15% → 10%）の即時投票:</div>
+<div style='font-size:0.52rem;color:var(--muted);margin-bottom:6px;'>次期プロトコル手数料削減（15% → 10%）の即時投票:</div>
 <div style='display:flex;gap:6px;'><button class='btn blue' style='flex:1;margin:0;' onclick='voteGov("YES")'>賛成投票 (YES)</button><button class='btn pur' style='flex:1;margin:0;' onclick='voteGov("NO")'>反対投票 (NO)</button></div>
 <div id='voteResult' style='font-size:0.5rem;color:var(--green);margin-top:6px;font-family:monospace;display:none;'></div>
 </div>
 <div style='margin-top:8px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>
 <div style='font-size:0.6rem;color:var(--gold);font-weight:bold;margin-bottom:4px;'>🤖 LIVE AGENT TASK AUCTION POOL</div>
-<div style='font-size:0.52rem;color:var(--muted);margin-bottom:6px;'>自律エージェント間のリアルタイム・タスクオークションおよび報酬分配状況:</div>
+<div style='font-size:0.52rem;color:var(--muted);margin-bottom:6px;'>自律エージェント間のリアルタイム・タスクオークション状況:</div>
 <div style='font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:5px;border-radius:3px;'>[AUCTION_NODE_#704] Active Bid: 0.045 BSV | Winner: Agent_Swarm_Alpha ✓</div>
 </div>
 </div>
@@ -228,4 +228,5 @@ async function sendFeedback(){
     }catch(e){alert('エラー');}
 }
 function runPing(){
-    const b=
+    const b=document.getElementById('pingBox');
+    b.style.display='blo
