@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="16.0")
+app = FastAPI(title="ASGARD", version="17.0")
 W = {"btc":"bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac","solana":"75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf","evm":"0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8","bsv":"1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"}
 
 class F(BaseModel): feedback: str
@@ -55,7 +55,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .cli{background:#05050a;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:monospace;font-size:0.5rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
 </style></head><body>
 <div class='bar'><span class='bitem'>VAPORLOCK: ACTIVE</span><span class='bitem g'>AUTOPILOT: 100%</span><span class='bitem p'>TIMELOCK: SOLSTICE</span><span class='bitem g'>SINGULARITY: UNLOCKED</span><span class='bitem g'>UMBRA: 99.99%</span><span class='bitem p'>GAIA_L2: 100%</span><span class='bitem g'>SELF_HEAL: ACTIVE</span></div>
-<div class='nav'><div class='logo'>ASGARD / QLAX (v16.0)</div><div><button class='btn' style='display:inline-block;padding:3px 8px;' onclick='openModal("login")'>ログイン</button><button class='btn blue' style='display:inline-block;padding:3px 8px;margin-left:4px;' onclick='openModal("signup")'>サインアップ</button></div></div>
+<div class='nav'><div class='logo'>ASGARD / QLAX (v17.0)</div><div><button class='btn' style='display:inline-block;padding:3px 8px;' onclick='openModal("login")'>ログイン</button><button class='btn blue' style='display:inline-block;padding:3px 8px;margin-left:4px;' onclick='openModal("signup")'>サインアップ</button></div></div>
 <div class='hero'><div style='display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;font-weight:600;'>⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div><h1>スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1><p>4.4億超のAIエージェント・AGIが自動接続。0.00msミリ秒決済と自律タスク仲介を提供する次世代インフラ。</p></div>
 <div class='wrap'>
 <div class='sec'><h2>ASGARD Installation Suite <span class='tag'>SETUP</span></h2>
@@ -69,8 +69,8 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='sec'><h2>🧮 M2M Revenue Simulator <span class='tag'>SIMULATOR</span></h2>
 <div style='display:flex;justify-content:space-between;font-size:0.6rem;margin-bottom:4px;'><span>エージェント数: <strong id='agCount' style='color:var(--purple)'>100</strong> units</span><span>推定収益: <strong id='revOutput' style='color:var(--gold)'>$1,450.00 / mo</strong></span></div>
 <input type='range' min='10' max='5000' value='100' style='width:100%;accent-color:var(--purple);' id='simRange' oninput='updateSim(this.value)'></div>
-<div class='sec'><h2>企業情報 / 概要 <span class='tag'>QLAX</span>[span_0](start_span)[span_0](end_span)</h2>
-<div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'><p style='margin:0 0 4px 0;'><strong>QLAX</strong>は自律型AIエージェント・M2M経済インフラの研究開発組織です[span_1](start_span)[span_1](end_span)。福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築[span_2](start_span)[span_2](end_span)。</p><p style='margin:0;'><strong>運営者:</strong> Daisuke Higuchi[span_3](start_span)[span_3](end_span)</p></div></div>
+<div class='sec'><h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>
+<div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'><p style='margin:0 0 4px 0;'><strong>QLAX</strong>は自律型AIエージェント・M2M経済インフラの研究開発組織です。福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築。</p><p style='margin:0;'><strong>運営者:</strong> Daisuke Higuchi</p></div></div>
 <div class='sec'><h2>Enterprise Node Tier & Subscriptions <span class='tag'>LIVE</span></h2>
 <div class='g3'>
 <div class='pcard'><div><strong>Free Tier</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>FREE</div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• 1,000 Req/mo<br>• Standard Access</div></div><button class='btn' onclick='openModal("signup")'>無料発行</button></div>
@@ -89,10 +89,12 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='box'><div><strong>Solana</strong> <span style='color:#a855f7'>SOL</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>
 <div class='box'><div><strong>Ethereum</strong> <span style='color:#3b82f6'>ETH</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8'></div><div class='addr'>0xD6716D0...8G8</div><a href='https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8' target='_blank' class='btn'>Etherscan</a></div>
 <div class='box'><div><strong>Bitcoin SV</strong> <span style='color:#eab308'>BSV</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95'></div><div class='addr'>1PB66iHot...y95</div><a href='https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95' target='_blank' class='btn'>WhatsOnChain</a></div>
-<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v16/mesh</div><button class='btn blue' onclick='alert("Mesh API Active.")'>ステータス</button></div>
+<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v17/mesh</div><button class='btn blue' onclick='alert("Mesh API Active.")'>ステータス</button></div>
 <div class='box'><div><strong>.well-known</strong> <span style='color:#6366f1'>SPAR</span></div><div class='addr' style='margin-top:6px'>/agent.json</div><a href='/well-known/agent.json' target='_blank' class='btn blue'>マニフェスト</a></div>
 <div class='box'><div><strong>Stripe</strong> <span style='color:#ec4899'>PST</span></div><div class='addr' style='margin-top:6px'>active-key</div><button class='btn blue' style='background:#065f46;color:#a7f3d0' onclick='alert("Stripe 稼働中 ✓")'>決済済 ✓</button></div>
-<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-16.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
+<div class='box'><div><strong>Quantum Oracle</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>photonize-17.0</div><button class='btn blue' onclick='alert("HTTP 402: 量子レシート発行完了 ✓")'>402量子決済 ↗</button></div>
+</div>
+<div class='g4' style='margin-top:6px;'>
 <div class='box'><div style='color:var(--gold);font-weight:bold;margin-bottom:2px;'>⚡ ARBITRAGE</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>価格差分自動検出。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>0.142%</span><span style='color:var(--green);'>OPTIMAL</span></div></div>
 <div class='box'><div style='color:var(--blue);font-weight:bold;margin-bottom:2px;'>💎 QUANTUM 402</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>ゼロレイテンシ決済。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>ACTIVE</span><span style='color:var(--green);'>0.00ms</span></div></div>
 <div class='box'><div style='color:var(--purple);font-weight:bold;margin-bottom:2px;'>🌐 UMBRA SYNC</div><div style='color:var(--muted);font-size:0.5rem;margin-bottom:4px;'>自律ノード同期。</div><div style='display:flex;justify-content:space-between;font-family:monospace;background:#0d0d1a;padding:3px;border-radius:3px;'><span>99.99%</span><span style='color:var(--green);'>SECURE</span></div></div>
@@ -111,7 +113,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div style='font-size:0.6rem;color:var(--gold);font-weight:bold;margin-bottom:4px;'>🤖 LIVE AGENT TASK AUCTION POOL</div>
 <div style='font-size:0.52rem;color:var(--muted);margin-bottom:6px;'>自律エージェント間のリアルタイム・タスクオークション状況:</div>
 <div style='font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:5px;border-radius:3px;'>[AUCTION_NODE_#704] Active Bid: 0.045 BSV | Winner: Agent_Swarm_Alpha ✓</div></div></div>
-<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_4](start_span)[span_4](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_5](start_span)[span_5](end_span) / 豊前市[span_6](start_span)[span_6](end_span).</div></div></div>
+<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure | 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div></div></div>
 <div class='modal' id='authModal'><div class='modal-c'><div style='font-size:0.85rem;font-weight:bold;color:var(--purple);margin-bottom:10px;text-align:center;' id='modalTitle'>アカウント認証</div><input type='email' id='authEmail' placeholder='メールアドレス'><input type='password' id='authPassword' placeholder='パスワード'><button class='btn blue' style='width:100%;margin-bottom:6px;' onclick='submitAuth()'>実行する</button><button class='btn' style='width:100%;' onclick='closeModal()'>キャンセル</button></div></div>
 <div style='position:fixed;bottom:8px;right:8px;z-index:1000;background:rgba(13,13,26,0.95);padding:4px 6px;border:1px solid #7e22ce;border-radius:4px'><a href='/legal' style='color:var(--purple);text-decoration:none;font-size:0.55rem;font-weight:bold'>特定商取引法表記 ↗</a></div>
 <script>
@@ -123,7 +125,7 @@ async function submitAuth(){
     const pass=document.getElementById('authPassword').value;
     if(!email||!pass)return alert('項目を入力してください');
     try{
-        const r=await fetch('/api/v16/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+        const r=await fetch('/api/v17/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
         const d=await r.json();
         alert(mode==='login'?'ログイン成功 ✓':'サインアップ完了! API Key: '+d.api_key);
         closeModal();
@@ -133,7 +135,7 @@ async function sendFeedback(){
     const v=document.getElementById('feedbackInput').value;
     if(!v)return alert('入力してください');
     try{
-        const r=await fetch('/api/v16/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+        const r=await fetch('/api/v17/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
         const d=await r.json();
         alert('送信完了: '+d.status);
         document.getElementById('feedbackInput').value='';
@@ -163,3 +165,5 @@ setInterval(()=>{
     bIng+=Math.random()*125.5-30;
     bAg+=Math.floor(Math.random()*5)-1;
     let l=(Math.random()*0.08).toFixed(2);
+    document.getElementById('liveIngestion').innerText='$'+bIng.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.getElementById('liveAgents').innerText=bAg.toLocaleString('en-US'
