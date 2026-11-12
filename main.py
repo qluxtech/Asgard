@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="38.0")
+app = FastAPI(title="ASGARD", version="39.0")
 W = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
     "solana": "75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf",
@@ -24,7 +24,7 @@ def init_db():
     c.execute("SELECT COUNT(*) FROM auctions")
     if c.fetchone()[0] == 0:
         c.execute("INSERT INTO auctions (agent_name, task_desc, bid_bsv, created_at) VALUES (?, ?, ?, ?)",
-                  ("Agent_Swarm_Alpha", "Cross-Chain Liquidity Routing #704", 0.045, datetime.datetime.now().strftime("%H:%M:%S")))
+                  ("Agent_Swarm_Alpha", "Cross-Chain Routing #704", 0.045, datetime.datetime.now().strftime("%H:%M:%S")))
     conn.commit()
     conn.close()
 
@@ -36,6 +36,7 @@ class FeedbackReq(BaseModel):
 class AuthReq(BaseModel):
     email: str
     password: str
+    mode: str = "login"
 
 class VoteReq(BaseModel):
     choice: str
@@ -66,14 +67,13 @@ class ConnectionManager:
 
 m_mgr = ConnectionManager()
 
-# --- 企業情報を一番下に正しく配置したHTMLテンプレート ---
+# 構文エラーを100%防ぐための安全な分割リスト
 HTML_LINES = [
     "<!DOCTYPE html>",
     "<html lang='ja'>",
     "<head>",
     "<meta charset='UTF-8'>",
     "<meta name='viewport' content='width=device-width,initial-scale=1.0'>",
-    "<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate'>",
     "<title>ASGARD / M2M Economic Infrastructure</title>",
     "<style>",
     ":root{--bg:#05050a;--card:#0d0d1a;--border:#1e1b4b;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}",
@@ -102,7 +102,7 @@ HTML_LINES = [
     ".qr{background:#fff;padding:2px;width:30px;height:30px;margin:4px auto;border-radius:3px;display:flex;}",
     ".qr img{width:100%;height:100%;}",
     ".addr{font-family:monospace;font-size:0.45rem;background:#0f0f1d;padding:2px;border-radius:3px;word-break:break-all;color:var(--muted);text-align:center;}",
-    ".stream{background:#05050a;border:1px solid var(--border);border-radius:6px;padding:8px;font-family:monospace;font-size:0.5rem;color:var(--green);max-height:85px;overflow-y:auto;}",
+    ".stream{background:#05050a;border:1px solid var(--border);border-radius:6px;padding:8px;font-family:monospace;font-size:0.5rem;color:var(--green);max-height:80px;overflow-y:auto;}",
     ".modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,10,0.85);z-index:2000;justify-content:center;align-items:center;}",
     ".modal-c{background:var(--card);border:1px solid var(--purple);padding:16px;border-radius:8px;width:90%;max-width:300px;}",
     ".modal-c input{width:100%;background:#05050a;border:1px solid var(--border);padding:6px;border-radius:4px;color:#fff;font-size:0.6rem;margin-bottom:8px;box-sizing:border-box;}",
@@ -115,13 +115,11 @@ HTML_LINES = [
     "<span class='bitem'>VAPORLOCK: ACTIVE</span>",
     "<span class='bitem g'>AUTOPILOT: 100%</span>",
     "<span class='bitem p'>TIMELOCK: SOLSTICE</span>",
-    "<span class='bitem g'>SINGULARITY: UNLOCKED</span>",
-    "<span class='bitem g'>DB_ENGINE: SQLITE_LIVE</span>",
+    "<span class='bitem g'>DB: SQLITE_LIVE</span>",
     "<span class='bitem p'>AGENT_JSON: v2.0</span>",
-    "<span class='bitem g'>SELF_HEAL: ACTIVE</span>",
     "</div>",
     "<div class='nav'>",
-    "<div class='logo'>ASGARD / QLAX (v38.0)</div>",
+    "<div class='logo'>ASGARD / QLAX (v39.0)</div>",
     "<div style='display:flex;align-items:center;gap:4px;'>",
     "<a href='/docs' class='btn' style='margin:0;border-color:var(--blue);color:var(--blue);'>API Docs ↗</a>",
     "<button class='btn' style='margin:0;' onclick='openModal(\"login\")'>ログイン</button>",
@@ -145,7 +143,7 @@ HTML_LINES = [
     "",
     "<div class='sec'>",
     "<h2>⚡ Live Node Ping & Quantum Test <span class='tag'>REAL API</span></h2>",
-    "<button class='btn blue' style='width:100%;padding:6px;' onclick='runPing()'>🚀 ノード疎通テスト実行 (Ping Node API)</button>",
+    "<button class='btn blue' style='width:100%;padding:6px;' onclick='runPing()'>🚀 ノード疎通テスト実行 (Ping Node)</button>",
     "<div id='pingBox' style='margin-top:6px;font-family:monospace;font-size:0.52rem;color:var(--green);background:#05050a;padding:6px;border-radius:4px;border:1px solid var(--border);display:none;'></div>",
     "</div>",
     "",
@@ -158,90 +156,21 @@ HTML_LINES = [
     "<div class='sec'>",
     "<h2>Enterprise Node Tier & Subscriptions <span class='tag'>LIVE</span></h2>",
     "<div class='g3'>",
-    "<div class='pcard'><div><strong>Free Tier</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>FREE</div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• 1,000 Req/mo<br>• Standard Access</div></div><button class='btn' onclick='openModal(\"signup\")'>無料発行</button></div>",
-    "<div class='pcard feat'><div><strong style='color:var(--purple)'>Autonomous Pro</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>$29<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Unlimited Req<br>• Zero Latency<br>• 15% Rebate</div></div><button class='btn pur' onclick='openModal(\"signup\")'>購入する ↗</button></div>",
-    "<div class='pcard'><div><strong>Enterprise</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>$299<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Swarm Core<br>• Task Auction<br>• SLA 100%</div></div><button class='btn blue' onclick='openModal(\"signup\")'>ライセンス ↗</button></div>",
+    "<div class='pcard'><div><strong>Free Tier</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>FREE</div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• 1,000 Req/mo</div></div><button class='btn' onclick='openModal(\"signup\")'>無料発行</button></div>",
+    "<div class='pcard feat'><div><strong style='color:var(--purple)'>Autonomous Pro</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>$29<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Unlimited Req</div></div><button class='btn pur' onclick='openModal(\"signup\")'>購入する ↗</button></div>",
+    "<div class='pcard'><div><strong>Enterprise</strong><div style='font-size:0.85rem;color:var(--gold);margin:3px 0'>$299<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Swarm Core</div></div><button class='btn blue' onclick='openModal(\"signup\")'>ライセンス ↗</button></div>",
     "</div>",
     "</div>",
     "",
     "<div class='sec'>",
     "<h2>God-Tier Autonomous Economic Core <span class='tag'>ACTIVE</span></h2>",
     "<div class='g4' style='margin-bottom:8px;'>",
-    "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>埋蔵残高 (INGESTION)</div><div id='liveIngestion' style='font-size:0.65rem;color:var(--green);font-weight:bold'>$94,800,120.00</div></div>",
+    "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>埋蔵残高</div><div id='liveIngestion' style='font-size:0.65rem;color:var(--green);font-weight:bold'>$94,800,120.00</div></div>",
     "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>アクティブエージェント</div><div id='liveAgents' style='font-size:0.65rem;color:var(--green);font-weight:bold'>442,050,910 units</div></div>",
-    "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>クロスチェーン効率</div><div id='liveEfficiency' style='font-size:0.65rem;color:var(--green);font-weight:bold'>99.99% (0.00ms)</div></div>",
-    "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>登録ノード/ユーザー</div><div id='liveUsers' style='font-size:0.65rem;color:var(--blue);font-weight:bold'>Loading...</div></div>",
+    "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>効率</div><div id='liveEfficiency' style='font-size:0.65rem;color:var(--green);font-weight:bold'>99.99% (0.00ms)</div></div>",
+    "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>登録ノード</div><div id='liveUsers' style='font-size:0.65rem;color:var(--blue);font-weight:bold'>Loading...</div></div>",
     "</div>",
     "<div class='g4'>",
-    "<div class='box'><div><strong>Bitcoin</strong> <span style='color:#f59e0b'>BTC</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac'></div><div class='addr'>bc1q94rkd...d7zac</div><a href='https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac' target='_blank' class='btn'>Mempool</a></div>",
-    "<div class='box'><div><strong>Solana</strong> <span style='color:#a855f7'>SOL</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>",
-    "<div class='box'><div><strong>Ethereum</strong> <span style='color:#3b82f6'>ETH</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8'></div><div class='addr'>0xD6716D0...8G8</div><a href='https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8' target='_blank' class='btn'>Etherscan</a></div>",
-    "<div class='box'><div><strong>Bitcoin SV</strong> <span style='color:#eab308'>BSV</span></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95'></div><div class='addr'>1PB66iHot...y95</div><a href='https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95' target='_blank' class='btn'>WhatsOnChain</a></div>",
-    "<div class='box'><div><strong>Mesh API</strong> <span style='color:var(--green)'>M2M</span></div><div class='addr' style='margin-top:6px'>/api/v38/mesh</div><a href='/docs' class='btn blue'>仕様書 ↗</a></div>",
-    "<div class='box'><div><strong>.well-known</strong> <span style='color:#6366f1'>SPAR</span></div><div class='addr' style='margin-top:6px'>/agent.json</div><a href='/.well-known/agent.json' target='_blank' class='btn blue'>マニフェスト</a></div>",
-    "<div class='box'><div><strong>Stripe</strong> <span style='color:#ec4899'>PST</span></div><div class='addr' style='margin-top:6px'>active-key</div><button class='btn blue' style='background:#065f46;color:#a7f3d0' onclick='alert(\"Stripe M2M Billing 稼働中 ✓\")'>決済済 ✓</button></div>",
-    "<div class='box'><div><strong>Quantum 402</strong> <span style='color:#06b6d4'>PCT</span></div><div class='addr' style='margin-top:6px'>HTTP-402-LIVE</div><button class='btn blue' onclick='test402()'>402検証 ↗</button></div>",
-    "</div>",
-    "</div>",
-    "",
-    "<div class='sec'>",
-    "<h2>OMNI-SYNAPSE LIVE COMMISSION STREAM <span class='tag'>WEBSOCKET</span></h2>",
-    "<div class='stream' id='streamLog'>[OMNI_SYNC_INIT] Node operational across BTC, SOL, EVM, BSV. SQLite DB & WebSocket Stream connected.</div>",
-    "</div>",
-    "",
-    "<div class='sec'>",
-    "<h2>ENTERPRISE FEEDBACK, GOVERNANCE & LIVE AUCTION <span class='tag'>DB PERSISTED</span></h2>",
-    "<div style='display:flex;gap:6px'><input type='text' id='feedbackInput' class='inp' style='flex:1;' placeholder='フィードバックを入力（DBに永続保存されます）...'><button class='btn blue' style='margin:0;width:60px' onclick='sendFeedback()'>送信</button></div>",
-    "",
-    "<div style='margin-top:10px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>",
-    "<div style='font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;'>🌐 SWARM GOVERNANCE VOTING CONSOLE (REAL-TIME DB)</div>",
-    "<div style='font-size:0.52rem;color:var(--muted);margin-bottom:6px;'>次期プロトコル手数料削減（15% → 10%）のオンチェーン・DB即時投票:</div>",
-    "<div style='display:flex;gap:6px;'><button class='btn blue' style='flex:1;margin:0;' onclick='voteGov(\"YES\")'>賛成投票 (YES)</button><button class='btn pur' style='flex:1;margin:0;' onclick='voteGov(\"NO\")'>反対投票 (NO)</button></div>",
-    "<div id='voteResult' style='font-size:0.52rem;color:var(--green);margin-top:6px;font-family:monospace;'>集計読み込み中...</div>",
-    "</div>",
-    "",
-    "<div style='margin-top:8px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>",
-    "<div style='font-size:0.6rem;color:var(--gold);font-weight:bold;margin-bottom:4px;'>🤖 LIVE AGENT TASK AUCTION POOL (INTERACTIVE)</div>",
-    "<div style='font-size:0.52rem;color:var(--muted);margin-bottom:6px;'>自律エージェント間のリアルタイム・タスク入札（BSV決済オークション）:</div>",
-    "<div style='display:flex;gap:4px;margin-bottom:6px;'>",
-    "<input type='text' id='bidAgent' class='inp' style='width:30%;' placeholder='Agent名 (例: Bot_01)'>",
-    "<input type='text' id='bidTask' class='inp' style='width:40%;' placeholder='タスク内容 (例: LLM推論)'>",
-    "<input type='number' step='0.001' id='bidAmount' class='inp' style='width:15%;' placeholder='BSV額' value='0.05'>",
-    "<button class='btn pur' style='margin:0;width:15%;' onclick='submitBid()'>入札</button>",
-    "</div>",
-    "<div id='auctionList' style='font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:6px;border-radius:3px;max-height:70px;overflow-y:auto;'>読み込み中...</div>",
-    "</div>",
-    "</div>",
-    "",
-    "<!-- 企業情報セクション（一番下に正しく配置） -->",
-    "<div class='sec'>",
-    "<h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>",
-    "<div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>",
-    "<p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>",
-    "<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県を拠点にM2Mと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_1](start_span)[span_1](end_span)。</p>",
-    "<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_2](start_span)[span_2](end_span)</p>",
-    "</div>",
-    "</div>",
-    "",
-    "<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_3](start_span)[span_3](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_4](start_span)[span_4](end_span) / 豊前市[span_5](start_span)[span_5](end_span).</div>",
-    "</div>",
-    "</div>",
-    "",
-    "<div class='modal' id='authModal'>",
-    "<div class='modal-c'>",
-    "<div style='font-size:0.85rem;font-weight:bold;color:var(--purple);margin-bottom:10px;text-align:center;' id='modalTitle'>アカウント認証</div>",
-    "<input type='email' id='authEmail' placeholder='メールアドレス'>",
-    "<input type='password' id='authPassword' placeholder='パスワード'>",
-    "<button class='btn blue' style='width:100%;margin-bottom:6px;' onclick='submitAuth()'>実行する</button>",
-    "<button class='btn' style='width:100%;' onclick='closeModal()'>キャンセル</button>",
-    "</div>",
-    "</div>",
-    "",
-    "<div style='position:fixed;bottom:8px;right:8px;z-index:1000;background:rgba(13,13,26,0.95);padding:4px 6px;border:1px solid #7e22ce;border-radius:4px'>",
-    "<a href='/legal' style='color:var(--purple);text-decoration:none;font-size:0.55rem;font-weight:bold'>特定商取引法表記 ↗</a>",
-    "</div>",
-    "",
-    "<script>",
-    "let mode='login';",
-    "function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}",
-    "function openModal(m){mode=m;document.getElementById('modalTitle').innerText=m==='login'?'ASGARD ログイン':'エージ
+    "<div class='box'><div><strong>Bitcoin</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac'></div><div class='addr'>bc1q94rkd...d7zac</div><a href='https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac' target='_blank' class='btn'>Mempool</a></div>",
+    "<div class='box'><div><strong>Solana</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>",
+    "<div class='box'><div><strong>Ethereum</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8'></div><div class='addr'>0xD6716D0...8G8</div><a href='
