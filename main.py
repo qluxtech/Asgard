@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="40.0")
+app = FastAPI(title="ASGARD", version="41.0")
 W = {
     "btc": "bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac",
     "solana": "75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf",
@@ -67,7 +67,7 @@ class ConnectionManager:
 
 m_mgr = ConnectionManager()
 
-# 構文エラーを100%防ぐための安全な分割リスト
+# コード決済セクションを確実に含み、企業情報を最下部に置いた安全なHTMLリスト
 HTML_LINES = [
     "<!DOCTYPE html>",
     "<html lang='ja'>",
@@ -114,12 +114,12 @@ HTML_LINES = [
     "<body>",
     "<div class='bar'>",
     "<span class='bitem'>VAPORLOCK: ACTIVE</span>",
-    "<span class='bitem g'>CODE_PAY: ENABLED</span>",
+    "<span class='bitem g'>CODE_PAY: ACTIVE</span>",
     "<span class='bitem p'>AUPAY / ALIPAY: READY</span>",
     "<span class='bitem g'>DB: SQLITE_LIVE</span>",
     "</div>",
     "<div class='nav'>",
-    "<div class='logo'>ASGARD / QLAX (v40.0)</div>",
+    "<div class='logo'>ASGARD / QLAX (v41.0)</div>",
     "<div style='display:flex;align-items:center;gap:4px;'>",
     "<a href='/docs' class='btn' style='margin:0;border-color:var(--blue);color:var(--blue);'>API Docs ↗</a>",
     "<button class='btn' style='margin:0;' onclick='openModal(\"login\")'>ログイン</button>",
@@ -129,7 +129,7 @@ HTML_LINES = [
     "<div class='hero'>",
     "<div style='display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;font-weight:600;'>⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>",
     "<h1>スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>",
-    "<p>暗号資産・Stripeに加え、au PAY・Alipay等の各種コード決済・マルチペイメントに対応した次世代ゲートウェイ。</p>",
+    "<p>暗号資産・Stripeに加え、au PAY・Alipay等の各種コード決済に対応した次世代ゲートウェイ。</p>",
     "</div>",
     "<div class='wrap'>",
     "",
@@ -140,7 +140,7 @@ HTML_LINES = [
     "<div class='cli' style='color:var(--gold);'><span>docker run -d --name asgard-node qlax/asgard-core</span><button class='btn' style='margin:0;padding:2px 6px;' onclick='copyCmd(\"docker run -d --name asgard-node qlax/asgard-core\")'>コピー</button></div>",
     "</div>",
     "",
-    "<!-- 新設：コード決済（au PAY / Alipay / Stripe）対応セクション -->",
+    "<!-- コード決済セクション -->",
     "<div class='sec'>",
     "<h2>Global & Code Payment Gateway <span class='tag'>au PAY / Alipay</span></h2>",
     "<div style='font-size:0.58rem;color:var(--muted);margin-bottom:8px;'>APIサブスクリプションやノード利用権を、各種コード決済およびオンライン決済で即時決済できます。</div>",
@@ -204,7 +204,7 @@ HTML_LINES = [
     "</div>",
     "</div>",
     "",
-    "<!-- 企業情報（一番下に完璧に配置） -->",
+    "<!-- 企業情報セクション（一番下に完璧に配置） -->",
     "<div class='sec'>",
     "<h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>",
     "<div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>",
@@ -234,13 +234,13 @@ HTML_LINES = [
     "function openModal(m){mode=m;document.getElementById('modalTitle').innerText=m==='login'?'ASGARD ログイン':'エージェント サインアップ';document.getElementById('authModal').style.display='flex';}",
     "function closeModal(){document.getElementById('authModal').style.display='none';}",
     "async function triggerCodePay(method){",
-    "  const r=await fetch('/api/v40/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});",
+    "  const r=await fetch('/api/v41/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});",
     "  const d=await r.json();",
     "  alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※コード決済APIリクエスト成功 ✓');",
     "}",
     "async function loadSystemState(){",
     "  try{",
-    "    const r=await fetch('/api/v40/state');",
+    "    const r=await fetch('/api/v41/state');",
     "    const d=await r.json();",
     "    document.getElementById('liveUsers').innerText=d.user_count + ' nodes';",
     "    document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;",
@@ -252,7 +252,7 @@ HTML_LINES = [
     "  const pass=document.getElementById('authPassword').value;",
     "  if(!email||!pass)return alert('入力してください');",
     "  try{",
-    "    const r=await fetch('/api/v40/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass,mode})});",
+    "    const r=await fetch('/api/v41/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass,mode})});",
     "    const d=await r.json();",
     "    alert('成功 ✓ API Key: ' + d.api_key);",
     "    closeModal(); loadSystemState();",
@@ -262,16 +262,16 @@ HTML_LINES = [
     "  const v=document.getElementById('feedbackInput').value;",
     "  if(!v)return alert('入力してください');",
     "  try{",
-    "    await fetch('/api/v40/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});",
+    "    await fetch('/api/v41/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});",
     "    alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';",
     "  }catch(e){alert('エラー');}",
     "}",
     "async function voteGov(choice){",
     "  try{",
-    "    const r=await fetch('/api/v40/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});",
+    "    const r=await fetch('/api/v41/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});",
     "    const d=await r.json();",
     "    document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';",
     "  }catch(e){}",
     "}",
     "async function submitBid(){",
-    "  co
+    "  const ag=document.getE
