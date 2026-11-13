@@ -1,9 +1,9 @@
-import os, datetime, sqlite3, secrets, asyncio
+import os, datetime, sqlite3, secrets, asyncio, random
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="48.0")
+app = FastAPI(title="ASGARD", version="49.0")
 DB_PATH = "asgard.db"
 
 def init_db():
@@ -60,7 +60,6 @@ class ConnectionManager:
 
 m_mgr = ConnectionManager()
 
-# --- すべての機能を統合した完全版HTMLテンプレート ---
 HTML_PAGE = """<!DOCTYPE html>
 <html lang='ja'>
 <head>
@@ -101,7 +100,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 <div class='bar'>
-<span class='bitem'>SYSTEM: ONLINE (v48.0)</span>
+<span class='bitem'>SYSTEM: ONLINE (v49.0)</span>
 <span class='bitem'>CODE_PAY: ENABLED</span>
 <span class='bitem'>DB: SQLITE_LIVE</span>
 </div>
@@ -218,13 +217,13 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
 async function triggerCodePay(method){
-  const r=await fetch('/api/v48/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
+  const r=await fetch('/api/v49/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
   const d=await r.json();
   alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v48/state');
+    const r=await fetch('/api/v49/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;
     document.getElementById('auctionList').innerHTML=d.auctions.map(a=>`[${a.created_at}] ${a.agent_name}: ${a.task_desc} (${a.bid_bsv} BSV)`).join('<br>');
@@ -233,11 +232,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v48/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v49/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
 }
 async function voteGov(choice){
-  const r=await fetch('/api/v48/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
+  const r=await fetch('/api/v49/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
 }
@@ -246,7 +245,7 @@ async function submitBid(){
   const tk=document.getElementById('bidTask').value||'Compute';
   const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
   try{
-    await fetch('/api/v48/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
+    await fetch('/api/v49/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
     document.getElementById('bidTask').value=''; loadState();
   }catch(e){}
 }
@@ -281,9 +280,9 @@ h1{color:#c084fc;font-size:1.2rem;} pre{background:#05050a;padding:8px;color:#10
 <h1>ASGARD Complete API Docs</h1>
 <p><a href='/'>← 戻る</a></p>
 <h2>1. Code Payment API</h2>
-<pre>POST /api/v48/code-pay</pre>
+<pre>POST /api/v49/code-pay</pre>
 <h2>2. Task Auction API</h2>
-<pre>POST /api/v48/auction/bid</pre>
+<pre>POST /api/v49/auction/bid</pre>
 </div></body></html>
 """
 
@@ -316,4 +315,5 @@ async def docs_page():
 async def legal_page():
     return LEGAL_HTML
 
-@app.get("/.well-known/a
+@app.get("/.well-known/agent.json")
+@app.get("/well
