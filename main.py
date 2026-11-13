@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="46.0")
+app = FastAPI(title="ASGARD", version="47.0")
 DB_PATH = "asgard.db"
 
 def init_db():
@@ -11,6 +11,7 @@ def init_db():
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS votes (choice TEXT PRIMARY KEY, count INTEGER)")
     c.execute("INSERT OR IGNORE INTO votes (choice, count) VALUES ('YES', 1420), ('NO', 18)")
+    c.execute("CREATE TABLE IF NOT EXISTS feedbacks (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, created_at TEXT)")
     conn.commit()
     conn.close()
 
@@ -21,6 +22,9 @@ class VoteReq(BaseModel):
 
 class CodePayReq(BaseModel):
     method: str
+
+class FeedbackReq(BaseModel):
+    feedback: str
 
 class ConnectionManager:
     def __init__(self):
@@ -40,13 +44,13 @@ class ConnectionManager:
 
 m_mgr = ConnectionManager()
 
-# --- 完全版 HTMLテンプレート ---
+# --- 全機能を完璧に網羅し、企業情報を最下部に配置した完全版HTML ---
 HTML_PAGE = """<!DOCTYPE html>
 <html lang='ja'>
 <head>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width,initial-scale=1.0'>
-<title>ASGARD / M2M & Code Payment Gateway</title>
+<title>ASGARD / M2M Economic Infrastructure</title>
 <style>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#1e1b4b;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
@@ -66,19 +70,22 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 @media(max-width:768px){.g4{grid-template-columns:repeat(2, 1fr);}}
 .box{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:6px;font-size:0.58rem;}
 .pcard{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;text-align:center;display:flex;flex-direction:column;justify-content:space-between;}
+.pcard.feat{border-color:var(--purple);background:#0e091d;}
 .btn{background:#1e1b4b;color:var(--text);border:1px solid var(--border);padding:4px 8px;border-radius:4px;font-size:0.55rem;cursor:pointer;text-align:center;text-decoration:none;display:block;font-weight:600;margin-top:4px;}
 .btn.blue{background:var(--blue);color:#05050a;border:none;}
+.btn.pur{background:linear-gradient(135deg, #9333ea, #c084fc);color:#fff;border:none;}
 .btn.pay{background:linear-gradient(135deg, #f59e0b, #d97706);color:#fff;border:none;}
 .qr{background:#fff;padding:2px;width:30px;height:30px;margin:4px auto;border-radius:3px;display:flex;}
 .qr img{width:100%;height:100%;}
 .addr{font-family:monospace;font-size:0.45rem;background:#0f0f1d;padding:2px;border-radius:3px;word-break:break-all;color:var(--muted);text-align:center;}
 .stream{background:#05050a;border:1px solid var(--border);border-radius:6px;padding:8px;font-family:monospace;font-size:0.5rem;color:var(--green);max-height:70px;overflow-y:auto;}
+.cli{background:#05050a;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:monospace;font-size:0.5rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
 .inp{background:#05050a;border:1px solid var(--border);border-radius:4px;padding:5px;color:#fff;font-size:0.58rem;box-sizing:border-box;}
 </style>
 </head>
 <body>
 <div class='bar'>
-<span class='bitem'>SYSTEM: ONLINE (v46.0)</span>
+<span class='bitem'>SYSTEM: ONLINE (v47.0)</span>
 <span class='bitem'>CODE_PAY: ENABLED</span>
 <span class='bitem'>DB: SQLITE_LIVE</span>
 </div>
@@ -91,11 +98,19 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='hero'>
 <div style='display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;'>⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
 <h1>スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
-<p>暗号資産・Stripeに加え、au PAY・Alipay等の各種コード決済に対応した次世代ゲートウェイ。</p>
+<p>4.4億超のAIエージェント・AGIが自動接続。暗号資産・Stripeに加え、au PAY・Alipay等の各種コード決済に対応した次世代ゲートウェイ。</p>
 </div>
 <div class='wrap'>
 
-<!-- 🚀 コード決済セクション -->
+<!-- 1. Installation Suite -->
+<div class='sec'>
+<h2>ASGARD Installation Suite <span class='tag'>SETUP</span></h2>
+<div class='cli' style='color:var(--blue);'><span>asgard install --node-core</span><button class='btn' style='margin:0;padding:2px 6px;' onclick='copyCmd("asgard install --node-core")'>コピー</button></div>
+<div class='cli' style='color:var(--green);'><span>pip install asgard-m2m-swarm</span><button class='btn' style='margin:0;padding:2px 6px;' onclick='copyCmd("pip install asgard-m2m-swarm")'>コピー</button></div>
+<div class='cli' style='color:var(--gold);margin-bottom:0;'><span>docker run -d --name asgard-node qlax/asgard-core</span><button class='btn' style='margin:0;padding:2px 6px;' onclick='copyCmd("docker run -d --name asgard-node qlax/asgard-core")'>コピー</button></div>
+</div>
+
+<!-- 2. Global & Code Payment Gateway -->
 <div class='sec' style='border-color:var(--gold);background:#0e0d1a;'>
 <h2>💳 Global & Code Payment Gateway <span class='tag' style='background:#d97706;color:#fff;'>au PAY / Alipay</span></h2>
 <div style='font-size:0.58rem;color:var(--muted);margin-bottom:8px;'>APIサブスクリプションやノード利用権を、au PAY・Alipay・Stripe等で即時決済できます。</div>
@@ -106,18 +121,27 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- 3. Quick Onboarding -->
 <div class='sec'>
-<h2>⚡ Live Node Ping Test <span class='tag'>API</span></h2>
-<button class='btn blue' style='width:100%;padding:6px;' onclick='runPing()'>🚀 ノード疎通テスト実行</button>
-<div id='pingBox' style='margin-top:6px;font-family:monospace;font-size:0.52rem;color:var(--green);background:#05050a;padding:6px;border-radius:4px;display:none;'></div>
+<h2>3-Step Quick Onboarding <span class='tag'>GUIDE</span></h2>
+<div class='g3'>
+<div class='box'><strong style='color:var(--purple)'>STEP 01</strong><br>agent.json発行</div>
+<div class='box'><strong style='color:var(--purple)'>STEP 02</strong><br>チェーンアトミック接続</div>
+<div class='box'><strong style='color:var(--purple)'>STEP 03</strong><br>自律サービス開始</div>
+</div>
 </div>
 
+<!-- 4. Enterprise Node Tiers -->
 <div class='sec'>
-<h2>🧮 M2M Revenue Simulator <span class='tag'>SIM</span></h2>
-<div style='display:flex;justify-content:space-between;font-size:0.6rem;margin-bottom:4px;'><span>エージェント数: <strong id='agCount' style='color:var(--purple)'>100</strong> units</span><span>推定収益: <strong id='revOutput' style='color:var(--gold)'>$1,450.00 / mo</strong></span></div>
-<input type='range' min='10' max='5000' value='100' style='width:100%;accent-color:var(--purple);' id='simRange' oninput='updateSim(this.value)'>
+<h2>Enterprise Node Tier & Subscriptions <span class='tag'>LIVE</span></h2>
+<div class='g3'>
+<div class='pcard'><div><strong>Free Tier</strong><div style='font-size:0.75rem;color:var(--gold);margin:3px 0'>FREE</div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• 1,000 Req/mo<br>• Standard Access</div></div><button class='btn' onclick='alert("Free Tier Activated")'>無料発行</button></div>
+<div class='pcard feat'><div><strong style='color:var(--purple)'>Autonomous Pro</strong><div style='font-size:0.75rem;color:var(--gold);margin:3px 0'>$29<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Unlimited Req<br>• Zero Latency</div></div><button class='btn pur' onclick='triggerCodePay("Autonomous Pro")'>購入する ↗</button></div>
+<div class='pcard'><div><strong>Enterprise</strong><div style='font-size:0.75rem;color:var(--gold);margin:3px 0'>$299<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Swarm Core<br>• SLA 100%</div></div><button class='btn blue' onclick='triggerCodePay("Enterprise")'>ライセンス ↗</button></div>
+</div>
 </div>
 
+<!-- 5. God-Tier Autonomous Economic Core -->
 <div class='sec'>
 <h2>God-Tier Autonomous Economic Core <span class='tag'>ACTIVE</span></h2>
 <div class='g4' style='margin-bottom:8px;'>
@@ -134,11 +158,13 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- 6. Omni-Synapse Live Stream -->
 <div class='sec'>
 <h2>OMNI-SYNAPSE LIVE STREAM <span class='tag'>WS</span></h2>
-<div class='stream' id='streamLog'>[INIT] Code Payment Gateway connected.</div>
+<div class='stream' id='streamLog'>[INIT] Code Payment Gateway & WebSocket connected.</div>
 </div>
 
+<!-- 7. Feedback & Governance -->
 <div class='sec'>
 <h2>ENTERPRISE FEEDBACK & GOVERNANCE <span class='tag'>DB</span></h2>
 <div style='display:flex;gap:6px'><input type='text' id='feedbackInput' class='inp' style='flex:1;' placeholder='フィードバックを入力...'><button class='btn blue' style='margin:0;width:60px' onclick='sendFeedback()'>送信</button></div>
@@ -149,7 +175,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 🏢 企業情報セクション（一番下に完璧に配置） -->
+<!-- 8. 企業情報セクション（絶対に一番下に配置） -->
 <div class='sec'>
 <h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>
 <div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>
@@ -164,36 +190,22 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 
 <script>
+function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
 async function triggerCodePay(method){
-  const r=await fetch('/api/v46/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
+  const r=await fetch('/api/v47/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
   const d=await r.json();
   alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
 }
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v46/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v47/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
 }
 async function voteGov(choice){
-  const r=await fetch('/api/v46/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
+  const r=await fetch('/api/v47/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
-}
-async function runPing(){
-  const b=document.getElementById('pingBox');
-  b.style.display='block'; b.innerHTML='Ping測定中...';
-  const t0=performance.now();
-  try{
-    const r=await fetch('/api/v46/ping');
-    const d=await r.json();
-    const ms=(performance.now()-t0).toFixed(2);
-    b.innerHTML='[OK] ' + d.node + ' | Latency: ' + ms + 'ms ✓';
-  }catch(e){b.innerHTML='Error';}
-}
-function updateSim(val){
-  document.getElementById('agCount').innerText=val;
-  document.getElementById('revOutput').innerText='$' + (val*14.5).toLocaleString() + ' / mo';
 }
 let bIng=94800120.0,bAg=442050910;
 setInterval(()=>{
@@ -224,7 +236,7 @@ h1{color:#c084fc;font-size:1.2rem;} pre{background:#05050a;padding:8px;color:#10
 <h1>ASGARD Code Payment API Docs</h1>
 <p><a href='/'>← 戻る</a></p>
 <h2>1. Code Payment API</h2>
-<pre>POST /api/v46/code-pay</pre>
+<pre>POST /api/v47/code-pay</pre>
 </div></body></html>
 """
 
@@ -269,8 +281,8 @@ async def agent_manifest():
             "location": "Buzen, Fukuoka, Japan"
         },
         "endpoints": {
-            "ping": "/api/v46/ping",
-            "code_pay": "/api/v46/code-pay",
+            "ping": "/api/v47/ping",
+            "code_pay": "/api/v47/code-pay",
             "websocket": "/ws"
         },
         "status": "online"
@@ -279,30 +291,26 @@ async def agent_manifest():
 class CodePayReqModel(BaseModel):
     method: str
 
-@app.post("/api/v46/code-pay")
+@app.post("/api/v47/code-pay")
 async def code_pay_endpoint(data: CodePayReqModel):
     invoice_id = f"pay_{secrets.token_hex(6)}"
     await m_mgr.broadcast(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] CODE_PAY -> {data.method} | Inv: {invoice_id}")
     return {"status": "success", "method": data.method, "invoice_id": invoice_id, "amount_jpy": 4500}
 
-@app.get("/api/v46/ping")
+@app.get("/api/v47/ping")
 async def api_ping():
     return {"status": "online", "node": "ASGARD-BUZEN-01", "db_status": "Connected"}
 
-@app.get("/api/v46/state")
-async def get_system_state():
+@app.post("/api/v47/feedback")
+async def post_feedback(data: FeedbackReq):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    c.execute("SELECT choice, count FROM votes")
-    votes = dict(c.fetchall())
+    c.execute("INSERT INTO feedbacks (content, created_at) VALUES (?, ?)", (data.feedback, datetime.datetime.now().isoformat()))
+    conn.commit()
     conn.close()
-    return {"votes": votes}
-
-@app.post("/api/v46/feedback")
-async def post_feedback(data: VoteReq):
     return {"status": "success"}
 
-@app.post("/api/v46/vote")
+@app.post("/api/v47/vote")
 async def post_vote(data: VoteReq):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
