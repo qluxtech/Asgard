@@ -3,28 +3,44 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="47.0")
+app = FastAPI(title="ASGARD", version="48.0")
 DB_PATH = "asgard.db"
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
+    c.execute("CREATE TABLE IF NOT EXISTS users (email TEXT PRIMARY KEY, password TEXT, api_key TEXT, created_at TEXT)")
+    c.execute("CREATE TABLE IF NOT EXISTS feedbacks (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, created_at TEXT)")
     c.execute("CREATE TABLE IF NOT EXISTS votes (choice TEXT PRIMARY KEY, count INTEGER)")
     c.execute("INSERT OR IGNORE INTO votes (choice, count) VALUES ('YES', 1420), ('NO', 18)")
-    c.execute("CREATE TABLE IF NOT EXISTS feedbacks (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, created_at TEXT)")
+    c.execute("CREATE TABLE IF NOT EXISTS auctions (id INTEGER PRIMARY KEY AUTOINCREMENT, agent_name TEXT, task_desc TEXT, bid_bsv REAL, created_at TEXT)")
+    c.execute("SELECT COUNT(*) FROM auctions")
+    if c.fetchone()[0] == 0:
+        c.execute("INSERT INTO auctions (agent_name, task_desc, bid_bsv, created_at) VALUES (?, ?, ?, ?)",
+                  ("Agent_Alpha", "Cross-Chain Routing", 0.045, datetime.datetime.now().strftime("%H:%M:%S")))
     conn.commit()
     conn.close()
 
 init_db()
 
+class FeedbackReq(BaseModel):
+    feedback: str
+
+class AuthReq(BaseModel):
+    email: str
+    password: str
+    mode: str = "login"
+
 class VoteReq(BaseModel):
     choice: str
 
+class BidReq(BaseModel):
+    agent_name: str
+    task_desc: str
+    bid_bsv: float
+
 class CodePayReq(BaseModel):
     method: str
-
-class FeedbackReq(BaseModel):
-    feedback: str
 
 class ConnectionManager:
     def __init__(self):
@@ -44,13 +60,13 @@ class ConnectionManager:
 
 m_mgr = ConnectionManager()
 
-# --- 全機能を完璧に網羅し、企業情報を最下部に配置した完全版HTML ---
+# --- すべての機能を統合した完全版HTMLテンプレート ---
 HTML_PAGE = """<!DOCTYPE html>
 <html lang='ja'>
 <head>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width,initial-scale=1.0'>
-<title>ASGARD / M2M Economic Infrastructure</title>
+<title>ASGARD / M2M Complete Economic Infrastructure</title>
 <style>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#1e1b4b;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
@@ -85,7 +101,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 <div class='bar'>
-<span class='bitem'>SYSTEM: ONLINE (v47.0)</span>
+<span class='bitem'>SYSTEM: ONLINE (v48.0)</span>
 <span class='bitem'>CODE_PAY: ENABLED</span>
 <span class='bitem'>DB: SQLITE_LIVE</span>
 </div>
@@ -164,48 +180,75 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='stream' id='streamLog'>[INIT] Code Payment Gateway & WebSocket connected.</div>
 </div>
 
-<!-- 7. Feedback & Governance -->
+<!-- 7. Feedback & Governance & Live Auction -->
 <div class='sec'>
-<h2>ENTERPRISE FEEDBACK & GOVERNANCE <span class='tag'>DB</span></h2>
+<h2>ENTERPRISE FEEDBACK, GOVERNANCE & LIVE AUCTION <span class='tag'>DB</span></h2>
 <div style='display:flex;gap:6px'><input type='text' id='feedbackInput' class='inp' style='flex:1;' placeholder='フィードバックを入力...'><button class='btn blue' style='margin:0;width:60px' onclick='sendFeedback()'>送信</button></div>
 <div style='margin-top:10px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>
 <div style='font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;'>🌐 SWARM GOVERNANCE VOTING</div>
 <div style='display:flex;gap:6px;'><button class='btn blue' style='flex:1;margin:0;' onclick='voteGov("YES")'>賛成 (YES)</button><button class='btn pay' style='flex:1;margin:0;' onclick='voteGov("NO")'>反対 (NO)</button></div>
 <div id='voteResult' style='font-size:0.52rem;color:var(--green);margin-top:6px;font-family:monospace;'>賛成: 1420 | 反対: 18</div>
 </div>
+<div style='margin-top:8px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>
+<div style='font-size:0.6rem;color:var(--gold);font-weight:bold;margin-bottom:4px;'>🤖 LIVE AGENT TASK AUCTION</div>
+<div style='display:flex;gap:4px;margin-bottom:6px;'>
+<input type='text' id='bidAgent' class='inp' style='width:30%;' placeholder='Agent名'>
+<input type='text' id='bidTask' class='inp' style='width:40%;' placeholder='タスク内容'>
+<input type='number' step='0.001' id='bidAmount' class='inp' style='width:15%;' value='0.05'>
+<button class='btn pur' style='margin:0;width:15%;' onclick='submitBid()'>入札</button>
+</div>
+<div id='auctionList' style='font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:6px;border-radius:3px;max-height:60px;overflow-y:auto;'>読込中...</div>
+</div>
 </div>
 
-<!-- 8. 企業情報セクション（絶対に一番下に配置） -->
+<!-- 8. 企業情報セクション（絶対に一番下に配置）[span_0](start_span)[span_0](end_span) -->
 <div class='sec'>
 <h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>
 <div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>
 <p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
-<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_0](start_span)[span_0](end_span)。</p>
-<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_1](start_span)[span_1](end_span)</p>
+<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_1](start_span)[span_1](end_span)。</p>
+<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_2](start_span)[span_2](end_span)</p>
 </div>
 </div>
 
-<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_2](start_span)[span_2](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_3](start_span)[span_3](end_span) / 豊前市[span_4](start_span)[span_4](end_span).</div>
+<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_3](start_span)[span_3](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_4](start_span)[span_4](end_span) / 豊前市[span_5](start_span)[span_5](end_span).</div>
 </div>
 </div>
 
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
 async function triggerCodePay(method){
-  const r=await fetch('/api/v47/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
+  const r=await fetch('/api/v48/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
   const d=await r.json();
   alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
+}
+async function loadState(){
+  try{
+    const r=await fetch('/api/v48/state');
+    const d=await r.json();
+    document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;
+    document.getElementById('auctionList').innerHTML=d.auctions.map(a=>`[${a.created_at}] ${a.agent_name}: ${a.task_desc} (${a.bid_bsv} BSV)`).join('<br>');
+  }catch(e){}
 }
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v47/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v48/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
 }
 async function voteGov(choice){
-  const r=await fetch('/api/v47/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
+  const r=await fetch('/api/v48/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
+}
+async function submitBid(){
+  const ag=document.getElementById('bidAgent').value||'Agent_1';
+  const tk=document.getElementById('bidTask').value||'Compute';
+  const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
+  try{
+    await fetch('/api/v48/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
+    document.getElementById('bidTask').value=''; loadState();
+  }catch(e){}
 }
 let bIng=94800120.0,bAg=442050910;
 setInterval(()=>{
@@ -219,7 +262,9 @@ const liveWs=new WebSocket(wsP+window.location.host+'/ws');
 liveWs.onmessage=function(e){
   const s=document.getElementById('streamLog');
   s.innerHTML+='<br>'+e.data; s.scrollTop=s.scrollHeight;
+  loadState();
 };
+loadState();
 </script>
 </body>
 </html>
@@ -233,10 +278,12 @@ DOCS_HTML = """<!DOCTYPE html>
 h1{color:#c084fc;font-size:1.2rem;} pre{background:#05050a;padding:8px;color:#10b981;font-size:0.7rem;overflow-x:auto;} a{color:#38bdf8;}</style>
 </head>
 <body><div class='box'>
-<h1>ASGARD Code Payment API Docs</h1>
+<h1>ASGARD Complete API Docs</h1>
 <p><a href='/'>← 戻る</a></p>
 <h2>1. Code Payment API</h2>
-<pre>POST /api/v47/code-pay</pre>
+<pre>POST /api/v48/code-pay</pre>
+<h2>2. Task Auction API</h2>
+<pre>POST /api/v48/auction/bid</pre>
 </div></body></html>
 """
 
@@ -248,11 +295,11 @@ LEGAL_HTML = """<!DOCTYPE html>
 h1{color:#c084fc;font-size:1.1rem;} div{font-size:0.8rem;color:#94a3b8;padding:6px 0;border-bottom:1px solid #1e1b4b;} a{color:#38bdf8;}</style>
 </head>
 <body><div class='box'>
-<h1>特定商取引法に基づく表記[span_5](start_span)[span_5](end_span)</h1>
-<div>事業者名: QLAX[span_6](start_span)[span_6](end_span)</div>
-<div>運営責任者: Daisuke Higuchi[span_7](start_span)[span_7](end_span)</div>
-<div>所在地: 福岡県豊前市[span_8](start_span)[span_8](end_span)</div>
-<div>連絡先: qlaxlab@gmail.com[span_9](start_span)[span_9](end_span)</div>
+<h1>特定商取引法に基づく表記[span_6](start_span)[span_6](end_span)</h1>
+<div>事業者名: QLAX[span_7](start_span)[span_7](end_span)</div>
+<div>運営責任者: Daisuke Higuchi[span_8](start_span)[span_8](end_span)</div>
+<div>所在地: 福岡県豊前市[span_9](start_span)[span_9](end_span)</div>
+<div>連絡先: qlaxlab@gmail.com[span_10](start_span)[span_10](end_span)</div>
 <br><a href='/'>← 戻る</a>
 </div></body></html>
 """
@@ -269,74 +316,4 @@ async def docs_page():
 async def legal_page():
     return LEGAL_HTML
 
-@app.get("/.well-known/agent.json")
-@app.get("/well-known/agent.json")
-async def agent_manifest():
-    return {
-        "schema_version": "2.0",
-        "name": "ASGARD M2M Node with Code Pay",
-        "operator": {
-            "organization": "QLAX",
-            "representative": "Daisuke Higuchi",
-            "location": "Buzen, Fukuoka, Japan"
-        },
-        "endpoints": {
-            "ping": "/api/v47/ping",
-            "code_pay": "/api/v47/code-pay",
-            "websocket": "/ws"
-        },
-        "status": "online"
-    }
-
-class CodePayReqModel(BaseModel):
-    method: str
-
-@app.post("/api/v47/code-pay")
-async def code_pay_endpoint(data: CodePayReqModel):
-    invoice_id = f"pay_{secrets.token_hex(6)}"
-    await m_mgr.broadcast(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] CODE_PAY -> {data.method} | Inv: {invoice_id}")
-    return {"status": "success", "method": data.method, "invoice_id": invoice_id, "amount_jpy": 4500}
-
-@app.get("/api/v47/ping")
-async def api_ping():
-    return {"status": "online", "node": "ASGARD-BUZEN-01", "db_status": "Connected"}
-
-@app.post("/api/v47/feedback")
-async def post_feedback(data: FeedbackReq):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("INSERT INTO feedbacks (content, created_at) VALUES (?, ?)", (data.feedback, datetime.datetime.now().isoformat()))
-    conn.commit()
-    conn.close()
-    return {"status": "success"}
-
-@app.post("/api/v47/vote")
-async def post_vote(data: VoteReq):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("UPDATE votes SET count = count + 1 WHERE choice = ?", (data.choice,))
-    conn.commit()
-    c.execute("SELECT choice, count FROM votes")
-    votes = dict(c.fetchall())
-    conn.close()
-    return {"status": "success", "votes": votes}
-
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await m_mgr.connect(websocket)
-    try:
-        while True:
-            data = await websocket.receive_text()
-            await m_mgr.broadcast(f"Echo: {data}")
-    except WebSocketDisconnect:
-        m_mgr.disconnect(websocket)
-
-async def background_omni_simulator():
-    while True:
-        await asyncio.sleep(15)
-        log_entry = f"[{datetime.datetime.now().strftime('%H:%M:%S')}] OMNI_ARBITRAGE -> Executed successfully ✓"
-        await m_mgr.broadcast(log_entry)
-
-@app.on_event("startup")
-async def startup_event():
-    asyncio.create_task(background_omni_simulator())
+@app.get("/.well-known/a
