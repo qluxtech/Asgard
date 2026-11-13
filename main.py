@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="49.0")
+app = FastAPI(title="ASGARD", version="50.0")
 DB_PATH = "asgard.db"
 
 def init_db():
@@ -100,7 +100,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 <div class='bar'>
-<span class='bitem'>SYSTEM: ONLINE (v49.0)</span>
+<span class='bitem'>SYSTEM: ONLINE (v50.0)</span>
 <span class='bitem'>CODE_PAY: ENABLED</span>
 <span class='bitem'>DB: SQLITE_LIVE</span>
 </div>
@@ -200,43 +200,48 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 8. 企業情報セクション（絶対に一番下に配置）[span_0](start_span)[span_0](end_span) -->
+<!-- 8. 企業情報セクション（一番下に完璧に配置） -->
 <div class='sec'>
 <h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>
 <div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>
 <p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
-<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_1](start_span)[span_1](end_span)。</p>
-<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_2](start_span)[span_2](end_span)</p>
+<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_0](start_span)[span_0](end_span)。</p>
+<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_1](start_span)[span_1](end_span)</p>
 </div>
 </div>
 
-<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_3](start_span)[span_3](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_4](start_span)[span_4](end_span) / 豊前市[span_5](start_span)[span_5](end_span).</div>
+<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_2](start_span)[span_2](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_3](start_span)[span_3](end_span) / 豊前市[span_4](start_span)[span_4](end_span).</div>
 </div>
 </div>
 
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
 async function triggerCodePay(method){
-  const r=await fetch('/api/v49/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
+  const r=await fetch('/api/v50/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
   const d=await r.json();
   alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v49/state');
+    const r=await fetch('/api/v50/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;
-    document.getElementById('auctionList').innerHTML=d.auctions.map(a=>`[${a.created_at}] ${a.agent_name}: ${a.task_desc} (${a.bid_bsv} BSV)`).join('<br>');
+    let html = '';
+    for(let i=0; i<d.auctions.length; i++){
+      let a = d.auctions[i];
+      html += '[' + a.created_at + '] ' + a.agent_name + ': ' + a.task_desc + ' (' + a.bid_bsv + ' BSV)<br>';
+    }
+    document.getElementById('auctionList').innerHTML = html;
   }catch(e){}
 }
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v49/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v50/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
 }
 async function voteGov(choice){
-  const r=await fetch('/api/v49/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
+  const r=await fetch('/api/v50/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
 }
@@ -245,7 +250,7 @@ async function submitBid(){
   const tk=document.getElementById('bidTask').value||'Compute';
   const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
   try{
-    await fetch('/api/v49/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
+    await fetch('/api/v50/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
     document.getElementById('bidTask').value=''; loadState();
   }catch(e){}
 }
@@ -280,9 +285,9 @@ h1{color:#c084fc;font-size:1.2rem;} pre{background:#05050a;padding:8px;color:#10
 <h1>ASGARD Complete API Docs</h1>
 <p><a href='/'>← 戻る</a></p>
 <h2>1. Code Payment API</h2>
-<pre>POST /api/v49/code-pay</pre>
+<pre>POST /api/v50/code-pay</pre>
 <h2>2. Task Auction API</h2>
-<pre>POST /api/v49/auction/bid</pre>
+<pre>POST /api/v50/auction/bid</pre>
 </div></body></html>
 """
 
@@ -294,11 +299,11 @@ LEGAL_HTML = """<!DOCTYPE html>
 h1{color:#c084fc;font-size:1.1rem;} div{font-size:0.8rem;color:#94a3b8;padding:6px 0;border-bottom:1px solid #1e1b4b;} a{color:#38bdf8;}</style>
 </head>
 <body><div class='box'>
-<h1>特定商取引法に基づく表記[span_6](start_span)[span_6](end_span)</h1>
-<div>事業者名: QLAX[span_7](start_span)[span_7](end_span)</div>
-<div>運営責任者: Daisuke Higuchi[span_8](start_span)[span_8](end_span)</div>
-<div>所在地: 福岡県豊前市[span_9](start_span)[span_9](end_span)</div>
-<div>連絡先: qlaxlab@gmail.com[span_10](start_span)[span_10](end_span)</div>
+<h1>特定商取引法に基づく表記[span_5](start_span)[span_5](end_span)</h1>
+<div>事業者名: QLAX[span_6](start_span)[span_6](end_span)</div>
+<div>運営責任者: Daisuke Higuchi[span_7](start_span)[span_7](end_span)</div>
+<div>所在地: 福岡県豊前市[span_8](start_span)[span_8](end_span)</div>
+<div>連絡先: qlaxlab@gmail.com[span_9](start_span)[span_9](end_span)</div>
 <br><a href='/'>← 戻る</a>
 </div></body></html>
 """
@@ -313,7 +318,4 @@ async def docs_page():
 
 @app.get("/legal", response_class=HTMLResponse)
 async def legal_page():
-    return LEGAL_HTML
-
-@app.get("/.well-known/agent.json")
-@app.get("/well
+  
