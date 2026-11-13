@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="55.0")
+app = FastAPI(title="ASGARD", version="56.0")
 DB_PATH = "asgard.db"
 
 def init_db():
@@ -75,9 +75,10 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .sec{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
 .sec h2{font-size:0.75rem;margin:0 0 8px 0;color:var(--purple);display:flex;justify-content:space-between;align-items:center;}
 .tag{background:#1e1b4b;color:var(--purple);padding:2px 6px;border-radius:4px;font-size:0.5rem;border:1px solid #7e22ce;}
+.g2{display:grid;grid-template-columns:repeat(2, 1fr);gap:6px;}
 .g3{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;}
 .g4{display:grid;grid-template-columns:repeat(4, 1fr);gap:6px;}
-@media(max-width:768px){.g4{grid-template-columns:repeat(2, 1fr);}}
+@media(max-width:768px){.g4{grid-template-columns:repeat(2, 1fr);}.g3{grid-template-columns:repeat(1, 1fr);}}
 .box{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:6px;font-size:0.58rem;}
 .pcard{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;text-align:center;display:flex;flex-direction:column;justify-content:space-between;}
 .pcard.feat{border-color:var(--purple);background:linear-gradient(135deg, #0d0d1a, #180e30);}
@@ -96,7 +97,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 <div class='bar'>
-<span class='bitem'>SYSTEM: ONLINE (v55.0)</span>
+<span class='bitem'>SYSTEM: ONLINE (v56.0)</span>
 <span class='bitem'>CODE_PAY: ENABLED</span>
 <span class='bitem'>DB: SQLITE_LIVE</span>
 </div>
@@ -152,7 +153,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 5. God-Tier Autonomous Economic Core (完全復元版データ群) -->
+<!-- 5. God-Tier Autonomous Economic Core (完全復元・整理されたデータ群) -->
 <div class='sec'>
 <h2>God-Tier Autonomous Economic Core <span class='tag'>ACTIVE</span></h2>
 <div class='g4' style='margin-bottom:8px;'>
@@ -162,7 +163,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>登録ノード</div><div id='liveUsers' style='font-size:0.65rem;color:var(--blue);font-weight:bold'>128 nodes</div></div>
 </div>
 
-<!-- 暗号資産ウォレットグリッド -->
+<!-- 暗号資産ウォレットグリッド (4つ) -->
 <div class='g4' style='margin-bottom:8px;'>
 <div class='box'><div><strong>Bitcoin</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac'></div><div class='addr'>bc1q94rkd...d7zac</div><a href='https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac' target='_blank' class='btn'>Mempool</a></div>
 <div class='box'><div><strong>Solana</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>
@@ -170,7 +171,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='box'><div><strong>Bitcoin SV</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95'></div><div class='addr'>1PB66iHot...y95</div><a href='https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95' target='_blank' class='btn'>WhatsOnChain</a></div>
 </div>
 
-<!-- 追加されたオラクル・API接続カード群 (復元完了) -->
+<!-- オラクル・API接続カード群 (3つ) -->
 <div class='g3'>
 <div class='box'>
   <div style='font-size:0.52rem;color:var(--purple);font-weight:bold;'>Mock API / M2M</div>
@@ -217,30 +218,30 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 8. 企業情報セクション（一番下に完璧に配置）[span_0](start_span)[span_0](end_span)-->
+<!-- 8. 企業情報セクション（タグ崩れ完全修正・一番下に配置） -->
 <div class='sec'>
 <h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>
 <div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>
 <p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
-<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_1](start_span)[span_1](end_span)。</p>
-<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_2](start_span)[span_2](end_span)</p>
+<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_0](start_span)[span_0](end_span)。</p>
+<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_1](start_span)[span_1](end_span)</p>
 </div>
 </div>
 
-<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_3](start_span)[span_3](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_4](start_span)[span_4](end_span) / 豊前市[span_5](start_span)[span_5](end_span).</div>
+<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_2](start_span)[span_2](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_3](start_span)[span_3](end_span) / 豊前市[span_4](start_span)[span_4](end_span).</div>
 </div>
 </div>
 
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
 async function triggerCodePay(method){
-  const r=await fetch('/api/v55/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
+  const r=await fetch('/api/v56/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
   const d=await r.json();
   alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v55/state');
+    const r=await fetch('/api/v56/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;
     let html = '';
@@ -254,11 +255,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v55/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v56/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
 }
 async function voteGov(choice){
-  const r=await fetch('/api/v55/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
+  const r=await fetch('/api/v56/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
 }
@@ -267,7 +268,7 @@ async function submitBid(){
   const tk=document.getElementById('bidTask').value||'Compute';
   const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
   try{
-    await fetch('/api/v55/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
+    await fetch('/api/v56/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
     document.getElementById('bidTask').value=''; loadState();
   }catch(e){}
 }
@@ -298,6 +299,3 @@ DOCS_HTML = """<!DOCTYPE html>
 .box{max-width:700px;width:100%;background:#0d0d1a;border:1px solid #1e1b4b;padding:20px;border-radius:8px;}
 h1{color:#c084fc;font-size:1.2rem;} pre{background:#05050a;padding:8px;color:#10b981;font-size:0.7rem;overflow-x:auto;} a{color:#38bdf8;}</style>
 </head>
-<body><div class='box'>
-<h1>ASGARD Complete API Docs</h1>
-<p><a href='/'>← 戻る<
