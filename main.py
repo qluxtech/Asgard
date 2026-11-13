@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="50.0")
+app = FastAPI(title="ASGARD", version="52.0")
 DB_PATH = "asgard.db"
 
 def init_db():
@@ -17,7 +17,7 @@ def init_db():
     c.execute("SELECT COUNT(*) FROM auctions")
     if c.fetchone()[0] == 0:
         c.execute("INSERT INTO auctions (agent_name, task_desc, bid_bsv, created_at) VALUES (?, ?, ?, ?)",
-                  ("Agent_Alpha", "Cross-Chain Routing", 0.045, datetime.datetime.now().strftime("%H:%M:%S")))
+                  ("Agent_Alpha", "Cross-Chain Routing #704", 0.045, datetime.datetime.now().strftime("%H:%M:%S")))
     conn.commit()
     conn.close()
 
@@ -60,6 +60,7 @@ class ConnectionManager:
 
 m_mgr = ConnectionManager()
 
+# --- パープルに統一されたハイエンド統合版 HTMLテンプレート ---
 HTML_PAGE = """<!DOCTYPE html>
 <html lang='ja'>
 <head>
@@ -67,17 +68,17 @@ HTML_PAGE = """<!DOCTYPE html>
 <meta name='viewport' content='width=device-width,initial-scale=1.0'>
 <title>ASGARD / M2M Complete Economic Infrastructure</title>
 <style>
-:root{--bg:#05050a;--card:#0d0d1a;--border:#1e1b4b;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}
+:root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--purple-glow:rgba(192,132,252,0.25);--green:#10b981;--gold:#facc15;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
-.bar{width:100%;background:#000;border-bottom:1px solid #2a275f;padding:6px 10px;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;font-family:monospace;font-size:0.55rem;}
-.bitem{background:#0a0a16;padding:2px 6px;border-radius:3px;border:1px solid #1e1b4b;color:#10b981;font-weight:bold;}
+.bar{width:100%;background:#030307;border-bottom:1px solid var(--border);padding:6px 10px;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;font-family:monospace;font-size:0.55rem;}
+.bitem{background:#0d0d1a;padding:2px 6px;border-radius:3px;border:1px solid var(--border);color:var(--purple);font-weight:bold;}
 .nav{width:100%;max-width:950px;display:flex;justify-content:space-between;align-items:center;padding:10px;box-sizing:border-box;border-bottom:1px solid var(--border);}
-.logo{font-size:0.8rem;font-weight:bold;color:var(--purple);}
-.hero{width:100%;padding:20px 10px;text-align:center;background:radial-gradient(circle at 50% 20%, rgba(192,132,252,0.18), transparent 75%);border-bottom:1px solid var(--border);}
-.hero h1{font-size:1.1rem;font-weight:800;margin:0 0 6px;color:#fff;}
+.logo{font-size:0.8rem;font-weight:bold;color:var(--purple);letter-spacing:0.5px;}
+.hero{width:100%;padding:22px 10px;text-align:center;background:radial-gradient(circle at 50% 20%, rgba(147,51,234,0.22), transparent 75%);border-bottom:1px solid var(--border);}
+.hero h1{font-size:1.1rem;font-weight:800;margin:0 0 6px;color:#fff;background:linear-gradient(135deg, #fff 30%, #c084fc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .hero p{font-size:0.6rem;color:var(--muted);max-width:650px;margin:0 auto;line-height:1.3;}
 .wrap{width:100%;max-width:950px;padding:10px;box-sizing:border-box;}
-.sec{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;}
+.sec{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
 .sec h2{font-size:0.75rem;margin:0 0 8px 0;color:var(--purple);display:flex;justify-content:space-between;align-items:center;}
 .tag{background:#1e1b4b;color:var(--purple);padding:2px 6px;border-radius:4px;font-size:0.5rem;border:1px solid #7e22ce;}
 .g3{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;}
@@ -85,11 +86,12 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 @media(max-width:768px){.g4{grid-template-columns:repeat(2, 1fr);}}
 .box{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:6px;font-size:0.58rem;}
 .pcard{background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;text-align:center;display:flex;flex-direction:column;justify-content:space-between;}
-.pcard.feat{border-color:var(--purple);background:#0e091d;}
-.btn{background:#1e1b4b;color:var(--text);border:1px solid var(--border);padding:4px 8px;border-radius:4px;font-size:0.55rem;cursor:pointer;text-align:center;text-decoration:none;display:block;font-weight:600;margin-top:4px;}
-.btn.blue{background:var(--blue);color:#05050a;border:none;}
-.btn.pur{background:linear-gradient(135deg, #9333ea, #c084fc);color:#fff;border:none;}
-.btn.pay{background:linear-gradient(135deg, #f59e0b, #d97706);color:#fff;border:none;}
+.pcard.feat{border-color:var(--purple);background:linear-gradient(135deg, #0d0d1a, #180e30);}
+.btn{background:#1e1b4b;color:var(--text);border:1px solid var(--border);padding:4px 8px;border-radius:4px;font-size:0.55rem;cursor:pointer;text-align:center;text-decoration:none;display:block;font-weight:600;margin-top:4px;transition:all 0.2s;}
+.btn:hover{border-color:var(--purple);background:#2e1065;}
+.btn.blue{background:#0369a1;color:#fff;border:none;}
+.btn.pur{background:linear-gradient(135deg, #7e22ce, #c084fc);color:#fff;border:none;}
+.btn.pay{background:linear-gradient(135deg, #6b21a8, #9333ea);color:#fff;border:1px solid #c084fc;}
 .qr{background:#fff;padding:2px;width:30px;height:30px;margin:4px auto;border-radius:3px;display:flex;}
 .qr img{width:100%;height:100%;}
 .addr{font-family:monospace;font-size:0.45rem;background:#0f0f1d;padding:2px;border-radius:3px;word-break:break-all;color:var(--muted);text-align:center;}
@@ -100,14 +102,14 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 <div class='bar'>
-<span class='bitem'>SYSTEM: ONLINE (v50.0)</span>
+<span class='bitem'>SYSTEM: ONLINE (v52.0)</span>
 <span class='bitem'>CODE_PAY: ENABLED</span>
 <span class='bitem'>DB: SQLITE_LIVE</span>
 </div>
 <div class='nav'>
 <div class='logo'>ASGARD / QLAX</div>
 <div style='display:flex;gap:4px;'>
-<a href='/docs' class='btn' style='margin:0;color:var(--blue);border-color:var(--blue);'>API Docs</a>
+<a href='/docs' class='btn' style='margin:0;color:var(--purple);border-color:var(--border);'>API Docs</a>
 </div>
 </div>
 <div class='hero'>
@@ -125,14 +127,14 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='cli' style='color:var(--gold);margin-bottom:0;'><span>docker run -d --name asgard-node qlax/asgard-core</span><button class='btn' style='margin:0;padding:2px 6px;' onclick='copyCmd("docker run -d --name asgard-node qlax/asgard-core")'>コピー</button></div>
 </div>
 
-<!-- 2. Global & Code Payment Gateway -->
-<div class='sec' style='border-color:var(--gold);background:#0e0d1a;'>
-<h2>💳 Global & Code Payment Gateway <span class='tag' style='background:#d97706;color:#fff;'>au PAY / Alipay</span></h2>
+<!-- 2. Global & Code Payment Gateway (紫トーンに統一) -->
+<div class='sec' style='border-color:#7e22ce;background:linear-gradient(135deg, #0d0d1a, #130a24);'>
+<h2>💳 Global & Code Payment Gateway <span class='tag' style='background:#581c87;color:#c084fc;'>au PAY / Alipay</span></h2>
 <div style='font-size:0.58rem;color:var(--muted);margin-bottom:8px;'>APIサブスクリプションやノード利用権を、au PAY・Alipay・Stripe等で即時決済できます。</div>
 <div class='g3'>
-<div class='pcard'><div><strong>au PAY 決済</strong><div style='font-size:0.5rem;color:var(--gold);margin:4px 0'>au WALLET連携</div></div><button class='btn pay' onclick='triggerCodePay("au PAY")'>au PAYで支払う</button></div>
-<div class='pcard'><div><strong>Alipay (支付宝)</strong><div style='font-size:0.5rem;color:var(--gold);margin:4px 0'>クロスボーダー</div></div><button class='btn blue' onclick='triggerCodePay("Alipay")'>Alipayで支払う</button></div>
-<div class='pcard'><div><strong>Stripe Gateway</strong><div style='font-size:0.5rem;color:var(--gold);margin:4px 0'>マルチ通貨対応</div></div><button class='btn blue' onclick='triggerCodePay("Stripe")'>決済ゲートウェイ</button></div>
+<div class='pcard'><div><strong>au PAY 決済</strong><div style='font-size:0.5rem;color:var(--purple);margin:4px 0'>au WALLET連携</div></div><button class='btn pay' onclick='triggerCodePay("au PAY")'>au PAYで支払う</button></div>
+<div class='pcard'><div><strong>Alipay (支付宝)</strong><div style='font-size:0.5rem;color:var(--purple);margin:4px 0'>クロスボーダー</div></div><button class='btn pur' onclick='triggerCodePay("Alipay")'>Alipayで支払う</button></div>
+<div class='pcard'><div><strong>Stripe Gateway</strong><div style='font-size:0.5rem;color:var(--purple);margin:4px 0'>マルチ通貨対応</div></div><button class='btn blue' onclick='triggerCodePay("Stripe")'>決済ゲートウェイ</button></div>
 </div>
 </div>
 
@@ -150,9 +152,9 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='sec'>
 <h2>Enterprise Node Tier & Subscriptions <span class='tag'>LIVE</span></h2>
 <div class='g3'>
-<div class='pcard'><div><strong>Free Tier</strong><div style='font-size:0.75rem;color:var(--gold);margin:3px 0'>FREE</div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• 1,000 Req/mo<br>• Standard Access</div></div><button class='btn' onclick='alert("Free Tier Activated")'>無料発行</button></div>
+<div class='pcard'><div><strong>Free Tier</strong><div style='font-size:0.75rem;color:var(--purple);margin:3px 0'>FREE</div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• 1,000 Req/mo<br>• Standard Access</div></div><button class='btn' onclick='alert("Free Tier Activated")'>無料発行</button></div>
 <div class='pcard feat'><div><strong style='color:var(--purple)'>Autonomous Pro</strong><div style='font-size:0.75rem;color:var(--gold);margin:3px 0'>$29<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Unlimited Req<br>• Zero Latency</div></div><button class='btn pur' onclick='triggerCodePay("Autonomous Pro")'>購入する ↗</button></div>
-<div class='pcard'><div><strong>Enterprise</strong><div style='font-size:0.75rem;color:var(--gold);margin:3px 0'>$299<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Swarm Core<br>• SLA 100%</div></div><button class='btn blue' onclick='triggerCodePay("Enterprise")'>ライセンス ↗</button></div>
+<div class='pcard'><div><strong>Enterprise</strong><div style='font-size:0.75rem;color:var(--purple);margin:3px 0'>$299<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Swarm Core<br>• SLA 100%</div></div><button class='btn blue' onclick='triggerCodePay("Enterprise")'>ライセンス ↗</button></div>
 </div>
 </div>
 
@@ -182,14 +184,14 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <!-- 7. Feedback & Governance & Live Auction -->
 <div class='sec'>
 <h2>ENTERPRISE FEEDBACK, GOVERNANCE & LIVE AUCTION <span class='tag'>DB</span></h2>
-<div style='display:flex;gap:6px'><input type='text' id='feedbackInput' class='inp' style='flex:1;' placeholder='フィードバックを入力...'><button class='btn blue' style='margin:0;width:60px' onclick='sendFeedback()'>送信</button></div>
+<div style='display:flex;gap:6px'><input type='text' id='feedbackInput' class='inp' style='flex:1;' placeholder='フィードバックを入力...'><button class='btn pur' style='margin:0;width:60px' onclick='sendFeedback()'>送信</button></div>
 <div style='margin-top:10px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>
 <div style='font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;'>🌐 SWARM GOVERNANCE VOTING</div>
-<div style='display:flex;gap:6px;'><button class='btn blue' style='flex:1;margin:0;' onclick='voteGov("YES")'>賛成 (YES)</button><button class='btn pay' style='flex:1;margin:0;' onclick='voteGov("NO")'>反対 (NO)</button></div>
+<div style='display:flex;gap:6px;'><button class='btn blue' style='flex:1;margin:0;' onclick='voteGov("YES")'>賛成 (YES)</button><button class='btn pur' style='flex:1;margin:0;' onclick='voteGov("NO")'>反対 (NO)</button></div>
 <div id='voteResult' style='font-size:0.52rem;color:var(--green);margin-top:6px;font-family:monospace;'>賛成: 1420 | 反対: 18</div>
 </div>
 <div style='margin-top:8px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;'>
-<div style='font-size:0.6rem;color:var(--gold);font-weight:bold;margin-bottom:4px;'>🤖 LIVE AGENT TASK AUCTION</div>
+<div style='font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;'>🤖 LIVE AGENT TASK AUCTION</div>
 <div style='display:flex;gap:4px;margin-bottom:6px;'>
 <input type='text' id='bidAgent' class='inp' style='width:30%;' placeholder='Agent名'>
 <input type='text' id='bidTask' class='inp' style='width:40%;' placeholder='タスク内容'>
@@ -200,30 +202,30 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 8. 企業情報セクション（一番下に完璧に配置） -->
+<!-- 8. 企業情報セクション（絶対に一番下に配置）[span_0](start_span)[span_0](end_span) -->
 <div class='sec'>
 <h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>
 <div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>
 <p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
-<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_0](start_span)[span_0](end_span)。</p>
-<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_1](start_span)[span_1](end_span)</p>
+<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_1](start_span)[span_1](end_span)。</p>
+<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_2](start_span)[span_2](end_span)</p>
 </div>
 </div>
 
-<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_2](start_span)[span_2](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_3](start_span)[span_3](end_span) / 豊前市[span_4](start_span)[span_4](end_span).</div>
+<div style='text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0'>© ASGARD Infrastructure[span_3](start_span)[span_3](end_span) | 運営者: QLAX (Daisuke Higuchi)[span_4](start_span)[span_4](end_span) / 豊前市[span_5](start_span)[span_5](end_span).</div>
 </div>
 </div>
 
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
 async function triggerCodePay(method){
-  const r=await fetch('/api/v50/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
+  const r=await fetch('/api/v52/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
   const d=await r.json();
   alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v50/state');
+    const r=await fetch('/api/v52/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;
     let html = '';
@@ -237,11 +239,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v50/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v52/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
 }
 async function voteGov(choice){
-  const r=await fetch('/api/v50/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
+  const r=await fetch('/api/v52/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
 }
@@ -250,7 +252,7 @@ async function submitBid(){
   const tk=document.getElementById('bidTask').value||'Compute';
   const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
   try{
-    await fetch('/api/v50/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
+    await fetch('/api/v52/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
     document.getElementById('bidTask').value=''; loadState();
   }catch(e){}
 }
@@ -285,9 +287,9 @@ h1{color:#c084fc;font-size:1.2rem;} pre{background:#05050a;padding:8px;color:#10
 <h1>ASGARD Complete API Docs</h1>
 <p><a href='/'>← 戻る</a></p>
 <h2>1. Code Payment API</h2>
-<pre>POST /api/v50/code-pay</pre>
+<pre>POST /api/v52/code-pay</pre>
 <h2>2. Task Auction API</h2>
-<pre>POST /api/v50/auction/bid</pre>
+<pre>POST /api/v52/auction/bid</pre>
 </div></body></html>
 """
 
@@ -299,23 +301,6 @@ LEGAL_HTML = """<!DOCTYPE html>
 h1{color:#c084fc;font-size:1.1rem;} div{font-size:0.8rem;color:#94a3b8;padding:6px 0;border-bottom:1px solid #1e1b4b;} a{color:#38bdf8;}</style>
 </head>
 <body><div class='box'>
-<h1>特定商取引法に基づく表記[span_5](start_span)[span_5](end_span)</h1>
-<div>事業者名: QLAX[span_6](start_span)[span_6](end_span)</div>
-<div>運営責任者: Daisuke Higuchi[span_7](start_span)[span_7](end_span)</div>
-<div>所在地: 福岡県豊前市[span_8](start_span)[span_8](end_span)</div>
-<div>連絡先: qlaxlab@gmail.com[span_9](start_span)[span_9](end_span)</div>
-<br><a href='/'>← 戻る</a>
-</div></body></html>
-"""
-
-@app.get("/", response_class=HTMLResponse)
-async def index():
-    return HTML_PAGE
-
-@app.get("/docs", response_class=HTMLResponse)
-async def docs_page():
-    return DOCS_HTML
-
-@app.get("/legal", response_class=HTMLResponse)
-async def legal_page():
-  
+<h1>特定商取引法に基づく表記[span_6](start_span)[span_6](end_span)</h1>
+<div>事業者名: QLAX[span_7](start_span)[span_7](end_span)</div>
+<div>運営
