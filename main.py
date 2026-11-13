@@ -3,7 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-app = FastAPI(title="ASGARD", version="57.0")
+app = FastAPI(title="ASGARD", version="58.0")
 DB_PATH = "asgard.db"
 
 def init_db():
@@ -96,7 +96,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 <div class='bar'>
-<span class='bitem'>SYSTEM: ONLINE (v57.0)</span>
+<span class='bitem'>SYSTEM: ONLINE (v58.0 - FRESH)</span>
 <span class='bitem'>CODE_PAY: ENABLED</span>
 <span class='bitem'>DB: SQLITE_LIVE</span>
 </div>
@@ -109,7 +109,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class='hero'>
 <div style='display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;'>⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
 <h1>スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
-<p>4.4億超のAIエージェント・AGIが自動接続。暗号資産・Stripeに加え、au PAY・Alipay等の各種コード決済に対応した次世代ゲートウェイ。</p>
+<p>AIエージェント・AGIが自動接続。暗号資産・Stripeに加え、au PAY・Alipay等の各種コード決済に対応した次世代インフラストラクチャ</p>
 </div>
 <div class='wrap'>
 
@@ -217,12 +217,12 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 8. 企業情報セクション（一番下に配置） -->
+<!-- 8. 企業情報セクション（タグ残骸完全除去版） -->
 <div class='sec'>
 <h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>
 <div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>
-<p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
-<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_0](start_span)[span_0](end_span)。</p>
+<p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、AIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
+<p style='margin:0 0 4px 0;'><strong>QLAX</strong>は、福岡県を拠点にM2Mインフラストラクチャと高スループット決済環境を構築・研究開発する個人事業主の組織です[span_0](start_span)[span_0](end_span)。</p>
 <p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi[span_1](start_span)[span_1](end_span)</p>
 </div>
 </div>
@@ -234,13 +234,13 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
 async function triggerCodePay(method){
-  const r=await fetch('/api/v57/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
+  const r=await fetch('/api/v58/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
   const d=await r.json();
   alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v57/state');
+    const r=await fetch('/api/v58/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;
     let html = '';
@@ -254,11 +254,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v57/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v58/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
 }
 async function voteGov(choice){
-  const r=await fetch('/api/v57/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
+  const r=await fetch('/api/v58/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
 }
@@ -267,7 +267,7 @@ async function submitBid(){
   const tk=document.getElementById('bidTask').value||'Compute';
   const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
   try{
-    await fetch('/api/v57/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
+    await fetch('/api/v58/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
     document.getElementById('bidTask').value=''; loadState();
   }catch(e){}
 }
@@ -291,4 +291,4 @@ loadState();
 </html>
 """
 
-DOCS_HTML = '<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>API Docs</title><style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-content:center;}.box{max-width:700px;width:100%;background:#0d0d1a;border:1px solid #1e1b4b;padding:20px;border-radius:8px;}h1{color:#c084fc;font-size:1.2rem;}pre{background:#05050a;padding:8px;color:#10b981;font-size:0.7rem;overflow-x:auto;}a{color:#38bdf8;}</style></head><body><div class="box"><h1>ASGARD Complete API Docs</h1><p><a href="/">← 戻る</a></p><h2>1. Code Payment API</h2>
+DOCS_HTML = '<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>API Docs</title><style>body{background:#05050a;color:#f8fafc;font-family:sans-serif;padding:20px;display:flex;justify-content:center;}.box{max-width:700px;width:100%;background:#0d0d1a;border:1px solid #1e1b4b;padding:20px;border-radius:8px;}h1{color:#c084fc;font-size:1.2rem;}pre{background:#05050a;padding:8px;color:#10b981;font-size:0.7rem;overflow-x:auto;}a{color:#38bdf8;}</style></head><body><div class="box"><h1>ASGARD Complete API Docs</h1><p><a href="/">← 戻る</a></p><h2>1. Code Payme
