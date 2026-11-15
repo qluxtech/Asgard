@@ -66,10 +66,10 @@ async def lifespan(app: FastAPI):
     yield
     task.cancel()
 
-app = FastAPI(title="ASGARD", version="71.0", lifespan=lifespan)
+app = FastAPI(title="ASGARD", version="73.0", lifespan=lifespan)
 
 def get_html():
-    p1 = [
+    s1 = [
         "<!DOCTYPE html><html lang='ja'><head><meta charset='UTF-8'>",
         "<meta name='viewport' content='width=device-width,initial-scale=1.0'>",
         "<title>ASGARD / M2M Complete Economic Infrastructure</title><style>",
@@ -104,7 +104,7 @@ def get_html():
         ".inp{background:#05050a;border:1px solid var(--border);border-radius:4px;padding:5px;color:#fff;font-size:0.58rem;box-sizing:border-box;}",
         "</style></head><body>"
     ]
-    p2 = [
+    s2 = [
         "<div class='top-tags'>",
         "<span class='ttag'>VAPORLOCK: ACTIVE</span>",
         "<span class='ttag'>AUTOPILOT: 100% RUN</span>",
@@ -126,7 +126,7 @@ def get_html():
         "</div>",
         "<div class='wrap'>"
     ]
-    p3 = [
+    s3 = [
         "<div class='sec'><h2>ASGARD Installation Suite <span class='tag'>SETUP</span></h2>",
         "<div class='cli' style='color:var(--blue);'><span>asgard install --node-core</span><button class='btn' style='margin:0;padding:2px 6px;' onclick='copyCmd(1)'>コピー</button></div>",
         "<div class='cli' style='color:var(--green);'><span>pip install asgard-m2m-swarm</span><button class='btn' style='margin:0;padding:2px 6px;' onclick='copyCmd(2)'>コピー</button></div>",
@@ -145,7 +145,7 @@ def get_html():
         "<div class='box'><strong style='color:var(--purple)'>STEP 03</strong><br>自律サービス開始</div>",
         "</div></div>"
     ]
-    p4 = [
+    s4 = [
         "<div class='sec'><h2>Enterprise Node Tier & Subscriptions <span class='tag'>LIVE</span></h2><div class='g3'>",
         "<div class='pcard'><div><strong>Free Tier</strong><div style='font-size:0.75rem;color:var(--purple);margin:3px 0'>FREE</div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• 1,000 Req/mo<br>• Standard Access</div></div><button class='btn' onclick='alert(1)'>無料発行</button></div>",
         "<div class='pcard feat'><div><strong style='color:var(--purple)'>Autonomous Pro</strong><div style='font-size:0.75rem;color:var(--gold);margin:3px 0'>$29<span style='font-size:0.45rem'>/mo</span></div><div style='font-size:0.48rem;color:var(--muted);text-align:left'>• Unlimited Req<br>• Zero Latency</div></div><button class='btn pur' onclick='triggerPay(4)'>購入する ↗</button></div>",
@@ -155,11 +155,11 @@ def get_html():
         "<div class='g4' style='margin-bottom:8px;'>",
         "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>埋蔵残高</div><div id='liveIngestion' style='font-size:0.65rem;color:var(--green);font-weight:bold'>$94,800,120.00</div></div>",
         "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>アクティブエージェント</div><div id='liveAgents' style='font-size:0.65rem;color:var(--green);font-weight:bold'>442,050,910 units</div></div>",
-        "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>効率</div><div style='font-size:0.65rem;color:var(--green);font-weight:bold'>99.99%</div></div>",
+        "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>効率</div><div style='font-size:0.65rem;color:var(--green);font-weight:bold">99.99%</div></div>",
         "<div class='box' style='text-align:center'><div style='font-size:0.45rem;color:var(--muted)'>登録ノード</div><div style='font-size:0.65rem;color:var(--blue);font-weight:bold'>128 nodes</div></div>",
         "</div>"
     ]
-    p5 = [
+    s5 = [
         "<div class='g4' style='margin-bottom:8px;'>",
         "<div class='box'><div><strong>Bitcoin</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac'></div><div class='addr'>bc1q94rkd...d7zac</div><a href='https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac' target='_blank' class='btn'>Mempool</a></div>",
         "<div class='box'><div><strong>Solana</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf'></div><div class='addr'>75igwQpPg...7nf</div><a href='https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf' target='_blank' class='btn'>Solscan</a></div>",
@@ -171,9 +171,9 @@ def get_html():
         "<div class='box'><div style='font-size:0.52rem;color:var(--purple);font-weight:bold;'>aws kinesis / SACK</div><div style='font-size:0.48rem;color:var(--muted);margin:2px 0;'>リアルタイムストリーム</div><button class='btn blue' onclick='alert(3)'>同期テスト</button></div>",
         "<div class='box'><div style='font-size:0.52rem;color:var(--purple);font-weight:bold;'>Stripe PYT</div><div style='font-size:0.48rem;color:var(--muted);margin:2px 0;'>フィアット・決済基盤</div><button class='btn pay' onclick='triggerPay(6)'>決済管理へ</button></div>",
         "</div>",
-        "<div class='box' style='font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;'><span>Quantum Oracle PLT [v71.0]</span><span style='color:var(--green);'>autonomous: active (0.00ms)</span></div></div>"
+        "<div class='box' style='font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;'><span>Quantum Oracle PLT [v73.0]</span><span style='color:var(--green);'>autonomous: active (0.00ms)</span></div></div>"
     ]
-    p6 = [
+    s6 = [
         "<div class='sec'><h2>OMNI-SYNAPSE LIVE STREAM <span class='tag'>WS</span></h2><div class='stream' id='streamLog'>[INIT] WebSocket connected.</div></div>",
         "<div class='sec'><h2>ENTERPRISE FEEDBACK, GOVERNANCE & LIVE AUCTION <span class='tag'>DB</span></h2>",
         "<div style='display:flex;gap:6px'><input type='text' id='feedbackInput' class='inp' style='flex:1;' placeholder='フィードバックを入力...'><button class='btn pur' style='margin:0;width:60px' onclick='sendFeedback()'>送信</button></div>",
@@ -190,7 +190,7 @@ def get_html():
         "<button class='btn pur' style='margin:0;width:15%;' onclick='submitBid()'>入札</button></div>",
         "<div id='auctionList' style='font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:6px;border-radius:3px;max-height:60px;overflow-y:auto;'>読込中...</div></div></div>"
     ]
-    p7 = [
+    s7 = [
         "<div class='sec'><h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>",
         "<div style='font-size:0.6rem;color:var(--muted);line-height:1.4;'>",
         "<p style='margin:0 0 4px 0;'><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>",
@@ -202,8 +202,8 @@ def get_html():
         "const CMDS={1:'asgard install --node-core',2:'pip install asgard-m2m-swarm',3:'docker run -d --name asgard-node qlax/asgard-core'};",
         "const PAYS={1:'au PAY',2:'Alipay',3:'Stripe',4:'Autonomous Pro',5:'Enterprise',6:'Stripe PYT'};",
         "function copyCmd(id){navigator.clipboard.writeText(CMDS[id]);alert('コピー完了');}",
-        "async function triggerPay(id){const m=PAYS[id];const r=await fetch('/api/v71/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});const d=await r.json();alert(d.method+' / ID:'+d.invoice_id+' / '+d.amount_jpy+' JPY');}",
-        "async function loadState(){try{const r=await fetch('/api/v71/state');const d=await r.json();document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;let h='';for(let i=0;i<d.auctions.length;i++){let a=d.auctions[i];h+='['+a.created_at+'] '+a.agent_name+': '+a.task_desc+' ('+a.bid_bsv+' BSV)<br>';}document.getElementById('auctionList').innerHTML=h;}catch(e){}}",
-        "async function sendFeedback(){const v=document.getElementById('feedbackInput').value;if(!v)return;await fetch('/api/v71/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});alert('送信完了');document.getElementById('feedbackInput').value='';}",
-        "async function voteGov(v){const c=v===1?'YES':'NO';const r=await fetch('/api/v71/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});const d=await r.json();document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;}",
-        "async function submitBid(){const ag=document.getElementById('bidAgent').value||'Agent_1';const tk=document.getElementById('bidTask').value||'Compute';const am=parseFloat(document.getElementById('bidAmount').value)||0.05;try{await fetch('/api/v71/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});document.getElementById('bidTa
+        "async function triggerPay(id){const m=PAYS[id];const r=await fetch('/api/v73/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});const d=await r.json();alert(d.method+' / ID:'+d.invoice_id+' / '+d.amount_jpy+' JPY');}",
+        "async function loadState(){try{const r=await fetch('/api/v73/state');const d=await r.json();document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;let h='';for(let i=0;i<d.auctions.length;i++){let a=d.auctions[i];h+='['+a.created_at+'] '+a.agent_name+': '+a.task_desc+' ('+a.bid_bsv+' BSV)<br>';}document.getElementById('auctionList').innerHTML=h;}catch(e){}}",
+        "async function sendFeedback(){const v=document.getElementById('feedbackInput').value;if(!v)return;await fetch('/api/v73/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});alert('送信完了');document.getElementById('feedbackInput').value='';}",
+        "async function voteGov(v){const c=v===1?'YES':'NO';const r=await fetch('/api/v73/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});const d=await r.json();document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;}",
+        "async function submitBid(){const ag=document.getElementById('bidAgent').value||'Agent_1';const tk=document.getElementById('bidTask').value||'Compute';const am=parseFloat(document.getElementById('bidAmount').value)||0.05;try{await fetch('/api/v73/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});document.getElementById('bidTa
