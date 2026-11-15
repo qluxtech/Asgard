@@ -236,8 +236,8 @@ a{color:#38bdf8;text-decoration:none;}
 <table>
 <tr><th>事業者名</th><td>QLAX</td></tr>
 <tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
-<tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
-<tr><th>連絡先 / お問い合わせ</th><td>メールアドレスまたはプラットフォーム内サポート窓口よりご連絡ください。</td></tr>
+<tr><th>所在地</th><td>〒828-0000 福岡県（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
+<tr><th>連絡先 qlaxlabs@gmail.com/ お問い合わせ</th><td>メールアドレスまたはプラットフォーム内サポート窓口よりご連絡ください。</td></tr>
 <tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月、Enterprise: $299/月、その他API・ノード利用権に基づく）</td></tr>
 <tr><th>商品代金以外の必要料金</th><td>ネットワーク手数料、決済手数料（ご利用の決済手段により異なります）</td></tr>
 <tr><th>代金の支払い方法</th><td>クレジットカード（Stripe）、暗号資産（Bitcoin / BSV, Solana, Ethereum）、各種コード決済（au PAY, Alipay）</td></tr>
