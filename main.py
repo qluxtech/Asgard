@@ -20,7 +20,7 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="75.0")
+app = FastAPI(title="ASGARD", version="76.0")
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -36,7 +36,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .nav{width:100%;max-width:950px;display:flex;justify-content:space-between;align-items:center;padding:10px;box-sizing:border-box;border-bottom:1px solid var(--border);}
 .logo{font-size:0.8rem;font-weight:bold;color:var(--purple);letter-spacing:0.5px;}
 .hero{width:100%;padding:20px 10px;text-align:center;background:radial-gradient(circle at 50% 20%, rgba(147,51,234,0.22), transparent 75%);border-bottom:1px solid var(--border);}
-.hero h1{font-size:1.1rem;font-weight:800;margin:0 0 6px;color:#fff;background:linear-gradient(135deg, #fff 30%, #c084fc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero h1{font-size:1.35rem;font-weight:900;letter-spacing:-0.02em;margin:0 0 8px;color:#fff;background:linear-gradient(135deg, #fff 40%, #c084fc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 10px rgba(192,132,252,0.35));}
 .hero p{font-size:0.6rem;color:var(--muted);max-width:650px;margin:0 auto;line-height:1.3;}
 .wrap{width:100%;max-width:950px;padding:10px;box-sizing:border-box;}
 .sec{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
@@ -82,9 +82,8 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 
 <div class="hero">
 <div style="display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
-<h1>スマートコントラクトの制約を打破する。
-ミリ秒駆動・AI自律経済プラットフォーム「ASGARD」<br>自律型AI M2M経済インフラストラクチャ</h1>
-<p>4.4億超のAIエージェント・AGIが自動接続。暗号資産・Stripeに加え、au PAY・Alipay等の各種コード決済に対応した次世代ゲートウェイ。</p>
+<h1>スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
+<p>福岡県を拠点に、数億規模のAIエージェント・自律型AGIがリアルタイムで接続する次世代M2Mインフラストラクチャ。ミリ秒駆動のトランザクションとマルチ通貨決済環境を提供します。</p>
 </div>
 
 <div class="wrap">
@@ -139,7 +138,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong>Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v75.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v76.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -155,9 +154,8 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="sec">
 <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
 <div style="font-size:0.6rem;color:var(--muted);line-height:1.4;">
-<p style="margin:0 0 4px 0;"><strong>ASGARD</strong>は、​AIエージェント間の自律取引を支える高スループット決済・インフラ基盤
-​福岡県を拠点とし、AI・自律エージェント間のトランザクションを自動化するM2Mインフラストラクチャの開発を手掛けています。ブロックチェーン、フィアット決済、各種コード決済をシームレスにブリッジする堅牢なアーキテクチャにより、次世代の高速かつセキュアな自動決済・経済圏の構築を実現します。</p>
-<p style="margin:0 0 4px 0;"><strong>QLAX</strong>は、福岡県を拠点にM2Mインフラストラクチャ,自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>
+<p style="margin:0 0 4px 0;"><strong>ASGARD</strong>は、数億のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
+<p style="margin:0 0 4px 0;"><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>
 <p style="margin:0;"><strong>運営責任者:</strong> Daisuke Higuchi</p>
 </div>
 </div>
@@ -168,13 +166,13 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v75/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v76/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   alert(d.method+' / ID:'+d.invoice_id+' / '+d.amount_jpy+' JPY');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v75/state');
+    const r=await fetch('/api/v76/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
   }catch(e){}
@@ -182,11 +180,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v75/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v76/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v75/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v76/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
@@ -213,7 +211,45 @@ async def docs_page():
 
 @app.get("/legal", response_class=HTMLResponse)
 async def legal_page():
-    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>特定商取引法に基づく表記</h1><p>事業者名: QLAX / 運営責任者: Daisuke Higuchi / 所在地: 福岡県豊前市</p><a href='/' style='color:#38bdf8;'>← 戻る</a></body></html>"
+    return """
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>特定商取引法に基づく表記 / ASGARD</title>
+<style>
+body{background:#05050a;color:#f8fafc;font-family:sans-serif;margin:0;padding:20px;line-height:1.6;font-size:0.75rem;}
+.container{max-width:800px;margin:0 auto;background:#0d0d1a;border:1px solid #2a2356;border-radius:8px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
+h1{font-size:1.1rem;color:#c084fc;margin-bottom:15px;border-bottom:1px solid #2a2356;padding-bottom:8px;}
+table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+th,td{padding:10px;border-bottom:1px solid #2a2356;text-align:left;vertical-align:top;}
+th{width:30%;color:#94a3b8;font-size:0.7rem;}
+td{color:#f8fafc;font-size:0.72rem;}
+a{color:#38bdf8;text-decoration:none;}
+.back{display:inline-block;margin-top:10px;background:#1e1b4b;color:#f8fafc;padding:6px 12px;border-radius:4px;border:1px solid #7e22ce;}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>特定商取引法に基づく表記</h1>
+<table>
+<tr><th>事業者名</th><td>QLAX</td></tr>
+<tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
+<tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
+<tr><th>連絡先 / お問い合わせ</th><td>メールアドレスまたはプラットフォーム内サポート窓口よりご連絡ください。</td></tr>
+<tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月、Enterprise: $299/月、その他API・ノード利用権に基づく）</td></tr>
+<tr><th>商品代金以外の必要料金</th><td>ネットワーク手数料、決済手数料（ご利用の決済手段により異なります）</td></tr>
+<tr><th>代金の支払い方法</th><td>クレジットカード（Stripe）、暗号資産（Bitcoin / BSV, Solana, Ethereum）、各種コード決済（au PAY, Alipay）</td></tr>
+<tr><th>代金の支払い時期</th><td>各サービスお申し込み時、およびサブスクリプション毎月の更新時に即時決済されます。</td></tr>
+<tr><th>サービス提供時期（引き渡し時期）</th><td>決済完了後、即時（リアルタイム / 0.00ms）にAPIエンドポイントおよびノード権限が解放・提供されます。</td></tr>
+<tr><th>返品・キャンセルに関する特約</th><td>デジタルインフラストラクチャおよびAPIサービスの性質上、購入完了後の返品、換金、キャンセル、返金には応じられません。あらかじめご了承ください。</td></tr>
+</table>
+<a href="/" class="back">← メイン画面へ戻る</a>
+</div>
+</body>
+</html>
+"""
 
 @app.get("/.well-known/agent.json")
 @app.get("/well-known/agent.json")
@@ -229,11 +265,11 @@ async def agent_manifest():
         "status": "online"
     }
 
-@app.post("/api/v75/code-pay")
+@app.post("/api/v76/code-pay")
 async def code_pay_endpoint(data: dict):
-    return {"status": "success", "method": data.get("method"), "invoice_id": "inv_75", "amount_jpy": 4500}
+    return {"status": "success", "method": data.get("method"), "invoice_id": "inv_76", "amount_jpy": 4500}
 
-@app.get("/api/v75/state")
+@app.get("/api/v76/state")
 async def get_system_state():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
@@ -242,11 +278,11 @@ async def get_system_state():
     conn.close()
     return {"votes": votes}
 
-@app.post("/api/v75/feedback")
+@app.post("/api/v76/feedback")
 async def post_feedback(data: dict):
     return {"status": "success"}
 
-@app.post("/api/v75/vote")
+@app.post("/api/v76/vote")
 async def post_vote(data: dict):
     choice = data.get("choice")
     conn = sqlite3.connect(DB_PATH)
