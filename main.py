@@ -20,9 +20,9 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="92.0")
+app = FastAPI(title="ASGARD", version="93.0")
 
-HTML_PAGE = """<!DOCTYPE html>
+HTML_INDEX = """<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -32,7 +32,6 @@ HTML_PAGE = """<!DOCTYPE html>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;--red:#ef4444;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
 
-/* 幅を広く持たせ、データ群タグをズラッと並べるスタイル */
 .top-tags{width:100%;max-width:1100px;background:#030307;border-bottom:1px solid var(--border);padding:10px 12px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
 .ttag{background:#130a24;border:1px solid #7e22ce;color:var(--purple);padding:6px 10px;border-radius:6px;font-family:monospace;font-size:0.75rem;font-weight:bold;box-shadow:0 2px 10px rgba(126,34,206,0.4);white-space:nowrap;}
 
@@ -169,7 +168,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong style="font-size:1rem;">Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v92.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v93.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -186,12 +185,12 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
 <div style="font-size:1rem;color:var(--muted);line-height:1.7;">
 <p style="margin:0 0 8px 0;"><strong>ASGARD</strong>は、数億のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
-<p style="margin:0 0 8px 0;"><strong>QLAX</strong>は、福岡県を拠点にM2M経済インフラストラクチャや自律アービトラージと高スループット決済環境を構築・研究開発する組織です。</p>
+<p style="margin:0 0 8px 0;"><strong>QLAX</strong>は、福岡県を拠点にM2M経済自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>
 <p style="margin:0;"><strong>運営責任者:</strong> Daisuke Higuchi</p>
 </div>
 </div>
 
-<div style="text-align:center;font-size:0.8rem;color:var(--muted);padding:10px 0">© ASGARD Infrastructure | 運営者: QLAX / </div>
+<div style="text-align:center;font-size:0.8rem;color:var(--muted);padding:10px 0">© ASGARD Infrastructure | 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
 </div>
 
 <div id="payModal">
@@ -206,7 +205,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v92/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v93/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   document.getElementById('modalBody').innerHTML='決済手段: <b style="color:var(--purple)">'+d.method+'</b><br>インボイスID: <span style="font-family:monospace;color:var(--green)">'+d.invoice_id+'</span><br>請求金額: <span style="color:var(--gold);font-weight:bold;font-size:1.6rem;">'+d.amount_jpy+' JPY</span>';
   document.getElementById('modalQr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+d.invoice_id+'_'+d.method+'">';
@@ -216,7 +215,7 @@ function closeModal(){
   document.getElementById('payModal').style.display='none';
 }
 async function triggerDrain(){
-  const r=await fetch('/api/v92/drain',{method:'POST'});
+  const r=await fetch('/api/v93/drain',{method:'POST'});
   const d=await r.json();
   alert('ドレイン実行成功: 収益プールの全額 ('+d.drained_amount+') がウォレットへ送金されました。');
   loadState();
@@ -228,7 +227,7 @@ async function triggerKillSwitch(){
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v92/state');
+    const r=await fetch('/api/v93/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
     document.getElementById('taxPool').innerText='$'+d.tax_pool.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -237,11 +236,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v92/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v93/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v92/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v93/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
@@ -258,9 +257,11 @@ loadState();
 </html>
 """
 
+app = FastAPI(title="ASGARD", version="93.0")
+
 @app.get("/", response_class=HTMLResponse)
 async def index():
-    return HTML_PAGE
+    return HTML_INDEX
 
 @app.get("/docs", response_class=HTMLResponse)
 async def docs_page():
@@ -292,4 +293,4 @@ a{color:#38bdf8;text-decoration:none;}
 <h1>特定商取引法に基づく表記</h1>
 <table>
 <tr><th>事業者名</th><td>QLAX</td></tr>
-<tr><th>運営責任者</th>
+<t
