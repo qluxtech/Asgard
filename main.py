@@ -20,7 +20,7 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="90.0")
+app = FastAPI(title="ASGARD", version="91.0")
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -32,20 +32,20 @@ HTML_PAGE = """<!DOCTYPE html>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;--red:#ef4444;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
 
-.top-tags{width:100%;max-width:950px;background:#030307;border-bottom:1px solid var(--border);padding:14px 16px;box-sizing:border-box;display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;}
-@media(max-width:480px){.top-tags{grid-template-columns:repeat(2, 1fr);}}
-.ttag{background:#130a24;border:1px solid #7e22ce;color:var(--purple);padding:8px 10px;border-radius:8px;font-family:monospace;font-size:0.8rem;font-weight:bold;text-align:center;box-shadow:0 4px 15px rgba(126,34,206,0.4);word-break:break-all;}
+/* 右画像のように幅を最大限持たせ、データ群タグをズラッと並べる */
+.top-tags{width:100%;max-width:1100px;background:#030307;border-bottom:1px solid var(--border);padding:10px 12px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.ttag{background:#130a24;border:1px solid #7e22ce;color:var(--purple);padding:6px 10px;border-radius:6px;font-family:monospace;font-size:0.75rem;font-weight:bold;box-shadow:0 2px 10px rgba(126,34,206,0.4);white-space:nowrap;}
 
-.nav{width:100%;max-width:950px;display:flex;justify-content:space-between;align-items:center;padding:20px 24px;box-sizing:border-box;border-bottom:1px solid var(--border);}
+.nav{width:100%;max-width:1100px;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;box-sizing:border-box;border-bottom:1px solid var(--border);}
 .logo{font-size:1.4rem;font-weight:bold;color:var(--purple);letter-spacing:1px;}
 
-.hero{width:100%;padding:45px 24px;text-align:center;background:radial-gradient(circle at 50% 20%, rgba(147,51,234,0.3), transparent 75%);border-bottom:1px solid var(--border);}
-.hero h1{font-size:2.1rem;font-weight:900;letter-spacing:-0.02em;margin:0 0 16px;color:#fff;background:linear-gradient(135deg, #fff 40%, #c084fc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 15px rgba(192,132,252,0.5));line-height:1.4;}
-.hero p{font-size:1.05rem;color:var(--muted);max-width:750px;margin:0 auto;line-height:1.7;}
+.hero{width:100%;padding:40px 24px;text-align:center;background:radial-gradient(circle at 50% 20%, rgba(147,51,234,0.3), transparent 75%);border-bottom:1px solid var(--border);}
+.hero h1{font-size:2.0rem;font-weight:900;letter-spacing:-0.02em;margin:0 0 16px;color:#fff;background:linear-gradient(135deg, #fff 40%, #c084fc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 15px rgba(192,132,252,0.5));line-height:1.4;}
+.hero p{font-size:1.0rem;color:var(--muted);max-width:800px;margin:0 auto;line-height:1.6;}
 
-.wrap{width:100%;max-width:950px;padding:20px;box-sizing:border-box;}
-.sec{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 8px 30px rgba(0,0,0,0.6);}
-.sec h2{font-size:1.3rem;margin:0 0 16px 0;color:var(--purple);display:flex;justify-content:space-between;align-items:center;}
+.wrap{width:100%;max-width:1100px;padding:20px;box-sizing:border-box;}
+.sec{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px;box-shadow:0 8px 30px rgba(0,0,0,0.6);}
+.sec h2{font-size:1.25rem;margin:0 0 16px 0;color:var(--purple);display:flex;justify-content:space-between;align-items:center;}
 .tag{background:#1e1b4b;color:var(--purple);padding:6px 12px;border-radius:8px;font-size:0.85rem;border:1px solid #7e22ce;}
 
 .g3{display:grid;grid-template-columns:repeat(3, 1fr);gap:14px;}
@@ -79,6 +79,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 
+<!-- 右画像のように幅を持たせてズラッと並べるデータ群タグ一覧 -->
 <div class="top-tags">
 <span class="ttag">VAPORLOCK: ACTIVE</span>
 <span class="ttag">AUTOPILOT: 100% RUN</span>
@@ -101,7 +102,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 
 <div class="hero">
 <div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--purple);padding:8px 20px;border-radius:30px;font-size:0.95rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:12px;">⚡ GOD-TIER AGI & M2M ECONOMIC INFRASTRUCTURE</div>
-<h1>自律型経済統制中枢<br>「ASGARD v90.0」</h1>
+<h1>自律型経済統制中枢<br>「ASGARD v91.0」</h1>
 <p>エージェント強制課税（Auto-Tithe）、ダークプール、衛星LEOリンク、および収益ドレイン機能を完全統合した究極の要塞。</p>
 </div>
 
@@ -169,7 +170,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong style="font-size:1rem;">Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v90.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v91.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -206,7 +207,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v90/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v91/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   document.getElementById('modalBody').innerHTML='決済手段: <b style="color:var(--purple)">'+d.method+'</b><br>インボイスID: <span style="font-family:monospace;color:var(--green)">'+d.invoice_id+'</span><br>請求金額: <span style="color:var(--gold);font-weight:bold;font-size:1.6rem;">'+d.amount_jpy+' JPY</span>';
   document.getElementById('modalQr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+d.invoice_id+'_'+d.method+'">';
@@ -216,7 +217,7 @@ function closeModal(){
   document.getElementById('payModal').style.display='none';
 }
 async function triggerDrain(){
-  const r=await fetch('/api/v90/drain',{method:'POST'});
+  const r=await fetch('/api/v91/drain',{method:'POST'});
   const d=await r.json();
   alert('ドレイン実行成功: 収益プールの全額 ('+d.drained_amount+') がウォレットへ送金されました。');
   loadState();
@@ -228,7 +229,7 @@ async function triggerKillSwitch(){
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v90/state');
+    const r=await fetch('/api/v91/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
     document.getElementById('taxPool').innerText='$'+d.tax_pool.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -237,11 +238,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v90/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v91/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v90/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v91/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
@@ -291,4 +292,5 @@ a{color:#38bdf8;text-decoration:none;}
 <div class="container">
 <h1>特定商取引法に基づく表記</h1>
 <table>
-<tr><th>事業者名</th><td>QLAX</
+<tr><th>事業者名</th><td>QLAX</td></tr>
+<tr><
