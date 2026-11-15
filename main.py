@@ -162,7 +162,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
 <div style="font-size:1.0rem;color:var(--muted);line-height:1.7;">
 <p style="margin:0 0 8px 0;"><strong>ASGARD</strong>は、数億のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
-<p style="margin:0 0 8px 0;"><strong>QLAX</strong>は、福岡県を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する組織です。</p>
+<p style="margin:0 0 8px 0;"><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>
 <p style="margin:0;"><strong>運営責任者:</strong> Daisuke Higuchi</p>
 </div>
 </div>
