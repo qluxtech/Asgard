@@ -1,6 +1,7 @@
 import os
 import datetime
 import sqlite3
+import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
@@ -20,7 +21,7 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="82.0")
+app = FastAPI(title="ASGARD", version="83.0")
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -134,7 +135,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
 <div class="g3">
 <div class="pcard"><div><strong style="font-size:1.1rem;">Free Tier</strong><div style="font-size:1.3rem;color:var(--purple);margin:8px 0">FREE</div><div style="font-size:0.85rem;color:var(--muted);text-align:left">• 1,000 Req/mo<br>• Standard Access</div></div><button class="btn" onclick="alert('Free Tier Active')">無料発行</button></div>
-<div class="pcard feat"><div><strong style="color:var(--purple);font-size:1.1rem;">Autonomous Pro</strong><div style="font-size:1.3rem;color:var(--gold);margin:8px 0">$29<span style="font-size:0.7rem">/mo</span></div><div style="font-size:0.85rem;color:var(--muted);text-align:left">• Unlimited Req<br>• Zero Latency</div></div><button class="btn pur" onclick="payTrigger('Autonomous Pro')">購入する ↗</button></div>
+<div class="pcard feat"><div><strong style="font-size:1.1rem;color:var(--purple);">Autonomous Pro</strong><div style="font-size:1.3rem;color:var(--gold);margin:8px 0">$29<span style="font-size:0.7rem">/mo</span></div><div style="font-size:0.85rem;color:var(--muted);text-align:left">• Unlimited Req<br>• Zero Latency</div></div><button class="btn pur" onclick="payTrigger('Autonomous Pro')">購入する ↗</button></div>
 <div class="pcard"><div><strong style="font-size:1.1rem;">Enterprise</strong><div style="font-size:1.3rem;color:var(--purple);margin:8px 0">$299<span style="font-size:0.7rem">/mo</span></div><div style="font-size:0.85rem;color:var(--muted);text-align:left">• Swarm Core<br>• SLA 100%</div></div><button class="btn blue" onclick="payTrigger('Enterprise')">ライセンス ↗</button></div>
 </div>
 </div>
@@ -155,7 +156,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong style="font-size:1rem;">Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v82.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v83.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -193,7 +194,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v82/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v83/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   document.getElementById('modalBody').innerHTML='決済手段: <b style="color:var(--purple)">'+d.method+'</b><br>インボイスID: <span style="font-family:monospace;color:var(--green)">'+d.invoice_id+'</span><br>請求金額: <span style="color:var(--gold);font-weight:bold;font-size:1.6rem;">'+d.amount_jpy+' JPY</span>';
   document.getElementById('modalQr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+d.invoice_id+'_'+d.method+'">';
@@ -204,7 +205,7 @@ function closeModal(){
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v82/state');
+    const r=await fetch('/api/v83/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
   }catch(e){}
@@ -212,11 +213,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v82/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v83/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v82/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v83/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
@@ -268,7 +269,7 @@ a{color:#38bdf8;text-decoration:none;}
 <table>
 <tr><th>事業者名</th><td>QLAX</td></tr>
 <tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
-<tr><th>所在地</th><td>〒828-0000 福岡県（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
+<tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
 <tr><th>連絡先 / お問い合わせ</th><td>メールアドレスまたはプラットフォーム内サポート窓口よりご連絡ください。</td></tr>
 <tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月、Enterprise: $299/月、その他API・ノード利用権に基づく）</td></tr>
 <tr><th>商品代金以外の必要料金</th><td>ネットワーク手数料、決済手数料（ご利用の決済手段により異なります）</td></tr>
@@ -297,6 +298,6 @@ async def agent_manifest():
         "status": "online"
     }
 
-@app.post("/api/v82/code-pay")
+@app.post("/api/v83/code-pay")
 async def code_pay_endpoint(data: dict):
-    return {"status": "success",
+    return {"stat
