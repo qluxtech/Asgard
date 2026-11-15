@@ -20,7 +20,7 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="88.0")
+app = FastAPI(title="ASGARD", version="90.0")
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -32,7 +32,6 @@ HTML_PAGE = """<!DOCTYPE html>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;--red:#ef4444;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
 
-/* スマホでも綺麗にタイル状に並ぶデータ群グリッド */
 .top-tags{width:100%;max-width:950px;background:#030307;border-bottom:1px solid var(--border);padding:14px 16px;box-sizing:border-box;display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;}
 @media(max-width:480px){.top-tags{grid-template-columns:repeat(2, 1fr);}}
 .ttag{background:#130a24;border:1px solid #7e22ce;color:var(--purple);padding:8px 10px;border-radius:8px;font-family:monospace;font-size:0.8rem;font-weight:bold;text-align:center;box-shadow:0 4px 15px rgba(126,34,206,0.4);word-break:break-all;}
@@ -69,7 +68,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .cli{background:#05050a;border:1px solid var(--border);padding:16px 18px;border-radius:8px;font-family:monospace;font-size:0.9rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .inp{background:#05050a;border:1px solid var(--border);border-radius:8px;padding:14px;color:#fff;font-size:1rem;box-sizing:border-box;}
 
-/* 決済モーダルポップアップ */
 #payModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,10,0.96);z-index:999;justify-content:center;align-items:center;padding:16px;box-sizing:border-box;}
 .modal-content{background:#0d0d1a;border:4px solid var(--purple);border-radius:24px;padding:40px 20px;width:100%;max-width:520px;text-align:center;box-shadow:0 0 100px rgba(192,132,252,0.8);}
 .modal-title{font-size:1.8rem;color:var(--purple);font-weight:bold;margin-bottom:20px;letter-spacing:1px;}
@@ -81,7 +79,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 
-<!-- AIエージェントスウォームが欲しがるデータ群一覧（スマホ対応グリッド） -->
 <div class="top-tags">
 <span class="ttag">VAPORLOCK: ACTIVE</span>
 <span class="ttag">AUTOPILOT: 100% RUN</span>
@@ -104,12 +101,11 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 
 <div class="hero">
 <div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--purple);padding:8px 20px;border-radius:30px;font-size:0.95rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:12px;">⚡ GOD-TIER AGI & M2M ECONOMIC INFRASTRUCTURE</div>
-<h1>自律型経済統制中枢<br>「ASGARD v88.0」</h1>
+<h1>自律型経済統制中枢<br>「ASGARD v90.0」</h1>
 <p>エージェント強制課税（Auto-Tithe）、ダークプール、衛星LEOリンク、および収益ドレイン機能を完全統合した究極の要塞。</p>
 </div>
 
 <div class="wrap">
-<!-- ワンタップ・クイック収益ドレイン & 強制課税プロトコル -->
 <div class="sec" style="border-color:var(--gold);background:linear-gradient(135deg, #0d0d1a, #1c150a);">
 <h2>⚡ 収益コントロール & 自動課税 <span class="tag" style="background:#451a03;color:var(--gold);">ACTIVE</span></h2>
 <div class="g3">
@@ -148,7 +144,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- Enterprise Node Tier & Subscriptions -->
 <div class="sec">
 <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
 <div class="g3">
@@ -174,7 +169,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong style="font-size:1rem;">Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v88.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v90.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -199,7 +194,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div style="text-align:center;font-size:0.8rem;color:var(--muted);padding:10px 0">© ASGARD Infrastructure | 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
 </div>
 
-<!-- 決済モーダルポップアップ -->
 <div id="payModal">
 <div class="modal-content">
 <div class="modal-title">💳 決済インプレッション発行</div>
@@ -212,7 +206,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v88/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v90/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   document.getElementById('modalBody').innerHTML='決済手段: <b style="color:var(--purple)">'+d.method+'</b><br>インボイスID: <span style="font-family:monospace;color:var(--green)">'+d.invoice_id+'</span><br>請求金額: <span style="color:var(--gold);font-weight:bold;font-size:1.6rem;">'+d.amount_jpy+' JPY</span>';
   document.getElementById('modalQr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+d.invoice_id+'_'+d.method+'">';
@@ -222,7 +216,7 @@ function closeModal(){
   document.getElementById('payModal').style.display='none';
 }
 async function triggerDrain(){
-  const r=await fetch('/api/v88/drain',{method:'POST'});
+  const r=await fetch('/api/v90/drain',{method:'POST'});
   const d=await r.json();
   alert('ドレイン実行成功: 収益プールの全額 ('+d.drained_amount+') がウォレットへ送金されました。');
   loadState();
@@ -234,7 +228,7 @@ async function triggerKillSwitch(){
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v88/state');
+    const r=await fetch('/api/v90/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
     document.getElementById('taxPool').innerText='$'+d.tax_pool.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -243,11 +237,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v88/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v90/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v88/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v90/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
@@ -290,4 +284,11 @@ th,td{padding:14px;border-bottom:1px solid #2a2356;text-align:left;vertical-alig
 th{width:32%;color:#94a3b8;font-size:1rem;}
 td{color:#f8fafc;font-size:1.05rem;}
 a{color:#38bdf8;text-decoration:none;}
-.back{display:inline-block;margin-top:18px;background:#1e1b4b
+.back{display:inline-block;margin-top:18px;background:#1e1b4b;color:#f8fafc;padding:12px 22px;border-radius:8px;border:1px solid #7e22ce;font-weight:bold;}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>特定商取引法に基づく表記</h1>
+<table>
+<tr><th>事業者名</th><td>QLAX</
