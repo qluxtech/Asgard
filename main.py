@@ -20,7 +20,7 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="81.0")
+app = FastAPI(title="ASGARD", version="82.0")
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -66,9 +66,9 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .cli{background:#05050a;border:1px solid var(--border);padding:16px 18px;border-radius:8px;font-family:monospace;font-size:0.9rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .inp{background:#05050a;border:1px solid var(--border);border-radius:8px;padding:14px;color:#fff;font-size:1rem;box-sizing:border-box;}
 
-/* スマホ画面を圧倒的に占拠する超巨大モーダル（約3倍強制スケール） */
-#payModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,10,0.96);z-index:999;justify-content:center;align-items:center;padding:10px;box-sizing:border-box;}
-.modal-content{background:#0d0d1a;border:4px solid var(--purple);border-radius:24px;padding:40px 20px;width:95%;max-width:600px;text-align:center;box-shadow:0 0 100px rgba(192,132,252,0.8);transform:scale(1.25);transform-origin:center;}
+/* 決済モーダルポップアップ */
+#payModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,10,0.96);z-index:999;justify-content:center;align-items:center;padding:16px;box-sizing:border-box;}
+.modal-content{background:#0d0d1a;border:4px solid var(--purple);border-radius:24px;padding:40px 20px;width:100%;max-width:520px;text-align:center;box-shadow:0 0 100px rgba(192,132,252,0.8);}
 .modal-title{font-size:1.8rem;color:var(--purple);font-weight:bold;margin-bottom:20px;letter-spacing:1px;}
 #modalBody{font-size:1.4rem;color:var(--text);margin-bottom:25px;line-height:1.8;}
 .modal-qr{background:#fff;padding:16px;width:280px;height:280px;margin:0 auto 25px auto;border-radius:14px;display:flex;}
@@ -155,7 +155,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong style="font-size:1rem;">Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v81.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v82.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -180,7 +180,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div style="text-align:center;font-size:0.8rem;color:var(--muted);padding:10px 0">© ASGARD Infrastructure | 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
 </div>
 
-<!-- 超巨大強制スケール・モーダルポップアップ -->
+<!-- モーダルポップアップ -->
 <div id="payModal">
 <div class="modal-content">
 <div class="modal-title">💳 決済インプレッション発行</div>
@@ -193,10 +193,10 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v81/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v82/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   document.getElementById('modalBody').innerHTML='決済手段: <b style="color:var(--purple)">'+d.method+'</b><br>インボイスID: <span style="font-family:monospace;color:var(--green)">'+d.invoice_id+'</span><br>請求金額: <span style="color:var(--gold);font-weight:bold;font-size:1.6rem;">'+d.amount_jpy+' JPY</span>';
-  document.getElementById('modalQr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=350x350&data='+d.invoice_id+'_'+d.method+'">';
+  document.getElementById('modalQr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+d.invoice_id+'_'+d.method+'">';
   document.getElementById('payModal').style.display='flex';
 }
 function closeModal(){
@@ -204,7 +204,7 @@ function closeModal(){
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v81/state');
+    const r=await fetch('/api/v82/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
   }catch(e){}
@@ -212,11 +212,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v81/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v82/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v81/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v82/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
@@ -268,7 +268,7 @@ a{color:#38bdf8;text-decoration:none;}
 <table>
 <tr><th>事業者名</th><td>QLAX</td></tr>
 <tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
-<tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
+<tr><th>所在地</th><td>〒828-0000 福岡県（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
 <tr><th>連絡先 / お問い合わせ</th><td>メールアドレスまたはプラットフォーム内サポート窓口よりご連絡ください。</td></tr>
 <tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月、Enterprise: $299/月、その他API・ノード利用権に基づく）</td></tr>
 <tr><th>商品代金以外の必要料金</th><td>ネットワーク手数料、決済手数料（ご利用の決済手段により異なります）</td></tr>
@@ -297,4 +297,6 @@ async def agent_manifest():
         "status": "online"
     }
 
-@app.post("/api/v81/code-pay"
+@app.post("/api/v82/code-pay")
+async def code_pay_endpoint(data: dict):
+    return {"status": "success",
