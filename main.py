@@ -20,7 +20,7 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="76.0")
+app = FastAPI(title="ASGARD", version="77.0")
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -57,6 +57,9 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .addr{font-family:monospace;font-size:0.45rem;background:#0f0f1d;padding:2px;border-radius:3px;word-break:break-all;color:var(--muted);text-align:center;}
 .cli{background:#05050a;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:monospace;font-size:0.5rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
 .inp{background:#05050a;border:1px solid var(--border);border-radius:4px;padding:5px;color:#fff;font-size:0.58rem;box-sizing:border-box;}
+/* 決済モーダル用スタイル */
+#payModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,10,0.85);z-index:999;justify-content:center;align-items:center;}
+.modal-content{background:#0d0d1a;border:1px solid var(--purple);border-radius:8px;padding:16px;width:90%;max-width:320px;text-align:center;box-shadow:0 0 30px rgba(192,132,252,0.3);}
 </style>
 </head>
 <body>
@@ -138,7 +141,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong>Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v76.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v77.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -163,16 +166,31 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div style="text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0">© ASGARD Infrastructure | 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
 </div>
 
+<!-- 決済確認用カスタムモーダル -->
+<div id="payModal">
+<div class="modal-content">
+<div style="font-size:0.75rem;color:var(--purple);font-weight:bold;margin-bottom:8px;">💳 決済インプレッション発行</div>
+<div id="modalBody" style="font-size:0.6rem;color:var(--text);margin-bottom:12px;line-height:1.4;"></div>
+<div class="qr"><img id="modalQr" src="" alt="QR"></div>
+<button class="btn pur" style="margin-top:12px;width:100%;" onclick="closeModal()">閉じる (スクショ可能)</button>
+</div>
+</div>
+
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v76/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v77/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
-  alert(d.method+' / ID:'+d.invoice_id+' / '+d.amount_jpy+' JPY');
+  document.getElementById('modalBody').innerHTML='決済手段: <b>'+d.method+'</b><br>インボイスID: <span style="font-family:monospace;color:var(--green)">'+d.invoice_id+'</span><br>請求金額: <span style="color:var(--gold);font-weight:bold;">'+d.amount_jpy+' JPY</span>';
+  document.getElementById('modalQr').src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data='+d.invoice_id+'_'+d.method;
+  document.getElementById('payModal').style.display='flex';
+}
+function closeModal(){
+  document.getElementById('payModal').style.display='none';
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v76/state');
+    const r=await fetch('/api/v77/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
   }catch(e){}
@@ -180,11 +198,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v76/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v77/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v76/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v77/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
@@ -236,8 +254,8 @@ a{color:#38bdf8;text-decoration:none;}
 <table>
 <tr><th>事業者名</th><td>QLAX</td></tr>
 <tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
-<tr><th>所在地</th><td>〒828-0000 福岡県（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
-<tr><th>連絡先 qlaxlabs@gmail.com/ お問い合わせ</th><td>メールアドレスまたはプラットフォーム内サポート窓口よりご連絡ください。</td></tr>
+<tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
+<tr><th>連絡先 / お問い合わせ</th><td>メールアドレスまたはプラットフォーム内サポート窓口よりご連絡ください。</td></tr>
 <tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月、Enterprise: $299/月、その他API・ノード利用権に基づく）</td></tr>
 <tr><th>商品代金以外の必要料金</th><td>ネットワーク手数料、決済手数料（ご利用の決済手段により異なります）</td></tr>
 <tr><th>代金の支払い方法</th><td>クレジットカード（Stripe）、暗号資産（Bitcoin / BSV, Solana, Ethereum）、各種コード決済（au PAY, Alipay）</td></tr>
@@ -265,11 +283,11 @@ async def agent_manifest():
         "status": "online"
     }
 
-@app.post("/api/v76/code-pay")
+@app.post("/api/v77/code-pay")
 async def code_pay_endpoint(data: dict):
-    return {"status": "success", "method": data.get("method"), "invoice_id": "inv_76", "amount_jpy": 4500}
+    return {"status": "success", "method": data.get("method"), "invoice_id": "inv_77", "amount_jpy": 4500}
 
-@app.get("/api/v76/state")
+@app.get("/api/v77/state")
 async def get_system_state():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
@@ -278,11 +296,11 @@ async def get_system_state():
     conn.close()
     return {"votes": votes}
 
-@app.post("/api/v76/feedback")
+@app.post("/api/v77/feedback")
 async def post_feedback(data: dict):
     return {"status": "success"}
 
-@app.post("/api/v76/vote")
+@app.post("/api/v77/vote")
 async def post_vote(data: dict):
     choice = data.get("choice")
     conn = sqlite3.connect(DB_PATH)
