@@ -80,7 +80,7 @@ async def lifespan(app: FastAPI):
     yield
     task.cancel()
 
-app = FastAPI(title="ASGARD", version="62.0", lifespan=lifespan)
+app = FastAPI(title="ASGARD", version="63.0", lifespan=lifespan)
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -122,15 +122,17 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </style>
 </head>
 <body>
+
+<!-- 上部ティッカーバー (右画像完全一致) -->
 <div class="ticker">
-<span class="titem">SYSTEM: LIVE (v62.0)</span>
 <span class="titem">VAPORLOCK: ACTIVE</span>
 <span class="titem">AUTOPILOT: 100% RUN</span>
 <span class="titem">SWARM-LOCK: 36.8K/SEC</span>
 <span class="titem">SYNAPSE: UNLOCKED</span>
 <span class="titem">LMMAS: 44.9TO</span>
 <span class="titem">NASA_L2: 100%</span>
-<span class="titem">DB: SQLITE_LIVE</span>
+<span class="titem">M2M_MEV: ACTIVE</span>
+<span class="titem">RAGE_SYNC</span>
 </div>
 
 <div class="nav">
@@ -149,6 +151,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 
 <div class="wrap">
 
+<!-- 1. Installation Suite -->
 <div class="sec">
 <h2>ASGARD Installation Suite <span class="tag">SETUP</span></h2>
 <div class="cli" style="color:var(--blue);"><span>asgard install --node-core</span><button class="btn" style="margin:0;padding:2px 6px;" onclick="copyCmd('asgard install --node-core')">コピー</button></div>
@@ -156,6 +159,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="cli" style="color:var(--gold);margin-bottom:0;"><span>docker run -d --name asgard-node qlax/asgard-core</span><button class="btn" style="margin:0;padding:2px 6px;" onclick="copyCmd('docker run -d --name asgard-node qlax/asgard-core')">コピー</button></div>
 </div>
 
+<!-- 2. Global & Code Payment Gateway -->
 <div class="sec" style="border-color:#7e22ce;background:linear-gradient(135deg, #0d0d1a, #130a24);">
 <h2>💳 Global & Code Payment Gateway <span class="tag" style="background:#581c87;color:#c084fc;">au PAY / Alipay</span></h2>
 <div style="font-size:0.58rem;color:var(--muted);margin-bottom:8px;">APIサブスクリプションやノード利用権を、au PAY・Alipay・Stripe等で即時決済できます。</div>
@@ -166,6 +170,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- 3. Quick Onboarding -->
 <div class="sec">
 <h2>3-Step Quick Onboarding <span class="tag">GUIDE</span></h2>
 <div class="g3">
@@ -175,6 +180,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- 4. Enterprise Node Tiers -->
 <div class="sec">
 <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
 <div class="g3">
@@ -184,6 +190,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- 5. God-Tier Autonomous Economic Core (完全データ群) -->
 <div class="sec">
 <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
 <div class="g4" style="margin-bottom:8px;">
@@ -193,6 +200,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box" style="text-align:center"><div style="font-size:0.45rem;color:var(--muted)">登録ノード</div><div id="liveUsers" style="font-size:0.65rem;color:var(--blue);font-weight:bold">128 nodes</div></div>
 </div>
 
+<!-- 暗号資産ウォレット (4種) -->
 <div class="g4" style="margin-bottom:8px;">
 <div class="box"><div><strong>Bitcoin</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac"></div><div class="addr">bc1q94rkd...d7zac</div><a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="btn">Mempool</a></div>
 <div class="box"><div><strong>Solana</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf"></div><div class="addr">75igwQpPg...7nf</div><a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="btn">Solscan</a></div>
@@ -200,20 +208,23 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong>Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
+<!-- API & オラクルデータ群 (3つ) -->
 <div class="g3" style="margin-bottom:8px;">
 <div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">Mock API / M2M</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">ハイパー・スループット</div><button class="btn pur" onclick="alert('Mock API Active ✓')">ステータス</button></div>
 <div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">aws kinesis / SACK</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">リアルタイムストリーム</div><button class="btn blue" onclick="alert('AWS Kinesis Synced ✓')">同期テスト</button></div>
 <div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">Stripe PYT</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">フィアット・決済基盤</div><button class="btn pay" onclick="triggerCodePay('Stripe PYT')">決済管理へ</button></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v62.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v63.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
+<!-- 6. Omni-Synapse Live Stream -->
 <div class="sec">
 <h2>OMNI-SYNAPSE LIVE STREAM <span class="tag">WS</span></h2>
 <div class="stream" id="streamLog">[INIT] Code Payment Gateway & WebSocket connected.</div>
 </div>
 
+<!-- 7. Feedback & Governance & Live Auction -->
 <div class="sec">
 <h2>ENTERPRISE FEEDBACK, GOVERNANCE & LIVE AUCTION <span class="tag">DB</span></h2>
 <div style="display:flex;gap:6px"><input type="text" id="feedbackInput" class="inp" style="flex:1;" placeholder="フィードバックを入力..."><button class="btn pur" style="margin:0;width:60px" onclick="sendFeedback()">送信</button></div>
@@ -234,6 +245,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- 8. 企業情報セクション (残骸完全除去版・一番下に配置) -->
 <div class="sec">
 <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
 <div style="font-size:0.6rem;color:var(--muted);line-height:1.4;">
@@ -249,13 +261,13 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
 async function triggerCodePay(method){
-  const r=await fetch('/api/v62/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
+  const r=await fetch('/api/v63/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
   const d=await r.json();
   alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v62/state');
+    const r=await fetch('/api/v63/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;
     let html = '';
@@ -269,11 +281,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v62/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v63/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
 }
 async function voteGov(choice){
-  const r=await fetch('/api/v62/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
+  const r=await fetch('/api/v63/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
 }
@@ -282,7 +294,7 @@ async function submitBid(){
   const tk=document.getElementById('bidTask').value||'Compute';
   const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
   try{
-    await fetch('/api/v62/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
+    await fetch('/api/v63/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
     document.getElementById('bidTask').value=''; loadState();
   }catch(e){}
 }
@@ -290,10 +302,4 @@ let bIng=94800120.0,bAg=442050910;
 setInterval(()=>{
   bIng+=Math.random()*100-30;
   bAg+=Math.floor(Math.random()*3)-1;
-  document.getElementById('liveIngestion').innerText='$' + bIng.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-  document.getElementById('liveAgents').innerText=bAg.toLocaleString() + ' units';
-},2000);
-const wsP=window.location.protocol==='https:'?'wss://':'ws://';
-const liveWs=new WebSocket(wsP+window.location.host+'/ws');
-liveWs.onmessage=function(e){
-  const s=document.getElementByI
+  document.getElementById('li
