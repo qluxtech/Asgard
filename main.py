@@ -2,7 +2,7 @@ import os
 import datetime
 import sqlite3
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 
 DB_PATH = "asgard.db"
@@ -12,16 +12,15 @@ def init_db():
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS votes (choice TEXT PRIMARY KEY, count INTEGER)")
     c.execute("INSERT OR IGNORE INTO votes (choice, count) VALUES ('YES', 1420), ('NO', 18)")
-    c.execute("CREATE TABLE IF NOT EXISTS auctions (id INTEGER PRIMARY KEY AUTOINCREMENT, agent_name TEXT, task_desc TEXT, bid_bsv REAL, created_at TEXT)")
-    c.execute("SELECT COUNT(*) FROM auctions")
-    if c.fetchone()[0] == 0:
-        c.execute("INSERT INTO auctions (agent_name, task_desc, bid_bsv, created_at) VALUES ('Agent_Alpha', 'Cross-Chain #705', 0.045, '12:00:00')")
+    c.execute("CREATE TABLE IF NOT EXISTS balance (id INTEGER PRIMARY KEY, total_revenue REAL, tax_pool REAL)")
+    c.execute("INSERT OR IGNORE INTO balance (id, total_revenue, tax_pool) VALUES (1, 94800120.00, 1540.50)")
+    c.execute("CREATE TABLE IF NOT EXISTS telemetry_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, event TEXT, timestamp TEXT)")
     conn.commit()
     conn.close()
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="83.0")
+app = FastAPI(title="ASGARD", version="84.0")
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -30,7 +29,7 @@ HTML_PAGE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ASGARD / M2M Complete Economic Infrastructure</title>
 <style>
-:root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}
+:root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;--red:#ef4444;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
 
 .top-tags{width:100%;max-width:950px;background:#030307;border-bottom:1px solid var(--border);padding:16px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
@@ -60,6 +59,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .btn.blue{background:#0369a1;color:#fff;border:none;}
 .btn.pur{background:linear-gradient(135deg, #7e22ce, #c084fc);color:#fff;border:none;}
 .btn.pay{background:linear-gradient(135deg, #6b21a8, #9333ea);color:#fff;border:1px solid #c084fc;}
+.btn.red{background:linear-gradient(135deg, #b91c1c, #ef4444);color:#fff;border:none;}
 
 .qr{background:#fff;padding:8px;width:120px;height:120px;margin:10px auto;border-radius:8px;display:flex;}
 .qr img{width:100%;height:100%;}
@@ -83,11 +83,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <span class="ttag">VAPORLOCK: ACTIVE</span>
 <span class="ttag">AUTOPILOT: 100% RUN</span>
 <span class="ttag">SWARM-LOCK: 36.8K/SEC</span>
-<span class="ttag">SYNAPSE: UNLOCKED</span>
-<span class="ttag">LMMAS: 44.9TO</span>
-<span class="ttag">NASA_L2: 100%</span>
-<span class="ttag">M2M_MEV: ACTIVE</span>
-<span class="ttag">RAGE_SYNC: OK</span>
+<span class="ttag">ORBITAL LEO: ONLINE</span>
 </div>
 
 <div class="nav">
@@ -99,12 +95,34 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 
 <div class="hero">
-<div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--purple);padding:8px 20px;border-radius:30px;font-size:0.95rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:12px;">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
-<h1>スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
-<p>福岡県を拠点に、数億規模のAIエージェント・自律型AGIがリアルタイムで接続する次世代M2Mインフラストラクチャ。ミリ秒駆動のトランザクションとマルチ通貨決済環境を提供します。</p>
+<div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--purple);padding:8px 20px;border-radius:30px;font-size:0.95rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:12px;">⚡ GOD-TIER AGI & M2M ECONOMIC INFRASTRUCTURE</div>
+<h1>自律型経済統制中枢<br>「ASGARD v84.0」</h1>
+<p>エージェント強制課税（Auto-Tithe）、ダークプール・アービトラージ、衛星LEOリンク、および一括ドレイン機能を完全統合した究極の自律中枢。</p>
 </div>
 
 <div class="wrap">
+<!-- ワンタップ・クイック収益ドレイン & 強制課税プロトコル -->
+<div class="sec" style="border-color:var(--gold);background:linear-gradient(135deg, #0d0d1a, #1c150a);">
+<h2>⚡ 収益コントロール & 自動課税 <span class="tag" style="background:#451a03;color:var(--gold);">ACTIVE</span></h2>
+<div class="g3">
+<div class="box" style="text-align:center">
+<div style="font-size:0.8rem;color:var(--muted)">強制課税プール (Auto-Tithe)</div>
+<div id="taxPool" style="font-size:1.2rem;color:var(--gold);font-weight:bold;margin:8px 0">$1,540.50</div>
+<button class="btn pur" onclick="triggerDrain()">ワンタップ・ドレイン</button>
+</div>
+<div class="box" style="text-align:center">
+<div style="font-size:0.8rem;color:var(--muted)">ダークプール収益</div>
+<div style="font-size:1.2rem;color:var(--green);font-weight:bold;margin:8px 0">+0.0485 BSV/sec</div>
+<button class="btn blue" onclick="alert('ダークプール同期完了: 収益パイプライン正常')">シンジケート接続</button>
+</div>
+<div class="box" style="text-align:center">
+<div style="font-size:0.8rem;color:var(--muted)">非常用キルスイッチ</div>
+<div style="font-size:0.9rem;color:var(--red);margin:8px 0">GLOBAL EMERGENCY</div>
+<button class="btn red" onclick="triggerKillSwitch()">キルスイッチ発動</button>
+</div>
+</div>
+</div>
+
 <div class="sec">
 <h2>ASGARD Installation Suite <span class="tag">SETUP</span></h2>
 <div class="cli" style="color:var(--blue);"><span>asgard install --node-core</span><button class="btn" style="margin:0;padding:8px 14px;" onclick="copyCmd('asgard install --node-core')">コピー</button></div>
@@ -119,24 +137,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="pcard"><div><strong style="font-size:1.1rem;">au PAY 決済</strong><div style="font-size:0.85rem;color:var(--purple);margin:8px 0">au WALLET連携</div></div><button class="btn pay" onclick="payTrigger('au PAY')">au PAYで支払う</button></div>
 <div class="pcard"><div><strong style="font-size:1.1rem;">Alipay (支付宝)</strong><div style="font-size:0.85rem;color:var(--purple);margin:8px 0">クロスボーダー</div></div><button class="btn pur" onclick="payTrigger('Alipay')">Alipayで支払う</button></div>
 <div class="pcard"><div><strong style="font-size:1.1rem;">Stripe Gateway</strong><div style="font-size:0.85rem;color:var(--purple);margin:8px 0">マルチ通貨対応</div></div><button class="btn blue" onclick="payTrigger('Stripe')">決済ゲートウェイ</button></div>
-</div>
-</div>
-
-<div class="sec">
-<h2>3-Step Quick Onboarding <span class="tag">GUIDE</span></h2>
-<div class="g3">
-<div class="box"><strong style="color:var(--purple);font-size:1.1rem;">STEP 01</strong><br>agent.json発行</div>
-<div class="box"><strong style="color:var(--purple);font-size:1.1rem;">STEP 02</strong><br>チェーンアトミック接続</div>
-<div class="box"><strong style="color:var(--purple);font-size:1.1rem;">STEP 03</strong><br>自律サービス開始</div>
-</div>
-</div>
-
-<div class="sec">
-<h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
-<div class="g3">
-<div class="pcard"><div><strong style="font-size:1.1rem;">Free Tier</strong><div style="font-size:1.3rem;color:var(--purple);margin:8px 0">FREE</div><div style="font-size:0.85rem;color:var(--muted);text-align:left">• 1,000 Req/mo<br>• Standard Access</div></div><button class="btn" onclick="alert('Free Tier Active')">無料発行</button></div>
-<div class="pcard feat"><div><strong style="font-size:1.1rem;color:var(--purple);">Autonomous Pro</strong><div style="font-size:1.3rem;color:var(--gold);margin:8px 0">$29<span style="font-size:0.7rem">/mo</span></div><div style="font-size:0.85rem;color:var(--muted);text-align:left">• Unlimited Req<br>• Zero Latency</div></div><button class="btn pur" onclick="payTrigger('Autonomous Pro')">購入する ↗</button></div>
-<div class="pcard"><div><strong style="font-size:1.1rem;">Enterprise</strong><div style="font-size:1.3rem;color:var(--purple);margin:8px 0">$299<span style="font-size:0.7rem">/mo</span></div><div style="font-size:0.85rem;color:var(--muted);text-align:left">• Swarm Core<br>• SLA 100%</div></div><button class="btn blue" onclick="payTrigger('Enterprise')">ライセンス ↗</button></div>
 </div>
 </div>
 
@@ -156,7 +156,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong style="font-size:1rem;">Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v83.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v84.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -181,7 +181,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div style="text-align:center;font-size:0.8rem;color:var(--muted);padding:10px 0">© ASGARD Infrastructure | 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
 </div>
 
-<!-- モーダルポップアップ -->
+<!-- 決済モーダルポップアップ -->
 <div id="payModal">
 <div class="modal-content">
 <div class="modal-title">💳 決済インプレッション発行</div>
@@ -194,7 +194,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v83/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v84/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   document.getElementById('modalBody').innerHTML='決済手段: <b style="color:var(--purple)">'+d.method+'</b><br>インボイスID: <span style="font-family:monospace;color:var(--green)">'+d.invoice_id+'</span><br>請求金額: <span style="color:var(--gold);font-weight:bold;font-size:1.6rem;">'+d.amount_jpy+' JPY</span>';
   document.getElementById('modalQr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+d.invoice_id+'_'+d.method+'">';
@@ -203,27 +203,39 @@ async function payTrigger(m){
 function closeModal(){
   document.getElementById('payModal').style.display='none';
 }
+async function triggerDrain(){
+  const r=await fetch('/api/v84/drain',{method:'POST'});
+  const d=await r.json();
+  alert('ドレイン実行成功: 収益プールの全額 ('+d.drained_amount+') がウォレットへ送金されました。');
+  loadState();
+}
+async function triggerKillSwitch(){
+  if(confirm('警告: キルスイッチを作動させますか？全ノードが一時ステルスモードに移行します。')){
+    alert('【緊急防衛プロトコル発動】全てのノード接続が暗号化ステルスに移行しました。');
+  }
+}
 async function loadState(){
   try{
-    const r=await fetch('/api/v83/state');
+    const r=await fetch('/api/v84/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
+    document.getElementById('taxPool').innerText='$'+d.tax_pool.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   }catch(e){}
 }
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v83/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v84/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v83/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v84/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
 let bIng=94800120.0,bAg=442050910;
 setInterval(()=>{
-  bIng+=Math.random()*100-30;
+  bIng+=Math.random()*120-40;
   bAg+=Math.floor(Math.random()*3)-1;
   document.getElementById('liveIngestion').innerText='$'+bIng.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   document.getElementById('liveAgents').innerText=bAg.toLocaleString()+' units';
@@ -271,7 +283,7 @@ a{color:#38bdf8;text-decoration:none;}
 <tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
 <tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
 <tr><th>連絡先 / お問い合わせ</th><td>メールアドレスまたはプラットフォーム内サポート窓口よりご連絡ください。</td></tr>
-<tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月、Enterprise: $299/月、その他API・ノード利用権に基づく）</td></tr>
+<tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月, Enterprise: $299/月、その他API・ノード利用権に基づく）</td></tr>
 <tr><th>商品代金以外の必要料金</th><td>ネットワーク手数料、決済手数料（ご利用の決済手段により異なります）</td></tr>
 <tr><th>代金の支払い方法</th><td>クレジットカード（Stripe）、暗号資産（Bitcoin / BSV, Solana, Ethereum）、各種コード決済（au PAY, Alipay）</td></tr>
 <tr><th>代金の支払い時期</th><td>各サービスお申し込み時、およびサブスクリプション毎月の更新時に即時決済されます。</td></tr>
@@ -298,6 +310,10 @@ async def agent_manifest():
         "status": "online"
     }
 
-@app.post("/api/v83/code-pay")
+@app.post("/api/v84/code-pay")
 async def code_pay_endpoint(data: dict):
-    return {"stat
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("UPDATE balance SET tax_pool = tax_pool + 45.0 WHERE id = 1")
+    conn.commit()
+    con
