@@ -1,13 +1,8 @@
 import os
 import datetime
 import sqlite3
-import secrets
-import asyncio
-import random
-from contextlib import asynccontextmanager
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
 
 DB_PATH = "asgard.db"
 
@@ -19,54 +14,13 @@ def init_db():
     c.execute("CREATE TABLE IF NOT EXISTS auctions (id INTEGER PRIMARY KEY AUTOINCREMENT, agent_name TEXT, task_desc TEXT, bid_bsv REAL, created_at TEXT)")
     c.execute("SELECT COUNT(*) FROM auctions")
     if c.fetchone()[0] == 0:
-        c.execute("INSERT INTO auctions (agent_name, task_desc, bid_bsv, created_at) VALUES (?, ?, ?, ?)", ("Agent_Alpha", "Cross-Chain #704", 0.045, "12:00:00"))
+        c.execute("INSERT INTO auctions (agent_name, task_desc, bid_bsv, created_at) VALUES ('Agent_Alpha', 'Cross-Chain #705', 0.045, '12:00:00')")
     conn.commit()
     conn.close()
 
 init_db()
 
-class FeedbackReq(BaseModel):
-    feedback: str
-class VoteReq(BaseModel):
-    choice: str
-class BidReq(BaseModel):
-    agent_name: str
-    task_desc: str
-    bid_bsv: float
-class CodePayReq(BaseModel):
-    method: str
-
-class ConnectionManager:
-    def __init__(self):
-        self.active_connections = []
-    async def connect(self, websocket: WebSocket):
-        await websocket.accept()
-        self.active_connections.append(websocket)
-    def disconnect(self, websocket: WebSocket):
-        if websocket in self.active_connections:
-            self.active_connections.remove(websocket)
-    async def broadcast(self, message: str):
-        for connection in list(self.active_connections):
-            try:
-                await connection.send_text(message)
-            except Exception:
-                pass
-
-m_mgr = ConnectionManager()
-
-async def background_sim():
-    while True:
-        await asyncio.sleep(15)
-        gain = round(random.uniform(0.002, 0.015), 4)
-        await m_mgr.broadcast(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] OMNI_ARBITRAGE -> Extracted {gain} BSV")
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    task = asyncio.create_task(background_sim())
-    yield
-    task.cancel()
-
-app = FastAPI(title="ASGARD", version="74.0", lifespan=lifespan)
+app = FastAPI(title="ASGARD", version="75.0")
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -101,7 +55,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .qr{background:#fff;padding:2px;width:30px;height:30px;margin:4px auto;border-radius:3px;display:flex;}
 .qr img{width:100%;height:100%;}
 .addr{font-family:monospace;font-size:0.45rem;background:#0f0f1d;padding:2px;border-radius:3px;word-break:break-all;color:var(--muted);text-align:center;}
-.stream{background:#05050a;border:1px solid var(--border);border-radius:6px;padding:8px;font-family:monospace;font-size:0.5rem;color:var(--green);max-height:70px;overflow-y:auto;}
 .cli{background:#05050a;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:monospace;font-size:0.5rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
 .inp{background:#05050a;border:1px solid var(--border);border-radius:4px;padding:5px;color:#fff;font-size:0.58rem;box-sizing:border-box;}
 </style>
@@ -185,37 +138,16 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div><strong>Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
 </div>
 
-<div class="g3" style="margin-bottom:8px;">
-<div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">Mock API / M2M</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">ハイパー・スループット</div><button class="btn pur" onclick="alert('Mock API Active')">ステータス</button></div>
-<div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">aws kinesis / SACK</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">リアルタイムストリーム</div><button class="btn blue" onclick="alert('AWS Kinesis Synced')">同期テスト</button></div>
-<div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">Stripe PYT</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">フィアット・決済基盤</div><button class="btn pay" onclick="payTrigger('Stripe PYT')">決済管理へ</button></div>
-</div>
-
-<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v74.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v75.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
-<h2>OMNI-SYNAPSE LIVE STREAM <span class="tag">WS</span></h2>
-<div class="stream" id="streamLog">[INIT] WebSocket connected.</div>
-</div>
-
-<div class="sec">
-<h2>ENTERPRISE FEEDBACK, GOVERNANCE & LIVE AUCTION <span class="tag">DB</span></h2>
+<h2>ENTERPRISE FEEDBACK & GOVERNANCE <span class="tag">DB</span></h2>
 <div style="display:flex;gap:6px"><input type="text" id="feedbackInput" class="inp" style="flex:1;" placeholder="フィードバックを入力..."><button class="btn pur" style="margin:0;width:60px" onclick="sendFeedback()">送信</button></div>
 <div style="margin-top:10px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;">
 <div style="font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;">🌐 SWARM GOVERNANCE VOTING</div>
 <div style="display:flex;gap:6px;"><button class="btn blue" style="flex:1;margin:0;" onclick="voteGov('YES')">賛成 (YES)</button><button class="btn pur" style="flex:1;margin:0;" onclick="voteGov('NO')">反対 (NO)</button></div>
 <div id="voteResult" style="font-size:0.52rem;color:var(--green);margin-top:6px;font-family:monospace;">賛成: 1420 | 反対: 18</div>
-</div>
-<div style="margin-top:8px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;">
-<div style="font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;">🤖 LIVE AGENT TASK AUCTION</div>
-<div style="display:flex;gap:4px;margin-bottom:6px;">
-<input type="text" id="bidAgent" class="inp" style="width:30%;" placeholder="Agent名">
-<input type="text" id="bidTask" class="inp" style="width:40%;" placeholder="タスク内容">
-<input type="number" step="0.001" id="bidAmount" class="inp" style="width:15%;" value="0.05">
-<button class="btn pur" style="margin:0;width:15%;" onclick="submitBid()">入札</button>
-</div>
-<div id="auctionList" style="font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:6px;border-radius:3px;max-height:60px;overflow-y:auto;">読込中...</div>
 </div>
 </div>
 
@@ -234,42 +166,27 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v74/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v75/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   alert(d.method+' / ID:'+d.invoice_id+' / '+d.amount_jpy+' JPY');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v74/state');
+    const r=await fetch('/api/v75/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
-    let h='';
-    for(let i=0;i<d.auctions.length;i++){
-      let a=d.auctions[i];
-      h+='['+a.created_at+'] '+a.agent_name+': '+a.task_desc+' ('+a.bid_bsv+' BSV)<br>';
-    }
-    document.getElementById('auctionList').innerHTML=h;
   }catch(e){}
 }
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v74/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v75/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v74/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v75/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
-}
-async function submitBid(){
-  const ag=document.getElementById('bidAgent').value||'Agent_1';
-  const tk=document.getElementById('bidTask').value||'Compute';
-  const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
-  try{
-    await fetch('/api/v74/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
-    document.getElementById('bidTask').value='';loadState();
-  }catch(e){}
 }
 let bIng=94800120.0,bAg=442050910;
 setInterval(()=>{
@@ -278,13 +195,6 @@ setInterval(()=>{
   document.getElementById('liveIngestion').innerText='$'+bIng.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   document.getElementById('liveAgents').innerText=bAg.toLocaleString()+' units';
 },2000);
-const wsP=window.location.protocol==='https:'?'wss://':'ws://';
-const liveWs=new WebSocket(wsP+window.location.host+'/ws');
-liveWs.onmessage=function(e){
-  const s=document.getElementById('streamLog');
-  s.innerHTML+='<br>'+e.data;s.scrollTop=s.scrollHeight;
-  loadState();
-};
 loadState();
 </script>
 </body>
@@ -297,8 +207,51 @@ async def index():
 
 @app.get("/docs", response_class=HTMLResponse)
 async def docs_page():
-    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>ASGARD API Docs</h1><a href='/' style='color:#38bdf8;'>← 戻る</a><pre>POST /api/v74/code-pay\nPOST /api/v74/auction/bid</pre></body></html>"
+    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>ASGARD API Docs</h1><a href='/' style='color:#38bdf8;'>← 戻る</a></body></html>"
 
 @app.get("/legal", response_class=HTMLResponse)
 async def legal_page():
-    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>特定商取引法に基づく表記</h1><p>事業者名: QLAX / 運営責任者: Daisuke Higuchi / 所在地: 福岡県豊前市</p><a href='/' style='col
+    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>特定商取引法に基づく表記</h1><p>事業者名: QLAX / 運営責任者: Daisuke Higuchi / 所在地: 福岡県豊前市</p><a href='/' style='color:#38bdf8;'>← 戻る</a></body></html>"
+
+@app.get("/.well-known/agent.json")
+@app.get("/well-known/agent.json")
+async def agent_manifest():
+    return {
+        "schema_version": "2.0",
+        "name": "ASGARD M2M Complete Node",
+        "operator": {
+            "organization": "QLAX",
+            "representative": "Daisuke Higuchi",
+            "location": "Buzen, Fukuoka, Japan"
+        },
+        "status": "online"
+    }
+
+@app.post("/api/v75/code-pay")
+async def code_pay_endpoint(data: dict):
+    return {"status": "success", "method": data.get("method"), "invoice_id": "inv_75", "amount_jpy": 4500}
+
+@app.get("/api/v75/state")
+async def get_system_state():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("SELECT choice, count FROM votes")
+    votes = dict(c.fetchall())
+    conn.close()
+    return {"votes": votes}
+
+@app.post("/api/v75/feedback")
+async def post_feedback(data: dict):
+    return {"status": "success"}
+
+@app.post("/api/v75/vote")
+async def post_vote(data: dict):
+    choice = data.get("choice")
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("UPDATE votes SET count = count + 1 WHERE choice = ?", (choice,))
+    conn.commit()
+    c.execute("SELECT choice, count FROM votes")
+    votes = dict(c.fetchall())
+    conn.close()
+    return {"status": "success", "votes": votes}
