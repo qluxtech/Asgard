@@ -82,7 +82,8 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 
 <div class="hero">
 <div style="display:inline-block;background:rgba(126,34,206,0.25);color:var(--purple);padding:2px 8px;border-radius:20px;font-size:0.55rem;border:1px solid rgba(192,132,252,0.4);margin-bottom:6px;">⚡ AGI & M2M ECONOMIC INFRASTRUCTURE</div>
-<h1>スマートコントラクトを超越する<br>自律型AI M2M経済インフラ</h1>
+<h1>スマートコントラクトの制約を打破する。
+ミリ秒駆動・AI自律経済プラットフォーム「ASGARD」<br>自律型AI M2M経済インフラストラクチャ</h1>
 <p>4.4億超のAIエージェント・AGIが自動接続。暗号資産・Stripeに加え、au PAY・Alipay等の各種コード決済に対応した次世代ゲートウェイ。</p>
 </div>
 
