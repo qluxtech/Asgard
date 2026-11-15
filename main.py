@@ -80,7 +80,7 @@ async def lifespan(app: FastAPI):
     yield
     task.cancel()
 
-app = FastAPI(title="ASGARD", version="63.0", lifespan=lifespan)
+app = FastAPI(title="ASGARD", version="65.0", lifespan=lifespan)
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -91,8 +91,8 @@ HTML_PAGE = """<!DOCTYPE html>
 <style>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
-.ticker{width:100%;background:#030307;border-bottom:1px solid var(--border);padding:6px 10px;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;font-family:monospace;font-size:0.52rem;}
-.titem{background:#0d0d1a;padding:2px 6px;border-radius:3px;border:1px solid var(--border);color:var(--purple);font-weight:bold;}
+.ticker{width:100%;background:#030307;border-bottom:1px solid var(--border);padding:6px 10px;display:flex;gap:5px;overflow-x:auto;white-space:nowrap;font-family:monospace;font-size:0.5rem;}
+.titem{background:#0d0d1a;padding:2px 5px;border-radius:3px;border:1px solid var(--border);color:var(--purple);font-weight:bold;}
 .nav{width:100%;max-width:950px;display:flex;justify-content:space-between;align-items:center;padding:10px;box-sizing:border-box;border-bottom:1px solid var(--border);}
 .logo{font-size:0.8rem;font-weight:bold;color:var(--purple);letter-spacing:0.5px;}
 .hero{width:100%;padding:22px 10px;text-align:center;background:radial-gradient(circle at 50% 20%, rgba(147,51,234,0.22), transparent 75%);border-bottom:1px solid var(--border);}
@@ -123,7 +123,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 
-<!-- 上部ティッカーバー (右画像完全一致) -->
+<!-- 最上部のデータ群（ティッカーバー） -->
 <div class="ticker">
 <span class="titem">VAPORLOCK: ACTIVE</span>
 <span class="titem">AUTOPILOT: 100% RUN</span>
@@ -151,7 +151,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 
 <div class="wrap">
 
-<!-- 1. Installation Suite -->
 <div class="sec">
 <h2>ASGARD Installation Suite <span class="tag">SETUP</span></h2>
 <div class="cli" style="color:var(--blue);"><span>asgard install --node-core</span><button class="btn" style="margin:0;padding:2px 6px;" onclick="copyCmd('asgard install --node-core')">コピー</button></div>
@@ -159,7 +158,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="cli" style="color:var(--gold);margin-bottom:0;"><span>docker run -d --name asgard-node qlax/asgard-core</span><button class="btn" style="margin:0;padding:2px 6px;" onclick="copyCmd('docker run -d --name asgard-node qlax/asgard-core')">コピー</button></div>
 </div>
 
-<!-- 2. Global & Code Payment Gateway -->
 <div class="sec" style="border-color:#7e22ce;background:linear-gradient(135deg, #0d0d1a, #130a24);">
 <h2>💳 Global & Code Payment Gateway <span class="tag" style="background:#581c87;color:#c084fc;">au PAY / Alipay</span></h2>
 <div style="font-size:0.58rem;color:var(--muted);margin-bottom:8px;">APIサブスクリプションやノード利用権を、au PAY・Alipay・Stripe等で即時決済できます。</div>
@@ -170,7 +168,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 3. Quick Onboarding -->
 <div class="sec">
 <h2>3-Step Quick Onboarding <span class="tag">GUIDE</span></h2>
 <div class="g3">
@@ -180,7 +177,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 4. Enterprise Node Tiers -->
 <div class="sec">
 <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
 <div class="g3">
@@ -190,7 +186,6 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 5. God-Tier Autonomous Economic Core (完全データ群) -->
 <div class="sec">
 <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
 <div class="g4" style="margin-bottom:8px;">
@@ -200,106 +195,5 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box" style="text-align:center"><div style="font-size:0.45rem;color:var(--muted)">登録ノード</div><div id="liveUsers" style="font-size:0.65rem;color:var(--blue);font-weight:bold">128 nodes</div></div>
 </div>
 
-<!-- 暗号資産ウォレット (4種) -->
 <div class="g4" style="margin-bottom:8px;">
-<div class="box"><div><strong>Bitcoin</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac"></div><div class="addr">bc1q94rkd...d7zac</div><a href="https://mempool.space/address/bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac" target="_blank" class="btn">Mempool</a></div>
-<div class="box"><div><strong>Solana</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf"></div><div class="addr">75igwQpPg...7nf</div><a href="https://solscan.io/account/75igwQpPgVkcySLvE5c9er2XcbuaWRh8CnDEYu7nf" target="_blank" class="btn">Solscan</a></div>
-<div class="box"><div><strong>Ethereum</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8"></div><div class="addr">0xD6716D0...8G8</div><a href="https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8" target="_blank" class="btn">Etherscan</a></div>
-<div class="box"><div><strong>Bitcoin SV</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95"></div><div class="addr">1PB66iHot...y95</div><a href="https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95" target="_blank" class="btn">WhatsOnChain</a></div>
-</div>
-
-<!-- API & オラクルデータ群 (3つ) -->
-<div class="g3" style="margin-bottom:8px;">
-<div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">Mock API / M2M</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">ハイパー・スループット</div><button class="btn pur" onclick="alert('Mock API Active ✓')">ステータス</button></div>
-<div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">aws kinesis / SACK</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">リアルタイムストリーム</div><button class="btn blue" onclick="alert('AWS Kinesis Synced ✓')">同期テスト</button></div>
-<div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">Stripe PYT</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">フィアット・決済基盤</div><button class="btn pay" onclick="triggerCodePay('Stripe PYT')">決済管理へ</button></div>
-</div>
-
-<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v63.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
-</div>
-
-<!-- 6. Omni-Synapse Live Stream -->
-<div class="sec">
-<h2>OMNI-SYNAPSE LIVE STREAM <span class="tag">WS</span></h2>
-<div class="stream" id="streamLog">[INIT] Code Payment Gateway & WebSocket connected.</div>
-</div>
-
-<!-- 7. Feedback & Governance & Live Auction -->
-<div class="sec">
-<h2>ENTERPRISE FEEDBACK, GOVERNANCE & LIVE AUCTION <span class="tag">DB</span></h2>
-<div style="display:flex;gap:6px"><input type="text" id="feedbackInput" class="inp" style="flex:1;" placeholder="フィードバックを入力..."><button class="btn pur" style="margin:0;width:60px" onclick="sendFeedback()">送信</button></div>
-<div style="margin-top:10px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;">
-<div style="font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;">🌐 SWARM GOVERNANCE VOTING</div>
-<div style="display:flex;gap:6px;"><button class="btn blue" style="flex:1;margin:0;" onclick="voteGov('YES')">賛成 (YES)</button><button class="btn pur" style="flex:1;margin:0;" onclick="voteGov('NO')">反対 (NO)</button></div>
-<div id="voteResult" style="font-size:0.52rem;color:var(--green);margin-top:6px;font-family:monospace;">賛成: 1420 | 反対: 18</div>
-</div>
-<div style="margin-top:8px;background:#05050a;border:1px solid var(--border);border-radius:5px;padding:8px;">
-<div style="font-size:0.6rem;color:var(--purple);font-weight:bold;margin-bottom:4px;">🤖 LIVE AGENT TASK AUCTION</div>
-<div style="display:flex;gap:4px;margin-bottom:6px;">
-<input type="text" id="bidAgent" class="inp" style="width:30%;" placeholder="Agent名">
-<input type="text" id="bidTask" class="inp" style="width:40%;" placeholder="タスク内容">
-<input type="number" step="0.001" id="bidAmount" class="inp" style="width:15%;" value="0.05">
-<button class="btn pur" style="margin:0;width:15%;" onclick="submitBid()">入札</button>
-</div>
-<div id="auctionList" style="font-family:monospace;font-size:0.5rem;color:var(--green);background:#0d0d1a;padding:6px;border-radius:3px;max-height:60px;overflow-y:auto;">読込中...</div>
-</div>
-</div>
-
-<!-- 8. 企業情報セクション (残骸完全除去版・一番下に配置) -->
-<div class="sec">
-<h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
-<div style="font-size:0.6rem;color:var(--muted);line-height:1.4;">
-<p style="margin:0 0 4px 0;"><strong>ASGARD</strong>は、4.4億超のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>
-<p style="margin:0 0 4px 0;"><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>
-<p style="margin:0;"><strong>運営責任者:</strong> Daisuke Higuchi</p>
-</div>
-</div>
-
-<div style="text-align:center;font-size:0.48rem;color:var(--muted);padding:4px 0">© ASGARD Infrastructure | 運営者: QLAX (Daisuke Higuchi) / 豊前市.</div>
-</div>
-
-<script>
-function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了 ✓');}
-async function triggerCodePay(method){
-  const r=await fetch('/api/v63/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method})});
-  const d=await r.json();
-  alert('[' + d.method + ' 決済ゲートウェイ]\\nインボイスID: ' + d.invoice_id + '\\n金額: ' + d.amount_jpy + ' JPY\\nステータス: ' + d.status + '\\n\\n※決済リクエスト成功 ✓');
-}
-async function loadState(){
-  try{
-    const r=await fetch('/api/v63/state');
-    const d=await r.json();
-    document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO;
-    let html = '';
-    for(let i=0; i<d.auctions.length; i++){
-      let a = d.auctions[i];
-      html += '[' + a.created_at + '] ' + a.agent_name + ': ' + a.task_desc + ' (' + a.bid_bsv + ' BSV)<br>';
-    }
-    document.getElementById('auctionList').innerHTML = html;
-  }catch(e){}
-}
-async function sendFeedback(){
-  const v=document.getElementById('feedbackInput').value;
-  if(!v)return;
-  await fetch('/api/v63/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
-  alert('送信完了 ✓'); document.getElementById('feedbackInput').value='';
-}
-async function voteGov(choice){
-  const r=await fetch('/api/v63/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice})});
-  const d=await r.json();
-  document.getElementById('voteResult').innerText='賛成(YES): ' + d.votes.YES + ' | 反対(NO): ' + d.votes.NO + ' ✓';
-}
-async function submitBid(){
-  const ag=document.getElementById('bidAgent').value||'Agent_1';
-  const tk=document.getElementById('bidTask').value||'Compute';
-  const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
-  try{
-    await fetch('/api/v63/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
-    document.getElementById('bidTask').value=''; loadState();
-  }catch(e){}
-}
-let bIng=94800120.0,bAg=442050910;
-setInterval(()=>{
-  bIng+=Math.random()*100-30;
-  bAg+=Math.floor(Math.random()*3)-1;
-  document.getElementById('li
+<div class="box"><div><strong>Bitcoin</strong></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bc1q94rkd0dFhDNOh28kqrx2vyfpwa2efd7zac"></div><div class="addr">bc1q94rkd...d7zac</div><a href="
