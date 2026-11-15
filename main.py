@@ -58,7 +58,7 @@ async def background_sim():
     while True:
         await asyncio.sleep(15)
         gain = round(random.uniform(0.002, 0.015), 4)
-        await m_mgr.broadcast(f"[{datetime.datetime.now().strftime('%H:%M:%Sק')}] OMNI_ARBITRAGE -> Extracted {gain} BSV")
+        await m_mgr.broadcast(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] OMNI_ARBITRAGE -> Extracted {gain} BSV")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -66,7 +66,7 @@ async def lifespan(app: FastAPI):
     yield
     task.cancel()
 
-app = FastAPI(title="ASGARD", version="68.0", lifespan=lifespan)
+app = FastAPI(title="ASGARD", version="69.0", lifespan=lifespan)
 
 HTML_PAGE = """<!DOCTYPE html>
 <html lang="ja">
@@ -77,8 +77,8 @@ HTML_PAGE = """<!DOCTYPE html>
 <style>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
-.ticker{width:100%;max-width:950px;background:#030307;border-bottom:1px solid var(--border);padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;box-sizing:border-box;}
-.titem{background:#0d0d1a;padding:4px 8px;border-radius:4px;border:1px solid var(--border);color:var(--purple);font-weight:bold;font-family:monospace;font-size:0.6rem;}
+.top-tags{width:100%;max-width:950px;background:#030307;border-bottom:1px solid var(--border);padding:10px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.ttag{background:#130a24;border:1px solid #7e22ce;color:var(--purple);padding:4px 8px;border-radius:4px;font-family:monospace;font-size:0.62rem;font-weight:bold;box-shadow:0 2px 8px rgba(126,34,206,0.2);}
 .nav{width:100%;max-width:950px;display:flex;justify-content:space-between;align-items:center;padding:10px;box-sizing:border-box;border-bottom:1px solid var(--border);}
 .logo{font-size:0.8rem;font-weight:bold;color:var(--purple);letter-spacing:0.5px;}
 .hero{width:100%;padding:20px 10px;text-align:center;background:radial-gradient(circle at 50% 20%, rgba(147,51,234,0.22), transparent 75%);border-bottom:1px solid var(--border);}
@@ -108,16 +108,16 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </head>
 <body>
 
-<!-- 上部データ群（ティッカーバー：ズラッと並ぶ仕様） -->
-<div class="ticker">
-<span class="titem">VAPORLOCK: ACTIVE</span>
-<span class="titem">AUTOPILOT: 100% RUN</span>
-<span class="titem">SWARM-LOCK: 36.8K/SEC</span>
-<span class="titem">SYNAPSE: UNLOCKED</span>
-<span class="titem">LMMAS: 44.9TO</span>
-<span class="titem">NASA_L2: 100%</span>
-<span class="titem">M2M_MEV: ACTIVE</span>
-<span class="titem">RAGE_SYNC</span>
+<!-- 最上部にズラッと並ぶデータ群（タグ群エリア） -->
+<div class="top-tags">
+<span class="ttag">VAPORLOCK: ACTIVE</span>
+<span class="ttag">AUTOPILOT: 100% RUN</span>
+<span class="ttag">SWARM-LOCK: 36.8K/SEC</span>
+<span class="ttag">SYNAPSE: UNLOCKED</span>
+<span class="ttag">LMMAS: 44.9TO</span>
+<span class="ttag">NASA_L2: 100%</span>
+<span class="ttag">M2M_MEV: ACTIVE</span>
+<span class="ttag">RAGE_SYNC: OK</span>
 </div>
 
 <div class="nav">
@@ -192,7 +192,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="box"><div style="font-size:0.52rem;color:var(--purple);font-weight:bold;">Stripe PYT</div><div style="font-size:0.48rem;color:var(--muted);margin:2px 0;">フィアット・決済基盤</div><button class="btn pay" onclick="payTrigger('Stripe PYT')">決済管理へ</button></div>
 </div>
 
-<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v68.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
+<div class="box" style="font-family:monospace;font-size:0.5rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;"><span>Quantum Oracle PLT [v69.0]</span><span style="color:var(--green);">autonomous: active (0.00ms)</span></div>
 </div>
 
 <div class="sec">
@@ -235,13 +235,13 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <script>
 function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
 async function payTrigger(m){
-  const r=await fetch('/api/v68/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v69/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   alert(d.method+' / ID:'+d.invoice_id+' / '+d.amount_jpy+' JPY');
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v68/state');
+    const r=await fetch('/api/v69/state');
     const d=await r.json();
     document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
     let h='';
@@ -255,11 +255,11 @@ async function loadState(){
 async function sendFeedback(){
   const v=document.getElementById('feedbackInput').value;
   if(!v)return;
-  await fetch('/api/v68/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v69/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('送信完了');document.getElementById('feedbackInput').value='';
 }
 async function voteGov(c){
-  const r=await fetch('/api/v68/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v69/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
@@ -268,7 +268,7 @@ async function submitBid(){
   const tk=document.getElementById('bidTask').value||'Compute';
   const am=parseFloat(document.getElementById('bidAmount').value)||0.05;
   try{
-    await fetch('/api/v68/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
+    await fetch('/api/v69/auction/bid',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_name:ag,task_desc:tk,bid_bsv:am})});
     document.getElementById('bidTask').value='';loadState();
   }catch(e){}
 }
@@ -298,8 +298,8 @@ async def index():
 
 @app.get("/docs", response_class=HTMLResponse)
 async def docs_page():
-    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>ASGARD API Docs</h1><a href='/' style='color:#38bdf8;'>← 戻る</a><pre>POST /api/v68/code-pay\nPOST /api/v68/auction/bid</pre></body></html>"
+    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>ASGARD API Docs</h1><a href='/' style='color:#38bdf8;'>← 戻る</a><pre>POST /api/v69/code-pay\nPOST /api/v69/auction/bid</pre></body></html>"
 
 @app.get("/legal", response_class=HTMLResponse)
 async def legal_page():
-    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>特定商取引法に基づく表記</h1><p>事業者名: QLAX / 運営責任者: Daisuke Higuchi / 所在地: 福岡県豊前市</p><a href='/' style='
+    return "<html><body style='background:#05050a;color:#fff;font-family:sans-serif;padding:20px;'><h1>特定商取引法に基づく表記</h1><p>事業者名: QLAX / 運営責任者: Daisuke Higuchi / 所在地: 
