@@ -18,7 +18,7 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="104.0")
+app = FastAPI(title="ASGARD", version="105.0")
 
 HTML_LINES = [
     "<!DOCTYPE html>",
@@ -148,7 +148,7 @@ HTML_LINES = [
     "<div class='box'><div><strong style='font-size:1rem;'>Ethereum</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8'></div><div class='addr'>0xD6716D0...8G8</div><a href='https://etherscan.io/address/0xD6716D08Da19874D108i4Cb7dcA2c6G590BD8G8' target='_blank' class='btn'>Etherscan</a></div>",
     "<div class='box'><div><strong style='font-size:1rem;'>Bitcoin SV</strong></div><div class='qr'><img src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95'></div><div class='addr'>1PB66iHot...y95</div><a href='https://whatsonchain.com/address/1PB66iHotUEgBaAnkgV9uTTV7R235Tuy95' target='_blank' class='btn'>WhatsOnChain</a></div>",
     "</div>",
-    "<div class='box' style='font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;'><span>Quantum Oracle PLT [v104.0]</span><span style='color:var(--green);'>autonomous: active (0.00ms)</span></div>",
+    "<div class='box' style='font-family:monospace;font-size:0.9rem;color:var(--purple);display:flex;justify-content:space-between;align-items:center;'><span>Quantum Oracle PLT [v105.0]</span><span style='color:var(--green);'>autonomous: active (0.00ms)</span></div>",
     "</div>",
     "<div class='sec'>",
     "<h2>ENTERPRISE FEEDBACK & GOVERNANCE <span class='tag'>DB</span></h2>",
@@ -163,7 +163,7 @@ HTML_LINES = [
     "<h2>企業情報 / 概要 <span class='tag'>QLAX</span></h2>",
     "<div style='font-size:1.0rem;color:var(--muted);line-height:1.7;'>",
     "<p style='margin:0 0 8px 0;'><strong>ASGARD</strong>は、数億のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラストラクチャです。</p>",
-    "<p style='margin:0 0 8px 0;'><strong>QLAX</strong>は、福岡県を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>",
+    "<p style='margin:0 0 8px 0;'><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>",
     "<p style='margin:0;'><strong>運営責任者:</strong> Daisuke Higuchi</p>",
     "</div>",
     "</div>",
@@ -180,7 +180,7 @@ HTML_LINES = [
     "<script>",
     "function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}",
     "async function payTrigger(m){",
-    "  const r=await fetch('/api/v104/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});",
+    "  const r=await fetch('/api/v105/code-pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});",
     "  const d=await r.json();",
     "  document.getElementById('modalBody').innerHTML='決済手段: <b style=\"color:var(--purple)\">'+d.method+'</b><br>インボイスID: <span style=\"font-family:monospace;color:var(--green)\">'+d.invoice_id+'</span><br>請求金額: <span style=\"color:var(--gold);font-weight:bold;font-size:1.6rem;\">'+d.amount_jpy+' JPY</span>';",
     "  document.getElementById('modalQr').innerHTML='<img src=\"https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+d.invoice_id+'_'+d.method+'\">';",
@@ -188,7 +188,7 @@ HTML_LINES = [
     "}",
     "function closeModal(){document.getElementById('payModal').style.display='none';}",
     "async function triggerDrain(){",
-    "  const r=await fetch('/api/v104/drain',{method:'POST'});",
+    "  const r=await fetch('/api/v105/drain',{method:'POST'});",
     "  const d=await r.json();",
     "  alert('ドレイン実行成功: 収益プールの全額 ('+d.drained_amount+') がウォレットへ送金されました。');",
     "  loadState();",
@@ -200,7 +200,7 @@ HTML_LINES = [
     "}",
     "async function loadState(){",
     "  try{",
-    "    const r=await fetch('/api/v104/state');",
+    "    const r=await fetch('/api/v105/state');",
     "    const d=await r.json();",
     "    document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;",
     "    document.getElementById('taxPool').innerText='$'+d.tax_pool.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});",
@@ -209,11 +209,11 @@ HTML_LINES = [
     "async function sendFeedback(){",
     "  const v=document.getElementById('feedbackInput').value;",
     "  if(!v)return;",
-    "  await fetch('/api/v104/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});",
+    "  await fetch('/api/v105/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});",
     "  alert('送信完了');document.getElementById('feedbackInput').value='';",
     "}",
     "async function voteGov(c){",
-    "  const r=await fetch('/api/v104/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});",
+    "  const r=await fetch('/api/v105/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});",
     "  const d=await r.json();",
     "  document.getElementById('voteResult').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;",
     "}",
