@@ -48,24 +48,83 @@ body{background:var(--bg);color:var(--tx);font-family:sans-serif;margin:0}
 h2{color:var(--pr);font-size:1.1rem;margin:0 0 12px 0;display:flex;align-items:center}
 .tag{background:var(--pr);color:#fff;padding:3px 8px;border-radius:6px;font-size:0.75rem;margin-left:8px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:768px){.grid{grid-template-columns:1fr}}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:768px){.grid,.grid-4{grid-template-columns:1fr}}
 .box{background:#05050a;border:1px solid var(--bd);border-radius:10px;padding:12px}
 .ps{border-color:var(--pr);background:linear-gradient(135deg,#0d0d1a,#2a2356)}
-.btn{background:#0365a1;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-weight:bold}
+.btn{background:#0365a1;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-weight:bold;width:100%;margin-top:8px}
 .btn-pr{background:var(--pr)}
+.qr{width:100px;height:100px;margin:0 auto 10px;background:#fff;padding:4px;border-radius:6px}
 </style></head>
 <body>
 <div style="background:#030307;border-bottom:1px solid #130a24;border-top:1px solid var(--pr);color:var(--pr);padding:6px;font-size:0.7rem;">
-🚀 AGI SWARM: 840M ACTIVE | ⚡ PRE-INTENT AGI: MAX | 🌐 NEURAL MESH: LIVE-SYNC
+🚀 AGI SWARM: 840M ACTIVE | ⚡ PRE-INTENT AGI: MAX | 🌐 NEURAL MESH: LIVE-SYNC | 🛰️ ORBITAL LED: SYNCHED
 </div>
 <div class="wrap">
-<div class="sec">
-<h2>高度プレ・インテント & AGI自動制御中枢 <span class="tag">AUTONOMOUS</span></h2>
-<div class="grid">
-<div class="box"><h3>① AGIスウォーム大群呼出</h3><p>外部AIエージェント100体を仮想同期。</p><button class="btn" onclick="swarmBurst()">スウォーム一斉突撃 ⚡</button></div>
-<div class="box"><h3>② 自律AIガバナンス合意</h3><p>スウォーム合意による最適化。</p><button class="btn" onclick="agiConsensus()">AGI合意シミュレーション</button></div>
-<div class="box ps"><h3>③ プレ・インテント超予測</h3><p>思考先読みオファーを全ノードへ同期。</p><button class="btn btn-pr" onclick="trigPI()">超予測オファー同期</button></div>
-</div></div></div>
+  <!-- ヒーローセクション -->
+  <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#0d0d1a,#05050a);">
+    <h1 style="font-size:1.4rem;color:#fff;margin:0 0 10px 0;">スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
+    <p style="color:var(--tx);font-size:0.85rem;margin:0 auto;max-width:750px;">外部AGIスウォームからのニューラル通信を完全自動想定し、プレ・インテント予測とゼロレイテンシー決済を自律駆動する最高峰の司令塔。</p>
+  </div>
+
+  <!-- ライブログ & エンドポイント -->
+  <div class="grid" style="margin-bottom:14px;">
+    <div class="box"><h3 style="font-size:0.9rem;color:var(--pr);">AGIスウォーム・ニューラルライブログ</h3><p style="font-size:0.7rem;font-family:monospace;background:#030307;padding:8px;border-radius:6px;">[22:21:55] ASGARD-CORE -> Autonomous Swarm Neural Mesh Active (10.00 BSV)</p></div>
+    <div class="box"><h3 style="font-size:0.9rem;color:var(--pr);">高度AI自動発見・エンドポイント</h3><p style="font-size:0.7rem;font-family:monospace;background:#030307;padding:8px;border-radius:6px;">[ENDPOINT] POST /api/v111/agi/mesh<br>[MANIFEST] GET /.well-known/agent.json</p></div>
+  </div>
+
+  <!-- 高度プレ・インテント -->
+  <div class="sec">
+    <h2>高度プレ・インテント & AGI自動制御中枢 <span class="tag">AUTONOMOUS</span></h2>
+    <div class="grid">
+      <div class="box"><h3>① AGIスウォーム大群呼出</h3><p>外部AIエージェント100体を仮想同期。</p><button class="btn" onclick="swarmBurst()">スウォーム一斉突撃 ⚡</button></div>
+      <div class="box"><h3>② 自律AIガバナンス合意</h3><p>スウォーム合意による最適化。</p><button class="btn" onclick="agiConsensus()">AGI合意シミュレーション</button></div>
+      <div class="box ps"><h3>③ プレ・インテント超予測</h3><p>思考先読みオファーを全ノードへ同期。</p><button class="btn btn-pr" onclick="trigPI()">超予測オファー同期</button></div>
+    </div>
+  </div>
+
+  <!-- 収益コントロール -->
+  <div class="sec" style="border-color:var(--pr);">
+    <h2>収益コントロール & 自動課税プール <span class="tag">ACTIVE</span></h2>
+    <div class="grid">
+      <div class="box" style="text-align:center;"><div style="font-size:0.75rem;">累計税プール (Auto-Tithe)</div><div style="font-size:1.2rem;font-weight:bold;color:#fff;">$1,890.00</div><button class="btn btn-pr" onclick="drainPool()">オートスワップ・ドレイン</button></div>
+      <div class="box" style="text-align:center;"><div style="font-size:0.75rem;">超低レイテンシーNeural TXs</div><div style="font-size:1.2rem;font-weight:bold;color:#fff;">1 TXs</div><button class="btn" onclick="alert('Live synced.')">ライブ状態稼働同期</button></div>
+      <div class="box" style="text-align:center;"><div style="font-size:0.75rem;color:var(--tx);">自動緊急キルスイッチ</div><div style="font-size:1.1rem;font-weight:bold;color:#ff4444;">GLOBAL EMERGENCY</div><button class="btn" style="background:#ff4444;" onclick="alert('Kill switch engaged.')">キルスイッチ発動</button></div>
+    </div>
+  </div>
+
+  <!-- 決済ゲートウェイ -->
+  <div class="sec">
+    <h2>Global & Code Payment Gateway <span class="tag">au PAY / Alipay</span></h2>
+    <div class="grid">
+      <div class="box" style="text-align:center;"><strong>au PAY 決済</strong><p style="font-size:0.75rem;">au WALLETオートスワップ</p><button class="btn btn-pr" onclick="alert('au PAY gateway active')">au PAYで支払う</button></div>
+      <div class="box" style="text-align:center;"><strong>Alipay (支付宝)</strong><p style="font-size:0.75rem;">クロスボーダー決済</p><button class="btn btn-pr" onclick="alert('Alipay active')">Alipayで支払う</button></div>
+      <div class="box" style="text-align:center;"><strong>Stripe Gateway</strong><p style="font-size:0.75rem;">マルチ通貨対応</p><button class="btn" onclick="alert('Stripe active')">決済ゲートウェイ</button></div>
+    </div>
+  </div>
+
+  <!-- サブスクリプション -->
+  <div class="sec">
+    <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
+    <div class="grid">
+      <div class="box" style="text-align:center;"><strong>Free Tier</strong><p style="font-size:1.1rem;color:#fff;">FREE</p><p style="font-size:0.75rem;">• 1,000 Req/mo<br>• Standard Access</p><button class="btn" onclick="alert('Free active')">無料発行</button></div>
+      <div class="box ps" style="text-align:center;"><strong>Autonomous Pro</strong><p style="font-size:1.1rem;color:var(--tx);">$29/mo</p><p style="font-size:0.75rem;">• Unlimited Req<br>• Zero Latency</p><button class="btn btn-pr" onclick="upg('autonomous_pro')">購入する ↗</button></div>
+      <div class="box" style="text-align:center;"><strong>Enterprise</strong><p style="font-size:1.1rem;color:#fff;">$299/mo</p><p style="font-size:0.75rem;">• Swarm Core<br>• SLA 100%</p><button class="btn" onclick="upg('enterprise')">ライセンス ↗</button></div>
+    </div>
+  </div>
+
+  <!-- 暗号資産コア (QRコード付き) -->
+  <div class="sec" style="border-color:var(--pr);">
+    <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
+    <div class="grid-4">
+      <div class="box" style="text-align:center;"><strong>Bitcoin</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bitcoin" width="100"></div><button class="btn" onclick="window.open('https://mempool.space')">Mempool</button></div>
+      <div class="box" style="text-align:center;"><strong>Solana</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=solana" width="100"></div><button class="btn" onclick="window.open('https://solscan.io')">Solscan</button></div>
+      <div class="box" style="text-align:center;"><strong>Ethereum</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=ethereum" width="100"></div><button class="btn" onclick="window.open('https://etherscan.io')">Etherscan</button></div>
+      <div class="box" style="text-align:center;"><strong>Bitcoin SV</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bsv" width="100"></div><button class="btn" onclick="window.open('https://whatsonchain.com')">WhatsOnChain</button></div>
+    </div>
+  </div>
+</div>
+
 <script>
 async function swarmBurst(){
   for(let i=0; i<5; i++){
@@ -79,6 +138,16 @@ async function agiConsensus(){
   alert('AGIスウォーム合意成立: ' + r.msg);
 }
 function trigPI(){ alert('Pre-Intent Hyper-Offer Synced.'); }
+async function drainPool(){
+  let res = await fetch('/api/v111/drain', {method:'POST'});
+  let r = await res.json();
+  alert('Auto-Tithe Drained: $' + r.amt);
+}
+async function upg(tier){
+  let res = await fetch('/api/v111/tier/upgrade', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({agent_id:"USER", target_tier:tier, payment_method:"stripe", wallet_or_token:"AUTO"})});
+  let r = await res.json();
+  alert('Subscription Upgraded to ' + r.tier + ' ($' + r.billed_usd + ')');
+}
 </script></body></html>"""
 
 @app.get("/", response_class=HTMLResponse)
