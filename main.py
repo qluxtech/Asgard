@@ -1,4 +1,4 @@
-import os, sqlite3, uvicorn, time, random
+import os, sqlite3, uvicorn, time
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse
 
@@ -270,4 +270,6 @@ async def dr_ep():
 
 @app.post("/api/v111/fb")
 async def fb_ep(data: dict):
-    return {"status": "succe
+    return {"status": "success"}
+
+@a
