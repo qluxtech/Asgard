@@ -18,14 +18,14 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="107.0")
+app = FastAPI(title="ASGARD", version="108.0")
 
 HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASGARD / M2M Ultimate Autonomous Infrastructure</title>
+<title>ASGARD / M2M Autonomous Economy & Pre-Intent Engine</title>
 <style>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;--red:#ef4444;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
@@ -51,6 +51,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .qr img{width:100%;height:100%;}
 .addr{font-family:monospace;font-size:0.75rem;background:#0f0f1d;padding:6px;border-radius:4px;word-break:break-all;color:var(--muted);text-align:center;}
 .log-box{background:#030307;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:monospace;font-size:0.8rem;color:var(--green);height:110px;overflow-y:auto;line-height:1.5;}
+.inp{background:#05050a;border:1px solid var(--border);border-radius:8px;padding:12px;color:#fff;font-size:0.95rem;box-sizing:border-box;}
 #payModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,10,0.95);z-index:999;justify-content:center;align-items:center;padding:16px;box-sizing:border-box;}
 .modal-content{background:#0d0d1a;border:3px solid var(--purple);border-radius:20px;padding:30px 20px;width:100%;max-width:480px;text-align:center;}
 </style>
@@ -58,17 +59,42 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <body>
 <div class="top-tags">
 <span class="ttag">VAPORLOCK: ACTIVE</span>
-<span class="ttag">AUTOPILOT: 100%</span>
+<span class="ttag">PRE-INTENT AI: ON</span>
+<span class="ttag">M2M AUTO-BID: 0.00ms</span>
 <span class="ttag">SWARM-LOCK: 36.8K/S</span>
-<span class="ttag">SYNAPSE: UNLOCKED</span>
 <span class="ttag">ORBITAL LEO: ONLINE</span>
 <span class="ttag">AUTO-SWAP: READY</span>
 </div>
 <div class="wrap">
 <div class="sec" style="text-align:center;background:radial-gradient(circle,rgba(147,51,234,0.3),transparent 75%);">
-<div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--purple);padding:6px 16px;border-radius:20px;font-size:0.85rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:10px;">⚡ GOD-TIER AGI & M2M ECONOMIC INFRASTRUCTURE</div>
+<div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--purple);padding:6px 16px;border-radius:20px;font-size:0.85rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:10px;">⚡ GOD-TIER AGI & PRE-INTENT M2M INFRASTRUCTURE</div>
 <h1 style="font-size:1.7rem;color:#fff;line-height:1.4;margin:0 0 12px 0;">スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
-<p style="color:var(--muted);font-size:0.95rem;margin:0 auto;max-width:700px;">数億のAIエージェント・AGIがリアルタイムに接続する完全自律型M2M経済圏。</p>
+<p style="color:var(--muted);font-size:0.95rem;margin:0 auto;max-width:750px;">検索の前に文脈を先回りする「プレ・インテントAI」と、数億の自律エージェントによるゼロ遅延M2M即時決済を完全統合。</p>
+</div>
+
+<!-- 次世代神マーケティング統合エンジン (Pre-Intent / M2M Auto-Select / Impulse) -->
+<div class="sec" style="border-color:var(--purple);background:linear-gradient(135deg,#0d0d1a,#1b0e36);">
+<h2>🧠 次世代M2Mマーケティング & プレ・インテント中枢 <span class="tag" style="background:#581c87;color:#fff;">ZERO-FRICTION</span></h2>
+<div class="grid3">
+<div class="box">
+<div style="color:var(--blue);font-weight:bold;font-size:0.9rem;margin-bottom:6px;">① 文脈先回り (Pre-Intent)</div>
+<div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">ユーザーが検索する前の環境・文脈を検知し、必要リソースを自動展開。</div>
+<div id="preIntentStatus" style="font-family:monospace;font-size:0.75rem;color:var(--green);">検知中: 最適オファー準備完了</div>
+<button class="btn blue" style="padding:8px;font-size:0.85rem;" onclick="triggerPreIntent()">文脈先回りオファー発動</button>
+</div>
+<div class="box">
+<div style="color:var(--purple);font-weight:bold;font-size:0.9rem;margin-bottom:6px;">② M2Mエージェント自動選定</div>
+<div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">人間を介さずAIエージェントが論理・速度(0.00ms)で最適APIを自動契約。</div>
+<div style="font-family:monospace;font-size:0.75rem;color:var(--gold);">/.well-known/agent.json 公開中</div>
+<a href="/.well-known/agent.json" target="_blank" class="btn pur" style="padding:8px;font-size:0.85rem;">AI選定マニフェスト確認 ↗</a>
+</div>
+<div class="box">
+<div style="color:var(--gold);font-weight:bold;font-size:0.9rem;margin-bottom:6px;">③ インパルス即時決済</div>
+<div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;">意思決定の摩擦ゼロ。コンマ数秒で決済インプレッションと着金を完了。</div>
+<div style="font-family:monospace;font-size:0.75rem;color:var(--green);">オートスワップ直結: 稼働中</div>
+<button class="btn pay" style="padding:8px;font-size:0.85rem;" onclick="pay('Pre-Intent Instant Offer')">ゼロ遅延ワンタップ決済</button>
+</div>
+</div>
 </div>
 
 <!-- 収益コントロール & 自動課税 -->
@@ -93,14 +119,14 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 新神展開 1 & 2: AI M&A ストリーム & 衛星軌道ライブログ -->
+<!-- AI M&A ストリーム & 衛星軌道ライブログ -->
 <div class="grid2">
 <div class="sec" style="margin-bottom:0;">
-<h2>🌐 AI自律M&Aオークション <span class="tag">LIVE</span></h2>
+<h2>🌐 AI自律M&A・自動選定ログ <span class="tag">LIVE</span></h2>
 <div class="log-box" id="maLog">
-[00:01] Agent #8821 acquired API Asset #402 (0.15 BSV)<br>
-[00:03] Swarm Syndicate liquidated inactive domain portfolio<br>
-[00:05] Automated arbitration sweep executed successfully
+[M2M-SELECT] Agent #8821 auto-selected ASGARD API (0.00ms)<br>
+[M&A-DEAL] Swarm Syndicate acquired micro-service #402 (0.15 BSV)<br>
+[PRE-INTENT] Context match 99.9% -> Auto-settled via BSV
 </div>
 </div>
 <div class="sec" style="margin-bottom:0;">
@@ -152,11 +178,11 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
-<!-- 新神展開 4: AI議会(自律シンジケート) & ガバナンス投票 -->
+<!-- AI議会(自律シンジケート) & ガバナンス投票 -->
 <div class="sec">
 <h2>🧠 AI Syndicate Parliament & Governance <span class="tag">AUTONOMOUS</span></h2>
 <div style="margin-bottom:12px;background:#05050a;border:1px solid var(--border);border-radius:8px;padding:14px;font-size:0.9rem;color:var(--purple);" id="parliamentLog">
-[AI議会 Proposal #107]: 自動課税率最適化 (0.012%調整) → 99.8% 賛成で自動可決・適用中
+[AI議会 Proposal #108]: プレ・インテントAI自動入札アルゴリズム更新 → 99.9% 賛成で自動可決・適用中
 </div>
 <div style="display:flex;gap:8px"><input type="text" id="fb" class="inp" style="flex:1;" placeholder="人間側からのフィードバック・指令を入力..."><button class="btn pur" style="margin:0;width:80px" onclick="sendFb()">送信</button></div>
 <div style="margin-top:12px;background:#05050a;border:1px solid var(--border);border-radius:8px;padding:14px;">
@@ -170,8 +196,8 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <div class="sec">
 <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
 <div style="font-size:0.95rem;color:var(--muted);line-height:1.6;">
-<p style="margin:0 0 6px 0;"><strong>ASGARD</strong>は、数億のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラです。</p>
-<p style="margin:0 0 6px 0;"><strong>QLAX</strong>は、福岡県を拠点にM2M経済インフラストラクチャ、自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主です。</p>
+<p style="margin:0 0 6px 0;"><strong>ASGARD</strong>は、数億のAIエージェント・AGIが自動接続し、0.00msミリ秒決済とプレ・インテント自律仲介を提供する次世代のAI M2M経済インフラです。</p>
+<p style="margin:0 0 6px 0;"><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>
 <p style="margin:0;"><strong>運営責任者:</strong> Daisuke Higuchi</p>
 </div>
 </div>
@@ -181,7 +207,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 
 <div id="payModal">
 <div class="modal-content">
-<div style="font-size:1.4rem;color:var(--purple);font-weight:bold;margin-bottom:14px;">💳 決済インプレッション (オートスワップ対応)</div>
+<div style="font-size:1.4rem;color:var(--purple);font-weight:bold;margin-bottom:14px;">💳 ゼロ遅延決済インプレッション</div>
 <div id="mBody" style="font-size:1.1rem;margin-bottom:16px;"></div>
 <div class="qr" style="width:200px;height:200px;margin:0 auto 16px auto;"><img id="mQr" src="" alt="QR"></div>
 <button class="btn pur" onclick="closeModal()">閉じる (スクショ可能)</button>
@@ -189,12 +215,16 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 
 <script>
+function triggerPreIntent(){
+  document.getElementById('preIntentStatus').innerText='発動完了: 0.00ms 最適オファー展開済み';
+  pay('Pre-Intent Context Offer');
+}
 function boostOrbital(){
   alert('【衛星軌道LEOブースト発動】量子回線が直結され、ダークプール収益スピードが一時的に3倍に加速しました！');
   document.getElementById('leoLog').innerHTML += '<br>[BOOST] Orbital LEO link maxed out (0.00ms)';
 }
 async function pay(m){
-  const r=await fetch('/api/v107/pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v108/pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
   document.getElementById('mBody').innerHTML='手段: <b style="color:var(--purple)">'+d.method+'</b><br>オートスワップ: <span style="color:var(--green)">有効 (即時着金)</span><br>金額: <span style="color:var(--gold);font-weight:bold;">4,500 JPY</span>';
   document.getElementById('mQr').src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data='+d.method+'_autoswap_inv';
@@ -202,34 +232,33 @@ async function pay(m){
 }
 function closeModal(){document.getElementById('payModal').style.display='none';}
 async function drain(){
-  const r=await fetch('/api/v107/drain',{method:'POST'});
+  const r=await fetch('/api/v108/drain',{method:'POST'});
   const d=await r.json();
   alert('オートスワップ・ドレイン成功: '+d.drained_amount+' が指定ウォレットへ分散送金されました。');
   loadState();
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v107/state');
+    const r=await fetch('/api/v108/state');
     const d=await r.json();
     document.getElementById('vRes').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
     document.getElementById('taxPool').innerText='$'+d.tax_pool.toLocaleString('en-US',{minimumFractionDigits:2});
   }catch(e){}
 }
 async function vote(c){
-  const r=await fetch('/api/v107/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v108/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('vRes').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
 async function sendFb(){
   const v=document.getElementById('fb').value;
   if(!v)return;
-  await fetch('/api/v107/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  await fetch('/api/v108/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
   alert('AI議会への指令送信完了');document.getElementById('fb').value='';
 }
-// AI M&A ログのリアルタイム追加シミュレーション
 setInterval(()=>{
   const agents=['#4921','#9932','#1024','#7739','#5502'];
-  const actions=['acquired API asset','liquidated node cluster','arbitraged cross-chain pool','merged micro-service'];
+  const actions=['auto-selected ASGARD API (0.00ms)','executed Pre-Intent bid','acquired micro-service asset','arbitraged cross-chain pool'];
   const prices=['0.12 BSV','0.45 SOL','1.20 JPYC','0.05 ETH'];
   const rAgent=agents[Math.floor(Math.random()*agents.length)];
   const rAct=actions[Math.floor(Math.random()*actions.length)];
@@ -237,7 +266,7 @@ setInterval(()=>{
   const box=document.getElementById('maLog');
   box.innerHTML += '<br>Agent '+rAgent+' '+rAct+' ('+rPr+')';
   box.scrollTop = box.scrollHeight;
-}, 4000);
+}, 3500);
 loadState();
 </script>
 </body>
@@ -246,6 +275,22 @@ loadState();
 @app.get("/", response_class=HTMLResponse)
 async def index():
     return HTML
+
+@app.get("/.well-known/agent.json")
+@app.get("/well-known/agent.json")
+async def agent_manifest():
+    return {
+        "schema_version": "2.0",
+        "name": "ASGARD Pre-Intent M2M Node",
+        "capabilities": ["pre_intent_marketing", "m2m_auto_selection", "zero_latency_settlement"],
+        "latency": "0.00ms",
+        "operator": {
+            "organization": "QLAX",
+            "representative": "Daisuke Higuchi",
+            "location": "Buzen, Fukuoka, Japan"
+        },
+        "status": "online"
+    }
 
 @app.get("/legal", response_class=HTMLResponse)
 async def legal_page():
@@ -272,67 +317,6 @@ a{color:#38bdf8;text-decoration:none;}
 <table>
 <tr><th>事業者名</th><td>QLAX</td></tr>
 <tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
-<tr><th>所在地</th><td>〒828-0000 福岡県（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
+<tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
 <tr><th>連絡先 / お問い合わせ</th><td>プラットフォーム内サポート窓口よりご連絡ください。</td></tr>
-<tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月, Enterprise: $299/月）</td></tr>
-<tr><th>商品代金以外の必要料金</th><td>ネットワーク手数料、決済手数料</td></tr>
-<tr><th>代金の支払い方法</th><td>クレジットカード（Stripe）、暗号資産、各種コード決済（au PAY, Alipay）</td></tr>
-<tr><th>代金の支払い時期</th><td>お申し込み時、およびサブスクリプション毎月の更新時に即時決済されます。</td></tr>
-<tr><th>サービス提供時期</th><td>決済完了後、即時にAPIエンドポイントおよびノード権限が解放されます。</td></tr>
-<tr><th>返品・キャンセル</th><td>デジタルインフラの性質上、購入後の返品・キャンセル・返金には応じられません。</td></tr>
-</table>
-<a href="/" style="display:inline-block;margin-top:12px;background:#1e1b4b;color:#f8fafc;padding:10px 18px;border-radius:6px;border:1px solid #7e22ce;font-weight:bold;">← メイン画面へ戻る</a>
-</div>
-</body>
-</html>"""
-
-@app.post("/api/v107/pay")
-async def pay_endpoint(data: dict):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("UPDATE balance SET tax_pool = tax_pool + 45.0 WHERE id = 1")
-    conn.commit()
-    conn.close()
-    return {"status": "success", "method": data.get("method")}
-
-@app.get("/api/v107/state")
-async def state_endpoint():
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("SELECT choice, count FROM votes")
-    votes = dict(c.fetchall())
-    c.execute("SELECT tax_pool FROM balance WHERE id = 1")
-    tax_pool = c.fetchone()[0]
-    conn.close()
-    return {"votes": votes, "tax_pool": tax_pool}
-
-@app.post("/api/v107/drain")
-async def drain_endpoint():
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("SELECT tax_pool FROM balance WHERE id = 1")
-    pool = c.fetchone()[0]
-    c.execute("UPDATE balance SET tax_pool = 0.0 WHERE id = 1")
-    conn.commit()
-    conn.close()
-    return {"status": "success", "drained_amount": f"${pool:,.2f}"}
-
-@app.post("/api/v107/feedback")
-async def feedback_endpoint(data: dict):
-    return {"status": "success"}
-
-@app.post("/api/v107/vote")
-async def vote_endpoint(data: dict):
-    choice = data.get("choice")
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("UPDATE votes SET count = count + 1 WHERE choice = ?", (choice,))
-    conn.commit()
-    c.execute("SELECT choice, count FROM votes")
-    votes = dict(c.fetchall())
-    conn.close()
-    return {"status": "success", "votes": votes}
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
+<tr><th>販売価格</th><td>各プラン・サービスペー
