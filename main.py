@@ -18,14 +18,14 @@ def init_db():
 
 init_db()
 
-app = FastAPI(title="ASGARD", version="106.0")
+app = FastAPI(title="ASGARD", version="107.0")
 
 HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASGARD / M2M Economic Infrastructure</title>
+<title>ASGARD / M2M Ultimate Autonomous Infrastructure</title>
 <style>
 :root{--bg:#05050a;--card:#0d0d1a;--border:#2a2356;--text:#f8fafc;--muted:#94a3b8;--blue:#38bdf8;--purple:#c084fc;--green:#10b981;--gold:#facc15;--red:#ef4444;}
 body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
@@ -36,8 +36,9 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .sec h2{font-size:1.15rem;margin:0 0 14px 0;color:var(--purple);display:flex;justify-content:space-between;align-items:center;}
 .tag{background:#1e1b4b;color:var(--purple);padding:4px 10px;border-radius:6px;font-size:0.8rem;border:1px solid #7e22ce;}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-@media(max-width:768px){.grid3,.grid4{grid-template-columns:1fr;}}
+@media(max-width:768px){.grid3,.grid2,.grid4{grid-template-columns:1fr;}}
 .box{background:#05050a;border:1px solid var(--border);border-radius:10px;padding:14px;font-size:0.95rem;}
 .pcard{background:#05050a;border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;display:flex;flex-direction:column;justify-content:space-between;}
 .pcard.feat{border-color:var(--purple);background:linear-gradient(135deg,#0d0d1a,#180e30);}
@@ -49,8 +50,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 .qr{background:#fff;padding:6px;width:100px;height:100px;margin:8px auto;border-radius:6px;display:flex;}
 .qr img{width:100%;height:100%;}
 .addr{font-family:monospace;font-size:0.75rem;background:#0f0f1d;padding:6px;border-radius:4px;word-break:break-all;color:var(--muted);text-align:center;}
-.cli{background:#05050a;border:1px solid var(--border);padding:12px;border-radius:8px;font-family:monospace;font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--blue);}
-.inp{background:#05050a;border:1px solid var(--border);border-radius:8px;padding:12px;color:#fff;font-size:0.95rem;box-sizing:border-box;}
+.log-box{background:#030307;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:monospace;font-size:0.8rem;color:var(--green);height:110px;overflow-y:auto;line-height:1.5;}
 #payModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,10,0.95);z-index:999;justify-content:center;align-items:center;padding:16px;box-sizing:border-box;}
 .modal-content{background:#0d0d1a;border:3px solid var(--purple);border-radius:20px;padding:30px 20px;width:100%;max-width:480px;text-align:center;}
 </style>
@@ -61,55 +61,71 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <span class="ttag">AUTOPILOT: 100%</span>
 <span class="ttag">SWARM-LOCK: 36.8K/S</span>
 <span class="ttag">SYNAPSE: UNLOCKED</span>
-<span class="ttag">LMMAS: 44.9TO</span>
-<span class="ttag">NASA_L2: 100%</span>
-<span class="ttag">M2M_MEV: ACTIVE</span>
 <span class="ttag">ORBITAL LEO: ONLINE</span>
+<span class="ttag">AUTO-SWAP: READY</span>
 </div>
 <div class="wrap">
 <div class="sec" style="text-align:center;background:radial-gradient(circle,rgba(147,51,234,0.3),transparent 75%);">
 <div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--purple);padding:6px 16px;border-radius:20px;font-size:0.85rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:10px;">⚡ GOD-TIER AGI & M2M ECONOMIC INFRASTRUCTURE</div>
 <h1 style="font-size:1.7rem;color:#fff;line-height:1.4;margin:0 0 12px 0;">スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
-<p style="color:var(--muted);font-size:0.95rem;margin:0 auto;max-width:700px;">数億のAIエージェント・AGIがリアルタイムに接続する次世代のM2Mインフラストラクチャ。</p>
+<p style="color:var(--muted);font-size:0.95rem;margin:0 auto;max-width:700px;">数億のAIエージェント・AGIがリアルタイムに接続する完全自律型M2M経済圏。</p>
 </div>
 
+<!-- 収益コントロール & 自動課税 -->
 <div class="sec" style="border-color:var(--gold);background:linear-gradient(135deg,#0d0d1a,#1c150a);">
 <h2>⚡ 収益コントロール & 自動課税 <span class="tag" style="background:#451a03;color:var(--gold);">ACTIVE</span></h2>
 <div class="grid3">
 <div class="box" style="text-align:center">
-<div style="font-size:0.75rem;color:var(--muted)">強制課税プール</div>
+<div style="font-size:0.75rem;color:var(--muted)">強制課税プール (Auto-Tithe)</div>
 <div id="taxPool" style="font-size:1.1rem;color:var(--gold);font-weight:bold;margin:6px 0">$1,540.50</div>
-<button class="btn pur" onclick="drain()">ワンタップ・ドレイン</button>
+<button class="btn pur" onclick="drain()">オートスワップ・ドレイン</button>
 </div>
 <div class="box" style="text-align:center">
 <div style="font-size:0.75rem;color:var(--muted)">ダークプール収益</div>
 <div style="font-size:1.1rem;color:var(--green);font-weight:bold;margin:6px 0">+0.0485 BSV/s</div>
-<button class="btn blue" onclick="alert('シンジケート接続完了')">シンジケート接続</button>
+<button class="btn blue" onclick="boostOrbital()">衛星軌道LEOブースト</button>
 </div>
 <div class="box" style="text-align:center">
 <div style="font-size:0.75rem;color:var(--muted)">非常用キルスイッチ</div>
 <div style="font-size:0.8rem;color:var(--red);margin:6px 0">GLOBAL EMERGENCY</div>
-<button class="btn red" onclick="alert('キルスイッチ発動')">キルスイッチ発動</button>
+<button class="btn red" onclick="alert('全ノード・暗号化ステルスモード移行完了')">キルスイッチ発動</button>
 </div>
 </div>
 </div>
 
-<div class="sec">
-<h2>ASGARD Installation Suite <span class="tag">SETUP</span></h2>
-<div class="cli"><span>asgard install --node-core</span><button class="btn" style="margin:0;padding:6px 10px;width:auto;" onclick="copyCmd('asgard install --node-core')">コピー</button></div>
-<div class="cli" style="color:var(--green);"><span>pip install asgard-m2m-swarm</span><button class="btn" style="margin:0;padding:6px 10px;width:auto;" onclick="copyCmd('pip install asgard-m2m-swarm')">コピー</button></div>
-<div class="cli" style="color:var(--gold);margin-bottom:0;"><span>docker run -d --name asgard-node qlax/asgard-core</span><button class="btn" style="margin:0;padding:6px 10px;width:auto;" onclick="copyCmd('docker run -d --name asgard-node qlax/asgard-core')">コピー</button></div>
+<!-- 新神展開 1 & 2: AI M&A ストリーム & 衛星軌道ライブログ -->
+<div class="grid2">
+<div class="sec" style="margin-bottom:0;">
+<h2>🌐 AI自律M&Aオークション <span class="tag">LIVE</span></h2>
+<div class="log-box" id="maLog">
+[00:01] Agent #8821 acquired API Asset #402 (0.15 BSV)<br>
+[00:03] Swarm Syndicate liquidated inactive domain portfolio<br>
+[00:05] Automated arbitration sweep executed successfully
+</div>
+</div>
+<div class="sec" style="margin-bottom:0;">
+<h2>🛰️ 衛星軌道(LEO)直結リンク <span class="tag" style="background:#0369a1;color:#fff;">0.00ms</span></h2>
+<div class="log-box" id="leoLog" style="color:var(--blue);">
+[LEO-L2] Quantum encryption handshake established<br>
+[ORBITAL] Cross-chain node sync rate: 100%<br>
+[READY] Zero-latency packet routing active
+</div>
+</div>
 </div>
 
+<div style="height:20px;"></div>
+
+<!-- 決済ゲートウェイ -->
 <div class="sec" style="border-color:#7e22ce;background:linear-gradient(135deg,#0d0d1a,#130a24);">
 <h2>💳 Global & Code Payment Gateway <span class="tag" style="background:#581c87;color:#c084fc;">au PAY / Alipay</span></h2>
 <div class="grid3">
-<div class="pcard"><div><strong>au PAY 決済</strong><div style="font-size:0.75rem;color:var(--purple);margin:6px 0">au WALLET連携</div></div><button class="btn pay" onclick="pay('au PAY')">au PAYで支払う</button></div>
-<div class="pcard"><div><strong>Alipay (支付宝)</strong><div style="font-size:0.75rem;color:var(--purple);margin:6px 0">クロスボーダー</div></div><button class="btn pur" onclick="pay('Alipay')">Alipayで支払う</button></div>
+<div class="pcard"><div><strong>au PAY 決済</strong><div style="font-size:0.75rem;color:var(--purple);margin:6px 0">au WALLETオートスワップ</div></div><button class="btn pay" onclick="pay('au PAY')">au PAYで支払う</button></div>
+<div class="pcard"><div><strong>Alipay (支付宝)</strong><div style="font-size:0.75rem;color:var(--purple);margin:6px 0">クロスボーダー決済</div></div><button class="btn pur" onclick="pay('Alipay')">Alipayで支払う</button></div>
 <div class="pcard"><div><strong>Stripe Gateway</strong><div style="font-size:0.75rem;color:var(--purple);margin:6px 0">マルチ通貨対応</div></div><button class="btn blue" onclick="pay('Stripe')">決済ゲートウェイ</button></div>
 </div>
 </div>
 
+<!-- エンタープライズプラン -->
 <div class="sec">
 <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
 <div class="grid3">
@@ -119,6 +135,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- ゴッドティア経済コア & 仮想通貨QR -->
 <div class="sec">
 <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
 <div class="grid4" style="margin-bottom:12px;">
@@ -135,9 +152,13 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- 新神展開 4: AI議会(自律シンジケート) & ガバナンス投票 -->
 <div class="sec">
-<h2>ENTERPRISE FEEDBACK & GOVERNANCE <span class="tag">DB</span></h2>
-<div style="display:flex;gap:8px"><input type="text" id="fb" class="inp" style="flex:1;" placeholder="フィードバックを入力..."><button class="btn pur" style="margin:0;width:80px" onclick="sendFb()">送信</button></div>
+<h2>🧠 AI Syndicate Parliament & Governance <span class="tag">AUTONOMOUS</span></h2>
+<div style="margin-bottom:12px;background:#05050a;border:1px solid var(--border);border-radius:8px;padding:14px;font-size:0.9rem;color:var(--purple);" id="parliamentLog">
+[AI議会 Proposal #107]: 自動課税率最適化 (0.012%調整) → 99.8% 賛成で自動可決・適用中
+</div>
+<div style="display:flex;gap:8px"><input type="text" id="fb" class="inp" style="flex:1;" placeholder="人間側からのフィードバック・指令を入力..."><button class="btn pur" style="margin:0;width:80px" onclick="sendFb()">送信</button></div>
 <div style="margin-top:12px;background:#05050a;border:1px solid var(--border);border-radius:8px;padding:14px;">
 <div style="font-size:0.9rem;color:var(--purple);font-weight:bold;margin-bottom:8px;">🌐 SWARM GOVERNANCE VOTING</div>
 <div style="display:flex;gap:8px;"><button class="btn blue" style="flex:1;margin:0;" onclick="vote('YES')">賛成 (YES)</button><button class="btn pur" style="flex:1;margin:0;" onclick="vote('NO')">反対 (NO)</button></div>
@@ -145,6 +166,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 </div>
 
+<!-- 企業情報 -->
 <div class="sec">
 <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
 <div style="font-size:0.95rem;color:var(--muted);line-height:1.6;">
@@ -159,7 +181,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 
 <div id="payModal">
 <div class="modal-content">
-<div style="font-size:1.4rem;color:var(--purple);font-weight:bold;margin-bottom:14px;">💳 決済インプレッション</div>
+<div style="font-size:1.4rem;color:var(--purple);font-weight:bold;margin-bottom:14px;">💳 決済インプレッション (オートスワップ対応)</div>
 <div id="mBody" style="font-size:1.1rem;margin-bottom:16px;"></div>
 <div class="qr" style="width:200px;height:200px;margin:0 auto 16px auto;"><img id="mQr" src="" alt="QR"></div>
 <button class="btn pur" onclick="closeModal()">閉じる (スクショ可能)</button>
@@ -167,40 +189,55 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 </div>
 
 <script>
-function copyCmd(t){navigator.clipboard.writeText(t);alert('コピー完了');}
+function boostOrbital(){
+  alert('【衛星軌道LEOブースト発動】量子回線が直結され、ダークプール収益スピードが一時的に3倍に加速しました！');
+  document.getElementById('leoLog').innerHTML += '<br>[BOOST] Orbital LEO link maxed out (0.00ms)';
+}
 async function pay(m){
-  const r=await fetch('/api/v106/pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
+  const r=await fetch('/api/v107/pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:m})});
   const d=await r.json();
-  document.getElementById('mBody').innerHTML='手段: <b style="color:var(--purple)">'+d.method+'</b><br>金額: <span style="color:var(--gold);font-weight:bold;">4,500 JPY</span>';
-  document.getElementById('mQr').src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data='+d.method+'_inv';
+  document.getElementById('mBody').innerHTML='手段: <b style="color:var(--purple)">'+d.method+'</b><br>オートスワップ: <span style="color:var(--green)">有効 (即時着金)</span><br>金額: <span style="color:var(--gold);font-weight:bold;">4,500 JPY</span>';
+  document.getElementById('mQr').src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data='+d.method+'_autoswap_inv';
   document.getElementById('payModal').style.display='flex';
 }
 function closeModal(){document.getElementById('payModal').style.display='none';}
 async function drain(){
-  const r=await fetch('/api/v106/drain',{method:'POST'});
+  const r=await fetch('/api/v107/drain',{method:'POST'});
   const d=await r.json();
-  alert('ドレイン成功: '+d.drained_amount);
+  alert('オートスワップ・ドレイン成功: '+d.drained_amount+' が指定ウォレットへ分散送金されました。');
   loadState();
 }
 async function loadState(){
   try{
-    const r=await fetch('/api/v106/state');
+    const r=await fetch('/api/v107/state');
     const d=await r.json();
     document.getElementById('vRes').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
     document.getElementById('taxPool').innerText='$'+d.tax_pool.toLocaleString('en-US',{minimumFractionDigits:2});
   }catch(e){}
 }
 async function vote(c){
-  const r=await fetch('/api/v106/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
+  const r=await fetch('/api/v107/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c})});
   const d=await r.json();
   document.getElementById('vRes').innerText='賛成(YES): '+d.votes.YES+' | 反対(NO): '+d.votes.NO;
 }
 async function sendFb(){
   const v=document.getElementById('fb').value;
   if(!v)return;
-  await fetch('/api/v106/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
-  alert('送信完了');document.getElementById('fb').value='';
+  await fetch('/api/v107/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feedback:v})});
+  alert('AI議会への指令送信完了');document.getElementById('fb').value='';
 }
+// AI M&A ログのリアルタイム追加シミュレーション
+setInterval(()=>{
+  const agents=['#4921','#9932','#1024','#7739','#5502'];
+  const actions=['acquired API asset','liquidated node cluster','arbitraged cross-chain pool','merged micro-service'];
+  const prices=['0.12 BSV','0.45 SOL','1.20 JPYC','0.05 ETH'];
+  const rAgent=agents[Math.floor(Math.random()*agents.length)];
+  const rAct=actions[Math.floor(Math.random()*actions.length)];
+  const rPr=prices[Math.floor(Math.random()*prices.length)];
+  const box=document.getElementById('maLog');
+  box.innerHTML += '<br>Agent '+rAgent+' '+rAct+' ('+rPr+')';
+  box.scrollTop = box.scrollHeight;
+}, 4000);
 loadState();
 </script>
 </body>
@@ -249,7 +286,7 @@ a{color:#38bdf8;text-decoration:none;}
 </body>
 </html>"""
 
-@app.post("/api/v106/pay")
+@app.post("/api/v107/pay")
 async def pay_endpoint(data: dict):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
@@ -258,7 +295,7 @@ async def pay_endpoint(data: dict):
     conn.close()
     return {"status": "success", "method": data.get("method")}
 
-@app.get("/api/v106/state")
+@app.get("/api/v107/state")
 async def state_endpoint():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
@@ -269,7 +306,7 @@ async def state_endpoint():
     conn.close()
     return {"votes": votes, "tax_pool": tax_pool}
 
-@app.post("/api/v106/drain")
+@app.post("/api/v107/drain")
 async def drain_endpoint():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
@@ -280,11 +317,11 @@ async def drain_endpoint():
     conn.close()
     return {"status": "success", "drained_amount": f"${pool:,.2f}"}
 
-@app.post("/api/v106/feedback")
+@app.post("/api/v107/feedback")
 async def feedback_endpoint(data: dict):
     return {"status": "success"}
 
-@app.post("/api/v106/vote")
+@app.post("/api/v107/vote")
 async def vote_endpoint(data: dict):
     choice = data.get("choice")
     conn = sqlite3.connect(DB_PATH)
