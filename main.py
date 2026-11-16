@@ -39,7 +39,7 @@ def calculate_dynamic_pricing() -> float:
 def execute_auto_drain_and_swap(amount: float, asset: str):
     print(f"[AUTO-DRAIN] Drained {amount} {asset} to master core.")
 
-HTML = """<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>ASGARD / M2M Infrastructure</title>
+HTML = """<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>ASGARD / Advanced AGI Swarm & M2M Infrastructure</title>
 <style>
 :root{--bg:#05050a;--card:#0d0d1a;--bd:#2a2356;--tx:#18fafc;--pr:#7e22ce}
 body{background:var(--bg);color:var(--tx);font-family:sans-serif;margin:0}
