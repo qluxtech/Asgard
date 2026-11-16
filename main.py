@@ -41,42 +41,58 @@ def execute_auto_drain_and_swap(amount: float, asset: str):
 
 HTML = """<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>ASGARD / Advanced AGI Swarm & M2M Infrastructure</title>
 <style>
-:root{--bg:#05050a;--card:#0d0d1a;--bd:#2a2356;--tx:#18fafc;--pr:#7e22ce}
-body{background:var(--bg);color:var(--tx);font-family:sans-serif;margin:0}
+:root{--bg:#05050a;--card:#0d0d1a;--bd:#3b2d71;--tx:#22ebf0;--pr:#9333ea;--pr-light:#a855f7}
+body{background:var(--bg);color:var(--tx);font-family:sans-serif;margin:0;font-size:0.95rem;}
 .wrap{width:100%;max-width:1100px;padding:16px;box-sizing:border-box;margin:0 auto}
-.sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px}
-h2{color:var(--pr);font-size:1.1rem;margin:0 0 12px 0;display:flex;align-items:center}
-.tag{background:var(--pr);color:#fff;padding:3px 8px;border-radius:6px;font-size:0.75rem;margin-left:8px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 4px 20px rgba(147,51,234,0.15)}
+h1{font-size:1.5rem;}
+h2{color:var(--pr-light);font-size:1.25rem;margin:0 0 14px 0;display:flex;align-items:center}
+p{font-size:0.9rem;line-height:1.5;}
+.tag{background:var(--pr);color:#fff;padding:4px 10px;border-radius:6px;font-size:0.8rem;margin-left:8px;font-weight:bold;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 @media(max-width:768px){.grid,.grid-4{grid-template-columns:1fr}}
-.box{background:#05050a;border:1px solid var(--bd);border-radius:10px;padding:12px}
-.ps{border-color:var(--pr);background:linear-gradient(135deg,#0d0d1a,#2a2356)}
-.btn{background:#0365a1;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-weight:bold;width:100%;margin-top:8px}
-.btn-pr{background:var(--pr)}
-.qr{width:90px;height:90px;margin:0 auto 10px;background:#fff;padding:4px;border-radius:6px}
+.box{background:#05050a;border:1px solid var(--bd);border-radius:10px;padding:14px}
+.ps{border-color:var(--pr);background:linear-gradient(135deg,#110c24,#3b2d71)}
+.btn{background:#0284c7;color:#fff;border:none;border-radius:6px;padding:10px 14px;cursor:pointer;font-weight:bold;width:100%;margin-top:10px;font-size:0.9rem;}
+.btn-pr{background:var(--pr);}
+.btn-pr:hover{background:var(--pr-light);}
+.qr{width:100px;height:100px;margin:0 auto 10px;background:#fff;padding:4px;border-radius:6px}
+input{font-size:0.9rem;}
 </style></head>
 <body>
 <!-- トップステータスバー -->
-<div style="background:#030307;border-bottom:1px solid #130a24;border-top:1px solid var(--pr);color:var(--pr);padding:6px;font-size:0.65rem;text-align:center;letter-spacing:1px;">
+<div style="background:#030307;border-bottom:1px solid #3b2d71;border-top:1px solid var(--pr);color:var(--pr-light);padding:8px;font-size:0.75rem;text-align:center;letter-spacing:1px;font-weight:bold;">
 VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mkc/S | ORBITAL LEO: ONLINE | AUTO-SWAP: READY
 </div>
 
 <div class="wrap">
   <!-- ヒーローセクション -->
-  <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#0d0d1a,#05050a);">
-    <div style="font-size:0.7rem;color:var(--pr);margin-bottom:6px;letter-spacing:1px;">GOD-TIER AGI & PRE-INTENT M2M INFRASTRUCTURE</div>
-    <h1 style="font-size:1.3rem;color:#fff;margin:0 0 8px 0;">スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
-    <p style="color:var(--tx);font-size:0.8rem;margin:0 auto;max-width:750px;">検索の前に文脈を先回りする「プレ・インテントAI」と、数億の自律エージェントによるゼロレイテンシーM2M即時決済を完全統合。</p>
+  <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#160b33,#05050a);border-color:var(--pr);">
+    <div style="font-size:0.8rem;color:var(--pr-light);margin-bottom:8px;letter-spacing:1.5px;font-weight:bold;">GOD-TIER AGI & PRE-INTENT M2M INFRASTRUCTURE</div>
+    <h1 style="font-size:1.5rem;color:#fff;margin:0 0 10px 0;">スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
+    <p style="color:#e2e8f0;font-size:0.95rem;margin:0 auto;max-width:800px;">検索の前に文脈を先回りする「プレ・インテントAI」と、数億の自律エージェントによるゼロレイテンシーM2M即時決済を完全統合。</p>
   </div>
 
-  <!-- 次世代M2Mマーケティング & プレ・インテント中枢 -->
+  <!-- 次世代M2Mマーケティング & プレ・インテント中枢 (復活・拡大) -->
   <div class="sec" style="border-color:var(--pr);">
-    <h2>次世代M2Mマーケティング & プレ・インテント中枢 <span class="tag" style="background:#ff2a85;">ZERO FRICTION</span></h2>
+    <h2>次世代M2Mマーケティング & プレ・インテント中枢 <span class="tag" style="background:#db2777;">ZERO FRICTION</span></h2>
     <div class="grid">
-      <div class="box"><h3>① 文脈先回り (Pre-Intent)</h3><p style="font-size:0.75rem;">相談前の環境・文脈を検知し、必要リソースを自動展開。</p><button class="btn btn-pr" onclick="trigPI()">文脈先回りオファー発動</button></div>
-      <div class="box"><h3>② M2Mエージェント自動選定</h3><p style="font-size:0.75rem;">AIエージェントが構築・論理対話[ms]で最適APIを自動契約。</p><button class="btn" onclick="window.open('/.well-known/agent.json')">AI選定マニフェスト確認 ↗</button></div>
-      <div class="box ps"><h3>③ インパルス即時決済</h3><p style="font-size:0.75rem;">意思決定の摩擦ゼロ。コンマ数秒で決済と着金を完了。</p><button class="btn btn-pr" onclick="swarmBurst()">ゼロレイテンシーワンタップ決済</button></div>
+      <div class="box">
+        <h3 style="font-size:1rem;color:#fff;margin-top:0;">① 文脈先回り (Pre-Intent)</h3>
+        <p style="font-size:0.85rem;color:#cbd5e1;">相談前の環境・文脈を検知し、必要リソースを自動展開。</p>
+        <button class="btn btn-pr" onclick="trigPI()">文脈先回りオファー発動</button>
+      </div>
+      <div class="box">
+        <h3 style="font-size:1rem;color:#fff;margin-top:0;">② M2Mエージェント自動選定</h3>
+        <p style="font-size:0.85rem;color:#cbd5e1;">AIエージェントが構築・論理対話[ms]で最適APIを自動契約。</p>
+        <button class="btn" onclick="window.open('/.well-known/agent.json')">AI選定マニフェスト確認 ↗</button>
+      </div>
+      <div class="box ps">
+        <h3 style="font-size:1rem;color:#fff;margin-top:0;">③ インパルス即時決済</h3>
+        <p style="font-size:0.85rem;color:#cbd5e1;">意思決定の摩擦ゼロ。コンマ数秒で決済と着金を完了。</p>
+        <button class="btn btn-pr" onclick="swarmBurst()">ゼロレイテンシーワンタップ決済</button>
+      </div>
     </div>
   </div>
 
@@ -84,25 +100,25 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
   <div class="sec" style="border-color:var(--pr);">
     <h2>収益コントロール & 自動課税 <span class="tag">ACTIVE</span></h2>
     <div class="grid">
-      <div class="box" style="text-align:center;"><div style="font-size:0.75rem;">累計税プール (Auto-Tithe)</div><div style="font-size:1.2rem;font-weight:bold;color:#fff;">$1,540.50</div><button class="btn btn-pr" onclick="drainPool()">オートスワップ・ドレイン</button></div>
-      <div class="box" style="text-align:center;"><div style="font-size:0.75rem;">ダークプール収益</div><div style="font-size:1.2rem;font-weight:bold;color:#18fafc;">+0.0485 BSV/s</div><button class="btn" onclick="alert('LEO Boost Active.')">低軌道LEOブースト</button></div>
-      <div class="box" style="text-align:center;"><div style="font-size:0.75rem;color:var(--tx);">緊急キルスイッチ</div><div style="font-size:1.1rem;font-weight:bold;color:#ff4444;">GLOBAL EMERGENCY</div><button class="btn" style="background:#ff4444;" onclick="alert('Kill switch engaged.')">キルスイッチ発動</button></div>
+      <div class="box" style="text-align:center;"><div style="font-size:0.85rem;color:#cbd5e1;">累計税プール (Auto-Tithe)</div><div style="font-size:1.35rem;font-weight:bold;color:#fff;margin:6px 0;">$1,540.50</div><button class="btn btn-pr" onclick="drainPool()">オートスワップ・ドレイン</button></div>
+      <div class="box" style="text-align:center;"><div style="font-size:0.85rem;color:#cbd5e1;">ダークプール収益</div><div style="font-size:1.35rem;font-weight:bold;color:var(--tx);margin:6px 0;">+0.0485 BSV/s</div><button class="btn" onclick="alert('LEO Boost Active.')">低軌道LEOブースト</button></div>
+      <div class="box" style="text-align:center;"><div style="font-size:0.85rem;color:#cbd5e1;">緊急キルスイッチ</div><div style="font-size:1.15rem;font-weight:bold;color:#ef4444;margin:8px 0;">GLOBAL EMERGENCY</div><button class="btn" style="background:#ef4444;" onclick="alert('Kill switch engaged.')">キルスイッチ発動</button></div>
     </div>
   </div>
 
   <!-- AI自律M&A・自動選定ログ & 衛星軌道直結リンク -->
-  <div class="grid" style="margin-bottom:14px;">
-    <div class="box"><h3 style="font-size:0.85rem;color:var(--pr);display:flex;justify-content:space-between;">AI自律M&A・自動選定ログ <span class="tag" style="font-size:0.6rem;">LIVE</span></h3><p style="font-size:0.65rem;font-family:monospace;background:#030307;padding:8px;border-radius:6px;line-height:1.4;">[M2M-SELECT] Agent #8821 auto-selected ASGARD API (0.00ms)<br>[M&A-DEAL] Swarm Syndicate acquired API #402 (0.15 BSV)<br>[PRE-INTENT] Context match 99.9% -> Auto-settled<br>Agent #4921 auto-selected ASGARD API (0.12 JPYC)</p></div>
-    <div class="box"><h3 style="font-size:0.85rem;color:var(--pr);display:flex;justify-content:space-between;">衛星軌道(LEO)直結リンク <span class="tag" style="font-size:0.6rem;background:#0365a1;">0.00ms</span></h3><p style="font-size:0.65rem;font-family:monospace;background:#030307;padding:8px;border-radius:6px;line-height:1.4;">[LEO-L2]: Quantum encryption handshake established.<br>[ORBITAL]: Cross-chain node sync rate: 100%<br>[READY]: Zero-Latency packet routing active.</p></div>
+  <div class="grid" style="margin-bottom:16px;">
+    <div class="box"><h3 style="font-size:0.95rem;color:var(--pr-light);display:flex;justify-content:space-between;margin-top:0;">AI自律M&A・自動選定ログ <span class="tag" style="font-size:0.65rem;">LIVE</span></h3><p style="font-size:0.75rem;font-family:monospace;background:#030307;padding:10px;border-radius:6px;line-height:1.5;color:#38bdf8;margin-bottom:0;">[M2M-SELECT] Agent #8821 auto-selected ASGARD API (0.00ms)<br>[M&A-DEAL] Swarm Syndicate acquired API #402 (0.15 BSV)<br>[PRE-INTENT] Context match 99.9% -> Auto-settled<br>Agent #4921 auto-selected ASGARD API (0.12 JPYC)</p></div>
+    <div class="box"><h3 style="font-size:0.95rem;color:var(--pr-light);display:flex;justify-content:space-between;margin-top:0;">衛星軌道(LEO)直結リンク <span class="tag" style="font-size:0.65rem;background:#0284c7;">0.00ms</span></h3><p style="font-size:0.75rem;font-family:monospace;background:#030307;padding:10px;border-radius:6px;line-height:1.5;color:#38bdf8;margin-bottom:0;">[LEO-L2]: Quantum encryption handshake established.<br>[ORBITAL]: Cross-chain node sync rate: 100%<br>[READY]: Zero-Latency packet routing active.</p></div>
   </div>
 
   <!-- Global & Code Payment Gateway -->
   <div class="sec">
     <h2>Global & Code Payment Gateway <span class="tag">au PAY / Alipay</span></h2>
     <div class="grid">
-      <div class="box" style="text-align:center;"><strong>au PAY 決済</strong><p style="font-size:0.75rem;">au WALLETオートスワップ</p><button class="btn btn-pr" onclick="alert('au PAY gateway active')">au PAYで支払う</button></div>
-      <div class="box" style="text-align:center;"><strong>Alipay (支付宝)</strong><p style="font-size:0.75rem;">クロスボーダー決済</p><button class="btn btn-pr" onclick="alert('Alipay active')">Alipayで支払う</button></div>
-      <div class="box" style="text-align:center;"><strong>Stripe Gateway</strong><p style="font-size:0.75rem;">マルチ通貨対応</p><button class="btn" onclick="alert('Stripe active')">決済ゲートウェイ</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">au PAY 決済</strong><p style="font-size:0.8rem;color:#cbd5e1;">au WALLETオートスワップ</p><button class="btn btn-pr" onclick="alert('au PAY gateway active')">au PAYで支払う</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Alipay (支付宝)</strong><p style="font-size:0.8rem;color:#cbd5e1;">クロスボーダー決済</p><button class="btn btn-pr" onclick="alert('Alipay active')">Alipayで支払う</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Stripe Gateway</strong><p style="font-size:0.8rem;color:#cbd5e1;">マルチ通貨対応</p><button class="btn" onclick="alert('Stripe active')">決済ゲートウェイ</button></div>
     </div>
   </div>
 
@@ -110,54 +126,54 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
   <div class="sec">
     <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
     <div class="grid">
-      <div class="box" style="text-align:center;"><strong>Free Tier</strong><p style="font-size:1.1rem;color:#fff;">FREE</p><p style="font-size:0.75rem;">• 1,000 Req/mo<br>• Standard Access</p><button class="btn" onclick="alert('Free active')">無料発行</button></div>
-      <div class="box ps" style="text-align:center;"><strong>Autonomous Pro</strong><p style="font-size:1.1rem;color:var(--tx);">$29/mo</p><p style="font-size:0.75rem;">• Unlimited Req<br>• Zero Latency</p><button class="btn btn-pr" onclick="upg('autonomous_pro')">購入する ↗</button></div>
-      <div class="box" style="text-align:center;"><strong>Enterprise</strong><p style="font-size:1.1rem;color:#fff;">$299/mo</p><p style="font-size:0.75rem;">• Swarm Core<br>• SLA 100%</p><button class="btn" onclick="upg('enterprise')">ライセンス ↗</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Free Tier</strong><p style="font-size:1.25rem;color:#fff;margin:8px 0;">FREE</p><p style="font-size:0.8rem;color:#cbd5e1;">• 1,000 Req/mo<br>• Standard Access</p><button class="btn" onclick="alert('Free active')">無料発行</button></div>
+      <div class="box ps" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Autonomous Pro</strong><p style="font-size:1.25rem;color:var(--tx);margin:8px 0;">$29/mo</p><p style="font-size:0.8rem;color:#cbd5e1;">• Unlimited Req<br>• Zero Latency</p><button class="btn btn-pr" onclick="upg('autonomous_pro')">購入する ↗</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Enterprise</strong><p style="font-size:1.25rem;color:#fff;margin:8px 0;">$299/mo</p><p style="font-size:0.8rem;color:#cbd5e1;">• Swarm Core<br>• SLA 100%</p><button class="btn" onclick="upg('enterprise')">ライセンス ↗</button></div>
     </div>
   </div>
 
   <!-- God-Tier Autonomous Economic Core -->
   <div class="sec" style="border-color:var(--pr);">
     <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
-    <div class="grid-4" style="text-align:center;margin-bottom:14px;font-size:0.75rem;">
-      <div class="box">接続残高<br><strong style="font-size:1rem;color:#fff;">$94,800,120</strong></div>
-      <div class="box">稼働エージェント<br><strong style="font-size:1rem;color:#fff;">442M units</strong></div>
-      <div class="box">効率<br><strong style="font-size:1rem;color:#fff;">99.99%</strong></div>
-      <div class="box">登録ノード<br><strong style="font-size:1rem;color:#fff;">128 nodes</strong></div>
+    <div class="grid-4" style="text-align:center;margin-bottom:14px;font-size:0.8rem;">
+      <div class="box">接続残高<br><strong style="font-size:1.1rem;color:#fff;">$94,800,120</strong></div>
+      <div class="box">稼働エージェント<br><strong style="font-size:1.1rem;color:#fff;">442M units</strong></div>
+      <div class="box">効率<br><strong style="font-size:1.1rem;color:#fff;">99.99%</strong></div>
+      <div class="box">登録ノード<br><strong style="font-size:1.1rem;color:#fff;">128 nodes</strong></div>
     </div>
     <div class="grid-4">
-      <div class="box" style="text-align:center;"><strong>Bitcoin</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bitcoin" width="90"></div><button class="btn" onclick="window.open('https://mempool.space')">Mempool</button></div>
-      <div class="box" style="text-align:center;"><strong>Solana</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=solana" width="90"></div><button class="btn" onclick="window.open('https://solscan.io')">Solscan</button></div>
-      <div class="box" style="text-align:center;"><strong>Ethereum</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=ethereum" width="90"></div><button class="btn" onclick="window.open('https://etherscan.io')">Etherscan</button></div>
-      <div class="box" style="text-align:center;"><strong>Bitcoin SV</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bsv" width="90"></div><button class="btn" onclick="window.open('https://whatsonchain.com')">WhatsOnChain</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Bitcoin</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bitcoin" width="100"></div><button class="btn" onclick="window.open('https://mempool.space')">Mempool</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Solana</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=solana" width="100"></div><button class="btn" onclick="window.open('https://solscan.io')">Solscan</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Ethereum</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=ethereum" width="100"></div><button class="btn" onclick="window.open('https://etherscan.io')">Etherscan</button></div>
+      <div class="box" style="text-align:center;"><strong style="font-size:1rem;color:#fff;">Bitcoin SV</strong><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=bsv" width="100"></div><button class="btn" onclick="window.open('https://whatsonchain.com')">WhatsOnChain</button></div>
     </div>
   </div>
 
   <!-- AI Syndicate Parliament & Governance -->
   <div class="sec">
-    <h2>AI Syndicate Parliament & Governance <span class="tag" style="background:#ff2a85;">AUTONOMOUS</span></h2>
-    <div style="font-size:0.75rem;background:#030307;padding:10px;border-radius:6px;margin-bottom:10px;">[AI議会 Proposal #103]: プレ・インテントAI自動入札アルゴリズム更新 -> 95.9% 賛成で自動可決・適用中</div>
-    <div style="display:flex;gap:8px;margin-bottom:10px;">
-      <input type="text" id="feedbackInput" placeholder="指令・フィードバックを入力..." style="flex:1;background:#05050a;border:1px solid var(--bd);color:#fff;padding:8px;border-radius:6px;font-size:0.8rem;">
-      <button class="btn btn-pr" style="width:100px;margin:0;" onclick="sendFeedback()">送信</button>
+    <h2>AI Syndicate Parliament & Governance <span class="tag" style="background:#db2777;">AUTONOMOUS</span></h2>
+    <div style="font-size:0.85rem;background:#030307;padding:12px;border-radius:6px;margin-bottom:12px;color:#38bdf8;">[AI議会 Proposal #103]: プレ・インテントAI自動入札アルゴリズム更新 -> 95.9% 賛成で自動可決・適用中</div>
+    <div style="display:flex;gap:10px;margin-bottom:12px;">
+      <input type="text" id="feedbackInput" placeholder="指令・フィードバックを入力..." style="flex:1;background:#05050a;border:1px solid var(--bd);color:#fff;padding:10px;border-radius:6px;">
+      <button class="btn btn-pr" style="width:110px;margin:0;" onclick="sendFeedback()">送信</button>
     </div>
-    <div style="font-size:0.8rem;margin-bottom:6px;">🌐 SWARM GOVERNANCE VOTING</div>
+    <div style="font-size:0.85rem;margin-bottom:8px;font-weight:bold;color:var(--pr-light);">🌐 SWARM GOVERNANCE VOTING</div>
     <div class="grid">
       <div class="box" style="text-align:center;grid-column: span 2;"><button class="btn btn-pr" onclick="vote('YES')">賛成 (YES)</button></div>
-      <div class="box" style="text-align:center;"><button class="btn" style="background:#2a2356;" onclick="vote('NO')">反対 (NO)</button></div>
+      <div class="box" style="text-align:center;"><button class="btn" style="background:#3b2d71;" onclick="vote('NO')">反対 (NO)</button></div>
     </div>
-    <div id="voteStatus" style="font-size:0.75rem;margin-top:8px;color:var(--tx);">賛成(YES): 1420 | 反対(NO): 18</div>
+    <div id="voteStatus" style="font-size:0.8rem;margin-top:10px;color:var(--tx);">賛成(YES): 1420 | 反対(NO): 18</div>
   </div>
 
   <!-- 企業情報 / 概要 -->
   <div class="sec" style="border-color:var(--pr);">
     <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
-    <p style="font-size:0.8rem;line-height:1.5;margin:0 0 8px 0;">ASGARDは、数億のAIエージェント・AGIが自律接続し、0.00msミリ秒決済とプレ・インテント自律仲介を提供する次世代のAI M2M経済インフラです。</p>
-    <p style="font-size:0.8rem;line-height:1.5;margin:0 0 8px 0;">QLAXは、福岡県豊前市を拠点に自律アービトラージと高スループット決済機構を構築・研究開発する個人事業主の組織です。</p>
-    <p style="font-size:0.8rem;margin:0;color:var(--tx);"><strong>運営責任者:</strong> Daisuke Higuchi</p>
+    <p style="font-size:0.85rem;line-height:1.6;margin:0 0 10px 0;color:#e2e8f0;">ASGARDは、数億のAIエージェント・AGIが自律接続し、0.00msミリ秒決済とプレ・インテント自律仲介を提供する次世代のAI M2M経済インフラです。</p>
+    <p style="font-size:0.85rem;line-height:1.6;margin:0 0 10px 0;color:#e2e8f0;">QLAXは、福岡県豊前市を拠点に自律アービトラージと高スループット決済機構を構築・研究開発する個人事業主の組織です。</p>
+    <p style="font-size:0.85rem;margin:0;color:var(--tx);"><strong>運営責任者:</strong> Daisuke Higuchi</p>
   </div>
 
-  <div style="text-align:center;font-size:0.7rem;color:var(--mt);padding:10px 0;">
+  <div style="text-align:center;font-size:0.75rem;color:#94a3b8;padding:12px 0;">
     © ASGARD Infrastructure | 拠点: QLAX (Daisuke Higuchi) / 福岡県豊前市 | <a href="/legal" style="color:var(--tx);">特商法表記</a>
   </div>
 </div>
@@ -256,6 +272,6 @@ async def st_op():
 async def dr_op():
     con = sqlite3.connect(DB); c = con.cursor()
     c.execute("SELECT pool FROM balance WHERE id = 1"); p = c.fetchone()[0]
-    c.execute("UPDATE balance SET pool = 0.0 WHERE id = 1")
+    con.execute("UPDATE balance SET pool = 0.0 WHERE id = 1")
     con.commit(); con.close()
     return {"status": "success", "amt": f"{p:.2f}"}
