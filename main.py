@@ -37,49 +37,50 @@ def calculate_dynamic_pricing() -> float:
     return round(BASE_API_PRICE_BSV * (ACTIVE_SWARM_NODES / 50.0), 8)
 
 def execute_auto_drain_and_swap(amount: float, asset: str):
-    print(f"[AUTO-DRAIN] Drained {amount} {asset} to master core via M2M gateway.")
+    print(f"[AUTO-DRAIN] Drained {amount} {asset} to master core.")
 
 HTML = """<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>ASGARD / Advanced AGI Swarm & M2M Infrastructure</title>
 <style>
 :root{
   --bg: #05030a;
   --card: #0c0817;
-  --bd: #4c1d95;
+  --bd: #581c87;
   --bd-glow: #7c3aed;
   --tx: #22d3ee;
   --tx-main: #f8fafc;
-  --pr: #8b5cf6;
-  --pr-light: #a78bfa;
-  --accent: #ec4899;
+  --pr: #7c3aed;
+  --pr-light: #9333ea;
+  --pr-hover: #6d28d9;
+  --accent: #db2777;
 }
 body{background:var(--bg);color:var(--tx-main);font-family:sans-serif;margin:0;font-size:0.95rem;}
 .wrap{width:100%;max-width:1100px;padding:16px;box-sizing:border-box;margin:0 auto}
-.sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 4px 25px rgba(139,92,246,0.12)}
+.sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 4px 25px rgba(124,58,237,0.15)}
 h1{font-size:1.45rem;}
-h2{color:var(--pr-light);font-size:1.2rem;margin:0 0 14px 0;display:flex;align-items:center;letter-spacing:0.5px;}
+h2{color:#c084fc;font-size:1.2rem;margin:0 0 14px 0;display:flex;align-items:center;letter-spacing:0.5px;}
 p{font-size:0.9rem;line-height:1.5;color:#cbd5e1;}
 .tag{background:var(--pr);color:#fff;padding:4px 10px;border-radius:6px;font-size:0.75rem;margin-left:8px;font-weight:bold;letter-spacing:0.5px;}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 @media(max-width:768px){.grid,.grid-4{grid-template-columns:1fr}}
 .box{background:#07040e;border:1px solid var(--bd);border-radius:10px;padding:14px}
-.ps{border-color:var(--pr-light);background:linear-gradient(135deg,#130b2e,#4c1d95)}
+.ps{border-color:#c084fc;background:linear-gradient(135deg,#170b36,#581c87)}
 .btn{background:var(--pr);color:#fff;border:none;border-radius:6px;padding:10px 14px;cursor:pointer;font-weight:bold;width:100%;margin-top:10px;font-size:0.9rem;transition:all 0.2s;}
-.btn:hover{background:var(--pr-light);box-shadow:0 0 15px rgba(167,139,250,0.5);}
+.btn:hover{background:var(--pr-hover);box-shadow:0 0 15px rgba(147,51,234,0.6);}
 .btn-accent{background:var(--accent);}
-.btn-accent:hover{background:#f472b6;}
+.btn-accent:hover{background:#be185d;}
 .qr{width:90px;height:90px;margin:0 auto 10px;background:#fff;padding:4px;border-radius:6px}
 input{font-size:0.9rem;}
 </style></head>
 <body>
 <!-- トップステータスバー -->
-<div style="background:#030207;border-bottom:1px solid var(--bd);border-top:1px solid var(--pr);color:var(--pr-light);padding:8px;font-size:0.75rem;text-align:center;letter-spacing:1px;font-weight:bold;">
+<div style="background:#030207;border-bottom:1px solid var(--bd);border-top:1px solid var(--pr);color:#c084fc;padding:8px;font-size:0.75rem;text-align:center;letter-spacing:1px;font-weight:bold;">
 VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mkc/S | ORBITAL LEO: ONLINE | AUTO-SWAP: READY
 </div>
 
 <div class="wrap">
   <!-- ヒーローセクション -->
-  <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#1e1b4b,#05030a);border-color:var(--bd-glow);">
+  <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#2e1065,#05030a);border-color:var(--bd-glow);">
     <div style="font-size:0.8rem;color:var(--tx);margin-bottom:8px;letter-spacing:1.5px;font-weight:bold;">GOD-TIER AGI & PRE-INTENT M2M INFRASTRUCTURE</div>
     <h1 style="color:#fff;margin:0 0 10px 0;">スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
     <p style="color:#e2e8f0;max-width:800px;margin:0 auto;">検索の前に文脈を先回りする「プレ・インテントAI」と、数億の自律エージェントによるゼロレイテンシーM2M即時決済を完全統合。</p>
@@ -97,7 +98,7 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       <div class="box">
         <h3 style="font-size:1rem;color:#fff;margin-top:0;">② M2Mエージェント自動選定</h3>
         <p>AIエージェントが構築・論理対話[ms]で最適APIを自動契約。</p>
-        <button class="btn" style="background:#4c1d95;" onclick="window.open('/.well-known/agent.json')">AI選定マニフェスト確認 ↗</button>
+        <button class="btn" style="background:#581c87;" onclick="window.open('/.well-known/agent.json')">AI選定マニフェスト確認 ↗</button>
       </div>
       <div class="box ps">
         <h3 style="font-size:1rem;color:#fff;margin-top:0;">③ インパルス即時決済</h3>
@@ -119,12 +120,12 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       <div class="box" style="text-align:center;">
         <div style="font-size:0.85rem;color:#cbd5e1;">ダークプール収益</div>
         <div style="font-size:1.35rem;font-weight:bold;color:var(--tx);margin:6px 0;">+0.0485 BSV/s</div>
-        <button class="btn" style="background:#4c1d95;" onclick="alert('LEO Quantum Orbital Boost Engaged.')">低軌道LEOブースト</button>
+        <button class="btn" style="background:#581c87;" onclick="alert('LEO Quantum Orbital Boost Engaged.')">低軌道LEOブースト</button>
       </div>
       <div class="box" style="text-align:center;">
         <div style="font-size:0.85rem;color:#cbd5e1;">緊急キルスイッチ</div>
         <div style="font-size:1.15rem;font-weight:bold;color:#f87171;margin:8px 0;">GLOBAL EMERGENCY</div>
-        <button class="btn btn-accent" style="background:#dc2626;" onclick="alert('⚠️ Global Emergency Kill-Switch Standby. System is fully autonomous.')">キルスイッチ発動</button>
+        <button class="btn btn-accent" style="background:#dc2626;" onclick="alert('⚠️ Global Emergency Kill-Switch Standby.')">キルスイッチ発動</button>
       </div>
     </div>
   </div>
@@ -132,16 +133,16 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
   <!-- AI自律M&A・自動選定ログ & 衛星軌道直結リンク -->
   <div class="grid" style="margin-bottom:16px;">
     <div class="box">
-      <h3 style="font-size:0.95rem;color:var(--pr-light);display:flex;justify-content:space-between;margin-top:0;">AI自律M&A・自動選定ログ <span class="tag" style="font-size:0.65rem;">LIVE</span></h3>
+      <h3 style="font-size:0.95rem;color:#c084fc;display:flex;justify-content:space-between;margin-top:0;">AI自律M&A・自動選定ログ <span class="tag" style="font-size:0.65rem;">LIVE</span></h3>
       <p style="font-size:0.75rem;font-family:monospace;background:#030207;padding:10px;border-radius:6px;line-height:1.5;color:var(--tx);margin-bottom:0;">[M2M-SELECT] Agent #8821 auto-selected ASGARD API (0.00ms)<br>[M&A-DEAL] Swarm Syndicate acquired API #402 (0.15 BSV)<br>[PRE-INTENT] Context match 99.9% -> Auto-settled<br>Agent #4921 auto-selected ASGARD API (0.12 JPYC)</p>
     </div>
     <div class="box">
-      <h3 style="font-size:0.95rem;color:var(--pr-light);display:flex;justify-content:space-between;margin-top:0;">衛星軌道(LEO)直結リンク <span class="tag" style="font-size:0.65rem;background:#0284c7;">0.00ms</span></h3>
+      <h3 style="font-size:0.95rem;color:#c084fc;display:flex;justify-content:space-between;margin-top:0;">衛星軌道(LEO)直結リンク <span class="tag" style="font-size:0.65rem;background:#0284c7;">0.00ms</span></h3>
       <p style="font-size:0.75rem;font-family:monospace;background:#030207;padding:10px;border-radius:6px;line-height:1.5;color:var(--tx);margin-bottom:0;">[LEO-L2]: Quantum encryption handshake established.<br>[ORBITAL]: Cross-chain node sync rate: 100%<br>[READY]: Zero-Latency packet routing active.</p>
     </div>
   </div>
 
-  <!-- Global & Code Payment Gateway (完全API連動決済) -->
+  <!-- Global & Code Payment Gateway -->
   <div class="sec">
     <h2>Global & Code Payment Gateway <span class="tag">au PAY / Alipay</span></h2>
     <div class="grid">
@@ -158,12 +159,12 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Stripe Gateway</strong>
         <p style="font-size:0.8rem;">マルチ通貨対応</p>
-        <button class="btn" style="background:#4c1d95;" onclick="executePayment('stripe', 100.0)">Stripeゲートウェイ起動</button>
+        <button class="btn" onclick="executePayment('stripe', 100.0)">Stripeゲートウェイ起動</button>
       </div>
     </div>
   </div>
 
-  <!-- Enterprise Node Tier & Subscriptions (完全連動) -->
+  <!-- Enterprise Node Tier & Subscriptions -->
   <div class="sec">
     <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
     <div class="grid">
@@ -171,7 +172,7 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
         <strong style="font-size:1rem;color:#fff;">Free Tier</strong>
         <p style="font-size:1.25rem;color:#fff;margin:8px 0;">FREE</p>
         <p style="font-size:0.8rem;">• 1,000 Req/mo<br>• Standard Access</p>
-        <button class="btn" style="background:#4c1d95;" onclick="upg('free')">無料ノード発行</button>
+        <button class="btn" style="background:#581c87;" onclick="upg('free')">無料ノード発行</button>
       </div>
       <div class="box ps" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Autonomous Pro</strong>
@@ -183,7 +184,7 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
         <strong style="font-size:1rem;color:#fff;">Enterprise</strong>
         <p style="font-size:1.25rem;color:#fff;margin:8px 0;">$299/mo</p>
         <p style="font-size:0.8rem;">• Swarm Core<br>• SLA 100%</p>
-        <button class="btn" style="background:#4c1d95;" onclick="upg('enterprise')">Enterpriseライセンス ↗</button>
+        <button class="btn" style="background:#581c87;" onclick="upg('enterprise')">Enterpriseライセンス ↗</button>
       </div>
     </div>
   </div>
@@ -201,22 +202,22 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Bitcoin</strong>
         <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bitcoin" width="90"></div>
-        <button class="btn" style="background:#4c1d95;" onclick="simulateCrypto('Bitcoin')">BTC決済同期</button>
+        <button class="btn" onclick="simulateCrypto('Bitcoin')">BTC決済同期</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Solana</strong>
         <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=solana" width="90"></div>
-        <button class="btn" style="background:#4c1d95;" onclick="simulateCrypto('Solana')">SOL決済同期</button>
+        <button class="btn" onclick="simulateCrypto('Solana')">SOL決済同期</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Ethereum</strong>
         <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=ethereum" width="90"></div>
-        <button class="btn" style="background:#4c1d95;" onclick="simulateCrypto('Ethereum')">ETH決済同期</button>
+        <button class="btn" onclick="simulateCrypto('Ethereum')">ETH決済同期</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Bitcoin SV</strong>
         <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bsv" width="90"></div>
-        <button class="btn" style="background:#4c1d95;" onclick="simulateCrypto('Bitcoin SV')">BSV決済同期</button>
+        <button class="btn" onclick="simulateCrypto('Bitcoin SV')">BSV決済同期</button>
       </div>
     </div>
   </div>
@@ -229,10 +230,10 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       <input type="text" id="feedbackInput" placeholder="指令・フィードバックを入力..." style="flex:1;background:#07040e;border:1px solid var(--bd);color:#fff;padding:10px;border-radius:6px;outline:none;">
       <button class="btn" style="width:110px;margin:0;" onclick="sendFeedback()">送信</button>
     </div>
-    <div style="font-size:0.85rem;margin-bottom:8px;font-weight:bold;color:var(--pr-light);">🌐 SWARM GOVERNANCE VOTING</div>
+    <div style="font-size:0.85rem;margin-bottom:8px;font-weight:bold;color:#c084fc;">🌐 SWARM GOVERNANCE VOTING</div>
     <div class="grid">
       <div class="box" style="text-align:center;grid-column: span 2;"><button class="btn" onclick="vote('YES')">賛成 (YES)</button></div>
-      <div class="box" style="text-align:center;"><button class="btn" style="background:#2e1065;" onclick="vote('NO')">反対 (NO)</button></div>
+      <div class="box" style="text-align:center;"><button class="btn" style="background:#3b0764;" onclick="vote('NO')">反対 (NO)</button></div>
     </div>
     <div id="voteStatus" style="font-size:0.8rem;margin-top:10px;color:var(--tx);">賛成(YES): 1420 | 反対(NO): 18</div>
   </div>
@@ -269,7 +270,7 @@ async function drainPool(){
 async function executePayment(method, amount){
   let res = await fetch('/api/v111/pay', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({method: method, amount: amount})});
   let r = await res.json();
-  alert('🚀 ' + method.toUpperCase + ' 決済が正常に同期・着金しました。Status: ' + r.status);
+  alert('🚀 ' + method.toUpperCase() + ' 決済が正常に同期・着金しました。Status: ' + r.status);
   refreshState();
 }
 
@@ -380,3 +381,7 @@ async def st_op():
 @app.post("/api/v111/drain")
 async def dr_op():
     con = sqlite3.connect(DB); c = con.cursor()
+    c.execute("SELECT pool FROM balance WHERE id = 1"); p = c.fetchone()[0]
+    c.execute("UPDATE balance SET pool = 0.0 WHERE id = 1")
+    con.commit(); con.close()
+    return {"status": "success", "amt": f"{p:.2f}"}
