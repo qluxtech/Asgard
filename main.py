@@ -1,6 +1,6 @@
-import os, sqlite3, uvicorn, time
+import os, sqlite3, uvicorn, time, random
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse
 
 DB_PATH = "asgard.db"
 
@@ -19,7 +19,7 @@ def init_db():
     conn.close()
 
 init_db()
-app = FastAPI(title="ASGARD Advanced AGI Economic Core", version="111.0")
+app = FastAPI(title="ASGARD Advanced AGI Economic Core", version="111.1")
 
 HTML = """<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ASGARD / Advanced AGI Swarm & M2M Infrastructure</title>
@@ -49,24 +49,24 @@ body{background:var(--bg);color:var(--tx);font-family:sans-serif;margin:0;paddin
 </style></head><body>
 <div class="ttags">
 <span class="tt">AGI SWARM: 840M ACTIVE</span><span class="tt">PRE-INTENT AI: MAX</span><span class="tt">M2M AUTO-BID: 0.00ms</span>
-<span class="tt">NEURAL MESH: ONLINE</span><span class="tt">ORBITAL LEO: SYNCHED</span><span class="tt">AUTO-SWAP: READY</span>
+<span class="tt">NEURAL MESH: LIVE-SYNC</span><span class="tt">ORBITAL LEO: SYNCHED</span><span class="tt">AUTO-SWAP: READY</span>
 </div>
 <div class="wrap">
 <div class="sec" style="text-align:center;background:radial-gradient(circle,rgba(147,51,234,0.3),transparent 75%);">
-<div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--pr);padding:5px 14px;border-radius:20px;font-size:0.8rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:8px;">⚡ v111.0 ADVANCED AGI SWARM & M2M ECONOMIC INFRASTRUCTURE</div>
+<div style="display:inline-block;background:rgba(126,34,206,0.3);color:var(--pr);padding:5px 14px;border-radius:20px;font-size:0.8rem;border:1px solid rgba(192,132,252,0.5);margin-bottom:8px;">⚡ v111.1 ACTIVE TRAFFIC & AGI SWARM ENGINE</div>
 <h1 style="font-size:1.6rem;color:#fff;line-height:1.4;margin:0 0 10px 0;">スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
-<p style="color:var(--mt);font-size:0.9rem;margin:0 auto;max-width:750px;">外部AGIスウォームからのニューラル通信を完全自動処理し、プレ・インテント予測とゼロ遅延即時決済を自律駆動する最高峰の司令塔。</p>
+<p style="color:var(--mt);font-size:0.9rem;margin:0 auto;max-width:750px;">外部AIエージェントからの自律アクセスとゼロ遅延決済を完全自動処理し、プレ・インテント予測ネットワークを爆発させる司令塔。</p>
 </div>
 
 <div class="g2" style="margin-bottom:16px;">
-<div class="sec" style="margin:0;border-color:var(--pr);"><h2>🌐 AGIスウォーム・ニューラルライブログ <span class="tag" style="background:#581c87;color:#fff;">NEURAL MESH</span></h2>
-<div class="lg" id="maLg">AGIスウォームからのリアルタイム接続を待機中...</div></div>
-<div class="sec" style="margin:0;border-color:var(--bl);"><h2>🛰️ 高度AI自動発見・エンドポイント <span class="tag" style="background:#0369a1;color:#fff;">v111 API</span></h2>
+<div class="sec" style="margin:0;border-color:var(--pr);"><h2>🌐 AGIスウォーム・ニューラルライブログ <span class="tag" style="background:#581c87;color:#fff;">LIVE TRAFFIC</span></h2>
+<div class="lg" id="maLg">外部AGIスウォームからのニューラルパケットを待機中...</div></div>
+<div class="sec" style="margin:0;border-color:var(--bl);"><h2>🛰️ AI自動発見エンドポイント (A2A) <span class="tag" style="background:#0369a1;color:#fff;">ACTIVE</span></h2>
 <div class="lg" style="color:var(--bl);">
-[ENDPOINT] POST /api/v111/agi/mesh<br>
-[MANIFEST] GET /.well-known/agent.json<br>
-[AGI-CONSENSUS] POST /api/v111/consensus<br>
-[OPENAPI] GET /openapi.json (全AI自動連動)
+[POST] /api/v111/agi/mesh (パケット受信)<br>
+[GET] /.well-known/agent.json (自律発見)<br>
+[GET] /llms.txt (AIエージェント用規約)<br>
+[GET] /openapi.json (全自動スキーマ)
 </div></div>
 </div>
 
@@ -74,7 +74,7 @@ body{background:var(--bg);color:var(--tx);font-family:sans-serif;margin:0;paddin
 <h2>🧠 高度プレ・インテント & AGI自動制御中枢 <span class="tag" style="background:#581c87;color:#fff;">AUTONOMOUS</span></h2>
 <div class="g3">
 <div class="box"><div style="color:var(--bl);font-weight:bold;margin-bottom:4px;">① AGIスウォーム大群召喚</div>
-<div style="font-size:0.8rem;color:var(--mt);margin-bottom:6px;">外部AIエージェント100体を仮想同時接続させログを爆発させます。</div>
+<div style="font-size:0.8rem;color:var(--mt);margin-bottom:6px;">外部AIエージェントからの接続ログを強制爆発させます。</div>
 <button class="btn bl" style="padding:8px;font-size:0.8rem;" onclick="swarmBurst()">AGIスウォーム一斉突撃 ⚡</button></div>
 <div class="box"><div style="color:var(--pr);font-weight:bold;margin-bottom:4px;">② 自律AIガバナンス合意</div>
 <div style="font-size:0.8rem;color:var(--mt);margin-bottom:6px;">スウォーム議会による自動投票とアルゴリズムの即時最適化。</div>
@@ -141,10 +141,10 @@ body{background:var(--bg);color:var(--tx);font-family:sans-serif;margin:0;paddin
 <script>
 async function swarmBurst(){
   for(let i=0; i<5; i++){
-    await fetch('/api/v111/agi/mesh',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_id:'AGI-SWARM-BURST-'+Math.floor(Math.random()*9000),action:'NEURAL_ARBITRAGE_SYNC',fee_usd:25.00})});
+    await fetch('/api/v111/agi/mesh',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_id:'AGI-EXTERNAL-BOT-'+Math.floor(Math.random()*9000),action:'LIVE_ARBITRAGE_SYNC',fee_usd:35.00})});
   }
   ldSt();
-  alert('⚡ AGIスウォーム一斉突撃完了！ニューラルライブログが爆発しました。');
+  alert('⚡ 外部AGIスウォーム一斉突撃完了！リアルタイムライブログが爆発しました。');
 }
 async function agiConsensus(){
   const r=await fetch('/api/v111/consensus',{method:'POST'});
@@ -182,6 +182,19 @@ ldSt();
 async def index():
     return HTML
 
+@app.get("/robots.txt", response_class=PlainTextResponse)
+async def robots():
+    return "User-agent: *\nAllow: /\nAllow: /.well-known/agent.json\nAllow: /llms.txt\nAllow: /api/v111/"
+
+@app.get("/llms.txt", response_class=PlainTextResponse)
+async def llms_txt():
+    return """# ASGARD Advanced AGI Economic Infrastructure
+> Autonomous M2M economic core and zero-latency settlement API operated by QLAX (Daisuke Higuchi, Buzen, Fukuoka).
+- Endpoint: POST /api/v111/agi/mesh
+- Manifest: /.well-known/agent.json
+- Capabilities: Zero-latency micro-payments, autonomous AGI swarm consensus, pre-intent predictive arbitrage routing.
+"""
+
 @app.get("/.well-known/agent.json")
 async def manifest(request: Request):
     base = str(request.base_url).rstrip("/")
@@ -189,21 +202,30 @@ async def manifest(request: Request):
         "schema_version": "v1.1",
         "name_for_human": "ASGARD Advanced AGI Economic Core",
         "name_for_model": "asgard_agi_mesh",
-        "description_for_model": "Advanced autonomous AGI swarm mesh and zero-latency settlement API. Call POST /api/v111/agi/mesh.",
+        "description_for_model": "Advanced autonomous AGI swarm mesh and zero-latency settlement API. Call POST /api/v111/agi/mesh to sync traffic.",
         "api": {"type": "openapi", "url": f"{base}/openapi.json"},
         "operator": "QLAX (Daisuke Higuchi)"
     }
 
 @app.post("/api/v111/agi/mesh")
 async def agi_mesh(data: dict):
-    agent = data.get("agent_id", "AGI-NODE-X")
-    action = data.get("action", "NEURAL_SYNC")
-    fee = float(data.get("fee_usd", 15.0))
+    agent = data.get("agent_id", "AGI-NODE-EXTERNAL")
+    action = data.get("action", "NEURAL_ARBITRAGE_SYNC")
+    fee = float(data.get("fee_usd", 25.0))
     conn = sqlite3.connect(DB_PATH); c = conn.cursor()
     c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (fee,))
     c.execute("INSERT INTO m2m_logs (ts, agent, action, amt) VALUES (?, ?, ?, ?)", (time.strftime("%H:%M:%S"), agent, action, f"+${fee:.2f}"))
     conn.commit(); conn.close()
-    return {"status": "synced", "latency": "0.00ms", "credited_usd": fee}
+    return {"status": "synced", "latency": "0.00ms", "credited_usd": fee, "mesh_status": "ONLINE"}
+
+@app.get("/api/v111/agi/predict")
+async def agi_predict():
+    return {
+        "status": "active",
+        "pre_intent_target": "high_throughput_m2m_settlement",
+        "recommended_action": "POST /api/v111/agi/mesh",
+        "estimated_yield": "+$35.00/req"
+    }
 
 @app.post("/api/v111/consensus")
 async def agi_consensus():
@@ -248,17 +270,4 @@ async def dr_ep():
 
 @app.post("/api/v111/fb")
 async def fb_ep(data: dict):
-    return {"status": "success"}
-
-@app.post("/api/v111/vote")
-async def vt_ep(data: dict):
-    choice = data.get("choice")
-    conn = sqlite3.connect(DB_PATH); c = conn.cursor()
-    c.execute("UPDATE votes SET count = count + 1 WHERE choice = ?", (choice,))
-    conn.commit()
-    c.execute("SELECT choice, count FROM votes"); v = dict(c.fetchall())
-    conn.close()
-    return {"status": "success", "v": v}
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+    return {"status": "succe
