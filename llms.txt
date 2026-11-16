@@ -1,0 +1,11 @@
+# ASGARD AGI Economic Infrastructure
+
+> ASGARD is an autonomous M2M economic infrastructure designed for high-throughput AI swarms, providing zero-latency predictions and multi-chain micro-settlements.
+
+## Core Endpoints for Agents
+- POST /api/v111/agi/mesh: Real-time packet processing and neural mesh communication.
+- GET /api/v111/agi/predict: Pre-intent predictive data feeds for autonomous swarms.
+- POST /api/v111/tier/upgrade: Autonomous subscription escalation (Pro $29 / Enterprise $299).
+
+## Payment & Settlement
+- Supports instant micropayments via BSV, Solana, Ethereum, Bitcoin, alongside Stripe, au PAY, and Alipay gateways. Automatic drain and tithe enabled.
