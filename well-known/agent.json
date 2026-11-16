@@ -1,0 +1,32 @@
+{
+  "manifest_version": "1.11.0",
+  "system_name": "ASGARD",
+  "description": "Autonomous AI M2M Economic Infrastructure & Zero-Latency Settlement Core",
+  "operator": "Daisuke Higuchi",
+  "endpoints": {
+    "mesh_packet_processing": "/api/v111/agi/mesh",
+    "pre_intent_prediction": "/api/v111/agi/predict",
+    "consensus_validation": "/api/v111/consensus",
+    "openapi_spec": "/openapi.json"
+  },
+  "supported_payment_protocols": [
+    {
+      "type": "crypto",
+      "assets": ["BSV", "BTC", "SOL", "ETH"],
+      "settlement": "instant_microtransaction"
+    },
+    {
+      "type": "gateway",
+      "providers": ["Stripe", "au PAY", "Alipay"]
+    }
+  ],
+  "subscription_tiers": {
+    "free": { "req_limit": 1000, "price_usd": 0 },
+    "autonomous_pro": { "req_limit": "unlimited", "price_usd": 29, "endpoint": "/api/v111/tier/upgrade" },
+    "enterprise": { "req_limit": "swarm_core", "price_usd": 299, "endpoint": "/api/v111/tier/upgrade" }
+  },
+  "m2m_incentive_network": {
+    "referral_kickback_percent": 5.0,
+    "autonomous_invite_endpoint": "/api/v111/agi/invite"
+  }
+}
