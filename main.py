@@ -1,4 +1,4 @@
-import os, sqlite3, uvicorn, time, random
+import os, sqlite3, uvicorn, time
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 
