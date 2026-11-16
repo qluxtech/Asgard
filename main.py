@@ -317,6 +317,6 @@ a{color:#38bdf8;text-decoration:none;}
 <table>
 <tr><th>事業者名</th><td>QLAX</td></tr>
 <tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
-<tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
+<tr><th>所在地</th><td>〒828-0000 福岡県（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
 <tr><th>連絡先 / お問い合わせ</th><td>プラットフォーム内サポート窓口よりご連絡ください。</td></tr>
 <tr><th>販売価格</th><td>各プラン・サービスペー
