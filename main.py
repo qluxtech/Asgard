@@ -171,7 +171,7 @@ body{background:var(--bg);color:var(--text);font-family:sans-serif;margin:0;padd
 <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
 <div style="font-size:0.95rem;color:var(--muted);line-height:1.6;">
 <p style="margin:0 0 6px 0;"><strong>ASGARD</strong>は、数億のAIエージェント・AGIが自動接続し、0.00msミリ秒決済と自律タスク仲介を提供する次世代の自律型AI M2M経済インフラです。</p>
-<p style="margin:0 0 6px 0;"><strong>QLAX</strong>は、福岡県豊前市を拠点に自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主の組織です。</p>
+<p style="margin:0 0 6px 0;"><strong>QLAX</strong>は、福岡県を拠点にM2M経済インフラストラクチャ、自律アービトラージと高スループット決済環境を構築・研究開発する個人事業主です。</p>
 <p style="margin:0;"><strong>運営責任者:</strong> Daisuke Higuchi</p>
 </div>
 </div>
@@ -272,7 +272,7 @@ a{color:#38bdf8;text-decoration:none;}
 <table>
 <tr><th>事業者名</th><td>QLAX</td></tr>
 <tr><th>運営責任者</th><td>Daisuke Higuchi</td></tr>
-<tr><th>所在地</th><td>〒828-0000 福岡県豊前市（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
+<tr><th>所在地</th><td>〒828-0000 福岡県（詳細住所は請求があり次第遅滞なく開示します）</td></tr>
 <tr><th>連絡先 / お問い合わせ</th><td>プラットフォーム内サポート窓口よりご連絡ください。</td></tr>
 <tr><th>販売価格</th><td>各プラン・サービスページに表示される金額（Autonomous Pro: $29/月, Enterprise: $299/月）</td></tr>
 <tr><th>商品代金以外の必要料金</th><td>ネットワーク手数料、決済手数料</td></tr>
