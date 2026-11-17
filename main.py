@@ -116,29 +116,8 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <div class="sec">
-    <h2>収益コントロール & 自動課税 <span class="tag">ACTIVE</span></h2>
-    <div class="grid">
-      <div class="box" style="text-align:center;">
-        <div style="font-size:0.85rem;color:#cbd5e1;">累計税プール (Auto-Tithe)</div>
-        <div id="poolDisplay" style="font-size:1.35rem;font-weight:bold;color:#fff;margin:6px 0;">$1,540.50</div>
-        <button class="btn" onclick="drainPool()">オートスワップ・ドレイン</button>
-      </div>
-      <div class="box" style="text-align:center;">
-        <div style="font-size:0.85rem;color:#cbd5e1;">ダークプール収益</div>
-        <div style="font-size:1.35rem;font-weight:bold;color:var(--tx);margin:6px 0;">+0.0485 BSV/s</div>
-        <button class="btn" style="background:#581c87;" onclick="openSimpleModal('LEO Quantum Orbital Boost', '低軌道LEO衛星との暗号化リンクが確立されました。')">低軌道LEOブースト</button>
-      </div>
-      <div class="box" style="text-align:center;">
-        <div style="font-size:0.85rem;color:#cbd5e1;">緊急キルスイッチ</div>
-        <div style="font-size:1.15rem;font-weight:bold;color:#f87171;margin:8px 0;">GLOBAL EMERGENCY</div>
-        <button class="btn btn-accent" style="background:#dc2626;" onclick="openSimpleModal('Global Emergency Status', '⚠️ キルスイッチは現在スタンバイ中です。')">キルスイッチ発動</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 全コード決済 & コンビニバーコード決済ゲートウェイ -->
-  <div class="sec">
+  <!-- 【最優先配置】全スマホコード決済 & コンビニバーコード決済ゲートウェイ -->
+  <div class="sec" style="border-color:var(--bd-glow);background:linear-gradient(135deg,#0c0817,#170b36);">
     <h2>Omni-Channel Pay & Convenience Barcode Gateway <span class="tag" style="background:var(--accent);">ALL PAYMENTS</span></h2>
     <p style="font-size:0.85rem;margin-bottom:14px;">コンビニ店頭端末・各種スマホ決済・QR/バーコードによる即時決済ネットワーク。</p>
     <div class="grid-6">
@@ -184,6 +163,27 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       </div>
       <div style="margin-top:10px;">
         <button class="btn btn-accent" style="max-width:280px;display:inline-block;" onclick="openPaymentModal('Convenience Store Barcode', '全国のコンビニレジでのバーコード決済セッションを発行しました。')">コンビニ決済用バーコードを発行</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>収益コントロール & 自動課税 <span class="tag">ACTIVE</span></h2>
+    <div class="grid">
+      <div class="box" style="text-align:center;">
+        <div style="font-size:0.85rem;color:#cbd5e1;">累計税プール (Auto-Tithe)</div>
+        <div id="poolDisplay" style="font-size:1.35rem;font-weight:bold;color:#fff;margin:6px 0;">$1,540.50</div>
+        <button class="btn" onclick="drainPool()">オートスワップ・ドレイン</button>
+      </div>
+      <div class="box" style="text-align:center;">
+        <div style="font-size:0.85rem;color:#cbd5e1;">ダークプール収益</div>
+        <div style="font-size:1.35rem;font-weight:bold;color:var(--tx);margin:6px 0;">+0.0485 BSV/s</div>
+        <button class="btn" style="background:#581c87;" onclick="openSimpleModal('LEO Quantum Orbital Boost', '低軌道LEO衛星との暗号化リンクが確立されました。')">低軌道LEOブースト</button>
+      </div>
+      <div class="box" style="text-align:center;">
+        <div style="font-size:0.85rem;color:#cbd5e1;">緊急キルスイッチ</div>
+        <div style="font-size:1.15rem;font-weight:bold;color:#f87171;margin:8px 0;">GLOBAL EMERGENCY</div>
+        <button class="btn btn-accent" style="background:#dc2626;" onclick="openSimpleModal('Global Emergency Status', '⚠️ キルスイッチは現在スタンバイ中です。')">キルスイッチ発動</button>
       </div>
     </div>
   </div>
@@ -343,8 +343,4 @@ async function upg(tier){
 async function vote(choice){
   let res = await fetch('/api/v111/consensus', {method:'POST'});
   let r = await res.json();
-  openSimpleModal('🌐 投票受付完了', r.msg);
-}
-
-function sendFeedback(){
-  let val = document.getElementById('feedbackI
+  openSimpleMod
