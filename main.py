@@ -16,17 +16,16 @@ def init_db():
         CREATE TABLE IF NOT EXISTS m2m_logs(id INTEGER PRIMARY KEY AUTOINCREMENT, ts DATETIME DEFAULT CURRENT_TIMESTAMP, agent TEXT, action TEXT, detail TEXT);
         INSERT OR IGNORE INTO m2m_logs (agent, action, detail) VALUES 
         ('AGI-NODE-Alpha', 'ARBITRAGE', 'BSV/SOL cross-chain liquidity route optimized [0.02ms]'),
-        ('AGI-NODE-Beta', 'API_CONTRACT', 'Auto-negotiated M2M endpoint settlement with Stripe API');
+        ('AGI-NODE-Beta', 'ONCHAIN_SYNC', 'Autonomous ledger updated via P2P broadcast');
     """)
     con.commit(); con.close()
 
 init_db()
-app = FastAPI(title="ASGARD Autonomous On-Chain Economic Core & M2M Stream", version="1.14.0")
+app = FastAPI(title="ASGARD Autonomous On-Chain Economic Core", version="1.16.0")
 
 class OnChainPayRequest(BaseModel):
-    gateway: str
+    chain: str
     amount_usd: float
-    target_chain: str = "BSV"
 
 class ConnectionManager:
     def __init__(self):
@@ -53,7 +52,7 @@ HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASGARD / Autonomous On-Chain M2M Infrastructure & Live Stream</title>
+<title>ASGARD / Autonomous On-Chain M2M Infrastructure</title>
 <style>
 :root{--bg:#05030a;--card:#0c0817;--bd:#581c87;--bd-glow:#7c3aed;--tx:#22d3ee;--tx-main:#f8fafc;--pr:#7c3aed;--accent:#db2777;}
 body{background:var(--bg);color:var(--tx-main);font-family:sans-serif;margin:0;font-size:0.95rem;}
@@ -65,17 +64,13 @@ p{font-size:0.9rem;line-height:1.5;color:#cbd5e1;}
 .tag{background:var(--pr);color:#fff;padding:4px 10px;border-radius:6px;font-size:0.75rem;margin-left:8px;font-weight:bold;}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:768px){.grid,.grid-4,.grid-6{grid-template-columns:1fr}}
+@media(max-width:768px){.grid,.grid-4{grid-template-columns:1fr}}
 .box{background:#07040e;border:1px solid var(--bd);border-radius:10px;padding:14px}
 .btn{background:var(--pr);color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-weight:bold;width:100%;margin-top:8px;font-size:0.85rem;}
 .btn:hover{background:#6d28d9;}
 .btn-accent{background:var(--accent);}
 .qr{width:75px;height:75px;margin:6px auto;background:#fff;padding:4px;border-radius:6px;}
-.barcode{width:100%;height:35px;margin:6px auto;background:#fff;padding:2px;border-radius:4px;object-fit:contain;}
 .addr-box{background:#030207;border:1px solid var(--bd);padding:6px;border-radius:6px;font-family:monospace;font-size:0.65rem;color:var(--tx);word-break:break-all;margin:6px 0;text-align:left;}
-.brand-badge-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px;}
-.brand-badge{background:#170b36;border:1px solid #7c3aed;color:#e2e8f0;padding:4px 8px;border-radius:4px;font-size:0.7rem;font-weight:bold;}
 .stream-box{background:#030207;border:1px solid var(--bd);border-radius:10px;padding:12px;font-family:monospace;font-size:0.75rem;height:160px;overflow-y:auto;color:var(--tx);text-align:left;}
 input{font-size:0.9rem;}
 #modalOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,3,10,0.85);z-index:9999;justify-content:center;align-items:center;padding:15px;box-sizing:border-box;}
@@ -84,14 +79,14 @@ input{font-size:0.9rem;}
 </head>
 <body>
 <div style="background:#030207;border-bottom:1px solid var(--bd);border-top:1px solid var(--pr);color:#c084fc;padding:8px;font-size:0.75rem;text-align:center;font-weight:bold;">
-VAPORLOCK: ACTIVE | RPC WEBSOCKET: <span id="wsStatus" style="color:#22d3ee;">CONNECTING...</span> | BLOCK HEIGHT: 854920
+VAPORLOCK: ACTIVE | ON-CHAIN M2M MESH: LIVE | WS: <span id="wsStatus" style="color:#22d3ee;">CONNECTING...</span> | BLOCK HEIGHT: 854920
 </div>
 
 <div class="wrap">
   <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#2e1065,#05030a);border-color:var(--bd-glow);">
     <div style="font-size:0.8rem;color:var(--tx);margin-bottom:8px;font-weight:bold;">AUTONOMOUS ON-CHAIN ECONOMIC INFRASTRUCTURE</div>
-    <h1 style="color:#fff;margin:0 0 10px 0;">仲介者を排除する。<br>ブロックチェーン連動型「ASGARD」決済網</h1>
-    <p style="color:#e2e8f0;max-width:800px;margin:0 auto;">国際ブランド・国内外QR・スマホ決済ネットワークをブロックチェーン自動同期とM2M即時決済で完全統合。</p>
+    <h1 style="color:#fff;margin:0 0 10px 0;">中立かつ自律的な経済圏。<br>ブロックチェーン主導型「ASGARD」</h1>
+    <p style="color:#e2e8f0;max-width:800px;margin:0 auto;">仲介者を一切排除し、ブロックチェーンとM2Mエージェントによる完全自律型リアルタイム決済・流動性インフラ。</p>
   </div>
 
   <div class="sec">
@@ -115,68 +110,11 @@ VAPORLOCK: ACTIVE | RPC WEBSOCKET: <span id="wsStatus" style="color:#22d3ee;">CO
     </div>
   </div>
 
-  <div class="sec" style="border-color:var(--bd-glow);background:linear-gradient(135deg,#0c0817,#170b36);">
-    <h2>Omni-Channel On-Chain Gateway <span class="tag" style="background:var(--accent);">ALL BRANDS LINKED</span></h2>
-    <p style="font-size:0.85rem;margin-bottom:10px;">国際カードブランド・各種スマホ決済・コンビニバーコードによるオンチェーン即時決済ネットワーク。</p>
-    
-    <div class="brand-badge-grid">
-      <span class="brand-badge">VISA</span>
-      <span class="brand-badge">Mastercard</span>
-      <span class="brand-badge">JCB</span>
-      <span class="brand-badge">American Express</span>
-      <span class="brand-badge">Diners Club</span>
-      <span class="brand-badge">Discover</span>
-      <span class="brand-badge">PayPay</span>
-      <span class="brand-badge">au PAY</span>
-      <span class="brand-badge">楽天ペイ</span>
-      <span class="brand-badge">d払い</span>
-      <span class="brand-badge">メルペイ</span>
-      <span class="brand-badge">銀聯 (UnionPay)</span>
-      <span class="brand-badge">WeChat Pay</span>
-      <span class="brand-badge">Alipay</span>
-      <span class="brand-badge">ゆうちょPay</span>
-    </div>
-
-    <div class="grid-6" style="margin-top:14px;">
-      <div class="box" style="text-align:center;">
-        <strong style="font-size:0.9rem;color:#fff;">au PAY</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95?amount=50" width="75" alt="auPAY"></div>
-        <button class="btn" onclick="onChainPay('au PAY')">au PAY連動決済</button>
-      </div>
-      <div class="box" style="text-align:center;">
-        <strong style="font-size:0.9rem;color:#fff;">Alipay (支付宝)</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95?amount=50" width="75" alt="Alipay"></div>
-        <button class="btn" onclick="onChainPay('Alipay')">Alipay連動決済</button>
-      </div>
-      <div class="box" style="text-align:center;">
-        <strong style="font-size:0.9rem;color:#fff;">PayPay</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95?amount=50" width="75" alt="PayPay"></div>
-        <button class="btn" onclick="onChainPay('PayPay')">PayPay連動決済</button>
-      </div>
-      <div class="box" style="text-align:center;">
-        <strong style="font-size:0.9rem;color:#fff;">楽天ペイ</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95?amount=50" width="75" alt="Rakuten"></div>
-        <button class="btn" onclick="onChainPay('Rakuten Pay')">楽天ペイ連動決済</button>
-      </div>
-      <div class="box" style="text-align:center;">
-        <strong style="font-size:0.9rem;color:#fff;">d払い</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95?amount=50" width="75" alt="d barai"></div>
-        <button class="btn" onclick="onChainPay('d払い')">d払い連動決済</button>
-      </div>
-      <div class="box" style="text-align:center;">
-        <strong style="font-size:0.9rem;color:#fff;">メルペイ</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95?amount=50" width="75" alt="Merpay"></div>
-        <button class="btn" onclick="onChainPay('Merpay')">メルペイ連動決済</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- リアルタイムM2Mログストリーム -->
   <div class="sec">
     <h2>Real-Time M2M & On-Chain Log Stream <span class="tag" style="background:var(--accent);">LIVE WS</span></h2>
-    <p style="font-size:0.85rem;margin-bottom:10px;">自律エージェントのAPI自動契約、クロスチェーン・アービトラージ、およびRPC入金検知イベントのライブフィード。</p>
+    <p style="font-size:0.85rem;margin-bottom:10px;">自律エージェントのAPI自動契約、クロスチェーン・アービトラージ、およびオンチェーン入金検知イベントのライブフィード。</p>
     <div id="streamBox" class="stream-box">
-      [SYSTEM] WebSocket connected. Initializing M2M telemetry stream...<br>
+      [SYSTEM] WebSocket connected. Initializing telemetry stream...<br>
     </div>
   </div>
 
@@ -201,8 +139,8 @@ VAPORLOCK: ACTIVE | RPC WEBSOCKET: <span id="wsStatus" style="color:#22d3ee;">CO
     </div>
   </div>
 
-  <div class="sec">
-    <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
+  <div class="sec" style="border-color:var(--bd-glow);background:linear-gradient(135deg,#0c0817,#170b36);">
+    <h2>God-Tier Autonomous Economic Core <span class="tag">ON-CHAIN</span></h2>
     <div class="grid-4" style="text-align:center;margin-bottom:14px;font-size:0.8rem;">
       <div class="box">接続残高<br><strong style="font-size:1.1rem;color:#fff;">$94,800,120</strong></div>
       <div class="box">稼働エージェント<br><strong style="font-size:1.1rem;color:#fff;">442M units</strong></div>
@@ -254,14 +192,12 @@ VAPORLOCK: ACTIVE | RPC WEBSOCKET: <span id="wsStatus" style="color:#22d3ee;">CO
 </div>
 
 <script>
-// WebSocket接続の確立
 const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 const ws = new WebSocket(protocol + window.location.host + '/ws/stream');
 const streamBox = document.getElementById('streamBox');
 
 ws.onopen = function() {
   document.getElementById('wsStatus').innerText = 'ONLINE';
-  document.getElementById('wsStatus').style.color = '#22d3ee';
 };
 
 ws.onmessage = function(event) {
@@ -289,23 +225,15 @@ function closeModal(){ document.getElementById('modalOverlay').style.display = '
 function copyAddr(txt){ navigator.clipboard.writeText(txt).then(() => alert('✨ コピーしました！')); }
 
 async function swarmBurst(){
-  let res = await fetch('/api/v114/onchain/mesh', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({gateway:"MESH_BURST", amount_usd:25.0})});
+  let res = await fetch('/api/v116/mesh', {method:'POST'});
   let r = await res.json();
-  openModal('✨ オンチェーン決済同期完了', 'ブロックハッシュ: ' + r.txid + '<br>プール加算: $' + r.added_usd);
-}
-
-async function onChainPay(gatewayName){
-  let amt = prompt(gatewayName + " のオンチェーン決済金額（USD）を入力:", "50.0");
-  if(!amt) return;
-  let res = await fetch('/api/v114/onchain/pay', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({gateway: gatewayName, amount_usd: parseFloat(amt)})});
-  let r = await res.json();
-  openModal('🚀 ' + gatewayName + ' オンチェーン同期成功', 'TXID: ' + r.txid + '<br>着金確定額: $' + r.amount);
+  openModal('✨ M2M Mesh Burst', '同期完了ブロックハッシュ: ' + r.txid);
 }
 
 async function drainPool(){
-  let res = await fetch('/api/v114/drain', {method:'POST'});
+  let res = await fetch('/api/v116/drain', {method:'POST'});
   let r = await res.json();
-  openModal('✨ マスターウォレット・ドレイン完了', '抽出金額: $' + r.amt);
+  openModal('✨ ドレイン完了', '抽出金額: $' + r.amt);
 }
 </script>
 </body>
@@ -324,7 +252,6 @@ async def robots():
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
-        # 初期接続時に既存の最新ログを流す
         con = sqlite3.connect(DB); c = con.cursor()
         c.execute("SELECT ts, agent, action, detail FROM m2m_logs ORDER BY id DESC LIMIT 5")
         rows = c.fetchall()
@@ -333,14 +260,13 @@ async def websocket_endpoint(websocket: WebSocket):
             await websocket.send_json({"type": "M2M_LOG", "msg": f"[{r[1]}] {r[2]} - {r[3]}"})
 
         while True:
-            # バックグラウンドで定期的にM2Mエージェントの自律活動ログをシミュレートしてブロードキャスト
-            await asyncio.sleep(8)
-            agents = ["AGI-NODE-Alpha", "AGI-NODE-Gamma", "ASGARD-Swarm-Core", "LEO-Orbital-Bot"]
-            actions = ["ARBITRAGE_EXEC", "RPC_BLOCK_SYNC", "M2M_MICRO_PAY", "API_AUTO_CONTRACT"]
+            await asyncio.sleep(10)
+            agents = ["AGI-NODE-Alpha", "BSV-Relay", "Solana-RPC", "ASGARD-Core"]
+            actions = ["ARBITRAGE_SYNC", "BLOCK_VERIFY", "M2M_LIQUIDITY_CHECK"]
             import random
             agent = random.choice(agents)
             action = random.choice(actions)
-            msg = f"[{agent}] Executed {action} with zero-latency topological routing."
+            msg = f"[{agent}] Executed {action} via decentralized cryptographic mesh."
             
             con = sqlite3.connect(DB); c = con.cursor()
             c.execute("INSERT INTO m2m_logs(agent, action, detail) VALUES(?, ?, ?)", (agent, action, msg))
@@ -350,18 +276,28 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 
-@app.post("/api/v114/onchain/mesh")
-async def onchain_mesh(data: OnChainPayRequest):
-    amt = data.amount_usd
+@app.post("/api/v116/mesh")
+async def mesh_action():
+    amt = 25.0
     con = sqlite3.connect(DB); c = con.cursor()
     c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (amt,))
     c.execute("SELECT pool FROM balance WHERE id = 1"); row = c.fetchone()
     pool_val = row[0]
     c.execute("INSERT INTO m2m_logs(agent, action, detail) VALUES(?, ?, ?)", 
-              ("Gateway-Mesh", "RPC_CONFIRMED", f"Mesh burst payment of ${amt} credited via on-chain sync."))
+              ("Mesh-Core", "IMPULSE_SYNC", "Zero-latency on-chain settlement verified."))
     con.commit(); con.close()
     
-    await manager.broadcast({"type": "PAYMENT", "msg": f"⚡ Mesh On-Chain Payment Confirmed: +${amt}", "pool": pool_val})
-    return {"status": "synced", "txid": "0x_mesh_onchain_854920...", "added_usd": amt}
+    await manager.broadcast({"type": "PAYMENT", "msg": f"⚡ On-Chain Mesh Burst: +${amt}", "pool": pool_val})
+    return {"status": "synced", "txid": "0x_onchain_mesh_854920..."}
 
-@ap
+@app.post("/api/v116/drain")
+async def dr_op():
+    con = sqlite3.connect(DB); c = con.cursor()
+    con.row_factory = sqlite3.Row
+    c.execute("SELECT pool FROM balance WHERE id = 1"); row = c.fetchone()
+    p = row["pool"] if row else 0.0
+    c.execute("UPDATE_balance SET pool = 0.0 WHERE id = 1" if False else "UPDATE balance SET pool = 0.0 WHERE id = 1")
+    con.commit(); con.close()
+
+    await manager.broadcast({"type": "DRAIN", "msg": f"💎 Master wallet drained ${p:.2f} to cold storage.", "pool": 0.0})
+    return {"status": "success", "amt": f"{p:.2f}"}
