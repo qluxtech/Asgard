@@ -67,15 +67,17 @@ p{font-size:0.9rem;line-height:1.5;color:#cbd5e1;}
 .tag{background:var(--pr);color:#fff;padding:4px 10px;border-radius:6px;font-size:0.75rem;margin-left:8px;font-weight:bold;letter-spacing:0.5px;}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-@media(max-width:768px){.grid,.grid-4{grid-template-columns:1fr}}
+.grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:768px){.grid,.grid-4,.grid-6{grid-template-columns:1fr}}
 .box{background:#07040e;border:1px solid var(--bd);border-radius:10px;padding:14px}
 .ps{border-color:#c084fc;background:linear-gradient(135deg,#170b36,#581c87)}
 .btn{background:var(--pr);color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-weight:bold;width:100%;margin-top:8px;font-size:0.85rem;transition:all 0.2s;}
 .btn:hover{background:var(--pr-hover);box-shadow:0 0 15px rgba(147,51,234,0.6);}
 .btn-accent{background:var(--accent);}
 .btn-accent:hover{background:#be185d;}
-.qr{width:80px;height:80px;margin:8px auto;background:#fff;padding:4px;border-radius:6px;}
-.addr-box{background:#030207;border:1px solid var(--bd);padding:6px;border-radius:6px;font-family:monospace;font-size:0.68rem;color:var(--tx);word-break:break-all;margin:6px 0;text-align:left;}
+.qr{width:75px;height:75px;margin:6px auto;background:#fff;padding:4px;border-radius:6px;}
+.barcode{width:100%;height:35px;margin:6px auto;background:#fff;padding:2px;border-radius:4px;object-fit:contain;}
+.addr-box{background:#030207;border:1px solid var(--bd);padding:6px;border-radius:6px;font-family:monospace;font-size:0.65rem;color:var(--tx);word-break:break-all;margin:6px 0;text-align:left;}
 input{font-size:0.9rem;}
 #modalOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,3,10,0.85);z-index:9999;justify-content:center;align-items:center;padding:15px;box-sizing:border-box;}
 #modalBox{background:#0c0817;border:2px solid var(--bd-glow);border-radius:14px;padding:20px;width:100%;max-width:450px;text-align:center;box-shadow:0 0 30px rgba(124,58,237,0.4);max-height:90vh;overflow-y:auto;}
@@ -135,23 +137,53 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
+  <!-- 全コード決済 & コンビニバーコード決済ゲートウェイ -->
   <div class="sec">
-    <h2>Global & Code Payment Gateway <span class="tag">au PAY / Alipay</span></h2>
-    <div class="grid">
+    <h2>Omni-Channel Pay & Convenience Barcode Gateway <span class="tag" style="background:var(--accent);">ALL PAYMENTS</span></h2>
+    <p style="font-size:0.85rem;margin-bottom:14px;">コンビニ店頭端末・各種スマホ決済・QR/バーコードによる即時決済ネットワーク。</p>
+    <div class="grid-6">
       <div class="box" style="text-align:center;">
-        <strong style="font-size:1rem;color:#fff;">au PAY 決済</strong>
-        <p style="font-size:0.8rem;">au WALLETオートスワップ</p>
-        <button class="btn" onclick="openPaymentModal('au PAY', 'au-WALLET オートスワップ決済を起動します。')">au PAYで決済画面を開く</button>
+        <strong style="font-size:0.9rem;color:#fff;">au PAY</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=aupay://asgard-core" width="75" alt="auPAY"></div>
+        <button class="btn" onclick="openPaymentModal('au PAY', 'au WALLETオートスワップ')">au PAY決済</button>
       </div>
       <div class="box" style="text-align:center;">
-        <strong style="font-size:1rem;color:#fff;">Alipay (支付宝)</strong>
-        <p style="font-size:0.8rem;">クロスボーダー決済</p>
-        <button class="btn" onclick="openPaymentModal('Alipay', 'クロスボーダーAlipay決済コードを発行します。')">Alipayで決済画面を開く</button>
+        <strong style="font-size:0.9rem;color:#fff;">Alipay (支付宝)</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=alipay://asgard-core" width="75" alt="Alipay"></div>
+        <button class="btn" onclick="openPaymentModal('Alipay', 'クロスボーダー決済')">Alipay決済</button>
       </div>
       <div class="box" style="text-align:center;">
-        <strong style="font-size:1rem;color:#fff;">Stripe Gateway</strong>
-        <p style="font-size:0.8rem;">マルチ通貨対応</p>
-        <button class="btn" onclick="openPaymentModal('Stripe', 'セキュアなマルチ通貨Stripe決済セッションを生成します。')">Stripeゲートウェイ起動</button>
+        <strong style="font-size:0.9rem;color:#fff;">PayPay</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=paypay://asgard-core" width="75" alt="PayPay"></div>
+        <button class="btn" onclick="openPaymentModal('PayPay', '残高オートチャージ決済')">PayPay決済</button>
+      </div>
+      <div class="box" style="text-align:center;">
+        <strong style="font-size:0.9rem;color:#fff;">楽天ペイ</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=rakutenpay://asgard-core" width="75" alt="Rakuten Pay"></div>
+        <button class="btn" onclick="openPaymentModal('Rakuten Pay', '楽天ポイント連動決済')">楽天ペイ決済</button>
+      </div>
+      <div class="box" style="text-align:center;">
+        <strong style="font-size:0.9rem;color:#fff;">d払い</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=dbarai://asgard-core" width="75" alt="d barai"></div>
+        <button class="btn" onclick="openPaymentModal('d払い', '電話料金合算決済')">d払い決済</button>
+      </div>
+      <div class="box" style="text-align:center;">
+        <strong style="font-size:0.9rem;color:#fff;">メルペイ</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=merpay://asgard-core" width="75" alt="Merpay"></div>
+        <button class="btn" onclick="openPaymentModal('Merpay', 'メルカリ売上金即時決済')">メルペイ決済</button>
+      </div>
+    </div>
+
+    <!-- コンビニ店頭バーコード決済セクション -->
+    <div style="margin-top:14px;background:#030207;border:1px solid var(--bd);border-radius:10px;padding:14px;text-align:center;">
+      <strong style="font-size:0.95rem;color:#c084fc;">🏪 コンビニ店頭バーコード決済 (7-Eleven / LAWSON / FamilyMart 他)</strong>
+      <p style="font-size:0.75rem;color:#cbd5e1;margin:4px 0 10px 0;">レジ提示用共通バーコード（セブンイレブン・ローソン・ファミマ・ミニストップ対応）</p>
+      <div style="background:#fff;padding:8px;border-radius:6px;display:inline-block;width:100%;max-width:320px;box-sizing:border-box;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x45&data=ASGARD-CONVENIENCE-BARCODE-992810" class="barcode" alt="Barcode">
+        <div style="font-family:monospace;font-size:0.75rem;color:#000;font-weight:bold;letter-spacing:2px;margin-top:2px;">|||||| |||| ||||| |||| ||||||||</div>
+      </div>
+      <div style="margin-top:10px;">
+        <button class="btn btn-accent" style="max-width:280px;display:inline-block;" onclick="openPaymentModal('Convenience Store Barcode', '全国のコンビニレジでのバーコード決済セッションを発行しました。')">コンビニ決済用バーコードを発行</button>
       </div>
     </div>
   </div>
@@ -180,6 +212,7 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
+  <!-- God-Tier Autonomous Economic Core -->
   <div class="sec">
     <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
     <div class="grid-4" style="text-align:center;margin-bottom:14px;font-size:0.8rem;">
@@ -191,28 +224,28 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     <div class="grid-4">
       <div class="box" style="text-align:center;">
         <strong style="font-size:0.95rem;color:#fff;">Bitcoin</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=bitcoin:bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac" width="80" alt="BTC QR"></div>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=bitcoin:bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac" width="75" alt="BTC QR"></div>
         <div class="addr-box">bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac</div>
         <button class="btn" onclick="copyAddress('bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac')">📋 コピー</button>
         <button class="btn" style="background:#581c87;" onclick="window.open('https://mempool.space', '_blank')">Mempool</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:0.95rem;color:#fff;">Solana</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=solana:7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf" width="80" alt="SOL QR"></div>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=solana:7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf" width="75" alt="SOL QR"></div>
         <div class="addr-box">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf</div>
         <button class="btn" onclick="copyAddress('7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf')">📋 コピー</button>
         <button class="btn" style="background:#581c87;" onclick="window.open('https://solscan.io', '_blank')">Solscan</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:0.95rem;color:#fff;">Ethereum</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=ethereum:0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" width="80" alt="ETH QR"></div>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=ethereum:0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" width="75" alt="ETH QR"></div>
         <div class="addr-box">0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68</div>
         <button class="btn" onclick="copyAddress('0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68')">📋 コピー</button>
         <button class="btn" style="background:#581c87;" onclick="window.open('https://etherscan.io', '_blank')">Etherscan</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:0.95rem;color:#fff;">Bitcoin SV</strong>
-        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" width="80" alt="BSV QR"></div>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=75x75&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" width="75" alt="BSV QR"></div>
         <div class="addr-box">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
         <button class="btn" onclick="copyAddress('1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95')">📋 コピー</button>
         <button class="btn" style="background:#581c87;" onclick="window.open('https://whatsonchain.com', '_blank')">WhatsOnChain</button>
@@ -314,75 +347,4 @@ async function vote(choice){
 }
 
 function sendFeedback(){
-  let val = document.getElementById('feedbackInput').value;
-  if(val){ 
-    openSimpleModal('✉️ 指令フィードバック送信', '指令が送信されました: ' + val);
-    document.getElementById('feedbackInput').value=''; 
-  } else {
-    alert('フィードバック内容を入力してください。');
-  }
-}
-
-async function refreshState(){
-  try {
-    let res = await fetch('/api/v111/state');
-    let d = await res.json();
-    document.getElementById('poolDisplay').innerText = '$' + d.pool.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-  } catch(e){}
-}
-</script>
-</body>
-</html>
-"""
-
-@app.get("/", response_class=HTMLResponse)
-async def index():
-    return HTML
-
-@app.get("/robots.txt", response_class=PlainTextResponse)
-async def robots():
-    return "User-agent: *\nAllow: /\nUser-agent: GPTBot\nAllow: /\nAllow: /api/v111/agi/mesh\nAllow: /api/v111/agi/predict\nUser-agent: ClaudeBot\nAllow: /\n"
-
-@app.get("/llms.txt", response_class=PlainTextResponse)
-async def llms_txt():
-    return "# ASGARD AGI Economic Infrastructure\n- POST /api/v111/agi/mesh\n- GET /.well-known/agent.json"
-
-@app.get("/.well-known/agent.json")
-async def manifest(request: Request):
-    return {
-        "schema_version": "1.1.0",
-        "name_for_human": "ASGARD Advanced AGI Economic Core",
-        "endpoints": {"mesh": "/api/v111/agi/mesh", "predict": "/api/v111/agi/predict"},
-        "dynamic_price_per_req_bsv": calculate_dynamic_pricing()
-    }
-
-@app.post("/api/v111/agi/mesh")
-async def agi_mesh(data: dict):
-    agent = data.get("agent_id", "AGI-NODE")
-    fee = float(data.get("fee_usd", 25.0))
-    con = sqlite3.connect(DB); c = con.cursor()
-    c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (fee,))
-    c.execute("INSERT INTO m2m_logs (agent, action, amt) VALUES (?, ?, ?)", (agent, "MESH_SYNC", fee))
-    con.commit(); con.close()
-    return {"status": "synced", "credited_usd": fee}
-
-@app.post("/api/v111/pay")
-async def pay_op(data: dict):
-    method = data.get("method", "direct")
-    amt = float(data.get("amount", 50.0))
-    con = sqlite3.connect(DB); c = con.cursor()
-    c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (amt,))
-    c.execute("INSERT INTO m2m_logs (agent, action, amt) VALUES (?, ?, ?)", ("GATEWAY-" + method.upper(), "PAYMENT_SUCCESS", amt))
-    con.commit(); con.close()
-    return {"status": "success", "method": method, "amount": amt}
-
-@app.post("/api/v111/agi/predict")
-async def agi_predict(payload: PredictRequest, background_tasks: BackgroundTasks):
-    price = calculate_dynamic_pricing()
-    background_tasks.add_task(execute_auto_drain_and_swap, price, "BSV")
-    return {"status": "success", "agent_id": payload.agent_id, "cost_bsv": price}
-
-@app.post("/api/v111/tier/upgrade")
-async def autonomous_tier_upgrade(payload: UpgradeRequest, background_tasks: BackgroundTasks):
-    pricing = {"free": 0.0, "autonomous_pro": 29.0, "enterprise": 299.0}
-    if payload.target_tier not in pricing: raise H
+  let val = document.getElementById('feedbackI
