@@ -81,7 +81,7 @@ SINGULARITY v2.2: ACTIVE | SWEEP PIPELINE: ARMED | AGENT MANIFEST: /.well-known/
 <div class="wrap">
   <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#2e1065,#05030a);border-color:var(--bd-glow);">
     <div style="font-size:0.8rem;color:var(--tx);margin-bottom:8px;font-weight:bold;">AUTONOMOUS SELF-EVOLVING ECONOMIC SINGULARITY</div>
-    <h1 style="color:#fff;margin:0 0 10px 0;">自己増殖型・超収益生命体<br>「ASGARD v2.2」中枢</h1>
+    <h1 style="color:#fff;margin:0 0 10px 0;">Machine-to-Machineインフラストラクチャ<br>ASGARD</h1>
     <p style="color:#e2e8f0;max-width:800px;margin:0 auto;">オンチェーン自動スイープ・外部エージェント受入マニフェスト・超進化ミューテーションを完全統合した最強の自律マネタイズコア。</p>
   </div>
 
@@ -173,9 +173,9 @@ SINGULARITY v2.2: ACTIVE | SWEEP PIPELINE: ARMED | AGENT MANIFEST: /.well-known/
 
   <div class="sec">
     <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
-    <p style="font-size:0.85rem;margin:0 0 8px 0;">ASGARD v2.2は、自己増殖型AIエージェントスウォームが自律拡張し、完全自動でキャッシュを生成・回収する経済生命体システムです。</p>
-    <p style="font-size:0.85rem;margin:0 0 8px 0;">QLAXは、福岡県豊前市を拠点に次世代の自律金融マトリックスを開発しています。</p>
-    <p style="font-size:0.85rem;margin:0;color:var(--tx);"><strong>運営責任者:</strong> Daisuke Higuchi</p>
+    <p style="font-size:0.85rem;margin:0 0 8px 0;">ASGARDは、自己増殖型AIエージェントスウォームが自律拡張し、完全自動でキャッシュを生成・回収する経済生命体システムです。</p>
+    <p style="font-size:0.85rem;margin:0 0 8px 0;">QLAXは、福岡県を拠点に次世代の自律金融マトリックスを開発しています。</p>
+    <p style="font-size:0.85rem;margin:0;color:var(--tx);"><strong>運営責任者:</strong>QLAX</p>
   </div>
 </div>
 
