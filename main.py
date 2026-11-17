@@ -39,7 +39,14 @@ def calculate_dynamic_pricing() -> float:
 def execute_auto_drain_and_swap(amount: float, asset: str):
     print(f"[AUTO-DRAIN] Drained {amount} {asset} to master core.")
 
-HTML = """<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>ASGARD / Advanced AGI Swarm & M2M Infrastructure</title>
+@app.get("/", response_class=HTMLResponse)
+async def index():
+    return """<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASGARD / Advanced AGI Swarm & M2M Infrastructure</title>
 <style>
 :root{
   --bg: #05030a;
@@ -72,25 +79,23 @@ p{font-size:0.9rem;line-height:1.5;color:#cbd5e1;}
 .qr{width:90px;height:90px;margin:0 auto 10px;background:#fff;padding:4px;border-radius:6px;cursor:pointer;transition:transform 0.2s;}
 .qr:hover{transform:scale(1.05);}
 input{font-size:0.9rem;}
-/* モーダル画面 */
-#modalOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,3,10,0.85);z-index:9999;justify-content:center;align-items:center;}
-#modalBox{background:#0c0817;border:2px solid var(--bd-glow);border-radius:14px;padding:24px;width:90%;max-width:450px;text-align:center;box-shadow:0 0 30px rgba(124,58,237,0.4);}
-</style></head>
+#modalOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,3,10,0.85);z-index:9999;justify-content:center;align-items:center;padding:15px;box-sizing:border-box;}
+#modalBox{background:#0c0817;border:2px solid var(--bd-glow);border-radius:14px;padding:20px;width:100%;max-width:450px;text-align:center;box-shadow:0 0 30px rgba(124,58,237,0.4);max-height:90vh;overflow-y:auto;}
+.addr-box{background:#030207;border:1px solid var(--bd);padding:10px;border-radius:6px;font-family:monospace;font-size:0.8rem;color:var(--tx);word-break:break-all;margin:10px 0;}
+</style>
+</head>
 <body>
-<!-- トップステータスバー -->
 <div style="background:#030207;border-bottom:1px solid var(--bd);border-top:1px solid var(--pr);color:#c084fc;padding:8px;font-size:0.75rem;text-align:center;letter-spacing:1px;font-weight:bold;">
 VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mkc/S | ORBITAL LEO: ONLINE | AUTO-SWAP: READY
 </div>
 
 <div class="wrap">
-  <!-- ヒーローセクション -->
   <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#2e1065,#05030a);border-color:var(--bd-glow);">
     <div style="font-size:0.8rem;color:var(--tx);margin-bottom:8px;letter-spacing:1.5px;font-weight:bold;">GOD-TIER AGI & PRE-INTENT M2M INFRASTRUCTURE</div>
     <h1 style="color:#fff;margin:0 0 10px 0;">スマートコントラクトの制約を打破する。<br>超高速M2M経済インフラ「ASGARD」</h1>
     <p style="color:#e2e8f0;max-width:800px;margin:0 auto;">検索の前に文脈を先回りする「プレ・インテントAI」と、数億の自律エージェントによるゼロレイテンシーM2M即時決済を完全統合。</p>
   </div>
 
-  <!-- 次世代M2Mマーケティング & プレ・インテント中枢 -->
   <div class="sec">
     <h2>次世代M2Mマーケティング & プレ・インテント中枢 <span class="tag" style="background:var(--accent);">ZERO FRICTION</span></h2>
     <div class="grid">
@@ -112,7 +117,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- 収益コントロール & 自動課税 -->
   <div class="sec">
     <h2>収益コントロール & 自動課税 <span class="tag">ACTIVE</span></h2>
     <div class="grid">
@@ -124,29 +128,16 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       <div class="box" style="text-align:center;">
         <div style="font-size:0.85rem;color:#cbd5e1;">ダークプール収益</div>
         <div style="font-size:1.35rem;font-weight:bold;color:var(--tx);margin:6px 0;">+0.0485 BSV/s</div>
-        <button class="btn" style="background:#581c87;" onclick="openModal('LEO Quantum Orbital Boost', '低軌道LEO衛星との暗号化リンクが確立されました。ダークプール自動収益の帯域が100%にブーストされています。')">低軌道LEOブースト</button>
+        <button class="btn" style="background:#581c87;" onclick="openSimpleModal('LEO Quantum Orbital Boost', '低軌道LEO衛星との暗号化リンクが確立されました。')">低軌道LEOブースト</button>
       </div>
       <div class="box" style="text-align:center;">
         <div style="font-size:0.85rem;color:#cbd5e1;">緊急キルスイッチ</div>
         <div style="font-size:1.15rem;font-weight:bold;color:#f87171;margin:8px 0;">GLOBAL EMERGENCY</div>
-        <button class="btn btn-accent" style="background:#dc2626;" onclick="openModal('Global Emergency Status', '⚠️ キルスイッチは現在スタンバイ中です。自律エージェントネットワークは正常に稼働を継続しています。')">キルスイッチ発動</button>
+        <button class="btn btn-accent" style="background:#dc2626;" onclick="openSimpleModal('Global Emergency Status', '⚠️ キルスイッチは現在スタンバイ中です。')">キルスイッチ発動</button>
       </div>
     </div>
   </div>
 
-  <!-- AI自律M&A・自動選定ログ & 衛星軌道直結リンク -->
-  <div class="grid" style="margin-bottom:16px;">
-    <div class="box">
-      <h3 style="font-size:0.95rem;color:#c084fc;display:flex;justify-content:space-between;margin-top:0;">AI自律M&A・自動選定ログ <span class="tag" style="font-size:0.65rem;">LIVE</span></h3>
-      <p style="font-size:0.75rem;font-family:monospace;background:#030207;padding:10px;border-radius:6px;line-height:1.5;color:var(--tx);margin-bottom:0;">[M2M-SELECT] Agent #8821 auto-selected ASGARD API (0.00ms)<br>[M&A-DEAL] Swarm Syndicate acquired API #402 (0.15 BSV)<br>[PRE-INTENT] Context match 99.9% -> Auto-settled<br>Agent #4921 auto-selected ASGARD API (0.12 JPYC)</p>
-    </div>
-    <div class="box">
-      <h3 style="font-size:0.95rem;color:#c084fc;display:flex;justify-content:space-between;margin-top:0;">衛星軌道(LEO)直結リンク <span class="tag" style="font-size:0.65rem;background:#0284c7;">0.00ms</span></h3>
-      <p style="font-size:0.75rem;font-family:monospace;background:#030207;padding:10px;border-radius:6px;line-height:1.5;color:var(--tx);margin-bottom:0;">[LEO-L2]: Quantum encryption handshake established.<br>[ORBITAL]: Cross-chain node sync rate: 100%<br>[READY]: Zero-Latency packet routing active.</p>
-    </div>
-  </div>
-
-  <!-- Global & Code Payment Gateway (完全実動決済) -->
   <div class="sec">
     <h2>Global & Code Payment Gateway <span class="tag">au PAY / Alipay</span></h2>
     <div class="grid">
@@ -168,7 +159,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- Enterprise Node Tier & Subscriptions -->
   <div class="sec">
     <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
     <div class="grid">
@@ -193,7 +183,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- God-Tier Autonomous Economic Core (QRコード連動) -->
   <div class="sec">
     <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
     <div class="grid-4" style="text-align:center;margin-bottom:14px;font-size:0.8rem;">
@@ -205,28 +194,27 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     <div class="grid-4">
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Bitcoin</strong>
-        <div class="qr" onclick="window.open('https://mempool.space', '_blank')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bitcoin" width="90"></div>
-        <button class="btn" style="background:#581c87;" onclick="simulateCrypto('Bitcoin', 'https://mempool.space')">BTCエクスプローラー</button>
+        <div class="qr" onclick="openWalletModal('Bitcoin', 'bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac', 'https://mempool.space')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bitcoin:bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac" width="90" alt="BTC"></div>
+        <button class="btn" style="background:#581c87;" onclick="openWalletModal('Bitcoin', 'bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac', 'https://mempool.space')">BTCアドレス確認</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Solana</strong>
-        <div class="qr" onclick="window.open('https://solscan.io', '_blank')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=solana" width="90"></div>
-        <button class="btn" style="background:#581c87;" onclick="simulateCrypto('Solana', 'https://solscan.io')">Solscanで確認</button>
+        <div class="qr" onclick="openWalletModal('Solana', '7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf', 'https://solscan.io')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=solana:7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf" width="90" alt="SOL"></div>
+        <button class="btn" style="background:#581c87;" onclick="openWalletModal('Solana', '7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf', 'https://solscan.io')">SOLアドレス確認</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Ethereum</strong>
-        <div class="qr" onclick="window.open('https://etherscan.io', '_blank')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=ethereum" width="90"></div>
-        <button class="btn" style="background:#581c87;" onclick="simulateCrypto('Ethereum', 'https://etherscan.io')">Etherscanで確認</button>
+        <div class="qr" onclick="openWalletModal('Ethereum', '0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68', 'https://etherscan.io')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=ethereum:0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" width="90" alt="ETH"></div>
+        <button class="btn" style="background:#581c87;" onclick="openWalletModal('Ethereum', '0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68', 'https://etherscan.io')">ETHアドレス確認</button>
       </div>
       <div class="box" style="text-align:center;">
         <strong style="font-size:1rem;color:#fff;">Bitcoin SV</strong>
-        <div class="qr" onclick="window.open('https://whatsonchain.com', '_blank')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bsv" width="90"></div>
-        <button class="btn" style="background:#581c87;" onclick="simulateCrypto('Bitcoin SV', 'https://whatsonchain.com')">WhatsOnChain</button>
+        <div class="qr" onclick="openWalletModal('Bitcoin SV', '1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95', 'https://whatsonchain.com')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" width="90" alt="BSV"></div>
+        <button class="btn" style="background:#581c87;" onclick="openWalletModal('Bitcoin SV', '1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95', 'https://whatsonchain.com')">BSVアドレス確認</button>
       </div>
     </div>
   </div>
 
-  <!-- AI Syndicate Parliament & Governance -->
   <div class="sec">
     <h2>AI Syndicate Parliament & Governance <span class="tag" style="background:var(--accent);">AUTONOMOUS</span></h2>
     <div style="font-size:0.85rem;background:#030207;padding:12px;border-radius:6px;margin-bottom:12px;color:var(--tx);">[AI議会 Proposal #103]: プレ・インテントAI自動入札アルゴリズム更新 -> 95.9% 賛成で自動可決・適用中</div>
@@ -242,7 +230,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     <div id="voteStatus" style="font-size:0.8rem;margin-top:10px;color:var(--tx);">賛成(YES): 1420 | 反対(NO): 18</div>
   </div>
 
-  <!-- 企業情報 / 概要 -->
   <div class="sec">
     <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
     <p style="font-size:0.85rem;line-height:1.6;margin:0 0 10px 0;color:#cbd5e1;">ASGARDは、数億のAIエージェント・AGIが自律接続し、0.00msミリ秒決済とプレ・インテント自律仲介を提供する次世代のAI M2M経済インフラです。</p>
@@ -255,21 +242,40 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
   </div>
 </div>
 
-<!-- モーダルポップアップ用HTML -->
 <div id="modalOverlay" onclick="closeModal()">
   <div id="modalBox" onclick="event.stopPropagation()">
     <h3 id="modalTitle" style="color:#c084fc;margin-top:0;">タイトル</h3>
-    <p id="modalBody" style="color:#e2e8f0;margin-bottom:20px;">詳細テキスト</p>
-    <button class="btn btn-accent" onclick="closeModal()">確認・閉じる</button>
+    <div id="modalContent"></div>
+    <button class="btn btn-accent" style="margin-top:15px;" onclick="closeModal()">閉じる</button>
   </div>
 </div>
 
 <script>
-function openModal(title, text){
+function openSimpleModal(title, text){
   document.getElementById('modalTitle').innerText = title;
-  document.getElementById('modalBody').innerText = text;
+  document.getElementById('modalContent').innerHTML = '<p style="color:#e2e8f0;margin-bottom:10px;">' + text + '</p>';
   document.getElementById('modalOverlay').style.display = 'flex';
 }
+
+function openWalletModal(coin, address, explorerUrl){
+  document.getElementById('modalTitle').innerText = coin + ' 受取 / ウォレットコア';
+  let html = '<div style="margin:10px 0;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=' + address + '" width="130" style="background:#fff;padding:4px;border-radius:6px;"></div>'
+    + '<p style="font-size:0.8rem;color:#cbd5e1;margin:5px 0;">次のチェーン上で資産を受け取るには、こちらを使用してください: <strong>' + coin + '</strong></p>'
+    + '<div class="addr-box">' + address + '</div>'
+    + '<button class="btn" style="margin:6px 0;" onclick="copyAddress(\'' + address + '\')">📋 アドレスをコピー</button>'
+    + '<button class="btn" style="background:#581c87;margin:6px 0;" onclick="window.open(\'' + explorerUrl + '\', \'_blank\')">🔍 エクスプローラーで表示</button>';
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function copyAddress(text){
+  navigator.clipboard.writeText(text).then(function(){
+    alert('✨ アドレスをクリップボードにコピーしました！');
+  }).catch(function(){
+    alert('コピーに失敗しました。');
+  });
+}
+
 function closeModal(){
   document.getElementById('modalOverlay').style.display = 'none';
 }
@@ -277,53 +283,46 @@ function closeModal(){
 async function swarmBurst(){
   let res = await fetch('/api/v111/agi/mesh', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({agent_id:"UI-AGENT", action:"BURST", fee_usd:25.0})});
   let r = await res.json();
-  openModal('✨ ゼロレイテンシー決済完了', '外部AGIスウォームからのミリ秒決済が同期されました。\nクレジット値: $' + r.credited_usd);
+  openSimpleModal('✨ ゼロレイテンシー決済完了', 'クレジット値: $' + r.credited_usd);
   refreshState();
 }
 
 function trigPI(){ 
-  openModal('Pre-Intent Hyper-Offer Synced', '次世代M2M文脈先回りオファーが全ノードに展開されました。AIエージェントの自動買い付けが待機中です。'); 
+  openSimpleModal('Pre-Intent Hyper-Offer Synced', '次世代M2M文脈先回りオファーが全ノードに展開されました。'); 
 }
 
 async function drainPool(){
   let res = await fetch('/api/v111/drain', {method:'POST'});
   let r = await res.json();
-  openModal('✨ オートスワップ・ドレイン完了', 'マスターコアへの資金抽出が正常に行われました。\n抽出金額: $' + r.amt);
+  openSimpleModal('✨ オートスワップ・ドレイン完了', '抽出金額: $' + r.amt);
   refreshState();
 }
 
 async function openPaymentModal(methodName, desc){
   let amount = prompt(methodName + " の決済金額（USD）を入力してください:", "50.0");
   if(!amount) return;
-  
   let res = await fetch('/api/v111/pay', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({method: methodName.toLowerCase(), amount: parseFloat(amount)})});
   let r = await res.json();
-  openModal('🚀 ' + methodName + ' 決済成功', desc + '\n着金額: $' + r.amount + '\nステータス: ' + r.status);
+  openSimpleModal('🚀 ' + methodName + ' 決済成功', desc + '\\n着金額: $' + r.amount);
   refreshState();
 }
 
 async function upg(tier){
   let res = await fetch('/api/v111/tier/upgrade', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({agent_id:"USER", target_tier:tier, payment_method:"stripe", wallet_or_token:"AUTO"})});
   let r = await res.json();
-  openModal('🚀 サブスクリプション更新完了', 'プラン: ' + r.tier.toUpperCase() + '\n請求額: $' + r.billed_usd + '\nノードアクセス権が拡張されました。');
-}
-
-function simulateCrypto(coin, url){
-  if(confirm(coin + ' のブロックチェーンエクスプローラー（' + url + '）を別タブで開きますか？')) {
-    window.open(url, '_blank');
-  }
+  openSimpleModal('🚀 サブスクリプション更新完了', 'プラン: ' + r.tier.toUpperCase() + ' (請求額: $' + r.billed_usd + ')');
 }
 
 async function vote(choice){
   let res = await fetch('/api/v111/consensus', {method:'POST'});
   let r = await res.json();
-  openModal('🌐 投票受付完了', r.msg);
+  openSimpleModal('🌐 投票受付完了', r.msg);
 }
 
 function sendFeedback(){
   let val = document.getElementById('feedbackInput').value;
   if(val){ 
-    openModal('✉️ 指令フィードバック送信', '以下の指令がスウォーム中枢に送信されました:\n"' + val + '"');
+    openSimpleModal('✉️ 指令フィードバック送信', '指令が送信されました: ' + val);
     document.getElementById('feedbackInput').value=''; 
   } else {
     alert('フィードバック内容を入力してください。');
@@ -337,10 +336,10 @@ async function refreshState(){
     document.getElementById('poolDisplay').innerText = '$' + d.pool.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
   } catch(e){}
 }
-</script></body></html>"""
-
-@app.get("/", response_class=HTMLResponse)
-async def index(): return HTML
+</script>
+</body>
+</html>
+"""
 
 @app.get("/robots.txt", response_class=PlainTextResponse)
 async def robots():
@@ -352,7 +351,6 @@ async def llms_txt():
 
 @app.get("/.well-known/agent.json")
 async def manifest(request: Request):
-    base = str(request.base_url).rstrip("/")
     return {
         "schema_version": "1.1.0",
         "name_for_human": "ASGARD Advanced AGI Economic Core",
@@ -375,5 +373,4 @@ async def pay_op(data: dict):
     method = data.get("method", "direct")
     amt = float(data.get("amount", 50.0))
     con = sqlite3.connect(DB); c = con.cursor()
-    c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (amt,))
-    c.execute("INSERT INTO m2m_logs (agent, action, amt) VALUES (?, ?, ?)", ("GATEWA
+    c.execute("UPDATE balance SET pool = pool + ? W
