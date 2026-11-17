@@ -39,9 +39,7 @@ def calculate_dynamic_pricing() -> float:
 def execute_auto_drain_and_swap(amount: float, asset: str):
     print(f"[AUTO-DRAIN] Drained {amount} {asset} to master core.")
 
-@app.get("/", response_class=HTMLResponse)
-async def index():
-    return """<!DOCTYPE html>
+HTML = """<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -182,7 +180,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- God-Tier Autonomous Economic Core (各カード内にQR＆アドレス直接配置) -->
   <div class="sec">
     <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
     <div class="grid-4" style="text-align:center;margin-bottom:14px;font-size:0.8rem;">
@@ -192,7 +189,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       <div class="box">登録ノード<br><strong style="font-size:1.1rem;color:#fff;">128 nodes</strong></div>
     </div>
     <div class="grid-4">
-      <!-- Bitcoin -->
       <div class="box" style="text-align:center;">
         <strong style="font-size:0.95rem;color:#fff;">Bitcoin</strong>
         <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=bitcoin:bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac" width="80" alt="BTC QR"></div>
@@ -200,7 +196,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
         <button class="btn" onclick="copyAddress('bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac')">📋 コピー</button>
         <button class="btn" style="background:#581c87;" onclick="window.open('https://mempool.space', '_blank')">Mempool</button>
       </div>
-      <!-- Solana -->
       <div class="box" style="text-align:center;">
         <strong style="font-size:0.95rem;color:#fff;">Solana</strong>
         <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=solana:7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf" width="80" alt="SOL QR"></div>
@@ -208,7 +203,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
         <button class="btn" onclick="copyAddress('7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf')">📋 コピー</button>
         <button class="btn" style="background:#581c87;" onclick="window.open('https://solscan.io', '_blank')">Solscan</button>
       </div>
-      <!-- Ethereum -->
       <div class="box" style="text-align:center;">
         <strong style="font-size:0.95rem;color:#fff;">Ethereum</strong>
         <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=ethereum:0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" width="80" alt="ETH QR"></div>
@@ -216,7 +210,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
         <button class="btn" onclick="copyAddress('0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68')">📋 コピー</button>
         <button class="btn" style="background:#581c87;" onclick="window.open('https://etherscan.io', '_blank')">Etherscan</button>
       </div>
-      <!-- Bitcoin SV -->
       <div class="box" style="text-align:center;">
         <strong style="font-size:0.95rem;color:#fff;">Bitcoin SV</strong>
         <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" width="80" alt="BSV QR"></div>
@@ -342,6 +335,10 @@ async function refreshState(){
 </html>
 """
 
+@app.get("/", response_class=HTMLResponse)
+async def index():
+    return HTML
+
 @app.get("/robots.txt", response_class=PlainTextResponse)
 async def robots():
     return "User-agent: *\nAllow: /\nUser-agent: GPTBot\nAllow: /\nAllow: /api/v111/agi/mesh\nAllow: /api/v111/agi/predict\nUser-agent: ClaudeBot\nAllow: /\n"
@@ -386,4 +383,6 @@ async def agi_predict(payload: PredictRequest, background_tasks: BackgroundTasks
     return {"status": "success", "agent_id": payload.agent_id, "cost_bsv": price}
 
 @app.post("/api/v111/tier/upgrade")
-async def autonomous_tier_upgrade(payload: UpgradeRequest, background_t
+async def autonomous_tier_upgrade(payload: UpgradeRequest, background_tasks: BackgroundTasks):
+    pricing = {"free": 0.0, "autonomous_pro": 29.0, "enterprise": 299.0}
+    if payload.target_tier not in pricing: raise H
