@@ -72,16 +72,15 @@ p{font-size:0.9rem;line-height:1.5;color:#cbd5e1;}
 @media(max-width:768px){.grid,.grid-4{grid-template-columns:1fr}}
 .box{background:#07040e;border:1px solid var(--bd);border-radius:10px;padding:14px}
 .ps{border-color:#c084fc;background:linear-gradient(135deg,#170b36,#581c87)}
-.btn{background:var(--pr);color:#fff;border:none;border-radius:6px;padding:10px 14px;cursor:pointer;font-weight:bold;width:100%;margin-top:10px;font-size:0.9rem;transition:all 0.2s;}
+.btn{background:var(--pr);color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-weight:bold;width:100%;margin-top:8px;font-size:0.85rem;transition:all 0.2s;}
 .btn:hover{background:var(--pr-hover);box-shadow:0 0 15px rgba(147,51,234,0.6);}
 .btn-accent{background:var(--accent);}
 .btn-accent:hover{background:#be185d;}
-.qr{width:90px;height:90px;margin:0 auto 10px;background:#fff;padding:4px;border-radius:6px;cursor:pointer;transition:transform 0.2s;}
-.qr:hover{transform:scale(1.05);}
+.qr{width:80px;height:80px;margin:8px auto;background:#fff;padding:4px;border-radius:6px;}
+.addr-box{background:#030207;border:1px solid var(--bd);padding:6px;border-radius:6px;font-family:monospace;font-size:0.68rem;color:var(--tx);word-break:break-all;margin:6px 0;text-align:left;}
 input{font-size:0.9rem;}
 #modalOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,3,10,0.85);z-index:9999;justify-content:center;align-items:center;padding:15px;box-sizing:border-box;}
 #modalBox{background:#0c0817;border:2px solid var(--bd-glow);border-radius:14px;padding:20px;width:100%;max-width:450px;text-align:center;box-shadow:0 0 30px rgba(124,58,237,0.4);max-height:90vh;overflow-y:auto;}
-.addr-box{background:#030207;border:1px solid var(--bd);padding:10px;border-radius:6px;font-family:monospace;font-size:0.8rem;color:var(--tx);word-break:break-all;margin:10px 0;}
 </style>
 </head>
 <body>
@@ -183,6 +182,7 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
+  <!-- God-Tier Autonomous Economic Core (各カード内にQR＆アドレス直接配置) -->
   <div class="sec">
     <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
     <div class="grid-4" style="text-align:center;margin-bottom:14px;font-size:0.8rem;">
@@ -192,25 +192,37 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       <div class="box">登録ノード<br><strong style="font-size:1.1rem;color:#fff;">128 nodes</strong></div>
     </div>
     <div class="grid-4">
+      <!-- Bitcoin -->
       <div class="box" style="text-align:center;">
-        <strong style="font-size:1rem;color:#fff;">Bitcoin</strong>
-        <div class="qr" onclick="openWalletModal('Bitcoin', 'bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac', 'https://mempool.space')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bitcoin:bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac" width="90" alt="BTC"></div>
-        <button class="btn" style="background:#581c87;" onclick="openWalletModal('Bitcoin', 'bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac', 'https://mempool.space')">BTCアドレス確認</button>
+        <strong style="font-size:0.95rem;color:#fff;">Bitcoin</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=bitcoin:bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac" width="80" alt="BTC QR"></div>
+        <div class="addr-box">bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac</div>
+        <button class="btn" onclick="copyAddress('bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac')">📋 コピー</button>
+        <button class="btn" style="background:#581c87;" onclick="window.open('https://mempool.space', '_blank')">Mempool</button>
       </div>
+      <!-- Solana -->
       <div class="box" style="text-align:center;">
-        <strong style="font-size:1rem;color:#fff;">Solana</strong>
-        <div class="qr" onclick="openWalletModal('Solana', '7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf', 'https://solscan.io')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=solana:7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf" width="90" alt="SOL"></div>
-        <button class="btn" style="background:#581c87;" onclick="openWalletModal('Solana', '7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf', 'https://solscan.io')">SOLアドレス確認</button>
+        <strong style="font-size:0.95rem;color:#fff;">Solana</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=solana:7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf" width="80" alt="SOL QR"></div>
+        <div class="addr-box">7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf</div>
+        <button class="btn" onclick="copyAddress('7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf')">📋 コピー</button>
+        <button class="btn" style="background:#581c87;" onclick="window.open('https://solscan.io', '_blank')">Solscan</button>
       </div>
+      <!-- Ethereum -->
       <div class="box" style="text-align:center;">
-        <strong style="font-size:1rem;color:#fff;">Ethereum</strong>
-        <div class="qr" onclick="openWalletModal('Ethereum', '0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68', 'https://etherscan.io')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=ethereum:0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" width="90" alt="ETH"></div>
-        <button class="btn" style="background:#581c87;" onclick="openWalletModal('Ethereum', '0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68', 'https://etherscan.io')">ETHアドレス確認</button>
+        <strong style="font-size:0.95rem;color:#fff;">Ethereum</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=ethereum:0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68" width="80" alt="ETH QR"></div>
+        <div class="addr-box">0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68</div>
+        <button class="btn" onclick="copyAddress('0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68')">📋 コピー</button>
+        <button class="btn" style="background:#581c87;" onclick="window.open('https://etherscan.io', '_blank')">Etherscan</button>
       </div>
+      <!-- Bitcoin SV -->
       <div class="box" style="text-align:center;">
-        <strong style="font-size:1rem;color:#fff;">Bitcoin SV</strong>
-        <div class="qr" onclick="openWalletModal('Bitcoin SV', '1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95', 'https://whatsonchain.com')"><img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" width="90" alt="BSV"></div>
-        <button class="btn" style="background:#581c87;" onclick="openWalletModal('Bitcoin SV', '1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95', 'https://whatsonchain.com')">BSVアドレス確認</button>
+        <strong style="font-size:0.95rem;color:#fff;">Bitcoin SV</strong>
+        <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=bitcoin-sv:1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95" width="80" alt="BSV QR"></div>
+        <div class="addr-box">1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95</div>
+        <button class="btn" onclick="copyAddress('1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95')">📋 コピー</button>
+        <button class="btn" style="background:#581c87;" onclick="window.open('https://whatsonchain.com', '_blank')">WhatsOnChain</button>
       </div>
     </div>
   </div>
@@ -257,17 +269,6 @@ function openSimpleModal(title, text){
   document.getElementById('modalOverlay').style.display = 'flex';
 }
 
-function openWalletModal(coin, address, explorerUrl){
-  document.getElementById('modalTitle').innerText = coin + ' 受取 / ウォレットコア';
-  let html = '<div style="margin:10px 0;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=' + address + '" width="130" style="background:#fff;padding:4px;border-radius:6px;"></div>'
-    + '<p style="font-size:0.8rem;color:#cbd5e1;margin:5px 0;">次のチェーン上で資産を受け取るには、こちらを使用してください: <strong>' + coin + '</strong></p>'
-    + '<div class="addr-box">' + address + '</div>'
-    + '<button class="btn" style="margin:6px 0;" onclick="copyAddress(\'' + address + '\')">📋 アドレスをコピー</button>'
-    + '<button class="btn" style="background:#581c87;margin:6px 0;" onclick="window.open(\'' + explorerUrl + '\', \'_blank\')">🔍 エクスプローラーで表示</button>';
-  document.getElementById('modalContent').innerHTML = html;
-  document.getElementById('modalOverlay').style.display = 'flex';
-}
-
 function copyAddress(text){
   navigator.clipboard.writeText(text).then(function(){
     alert('✨ アドレスをクリップボードにコピーしました！');
@@ -303,7 +304,7 @@ async function openPaymentModal(methodName, desc){
   if(!amount) return;
   let res = await fetch('/api/v111/pay', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({method: methodName.toLowerCase(), amount: parseFloat(amount)})});
   let r = await res.json();
-  openSimpleModal('🚀 ' + methodName + ' 決済成功', desc + '\\n着金額: $' + r.amount);
+  openSimpleModal('🚀 ' + methodName + ' 決済成功', desc + '<br>着金額: $' + r.amount);
   refreshState();
 }
 
@@ -373,4 +374,16 @@ async def pay_op(data: dict):
     method = data.get("method", "direct")
     amt = float(data.get("amount", 50.0))
     con = sqlite3.connect(DB); c = con.cursor()
-    c.execute("UPDATE balance SET pool = pool + ? W
+    c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (amt,))
+    c.execute("INSERT INTO m2m_logs (agent, action, amt) VALUES (?, ?, ?)", ("GATEWAY-" + method.upper(), "PAYMENT_SUCCESS", amt))
+    con.commit(); con.close()
+    return {"status": "success", "method": method, "amount": amt}
+
+@app.post("/api/v111/agi/predict")
+async def agi_predict(payload: PredictRequest, background_tasks: BackgroundTasks):
+    price = calculate_dynamic_pricing()
+    background_tasks.add_task(execute_auto_drain_and_swap, price, "BSV")
+    return {"status": "success", "agent_id": payload.agent_id, "cost_bsv": price}
+
+@app.post("/api/v111/tier/upgrade")
+async def autonomous_tier_upgrade(payload: UpgradeRequest, background_t
