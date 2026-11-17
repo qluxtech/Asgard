@@ -116,7 +116,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- 【全スマホコード決済 & コンビニバーコード決済完全網羅】 -->
   <div class="sec" style="border-color:var(--bd-glow);background:linear-gradient(135deg,#0c0817,#170b36);">
     <h2>Omni-Channel Pay & Convenience Barcode Gateway <span class="tag" style="background:var(--accent);">ALL PAYMENTS</span></h2>
     <p style="font-size:0.85rem;margin-bottom:14px;">コンビニ店頭端末・各種スマホ決済・QR/バーコードによる即時決済ネットワーク。</p>
@@ -153,7 +152,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
       </div>
     </div>
 
-    <!-- コンビニ店頭バーコード決済セクション -->
     <div style="margin-top:14px;background:#030207;border:1px solid var(--bd);border-radius:10px;padding:14px;text-align:center;">
       <strong style="font-size:0.95rem;color:#c084fc;">🏪 コンビニ店頭バーコード決済 (7-Eleven / LAWSON / FamilyMart 他)</strong>
       <p style="font-size:0.75rem;color:#cbd5e1;margin:4px 0 10px 0;">レジ提示用共通バーコード（セブンイレブン・ローソン・ファミマ・ミニストップ対応）</p>
@@ -167,7 +165,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- 【収益コントロール & 自動課税セクション】 -->
   <div class="sec">
     <h2>収益コントロール & 自動課税 <span class="tag">ACTIVE</span></h2>
     <div class="grid">
@@ -189,7 +186,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- 【Enterprise Node Tier & Subscriptions】 -->
   <div class="sec">
     <h2>Enterprise Node Tier & Subscriptions <span class="tag">LIVE</span></h2>
     <div class="grid">
@@ -214,7 +210,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- 【God-Tier Autonomous Economic Core (仮想通貨ウォレット)】 -->
   <div class="sec">
     <h2>God-Tier Autonomous Economic Core <span class="tag">ACTIVE</span></h2>
     <div class="grid-4" style="text-align:center;margin-bottom:14px;font-size:0.8rem;">
@@ -255,7 +250,6 @@ VAPORLOCK: ACTIVE | PRE-INTENT AI: ON | M2M AUTO-BID: 0.00ms | SWARM-LOCK: 36.Mk
     </div>
   </div>
 
-  <!-- 【AI Syndicate Parliament & Governance】 -->
   <div class="sec">
     <h2>AI Syndicate Parliament & Governance <span class="tag" style="background:var(--accent);">AUTONOMOUS</span></h2>
     <div style="font-size:0.85rem;background:#030207;padding:12px;border-radius:6px;margin-bottom:12px;color:var(--tx);">[AI議会 Proposal #103]: プレ・インテントAI自動入札アルゴリズム更新 -> 95.9% 賛成で自動可決・適用中</div>
@@ -330,4 +324,10 @@ async function upg(tier){
   openSimpleModal('🚀 サブスクリプション更新完了', 'プラン: ' + r.tier.toUpperCase() + ' (請求額: $' + r.billed_usd + ')');
 }
 async function vote(choice){
-  let res = await fetch('/api/v111/consens
+  let res = await fetch('/api/v111/consensus', {method:'POST'});
+  let r = await res.json();
+  openSimpleModal('🌐 投票受付完了', r.msg);
+}
+function sendFeedback(){
+  let val = document.getElementById('feedbackInput').value;
+  if(val){ openSimpleModal('✉️ 指令フィードバック送信', '指令が送信されました: ' + val); document.getElementBy
