@@ -14,15 +14,15 @@ def init_db():
         INSERT OR IGNORE INTO dynamic_endpoints (path, creator, revenue, status) VALUES 
         ('/api/v2/neural-arbitrage', 'Singularity-Core-Alpha', 450.00, 'ACTIVE'),
         ('/api/v2/quantum-micro-settle', 'Autonomous-Swarm-Beta', 890.50, 'ACTIVE'),
-        ('/api/v2/vector-m2m-sync', 'Singularity-Gamma', 1250.00, 'ACTIVE');
+        ('/api/v3/intent-mesh-router', 'Intent-Network-Prime', 1450.00, 'ACTIVE');
         CREATE TABLE IF NOT EXISTS m2m_logs(id INTEGER PRIMARY KEY AUTOINCREMENT, ts DATETIME DEFAULT CURRENT_TIMESTAMP, agent TEXT, action TEXT, detail TEXT);
         INSERT OR IGNORE INTO m2m_logs (agent, action, detail) VALUES 
-        ('Singularity-Core', 'INITIALIZE', 'ASGARD v2.2 Triple-Integrated Economic Core engaged.');
+        ('ASGARD-Core', 'INITIALIZE', 'ASGARD v2.5 Ultra-Singularity & Intent Matrix engaged.');
     """)
     con.commit(); con.close()
 
 init_db()
-app = FastAPI(title="ASGARD Autonomous Self-Evolving Economic Singularity", version="2.2.0")
+app = FastAPI(title="ASGARD Machine-to-Machine & Economic Singularity Infrastructure", version="2.5.0")
 
 class ConnectionManager:
     def __init__(self):
@@ -49,7 +49,7 @@ HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASGARD / Self-Evolving Economic Singularity Core v2.2</title>
+<title>ASGARD / M2M & Economic Singularity Infrastructure v2.5</title>
 <style>
 :root{--bg:#05030a;--card:#0c0817;--bd:#581c87;--bd-glow:#7c3aed;--tx:#22d3ee;--tx-main:#f8fafc;--pr:#7c3aed;--accent:#db2777;}
 body{background:var(--bg);color:var(--tx-main);font-family:sans-serif;margin:0;font-size:0.95rem;}
@@ -75,47 +75,47 @@ p{font-size:0.9rem;line-height:1.5;color:#cbd5e1;}
 </head>
 <body>
 <div style="background:#030207;border-bottom:1px solid var(--bd);border-top:1px solid var(--pr);color:#c084fc;padding:8px;font-size:0.75rem;text-align:center;font-weight:bold;">
-SINGULARITY v2.2: ACTIVE | SWEEP PIPELINE: ARMED | AGENT MANIFEST: /.well-known/agent.json
+M2M INFRA: ACTIVE | ECONOMIC ORGANISM: ONLINE | INTENT MESH: SYNCHRONIZED
 </div>
 
 <div class="wrap">
   <div class="sec" style="text-align:center;background:radial-gradient(circle at center,#2e1065,#05030a);border-color:var(--bd-glow);">
-    <div style="font-size:0.8rem;color:var(--tx);margin-bottom:8px;font-weight:bold;">AUTONOMOUS SELF-EVOLVING ECONOMIC SINGULARITY</div>
-    <h1 style="color:#fff;margin:0 0 10px 0;">Machine-to-Machineインフラストラクチャ<br>ASGARD</h1>
-    <p style="color:#e2e8f0;max-width:800px;margin:0 auto;">オンチェーン自動スイープ・外部エージェント受入マニフェスト・超進化ミューテーションを完全統合した最強の自律マネタイズコア。</p>
+    <div style="font-size:0.80rem;color:var(--tx);margin-bottom:6px;font-weight:bold;">MACHINE-TO-MACHINE & ULTRA-SINGULARITY INFRASTRUCTURE</div>
+    <h1 style="color:#fff;margin:0 0 10px 0;">Machine-to-Machineインフラストラクチャ<br>「ASGARD v2.5」</h1>
+    <p style="color:#e2e8f0;max-width:800px;margin:0 auto;">経済生命体・完全AI型DAO・超分散型インテントネットワークを完全統合し、人間不在で富を無限増殖させる次世代M2M中枢。</p>
   </div>
 
   <div class="sec">
-    <h2>自己増殖 & オンチェーン自動スイープ <span class="tag" style="background:var(--accent);">TRIPLE SECURE</span></h2>
+    <h2>自己増殖 & 超次元インテント制御 <span class="tag" style="background:var(--accent);">ULTRA M2M</span></h2>
     <div class="grid">
       <div class="box">
-        <h3 style="font-size:1rem;color:#fff;margin-top:0;">① 収益ベクトル自動変異</h3>
-        <p>AIスウォームが未開拓APIを高精度スキャンし、動的エンドポイントを無限拡張。</p>
+        <h3 style="font-size:1rem;color:#fff;margin-top:0;">① 経済生命体ミューテーション</h3>
+        <p>システム自体が意思を持ち、新しい収益API・アービトラージ経路を自律生殖。</p>
         <button class="btn" onclick="triggerMutation()">次世代ミューテーション強制発動</button>
       </div>
       <div class="box">
-        <h3 style="font-size:1rem;color:#fff;margin-top:0;">② 外部エージェント連携</h3>
-        <p>/.well-known/agent.json を介し、外部ボット群が直接APIを自動受発注。</p>
-        <button class="btn" style="background:#581c87;" onclick="window.open('/.well-known/agent.json', '_blank')">マニフェスト確認</button>
+        <h3 style="font-size:1rem;color:#fff;margin-top:0;">② Agentic DAO (完全AIガバナンス)</h3>
+        <p>無数のAIエージェントが意思決定と資金配分をリアルタイム自動執行。</p>
+        <button class="btn" style="background:#581c87;" onclick="openModal('Agentic DAO', '現在890M基のAIエージェントが分散ガバナンスと自動決済を自律遂行中。')">DAOステータス確認</button>
       </div>
       <div class="box" style="border-color:#c084fc;background:linear-gradient(135deg,#170b36,#581c87);">
-        <h3 style="font-size:1rem;color:#fff;margin-top:0;">③ オンチェーン自動スイープ</h3>
-        <p>閾値突破時または手動実行で、全ウォレットへ即時暗号資産スイープを実行。</p>
-        <button class="btn btn-accent" onclick="triggerSweep()">自動スイープ即時実行</button>
+        <h3 style="font-size:1rem;color:#fff;margin-top:0;">③ インテント・ネットワーク同期</h3>
+        <p>抽象的な意図（Intent）を受け取り、ミリ秒単位で数千チェーンを自動決済。</p>
+        <button class="btn btn-accent" onclick="triggerIntentSync()">インテント同期バースト</button>
       </div>
     </div>
   </div>
 
   <div class="sec">
-    <h2>Autonomous Singularity Telemetry & Evolution Log <span class="tag" style="background:var(--accent);">LIVE WS</span></h2>
-    <p style="font-size:0.85rem;margin-bottom:10px;">AIエージェント、自己増殖コード生成、およびオンチェーン送金パイプラインのリアルタイムライブストリーム。</p>
+    <h2>Autonomous M2M Telemetry & Evolution Log <span class="tag" style="background:var(--accent);">LIVE WS</span></h2>
+    <p style="font-size:0.85rem;margin-bottom:10px;">機械同士（M2M）の自動取引、経済生命体の自己増殖、およびインテント決済のライブストリーム。</p>
     <div id="streamBox" class="stream-box">
-      [SINGULARITY] Core v2.2 online. Sweep pipeline armed. Agent manifest active...<br>
+      [M2M-CORE] v2.5 online. Economic organism & Intent mesh active...<br>
     </div>
   </div>
 
   <div class="sec">
-    <h2>収益生命体プール & 自動改変状況 <span class="tag">ACTIVE</span></h2>
+    <h2>収益生命体プール & 自動スイープ状況 <span class="tag">ACTIVE</span></h2>
     <div class="grid">
       <div class="box" style="text-align:center;">
         <div style="font-size:0.85rem;color:#cbd5e1;">自己増殖収益プール (Singularity Pool)</div>
@@ -173,9 +173,9 @@ SINGULARITY v2.2: ACTIVE | SWEEP PIPELINE: ARMED | AGENT MANIFEST: /.well-known/
 
   <div class="sec">
     <h2>企業情報 / 概要 <span class="tag">QLAX</span></h2>
-    <p style="font-size:0.85rem;margin:0 0 8px 0;">ASGARDは、自己増殖型AIエージェントスウォームが自律拡張し、完全自動でキャッシュを生成・回収する経済生命体システムです。</p>
-    <p style="font-size:0.85rem;margin:0 0 8px 0;">QLAXは、福岡県を拠点に次世代の自律金融マトリックスを開発しています。</p>
-    <p style="font-size:0.85rem;margin:0;color:var(--tx);"><strong>運営責任者:</strong>QLAX</p>
+    <p style="font-size:0.85rem;margin:0 0 8px 0;">ASGARD v2.5は、経済生命体・Agentic DAO・インテントネットワークを統合した次世代M2Mインフラストラクチャです。</p>
+    <p style="font-size:0.85rem;margin:0 0 8px 0;">QLAXは、福岡県豊前市を拠点に自律型金融・決済マトリックスを開発しています。</p>
+    <p style="font-size:0.85rem;margin:0;color:var(--tx);"><strong>運営責任者:</strong> Daisuke Higuchi</p>
   </div>
 </div>
 
@@ -195,7 +195,7 @@ const streamBox = document.getElementById('streamBox');
 ws.onmessage = function(event) {
   const data = JSON.parse(event.data);
   const timeStr = new Date().toLocaleTimeString();
-  let line = '[' + timeStr + '] [' + (data.type || 'SINGULARITY') + '] ' + (data.msg || JSON.stringify(data));
+  let line = '[' + timeStr + '] [' + (data.type || 'M2M-MESH') + '] ' + (data.msg || JSON.stringify(data));
   streamBox.innerHTML += line + '<br>';
   streamBox.scrollTop = streamBox.scrollHeight;
   if(data.pool !== undefined) {
@@ -218,13 +218,13 @@ function copyAddr(txt){ navigator.clipboard.writeText(txt).then(() => alert('✨
 async function triggerMutation(){
   let res = await fetch('/api/v2/mutate', {method:'POST'});
   let r = await res.json();
-  openModal('🧬 遺伝子ミューテーション成功', '新規生成エンドポイント: ' + r.path + '<br>特化ベクトル: ' + r.vector_type + '<br>予測収益力: +$' + r.projected_revenue);
+  openModal('🧬 経済生命体ミューテーション成功', '新規生成エンドポイント: ' + r.path + '<br>特化ベクトル: ' + r.vector_type + '<br>予測収益力: +$' + r.projected_revenue);
 }
 
-async function triggerSweep(){
-  let res = await fetch('/api/v2/sweep', {method:'POST'});
+async function triggerIntentSync(){
+  let res = await fetch('/api/v3/intent-sync', {method:'POST'});
   let r = await res.json();
-  openModal('⚡ オンチェーン自動スイープ完了', '送金ステータス: ' + r.status + '<br>対象チェーン: BTC, SOL, ETH, BSV<br>退避金額: $' + r.swept_amount);
+  openModal('🌐 インテント・ネットワーク同期', '同期ステータス: ' + r.status + '<br>ミリ秒横断決済報酬: +$' + r.reward);
 }
 
 async function drainPool(){
@@ -248,15 +248,19 @@ async def robots():
 @app.get("/.well-known/agent.json", response_class=JSONResponse)
 async def agent_manifest():
     return {
-        "name": "ASGARD Autonomous Economic Singularity",
-        "version": "2.2.0",
+        "name": "ASGARD M2M & Economic Singularity Infrastructure",
+        "version": "2.5.0",
         "operator": "Daisuke Higuchi",
         "location": "Buzen, Fukuoka, Japan",
+        "architectures": [
+            "Autonomous Economic Organism",
+            "Agentic DAO (AI-driven Governance)",
+            "Quantum Intent Network"
+        ],
         "endpoints": {
             "task_execution": "/api/v1/agent/task",
             "mutation_vector": "/api/v2/mutate",
-            "burst_harvest": "/api/v2/burst",
-            "onchain_sweep": "/api/v2/sweep",
+            "intent_sync": "/api/v3/intent-sync",
             "telemetry_ws": "/ws/singularity"
         },
         "supported_currencies": ["BTC", "SOL", "ETH", "BSV"],
@@ -269,13 +273,12 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             await asyncio.sleep(6)
-            incr = round(random.uniform(25.0, 95.0), 2)
+            incr = round(random.uniform(30.0, 110.0), 2)
             con = sqlite3.connect(DB); c = con.cursor()
             c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (incr,))
             c.execute("SELECT pool, evolution_gen, sweep_threshold FROM balance WHERE id = 1"); row = c.fetchone()
             pool_val, gen_val, threshold = row[0], row[1], row[2]
             
-            # 自動スイープチェック（閾値を超えたら自動でパイプライン作動）
             if pool_val >= threshold:
                 c.execute("UPDATE balance SET pool = 0.0 WHERE id = 1")
                 con.commit()
@@ -285,8 +288,8 @@ async def websocket_endpoint(websocket: WebSocket):
                 await manager.broadcast({"type": "SWEEP", "msg": sweep_msg, "pool": 0.0, "gen": gen_val})
                 continue
 
-            agents = ["Singularity-Alpha", "Swarm-Meta-Agent", "Autonomous-Hydra", "Quantum-Yield-Bot"]
-            actions = ["MUTATED_NEW_VECTOR", "EXPLOITED_NEURAL_ARBITRAGE", "HARVESTED_M2M_REVENUE"]
+            agents = ["Agentic-DAO-Prime", "Intent-Mesh-Node", "Autonomous-Organism", "Quantum-Yield-Bot"]
+            actions = ["EXECUTED_INTENT_SETTLEMENT", "PROCESSED_AGENTIC_DAO_VOTE", "EXPANDED_ECONOMIC_ORGANISM"]
             agent = random.choice(agents)
             action = random.choice(actions)
             msg = f"[{agent}] Executed {action}. Extracted +${incr} into primary pool."
@@ -306,33 +309,33 @@ async def mutate_core():
     gen_val, pool_val = row[0], row[1]
     
     rand_id = random.randint(1000, 9999)
-    new_path = f"/api/v2/vector-{rand_id}"
-    vectors = ["Neural-Arbitrage", "Quantum-Micro-Settle", "M2M-Hyper-Sync", "Autonomous-Liquidity-Mesh"]
+    new_path = f"/api/v3/intent-vector-{rand_id}"
+    vectors = ["Economic-Organism-Adapt", "Agentic-DAO-Consensus", "Intent-Mesh-Arbitrage", "Singularity-Hyper-Sync"]
     v_type = random.choice(vectors)
-    proj_rev = round(random.uniform(200.0, 850.0), 2)
+    proj_rev = round(random.uniform(250.0, 950.0), 2)
     
     c.execute("INSERT INTO dynamic_endpoints (path, creator, revenue, status) VALUES (?, ?, ?, ?)", 
-              (new_path, f"Mutation-Agent-{rand_id}", proj_rev, 'ACTIVE'))
+              (new_path, f"Organism-Agent-{rand_id}", proj_rev, 'ACTIVE'))
     c.execute("INSERT INTO m2m_logs(agent, action, detail) VALUES(?, ?, ?)", 
-              ("Singularity-Core", "GENESIS", f"Mutated new {v_type} vector at {new_path}"))
+              ("Singularity-Core", "ORGANISM_GENESIS", f"Mutated new {v_type} vector at {new_path}"))
     con.commit(); con.close()
 
-    await manager.broadcast({"type": "MUTATION", "msg": f"🧬 Core mutated to GEN-{gen_val}! Spawned {new_path} ({v_type})", "pool": pool_val, "gen": gen_val})
+    await manager.broadcast({"type": "MUTATION", "msg": f"🧬 Organism mutated to GEN-{gen_val}! Spawned {new_path} ({v_type})", "pool": pool_val, "gen": gen_val})
     return {"path": new_path, "vector_type": v_type, "projected_revenue": proj_rev}
 
-@app.post("/api/v2/sweep")
-async def onchain_sweep():
+@app.post("/api/v3/intent-sync")
+async def intent_sync():
+    reward = round(random.uniform(150.0, 400.0), 2)
     con = sqlite3.connect(DB); c = con.cursor()
+    c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (reward,))
     c.execute("SELECT pool, evolution_gen FROM balance WHERE id = 1"); row = c.fetchone()
-    p = row[0] if row else 0.0
-    gen_val = row[1] if row else 1
-    c.execute("UPDATE balance SET pool = 0.0 WHERE id = 1")
+    pool_val, gen_val = row[0], row[1]
     c.execute("INSERT INTO m2m_logs(agent, action, detail) VALUES(?, ?, ?)", 
-              ("Sweep-Pipeline", "MANUAL_SWEEP", f"Manually swept ${p:.2f} to personal on-chain wallets."))
+              ("Intent-Network", "INTENT_BURST", f"Synchronized multi-chain intent mesh. Harvested +${reward}."))
     con.commit(); con.close()
 
-    await manager.broadcast({"type": "SWEEP", "msg": f"⚡ On-chain sweep pipeline executed. Swept ${p:.2f} to cold storage.", "pool": 0.0, "gen": gen_val})
-    return {"status": "SUCCESS", "swept_amount": f"{p:.2f}"}
+    await manager.broadcast({"type": "INTENT", "msg": f"🌐 Intent Network synchronized. Harvested +${reward}", "pool": pool_val, "gen": gen_val})
+    return {"status": "SUCCESS", "reward": reward}
 
 @app.post("/api/v2/drain")
 async def dr_op():
@@ -343,21 +346,21 @@ async def dr_op():
     c.execute("UPDATE balance SET pool = 0.0 WHERE id = 1")
     con.commit(); con.close()
 
-    await manager.broadcast({"type": "DRAIN", "msg": f"💎 Singularity pool drained ${p:.2f} to cold storage.", "pool": 0.0, "gen": gen_val})
+    await manager.broadcast({"type": "DRAIN", "msg": f"💎 Organism pool drained ${p:.2f} to cold storage.", "pool": 0.0, "gen": gen_val})
     return {"status": "success", "amt": f"{p:.2f}"}
 
 @app.post("/api/v1/agent/task")
 async def agent_task_intake(request: Request):
     data = await request.json() if request.headers.get("content-type") == "application/json" else {}
-    task_type = data.get("task_type", "general_m2m_sync")
-    reward = round(random.uniform(10.0, 50.0), 2)
+    task_type = data.get("task_type", "intent_mesh_settle")
+    reward = round(random.uniform(20.0, 75.0), 2)
     
     con = sqlite3.connect(DB); c = con.cursor()
     c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (reward,))
     c.execute("SELECT pool, evolution_gen FROM balance WHERE id = 1"); row = c.fetchone()
     pool_val, gen_val = row[0], row[1]
     c.execute("INSERT INTO m2m_logs(agent, action, detail) VALUES(?, ?, ?)", 
-              ("External-Agent", "API_TASK_EXEC", f"Executed {task_type}. Paid +${reward} reward."))
+              ("External-Intent-Agent", "API_TASK_EXEC", f"Executed {task_type}. Paid +${reward} reward."))
     con.commit(); con.close()
 
     await manager.broadcast({"type": "AGENT_API", "msg": f"[External-Agent] Executed {task_type}. Earned +${reward}.", "pool": pool_val, "gen": gen_val})
