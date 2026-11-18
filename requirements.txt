@@ -4,3 +4,4 @@ pydantic
 langchain-core
 langchain-openai
 langsmith
+httpx
