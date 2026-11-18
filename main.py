@@ -334,3 +334,130 @@ async def dr_op():
     con.commit(); c.close()
     await manager.broadcast({"type": "DRAIN", "msg": f"💎 Full-matrix pool drained ${p:.2f} to cold storage.", "pool": 0.0})
     return {"status": "success", "amt": f"{p:.2f}"}
+
+@app.websocket("/ws/matrix")
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    try:
+        while True:
+            # 嘘の自動加算は完全停止。接続維持のpingのみ待機
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
+
+async def check_bsv_real_tx(txid: str) -> int:
+    """WhatsonChain Mainnet APIでBSVの着金サトシ数を本物検証"""
+    url = f"https://api.whatsonchain.com/v1/bsv/main/tx/hash/{txid}"
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        res = await client.get(url)
+        if res.status_code != 200:
+            raise HTTPException(status_code=404, detail="BSVトランザクションがメインネット上で見つかりません。")
+        tx_data = res.json()
+        received_sats = 0
+        for vout in tx_data.get("vout", []):
+            addresses = vout.get("scriptPubKey", {}).get("addresses", [])
+            if WALLETS["BSV"] in addresses:
+                # BSVはBTC単位(float)で返るため10^8を掛けて整数サトシ化
+                received_sats += int(round(float(vout.get("value", 0)) * 100_000_000))
+        return received_sats
+
+async def check_sol_real_tx(signature: str) -> int:
+    """Solana Mainnet RPCでSOLの着金lamports数を本物検証"""
+    url = "https://api.mainnet-beta.solana.com"
+    payload = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "getTransaction",
+        "params": [signature, {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}]
+    }
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        res = await client.post(url, json=payload)
+        data = res.json()
+        result = data.get("result")
+        if not result:
+            raise HTTPException(status_code=404, detail="Solanaトランザクションがメインネット上で見つかりません。")
+        if result.get("meta", {}).get("err") is not None:
+            raise HTTPException(status_code=400, detail="失敗したトランザクションです。")
+        
+        account_keys = result.get("transaction", {}).get("message", {}).get("accountKeys", [])
+        pre_balances = result.get("meta", {}).get("preBalances", [])
+        post_balances = result.get("meta", {}).get("postBalances", [])
+        
+        received_lamports = 0
+        for idx, acc in enumerate(account_keys):
+            pubkey = acc.get("pubkey") if isinstance(acc, dict) else acc
+            if pubkey == WALLETS["SOL"]:
+                diff = post_balances[idx] - pre_balances[idx]
+                if diff > 0:
+                    received_lamports += diff
+        return received_lamports
+
+@app.post("/api/v4/oracle/verify-all")
+async def oracle_verify_real(request: Request):
+    """1サトシ / 1 lamport から本物の着金のみを検証するリアルゲートウェイ"""
+    data = await request.json() if request.headers.get("content-type") == "application/json" else {}
+    chain = data.get("chain", "").upper()
+    txid = data.get("txid", "").strip()
+
+    if not txid or chain not in ["BSV", "SOL"]:
+        raise HTTPException(status_code=400, detail="chain ('BSV' または 'SOL') と有効な txid が必要です。")
+
+    con = sqlite3.connect(DB); c = con.cursor()
+    c.execute("SELECT txid FROM verified_txs WHERE txid = ?", (txid,))
+    if c.fetchone():
+        con.close()
+        raise HTTPException(status_code=409, detail="このTxIDは既に検証・計上済みです。")
+
+    if chain == "BSV":
+        amount_raw = await check_bsv_real_tx(txid)
+        unit = "satoshis"
+        col = "bsv_sats"
+    else:
+        amount_raw = await check_sol_real_tx(txid)
+        unit = "lamports"
+        col = "sol_lamports"
+
+    if amount_raw <= 0:
+        con.close()
+        raise HTTPException(status_code=402, detail=f"指定されたTxID内にあなたの{chain}ウォレットへの着金が確認できませんでした。")
+
+    c.execute("INSERT INTO verified_txs(txid, chain, amount_raw) VALUES(?, ?, ?)", (txid, chain, amount_raw))
+    c.execute(f"UPDATE balance SET {col} = {col} + ? WHERE id = 1", (amount_raw,))
+    c.execute("SELECT bsv_sats, sol_lamports FROM balance WHERE id = 1")
+    bsv_total, sol_total = c.fetchone()
+
+    msg = f"✅ REAL {chain} SETTLEMENT VERIFIED: +{amount_raw:,} {unit} (Tx: {txid[:12]}...)"
+    c.execute("INSERT INTO m2m_logs(agent, action, detail) VALUES(?, ?, ?)", (f"RealOracle-{chain}", "ONCHAIN_VERIFIED", msg))
+    con.commit(); con.close()
+
+    await manager.broadcast({
+        "type": "REAL_SETTLEMENT",
+        "msg": msg,
+        "bsv_sats": bsv_total,
+        "sol_lamports": sol_total
+    })
+
+    return {
+        "status": "VERIFIED_REAL_PAYMENT",
+        "chain": chain,
+        "txid": txid,
+        "received": amount_raw,
+        "unit": unit,
+        "total_bsv_sats": bsv_total,
+        "total_sol_lamports": sol_total
+    }
+
+@app.get("/api/v4/balance/real")
+async def get_real_balance():
+    """現在の本物の着金累計を返す"""
+    con = sqlite3.connect(DB); c = con.cursor()
+    c.execute("SELECT bsv_sats, sol_lamports FROM balance WHERE id = 1")
+    bsv_total, sol_total = c.fetchone()
+    con.close()
+    return {
+        "bsv_sats": bsv_total,
+        "bsv": bsv_total / 100_000_000,
+        "sol_lamports": sol_total,
+        "sol": sol_total / 1_000_000_000
+    }
+
