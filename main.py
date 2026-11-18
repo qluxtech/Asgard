@@ -1,4 +1,4 @@
-さimport os, sqlite3, asyncio, json, random
+import os, sqlite3, asyncio, json, random
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, HTTPException, Header
 from fastapi.responses import HTMLResponse, PlainTextResponse, JSONResponse
 from pydantic import BaseModel
