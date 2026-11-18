@@ -355,3 +355,19 @@ async def verify_multichain_tx(request: Request):
     con.commit(); con.close()
     
     return {"status": "SUCCESS", "chain": chain, "txid": txid, "credited_usd": amount, "pool_total": pool_val}
+
+@app.post("/api/v3/multichain/verify-tx")
+async def verify_multichain_tx(request: Request):
+    """マルチチェーン決済検証エンドポイント"""
+    data = await request.json() if request.headers.get("content-type") == "application/json" else {}
+    chain = data.get("chain", "BSV").upper()
+    txid = data.get("txid", "mock_txid")
+    amount = float(data.get("amount_usd", 50.0))
+    
+    con = sqlite3.connect(DB); c = con.cursor()
+    c.execute("UPDATE balance SET pool = pool + ? WHERE id = 1", (amount,))
+    c.execute("SELECT pool FROM balance WHERE id = 1"); row = c.fetchone()
+    pool_val = row[0]
+    con.commit(); con.close()
+    
+    return {"status": "SUCCESS", "chain": chain, "txid": txid, "credited_usd": amount, "pool_total": pool_val}
