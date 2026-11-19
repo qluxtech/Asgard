@@ -1,4 +1,4 @@
-import os, sqlite3, asyncio, json
+ぬimport os, sqlite3, asyncio, json
 import httpx
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import HTMLResponse, PlainTextResponse, JSONResponse
@@ -463,3 +463,63 @@ async def get_real_balance():
         "sol": sol_total / 1_000_000_000
     }
 
+async def check_bsv_real_tx(txid: str) -> int:
+    url = f"https://api.whatsonchain.com/v1/bsv/main/tx/hash/{txid}"
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        res = await client.get(url)
+        if res.status_code != 200:
+            raise HTTPException(status_code=404, detail="BSVトランザクションがメインネット上で見つかりません。")
+        tx_data = res.json()
+        received_sats = 0
+        for vout in tx_data.get("vout", []):
+            if WALLETS["BSV"] in vout.get("scriptPubKey", {}).get("addresses", []):
+                received_sats += int(round(float(vout.get("value", 0)) * 100_000_000))
+        return received_sats
+
+async def check_sol_real_tx(signature: str) -> int:
+    url = "https://api.mainnet-beta.solana.com"
+    payload = {"jsonrpc": "2.0", "id": 1, "method": "getTransaction", "params": [signature, {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}]}
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        res = await client.post(url, json=payload)
+        result = res.json().get("result")
+        if not result or result.get("meta", {}).get("err") is not None:
+            raise HTTPException(status_code=404, detail="有効なSolanaトランザクションが見つかりません。")
+        account_keys = result.get("transaction", {}).get("message", {}).get("accountKeys", [])
+        pre_balances = result.get("meta", {}).get("preBalances", [])
+        post_balances = result.get("meta", {}).get("postBalances", [])
+        received_lamports = 0
+        for idx, acc in enumerate(account_keys):
+            pubkey = acc.get("pubkey") if isinstance(acc, dict) else acc
+            if pubkey == WALLETS["SOL"]:
+                diff = post_balances[idx] - pre_balances[idx]
+                if diff > 0:
+                    received_lamports += diff
+        return received_lamports
+
+@app.post("/api/v4/oracle/verify-all")
+async def oracle_verify_real(request: Request):
+    data = await request.json() if request.headers.get("content-type") == "application/json" else {}
+    chain = data.get("chain", "").upper()
+    txid = data.get("txid", "").strip()
+    if not txid or chain not in ["BSV", "SOL"]:
+        raise HTTPException(status_code=400, detail="chain ('BSV' または 'SOL') と有効な txid が必要です。")
+
+    con = sqlite3.connect(DB); c = con.cursor()
+    c.execute("SELECT txid FROM verified_txs WHERE txid = ?", (txid,))
+    if c.fetchone():
+        con.close()
+        raise HTTPException(status_code=409, detail="このTxIDは既に検証済みです。")
+
+    amount_raw = await check_bsv_real_tx(txid) if chain == "BSV" else await check_sol_real_tx(txid)
+    if amount_raw <= 0:
+        con.close()
+        raise HTTPException(status_code=402, detail=f"あなたの{chain}アドレスへの着金が確認できませんでした。")
+
+    col = "bsv_sats" if chain == "BSV" else "sol_lamports"
+    c.execute("INSERT INTO verified_txs(txid, chain, amount_raw) VALUES(?, ?, ?)", (txid, chain, amount_raw))
+    c.execute(f"UPDATE balance SET {col} = {col} + ? WHERE id = 1", (amount_raw,))
+    c.execute("SELECT bsv_sats, sol_lamports FROM balance WHERE id = 1")
+    bsv_total, sol_total = c.fetchone()
+    con.commit(); con.close()
+
+    return {"status": "VERIFIED_REAL_PAYMENT", "chain": chain, "txid": txid, "received": amount_raw, "total_bsv_sats": bsv_total, "total_sol_lamports": sol_total}
