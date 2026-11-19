@@ -1,4 +1,4 @@
-ぬimport os, sqlite3, asyncio, json
+くimport os, sqlite3, asyncio, json
 import httpx
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import HTMLResponse, PlainTextResponse, JSONResponse
@@ -523,3 +523,36 @@ async def oracle_verify_real(request: Request):
     con.commit(); con.close()
 
     return {"status": "VERIFIED_REAL_PAYMENT", "chain": chain, "txid": txid, "received": amount_raw, "total_bsv_sats": bsv_total, "total_sol_lamports": sol_total}
+
+async def check_bsv_real_tx(txid: str) -> int:
+    url = f"https://api.whatsonchain.com/v1/bsv/main/tx/hash/{txid}"
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        res = await client.get(url)
+        if res.status_code != 200:
+            raise HTTPException(status_code=404, detail="BSVトランザクションがメインネット上で見つかりません。")
+        tx_data = res.json()
+        received_sats = 0
+        for vout in tx_data.get("vout", []):
+            if WALLETS["BSV"] in vout.get("scriptPubKey", {}).get("addresses", []):
+                received_sats += int(round(float(vout.get("value", 0)) * 100_000_000))
+        return received_sats
+
+async def check_sol_real_tx(signature: str) -> int:
+    url = "https://api.mainnet-beta.solana.com"
+    payload = {"jsonrpc": "2.0", "id": 1, "method": "getTransaction", "params": [signature, {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}]}
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        res = await client.post(url, json=payload)
+        result = res.json().get("result")
+        if not result or result.get("meta", {}).get("err") is not None:
+            raise HTTPException(status_code=404, detail="有効なSolanaトランザクションが見つかりません。")
+        account_keys = result.get("transaction", {}).get("message", {}).get("accountKeys", [])
+        pre_balances = result.get("meta", {}).get("preBalances", [])
+        post_balances = result.get("meta", {}).get("postBalances", [])
+        received_lamports = 0
+        for idx, acc in enumerate(account_keys):
+            pubkey = acc.get("pubkey") if isinstance(acc, dict) else acc
+            if pubkey == WALLETS["SOL"]:
+                diff = post_balances[idx] - pre_balances[idx]
+                if diff > 0:
+                    received_lamports += diff
+        return received_lamports
