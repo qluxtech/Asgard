@@ -7,7 +7,7 @@
 * **🌐 Live Mainnet Gateway**: [https://asgard-tgio.onrender.com](https://asgard-tgio.onrender.com)
 * **🤖 Agent Discovery Manifest**: `https://asgard-tgio.onrender.com/.well-known/agent.json`
 * **⚡ Live Telemetry Stream**: `wss://asgard-tgio.onrender.com/ws/matrix`
-* **🏢 Operator**: QLAX (Daisuke Higuchi) — Buzen, Fukuoka, Japan
+* **🏢 Operator**: QLAX —Fukuoka, Japan
 
 ---
 
