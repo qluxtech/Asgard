@@ -1,27 +1,29 @@
-import os, sqlite3, asyncio, json, random
+import os, sqlite3, asyncio, json
+import httpx
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import HTMLResponse, PlainTextResponse, JSONResponse
 
-DB = "asgard.db"
+DB = "asgard_real.db"
+
+WALLETS = {
+    "BTC": "bc1qlt94rkd00fh0h06h28kqzx2vyfpww2efjd7zac",
+    "SOL": "7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf",
+    "ETH": "0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68",
+    "BSV": "1Mb66iHohUEg8eAnkgV9uTTV7R235tuy95"
+}
 
 def init_db():
     con = sqlite3.connect(DB); c = con.cursor()
     c.executescript("""
-        CREATE TABLE IF NOT EXISTS balance(id INT PRIMARY KEY, pool REAL, dark_pool REAL, evolution_gen INT, sweep_threshold REAL);
-        INSERT OR IGNORE INTO balance VALUES(1, 3185.09, 0.1250, 10, 5000.0);
-        CREATE TABLE IF NOT EXISTS dynamic_endpoints(id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT, creator TEXT, revenue REAL, status TEXT);
-        INSERT OR IGNORE INTO dynamic_endpoints (path, creator, revenue, status) VALUES 
-        ('/api/v4/agent/pay-per-call', 'PayPerCall-Engine', 1850.00, 'ACTIVE'),
-        ('/api/v4/intent/mesh-match', 'Intent-DAO-Core', 1450.00, 'ACTIVE'),
-        ('/api/v4/oracle/verify-all', 'Multichain-Oracle', 2200.00, 'ACTIVE');
+        CREATE TABLE IF NOT EXISTS balance(id INT PRIMARY KEY, bsv_sats INTEGER, sol_lamports INTEGER);
+        INSERT OR IGNORE INTO balance VALUES(1, 0, 0);
+        CREATE TABLE IF NOT EXISTS verified_txs(txid TEXT PRIMARY KEY, chain TEXT, amount_raw INTEGER, ts DATETIME DEFAULT CURRENT_TIMESTAMP);
         CREATE TABLE IF NOT EXISTS m2m_logs(id INTEGER PRIMARY KEY AUTOINCREMENT, ts DATETIME DEFAULT CURRENT_TIMESTAMP, agent TEXT, action TEXT, detail TEXT);
-        INSERT OR IGNORE INTO m2m_logs (agent, action, detail) VALUES 
-        ('ASGARD-Core', 'INITIALIZE', 'ASGARD v4.0 Full-Matrix Production Core fully engaged.');
     """)
     con.commit(); con.close()
 
 init_db()
-app = FastAPI(title="ASGARD Full-Matrix M2M Infrastructure", version="4.0.0")
+app = FastAPI(title="ASGARD Real On-Chain Settlement Gateway", version="4.1.0-REAL")
 
 class ConnectionManager:
     def __init__(self):
