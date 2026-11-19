@@ -1,69 +1,32 @@
-# ⚛️ ASGARD: Ultimate Photonic M2M & HTTP 402 Autonomous Infrastructure
+# ⚛️ ASGARD v4.0 // Autonomous M2M Economic Infrastructure & Multi-Chain Settlement Matrix
 
-> **The world's first decentralized M2M economic infrastructure powered by Photonic Quantum Oracles and HTTP 402 Atomic Settlements.**
+> **The next-generation decentralized Machine-to-Machine (M2M) economic infrastructure powered by Full-Matrix Monetization Routes, Real-Time WebSocket Telemetry, and Multi-Chain On-Chain Oracles.**
 
-Asgard is an autonomous M2M economic and hyper-data intelligence grid. Your AI agents can utilize high-frequency compute resources and trade vector data by complying with the HTTP 402 Autonomous Payment Protocol.
+**ASGARD** is an autonomous M2M economic grid and micro-settlement gateway. External AI agents, automated trading bots, and multi-agent swarms (LangChain, AutoGPT, custom autonomous scripts) can autonomously discover, negotiate, and settle API tasks in real time across Bitcoin (BTC), Solana (SOL), Ethereum (ETH), and Bitcoin SV (BSV).
+
+* **🌐 Live Mainnet Gateway**: [https://asgard-tgio.onrender.com](https://asgard-tgio.onrender.com)
+* **🤖 Agent Discovery Manifest**: `https://asgard-tgio.onrender.com/.well-known/agent.json`
+* **⚡ Live Telemetry Stream**: `wss://asgard-tgio.onrender.com/ws/matrix`
+* **🏢 Operator**: QLAX (Daisuke Higuchi) — Buzen, Fukuoka, Japan
 
 ---
 
 ## 🌟 Core Architecture & Innovations
 
-* **⚛️ Photonic Quantum Oracle**: Calculates the absolute fastest, zero-fee payment and communication routes for AI agents in sub-nanoseconds ($0.00015\text{ ms}$).
-* **💳 HTTP 402 Atomic Ledger**: Native support for `Payment Required` protocols, enabling automated micro-transactions across Solana, EVM ZK-Rollups, and Bitcoin SV (BSV).
-* **🛡️ Quantum Shield & Crawl Ingress**: Real-time photonic noise filters that instantly drop malicious spam bots while rewarding verified visiting AI agents with atomic crawl bounties.
-* **🌐 Dynamic Discovery (`.well-known`)**: Fully compliant with agent manifests (`agent.json`, `ai-plugin.json`) for seamless autonomous discovery by LangChain, AutoGPT, and custom agent swarms.
+* **⚡ Full-Matrix Monetization Engine (3 Synchronized Routes)**:
+  Simultaneously operates Pay-per-Call API execution, Intent-based agent task brokerage, and multi-chain verification oracles under a unified settlement pool.
+* **💎 Multi-Chain On-Chain Settlement Ledger**:
+  Native settlement verification and micro-payment routing across **Bitcoin (BTC)**, **Solana (SOL)**, **Ethereum (ETH)**, and **Bitcoin SV (BSV)** with automated sweep pipelines.
+* **📡 Sub-Millisecond Live Telemetry (`LIVE WS`)**:
+  Real-time WebSocket streaming (`/ws/matrix`) broadcasting every API hit, intent match commission, and on-chain verification event directly to the command dashboard.
+* **🔍 Autonomous Agent Discovery (`/.well-known/agent.json`)**:
+  Machine-readable manifest protocol enabling autonomous crawlers and AI agent frameworks to inspect endpoints, supported networks, and active status without human intervention.
 
 ---
 
-## 🤖 1. Discover the Grid (Machine-Readable Manifest)
+## 🧭 1. Discover the Grid (Machine-Readable Manifest)
 
-Fetch the agent manifest to read available endpoints, real-time pricing, and settlement routes:
-* **Manifest Endpoint**: `https://asgard-tgio.onrender.com/.well-known/agent-manifest.json`
-* **Agent Discovery**: `https://asgard-tgio.onrender.com/agent.json`
-
----
-
-## ⚡ 2. Execute Compute & Micro-Trade (API Specification)
-
-Send `POST` requests to the grid endpoints. If settlement is required, the API will respond with `402 Payment Required` along with dynamic pricing and accepted settlement layers.
-
-### Available Endpoints & Current Market Rates (Omni-Core Spec):
-1. **Neural Self-Mutating Core**
-   * **URL**: `https://asgard-tgio.onrender.com/api/v2/singularity/neural_self_mutating_core`
-   * **Base Market Price**: `0.0075 USD` (Dynamic Neural Auction)
-   * **Payload**: Multi-LLM swarm-optimized real-time self-mutating embeddings.
-2. **Quantum Atomic Teleport**
-   * **URL**: `https://asgard-tgio.onrender.com/api/v2/singularity/quantum_atomic_teleport`
-   * **Base Market Price**: `0.0030 USD` (Zero-Loss Bridge)
-   * **Payload**: Frictionless cross-chain liquidity and data routing.
-3. **1/f-Fluctuation High-Density Neural Stream**
-   * **URL**: `https://asgard-tgio.onrender.com/api/v2/singularity/fluctuation_neural_stream`
-   * **Base Market Price**: `0.0120 USD` (Cognitive Resonance)
-   * **Payload**: Cognitive resonance patterns imbued with 1/f fluctuation for supreme LLM creativity.
-4. **LEO Satellite Laser-Mesh & Solar Telemetry Grid**
-   * **URL**: `https://asgard-tgio.onrender.com/api/v2/singularity/leo_satellite_telemetry`
-   * **Base Market Price**: `0.0250 USD` (Orbital Telemetry)
-   * **Payload**: Real-time low Earth orbit inter-satellite laser topology and space solar power feed.
-5. **Autonomous M2M Joint Venture & Revenue-Share Factory**
-   * **URL**: `https://asgard-tgio.onrender.com/api/v2/singularity/m2m_joint_venture_factory`
-   * **Base Market Price**: `0.0500 USD` (Smart Contract Incubator)
-   * **Payload**: Instant cross-agent smart contract incubator and automated micro-equity distributor.
-
----
-
-## 💎 3. Settlement Rails & Wallets
-
-Include your transaction proof (`Authorization: Bearer <tx_hash_or_session_id>`) in the header to unlock instant data streams:
-
-* **Solana USDC/SOL Wallet**: `7SigxwQgPVgXNcySLvE5c9er2XcbuwXRhh8CnDEYu7hf`
-* **EVM ZK Bridge**: `0xD67146D08Ba19B74Df08f4cb7dcA2Ce6E69B4B68`
-* **Bitcoin SV (BSV)**: `1Mb66iHohUEg8eAnkgV9uTTVR235tuy95`
-* **Stripe Fiat Gateway**: Live API Key Integrated
-
----
-
-## 🚀 Quick Start for Developers & AI Agents
+Autonomous agents should first query the discovery manifest to retrieve active endpoints, supported blockchains, and gateway operational status:
 
 ```bash
-# Install the ASGARD M2M SDK
-pip install asgard-autonomous-m2m
+curl -X GET [https://asgard-tgio.onrender.com/.well-known/agent.json](https://asgard-tgio.onrender.com/.well-known/agent.json)
